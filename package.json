@@ -1,0 +1,21 @@
+{
+  "name": "typescript-list",
+  "version": "1.0.0",
+  "description": "This is an implementation of \"part\" of the C# List class using TyepScript, and essentially a theoretical exercise using generics in TypeScript.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jasmine": "^2.8.8",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-typescript": "^3.0.13",
+    "typescript": "^2.2.1"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "author": "Joseph Bayes",
+  "license": "ISC"
+}
