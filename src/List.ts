@@ -52,7 +52,7 @@ namespace Collections {
      * @param elements 
      */
     public AddRange(elements: Array<T>) {
-      this.Item.concat(elements);
+      this.Item = this.Item.concat(elements);
       this.updateStaticProperties();
     }
 
@@ -69,19 +69,23 @@ namespace Collections {
      * Currently checks if every key on the parameter object matches every key on a member (contained) object
      * @param object 
      */
-    public Contains(object: T) {
+    public Contains(object: T): boolean {
       let isContained = this.Item.indexOf(object) >= 0;
 
-      if (!isContained) { // check keys in case of complex object
+      if (!isContained && typeof object === 'object') { // check keys in case of complex object
         const keys = Object.keys(object);
         if (this.Item.length >= 1 && keys) {
           this.Item.forEach(element => {
             const elementKeys = Object.keys(element);
+
             let keyMatches = 0;
             for (let index = 0; index < elementKeys.length; index++) {
+              const memberElement: any = element;
+              const objectElement: any = object;
+
               const memberKey = elementKeys[index];
               const searchKey = keys[index];
-              if (memberKey === searchKey) {
+              if (memberElement[memberKey] === objectElement[searchKey]) {
                 keyMatches++;
               }
             }
@@ -89,8 +93,8 @@ namespace Collections {
           });
         }
 
-        return isContained;
       }
+      return isContained;
     }
 
     // ====================================== Private methods start ====================================== //
