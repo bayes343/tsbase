@@ -197,10 +197,31 @@ namespace Collections {
       return range;
     }
 
+    /**
+     * Searches for the specified object and returns the zero-based index of the first occurrence within the range of elements in the List<T> that extends from the specified index to the last element.
+     * @param item 
+     * @param startIndex 
+     */
     public IndexOf(item: T, startIndex?: number): number {
       startIndex = startIndex ? startIndex : 0;
       let index = -1;
       for (let i = startIndex; i < this.Item.length && index === -1; i++) {
+        if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
+          index = i;
+        }
+      }
+      return index;
+    }
+
+    /**
+     * Returns the zero-based index of the last occurrence of a value in the List<T> or in a portion of it.
+     * @param item 
+     * @param endIndex 
+     */
+    public LastIndexOf(item: T, endIndex?: number): number {
+      endIndex = endIndex ? endIndex : this.Count - 1;
+      let index = -1;
+      for (let i = endIndex; i >= 0 && index === -1; i--) {
         if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
           index = i;
         }
@@ -232,6 +253,10 @@ namespace Collections {
       return result;
     }
 
+    /**
+     * Sorts the elements or a portion of the elements in the List<T> using either the specified or default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
+     * @param comparison 
+     */
     public Sort(comparison: (item: T) => any): void {
       this.Item.sort((a: T, b: T) => {
         if (comparison(a) < comparison(b)) {
@@ -242,6 +267,69 @@ namespace Collections {
           return 0;
         }
       });
+    }
+
+    /**
+     * Inserts an element into the List<T> at the specified index.
+     * @param index 
+     * @param item 
+     */
+    public Insert(index: number, item: T): void {
+      if (index >= 0 && this.Item.length >= index) {
+        this.Item.splice(index, 0, item);
+        this.updateProperties();
+      } else {
+        throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      }
+    }
+
+    /**
+     * Inserts the elements of a collection into the List<T> at the specified index.
+     * @param index 
+     * @param collection 
+     */
+    public InsertRange(index: number, collection: List<T>): void {
+      if (index >= 0 && this.Item.length >= index) {
+        for (let i = 0; i < collection.Count; i++) {
+          const element = collection.Item[i];
+          this.Item.splice(index + i, 0, element);
+        }
+        this.updateProperties();
+      } else {
+        throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      }
+    }
+
+    /**
+     * Removes the first occurrence of a specific object from the List<T>.
+     * @param item 
+     */
+    public Remove(item: T): boolean {
+      const itemIndex = this.IndexOf(item);
+      if (itemIndex >= 0) {
+        this.Item.splice(itemIndex, 1);
+        this.updateProperties();
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    /**
+     * Removes all the elements that match the conditions defined by the specified predicate.
+     * @param match 
+     */
+    public RemoveAll(match: (item: T) => any): number {
+      let count = 0;
+      for (let index = 0; index < this.Item.length; index++) {
+        const element = this.Item[index];
+        if (match(element)) {
+          this.Remove(element);
+          index--;
+          count++;
+        }
+      }
+      return count;
     }
 
     //#region Private implementation 'helpers'

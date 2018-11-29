@@ -184,5 +184,51 @@ describe('List', () => {
     const notFound = classUnderTest.IndexOf('2', 2);
     expect(notFound).toEqual(-1);
   });
+
+  it('should get the last index of an item, considering any range passed', () => {
+    classUnderTest.AddRange(['3', '2', '1', '3', '21', '0', '0', '2']);
+    const indexTwo = classUnderTest.LastIndexOf('3');
+    expect(indexTwo).toEqual(3);
+
+    const notFound = classUnderTest.LastIndexOf('2', classUnderTest.Count - 2);
+    expect(notFound).toEqual(1);
+  });
+
+  it('should insert item into a the list at a specified index', () => {
+    classUnderTest.AddRange(['1', '3']);
+    classUnderTest.Insert(1, '2');
+    expect(classUnderTest.Item[1]).toEqual('2');
+
+    // error
+    expect(() => {
+      classUnderTest.Insert(5, '6');
+    }).toThrow('IndexOutOfRange - Range: 0-3 | Passed index: 5');
+  });
+
+  it('should insert a range into the List at a specified index', () => {
+    classUnderTest.AddRange(['1', '5']);
+    classUnderTest.InsertRange(1, new List<string>(['2', '3', '4']));
+    expect(classUnderTest.Item[1]).toEqual('2');
+    expect(classUnderTest.Item[3]).toEqual('4');
+
+    // error
+    expect(() => {
+      classUnderTest.InsertRange(6, new List<string>(['2', '3', '4']));
+    }).toThrow('IndexOutOfRange - Range: 0-5 | Passed index: 6');
+  });
+
+  it('should remove an element passed', () => {
+    classUnderTest.AddRange(['1', '2', '3']);
+    classUnderTest.Remove('2');
+    expect(classUnderTest.Item[1]).toEqual('3');
+    expect(classUnderTest.Remove('2')).toBeFalsy();
+  });
+
+  it('should remove all items that match the passed predicate', () => {
+    classUnderTest.AddRange(['1', '2', '3']);
+    const count = classUnderTest.RemoveAll(item => parseInt(item) > 1);
+    expect(count).toEqual(2);
+    expect(classUnderTest.Count).toEqual(1);
+  });
 });
 
