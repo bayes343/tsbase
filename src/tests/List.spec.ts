@@ -1,3 +1,5 @@
+import List = Collections.List;
+
 describe('List', () => {
   let classUnderTest: List<any>;
 
@@ -80,6 +82,23 @@ describe('List', () => {
     classUnderTest.AddRange(['1', '2', '3', '21']);
     const threeElements = classUnderTest.FindAll(item => item.length === 1);
     expect(threeElements.Count).toEqual(3);
+  });
+
+  it('should find the index of the first element that matches a predicate', () => {
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    const zero = classUnderTest.FindIndex(item => item === '1');
+    expect(zero).toEqual(0);
+
+    // start index
+    const two = classUnderTest.FindIndex(item => item.length === 1, 2);
+    expect(two).toEqual(2);
+
+    // end range
+    const three = classUnderTest.FindIndex(item => item.length >= 2, 2, classUnderTest.Count);
+    expect(three).toEqual(3);
+
+    const notFound = classUnderTest.FindIndex(item => item === '0');
+    expect(notFound).toEqual(-1);
   });
 });
 

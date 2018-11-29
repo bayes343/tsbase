@@ -115,7 +115,7 @@ namespace Collections {
      * Determines whether the List<T> contains elements that match the conditions defined by the specified predicate.
      * @param match
      */
-    public Exists(match: (item: any) => any): boolean {
+    public Exists(match: (item: T) => any): boolean {
       let answer = false;
       for (let index = 0; index < this.Item.length && !answer; index++) {
         const element = this.Item[index];
@@ -130,22 +130,21 @@ namespace Collections {
      * Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire List<T>.
      * @param match
      */
-    public Find(match: (item: any) => any): any {
-      let item = null;
-      for (let index = 0; index < this.Item.length && item === null; index++) {
+    public Find(match: (item: T) => any): T | null {
+      for (let index = 0; index < this.Item.length; index++) {
         const element = this.Item[index];
         if (match(element)) {
-          item = element;
+          return (element);
         }
       }
-      return item;
+      return null;
     }
 
     /**
      * Retrieves all the elements that match the conditions defined by the specified predicate.
      * @param match 
      */
-    public FindAll(match: (item: any) => any): List<T> {
+    public FindAll(match: (item: T) => any): List<T> {
       const collection = new List<T>();
       this.Item.forEach(element => {
         if (match(element)) {
@@ -153,6 +152,25 @@ namespace Collections {
         }
       });
       return collection;
+    }
+
+    /**
+     * Searches for an element that matches the conditions defined by a specified predicate, and returns the zero-based index of the first occurrence within the List<T> or a portion of it. This method returns -1 if an item that matches the conditions is not found.
+     * @param match 
+     * @param startIndex 
+     * @param endIndex 
+     */
+    public FindIndex(match: (item: T) => any, startIndex?: number, endIndex?: number): number {
+      startIndex = startIndex ? startIndex : 0;
+      endIndex = endIndex ? endIndex : this.Item.length;
+      let index = -1;
+      for (let i = startIndex; i < endIndex && index === -1; i++) {
+        const element = this.Item[i];
+        if (match(element)) {
+          index = i;
+        }
+      }
+      return index;
     }
 
     //#region Private implementation 'helpers'
@@ -167,5 +185,3 @@ namespace Collections {
   }
 
 }
-
-import List = Collections.List;
