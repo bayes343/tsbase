@@ -11,6 +11,11 @@ describe('List', () => {
     expect(classUnderTest).toBeDefined();
   });
 
+  it('should be constructed with a parameter array', () => {
+    classUnderTest = new List<number>([1, 2, 3]);
+    expect(classUnderTest.Count).toEqual(3);
+  });
+
   it('should add objects to the collection', () => {
     classUnderTest.Add('String1');
     classUnderTest.Add('String2');
@@ -125,6 +130,23 @@ describe('List', () => {
 
     const notFound = classUnderTest.FindLastIndex(item => item === '0');
     expect(notFound).toEqual(-1);
+  });
+
+  it('should apply an action foreach element in the list', () => {
+    // external scope
+    let counter = 0;
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    classUnderTest.ForEach(item => {
+      counter++
+    });
+    expect(counter).toEqual(4);
+
+    // internal scope
+    let currentValue = '';
+    classUnderTest.ForEach(item => {
+      currentValue = item;
+    });
+    expect(currentValue).toEqual('21');
   });
 });
 

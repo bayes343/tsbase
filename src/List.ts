@@ -22,17 +22,12 @@ namespace Collections {
     /**
      * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
      * List<T>(IEnumerable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
-     * List<T>(Int32) Initializes a new instance of the List<T> class that is empty and has the specified initial capacity.
      */
     constructor();
     constructor(initParam: Array<T>);
     constructor(initParam?: any) {
       if (initParam && initParam.length) {
         this.Item = initParam;
-      }
-
-      if (initParam && !initParam.length) {
-        this.Item = new Array(initParam);
       }
 
       this.updateProperties();
@@ -204,6 +199,16 @@ namespace Collections {
         }
       }
       return index;
+    }
+
+    /**
+     * Performs the specified action on each element of the List<T>.
+     * @param action 
+     */
+    public ForEach(action: (item: T) => any): void {
+      this.Item.forEach(element => {
+        action(element);
+      });
     }
 
     //#region Private implementation 'helpers'
