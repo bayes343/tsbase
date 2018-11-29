@@ -4,12 +4,6 @@ namespace Collections {
 
   export class List<T> {
     /**
-     * Gets or sets the total number of elements the internal data structure can hold without resizing.
-     * Same as count - included merely for the sake of mimicking C#'s list api.
-     */
-    public Capacity: number = 0;
-
-    /**
      * Gets the number of elements contained in the List<T>.
      */
     public Count: number = 0;
@@ -67,27 +61,10 @@ namespace Collections {
     public Contains(object: T): boolean {
       let isContained = this.Item.indexOf(object) >= 0;
 
-      if (!isContained && typeof object === 'object') { // check keys in case of complex object
-        const keys = Object.keys(object);
-        if (this.Item.length >= 1 && keys) {
-          this.Item.forEach(element => {
-            const elementKeys = Object.keys(element);
-
-            let keyMatches = 0;
-            for (let index = 0; index < elementKeys.length; index++) {
-              const memberElement: any = element;
-              const objectElement: any = object;
-
-              const memberKey = elementKeys[index];
-              const searchKey = keys[index];
-              if (memberElement[memberKey] === objectElement[searchKey]) {
-                keyMatches++;
-              }
-            }
-            isContained = keyMatches === keys.length;
-          });
-        }
-
+      if (!isContained && typeof object === 'object') {
+        const stringifiedList = JSON.stringify(this.Item);
+        const stringifiedObject = JSON.stringify(object);
+        isContained = stringifiedList.indexOf(stringifiedObject) >= 0;
       }
       return isContained;
     }
@@ -140,13 +117,8 @@ namespace Collections {
      * @param match 
      */
     public FindAll(match: (item: T) => any): List<T> {
-      const collection = new List<T>();
-      this.Item.forEach(element => {
-        if (match(element)) {
-          collection.Add(element);
-        }
-      });
-      return collection;
+      const matchingElements = this.Item.filter(item => match(item));
+      return new List<T>(matchingElements);
     }
 
     /**
@@ -211,13 +183,71 @@ namespace Collections {
       });
     }
 
-    //#region Private implementation 'helpers'
-
-    private updateProperties(): void {
-      this.Capacity = this.Item.length;
-      this.Count = this.Item.length;
+    /**
+     * Creates a shallow copy of a range of elements in the source List<T>.
+     * @param index 
+     * @param count 
+     */
+    public GetRange(index: number, count: number): List<T> {
+      const range = new List<T>();
+      for (let i = index; i < count; i++) {
+        const element = this.Item[i];
+        range.Add(element);
+      }
+      return range;
     }
 
+    public IndexOf(item: T, startIndex?: number): number {
+      startIndex = startIndex ? startIndex : 0;
+      let index = -1;
+      for (let i = startIndex; i < this.Item.length && index === -1; i++) {
+        if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
+          index = i;
+        }
+      }
+      return index;
+    }
+
+    /**
+     * Copies the elements of the List<T> to a new array.
+     */
+    public ToArray(): Array<T> {
+      let newItemArray = new Array<T>();
+      newItemArray = newItemArray.concat(this.Item);
+      return newItemArray;
+    }
+
+    /**
+     * Determines whether every element in the List<T> matches the conditions defined by the specified predicate.
+     * @param match 
+     */
+    public TrueForAll(match: (item: T) => any): boolean {
+      let result = true;
+      for (let index = 0; index < this.Item.length && result === true; index++) {
+        const element = this.Item[index];
+        if (!match(element)) {
+          result = false;
+        }
+      }
+      return result;
+    }
+
+    public Sort(comparison: (item: T) => any): void {
+      this.Item.sort((a: T, b: T) => {
+        if (comparison(a) < comparison(b)) {
+          return -1;
+        } else if (comparison(a) > comparison(b)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    }
+
+    //#region Private implementation 'helpers'
+    private updateProperties(): void {
+      this.Count = this.Item.length;
+    }
     //#endregion
 
   }

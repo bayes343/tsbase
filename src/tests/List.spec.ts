@@ -148,5 +148,41 @@ describe('List', () => {
     });
     expect(currentValue).toEqual('21');
   });
+
+  it('should get a range of the list', () => {
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    const range = classUnderTest.GetRange(0, 2);
+    expect(range.Count).toEqual(2);
+  });
+
+  it('should return a new array if requested', () => {
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    const arrayOfList = classUnderTest.ToArray();
+    expect(arrayOfList.length).toEqual(4);
+  });
+
+  it('should evaluate whether a predicate matches all elements in the array', () => {
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    const truthy = classUnderTest.TrueForAll(item => item.length >= 1);
+    expect(truthy).toBeTruthy();
+    const falsy = classUnderTest.TrueForAll(item => item.length === 1);
+    expect(falsy).toBeFalsy();
+  });
+
+  it('should sort a list based on a comparison function', () => {
+    classUnderTest.AddRange(['2', '1', '3', '21', '0', '0']);
+    classUnderTest.Sort(item => parseInt(item));
+    expect(classUnderTest.Item[0]).toEqual('0');
+    expect(classUnderTest.Item[5]).toEqual('21');
+  });
+
+  it('should get the index of an item, considering any range passed', () => {
+    classUnderTest.AddRange(['2', '1', '3', '21', '0', '0']);
+    const indexTwo = classUnderTest.IndexOf('3');
+    expect(indexTwo).toEqual(2);
+
+    const notFound = classUnderTest.IndexOf('2', 2);
+    expect(notFound).toEqual(-1);
+  });
 });
 
