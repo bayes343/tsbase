@@ -332,6 +332,28 @@ namespace Collections {
       return count;
     }
 
+    /**
+     * Removes the element at the specified index of the List<T>.
+     * @param index 
+     */
+    public RemoveAt(index: number): void {
+      if (index >= 0 && this.Item.length >= index) {
+        this.Item.splice(index, 1);
+        this.updateProperties();
+      } else {
+        throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      }
+    }
+
+    public RemoveRange(index: number, count: number): void {
+      if (index >= 0 && this.Item.length >= index && this.Item.length >= index + count) {
+        this.Item.splice(index, count);
+        this.updateProperties();
+      } else {
+        throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index} | Passed count: ${count}`);
+      }
+    }
+
     //#region Private implementation 'helpers'
     private updateProperties(): void {
       this.Count = this.Item.length;

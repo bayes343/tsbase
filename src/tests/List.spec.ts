@@ -230,5 +230,28 @@ describe('List', () => {
     expect(count).toEqual(2);
     expect(classUnderTest.Count).toEqual(1);
   });
+
+  it('should remove an element at a given index', () => {
+    classUnderTest.AddRange(['1', '2', '3']);
+    classUnderTest.RemoveAt(1);
+    expect(classUnderTest.Count).toEqual(2);
+    expect(classUnderTest.Item[1]).toEqual('3');
+
+    // error
+    expect(() => {
+      classUnderTest.RemoveAt(3);
+    }).toThrow('IndexOutOfRange - Range: 0-2 | Passed index: 3');
+  });
+
+  it('should remove a range from the list based on the passed paramaters', () => {
+    classUnderTest.AddRange(['1', '2', '3', '4', '5']);
+    classUnderTest.RemoveRange(0, 2);
+    expect(classUnderTest.Item[0]).toEqual('3');
+
+    // error
+    expect(() => {
+      classUnderTest.RemoveRange(0, 5);
+    }).toThrow('IndexOutOfRange - Range: 0-3 | Passed index: 0 | Passed count: 5');
+  });
 });
 
