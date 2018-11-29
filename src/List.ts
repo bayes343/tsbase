@@ -35,7 +35,7 @@ namespace Collections {
         this.Item = new Array(initParam);
       }
 
-      this.updateStaticProperties();
+      this.updateProperties();
     }
 
     /**
@@ -44,7 +44,7 @@ namespace Collections {
      */
     public Add(object: T) {
       this.Item.push(object);
-      this.updateStaticProperties();
+      this.updateProperties();
     }
 
     /**
@@ -53,7 +53,7 @@ namespace Collections {
      */
     public AddRange(elements: Array<T>) {
       this.Item = this.Item.concat(elements);
-      this.updateStaticProperties();
+      this.updateProperties();
     }
 
     /**
@@ -61,7 +61,7 @@ namespace Collections {
      */
     public Clear(): void {
       this.Item = new Array();
-      this.updateStaticProperties();
+      this.updateProperties();
     }
 
     /**
@@ -97,13 +97,75 @@ namespace Collections {
       return isContained;
     }
 
-    // ====================================== Private methods start ====================================== //
+    /**
+     * Copies the List<T> or a portion of it to an array.
+     * @param array 
+     * @param arrayIndex 
+     */
+    public CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void {
+      startIndex = startIndex ? startIndex : 0;
+      endIndex = endIndex ? endIndex : this.Item.length;
+      for (let index = startIndex; index < endIndex; index++) {
+        const element = this.Item[index];
+        array.push(element);
+      }
+    }
 
-    private updateStaticProperties(): void {
+    /**
+     * Determines whether the List<T> contains elements that match the conditions defined by the specified predicate.
+     * @param match
+     */
+    public Exists(match: (item: any) => any): boolean {
+      let answer = false;
+      for (let index = 0; index < this.Item.length && !answer; index++) {
+        const element = this.Item[index];
+        if (match(element)) {
+          answer = true;
+        }
+      }
+      return answer;
+    }
+
+    /**
+     * Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire List<T>.
+     * @param match
+     */
+    public Find(match: (item: any) => any): any {
+      let item = null;
+      for (let index = 0; index < this.Item.length && item === null; index++) {
+        const element = this.Item[index];
+        if (match(element)) {
+          item = element;
+        }
+      }
+      return item;
+    }
+
+    /**
+     * Retrieves all the elements that match the conditions defined by the specified predicate.
+     * @param match 
+     */
+    public FindAll(match: (item: any) => any): List<T> {
+      const collection = new List<T>();
+      this.Item.forEach(element => {
+        if (match(element)) {
+          collection.Add(element);
+        }
+      });
+      return collection;
+    }
+
+    //#region Private implementation 'helpers'
+
+    private updateProperties(): void {
       this.Capacity = this.Item.length;
       this.Count = this.Item.length;
     }
 
+    //#endregion
+
   }
 
 }
+
+import List = Collections.List;
