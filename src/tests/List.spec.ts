@@ -100,5 +100,31 @@ describe('List', () => {
     const notFound = classUnderTest.FindIndex(item => item === '0');
     expect(notFound).toEqual(-1);
   });
+
+  it('should find the last element that matches a predicate', () => {
+    classUnderTest.AddRange(['1', '2', '3']);
+    const match = classUnderTest.FindLast(item => item.length === 1);
+    expect(match).toEqual('3')
+
+    const noMatch = classUnderTest.FindLast(item => item === '5');
+    expect(noMatch).toBeFalsy();
+  });
+
+  it('should find the last index of the first element that matches a predicate', () => {
+    classUnderTest.AddRange(['1', '2', '3', '21']);
+    const zero = classUnderTest.FindLastIndex(item => item.length === 1);
+    expect(zero).toEqual(2);
+
+    // start index
+    const two = classUnderTest.FindLastIndex(item => item.length === 1, 2);
+    expect(two).toEqual(2);
+
+    // // end range
+    const three = classUnderTest.FindLastIndex(item => item.length >= 1, 0, classUnderTest.Count - 1);
+    expect(three).toEqual(3);
+
+    const notFound = classUnderTest.FindLastIndex(item => item === '0');
+    expect(notFound).toEqual(-1);
+  });
 });
 

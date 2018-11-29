@@ -173,6 +173,39 @@ namespace Collections {
       return index;
     }
 
+    /**
+     * Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire List<T>.
+     * @param match
+     */
+    public FindLast(match: (item: T) => any): T | null {
+      for (let index = this.Count - 1; index >= 0; index--) {
+        const element = this.Item[index];
+        if (match(element)) {
+          return (element);
+        }
+      }
+      return null;
+    }
+
+    /**
+     * Searches for an element that matches the conditions defined by a specified predicate, and returns the zero-based index of the last occurrence within the List<T> or a portion of it.
+     * @param match
+     * @param startIndex 
+     * @param endIndex 
+     */
+    public FindLastIndex(match: (item: T) => any, startIndex?: number, endIndex?: number): number {
+      startIndex = startIndex ? startIndex : 0;
+      endIndex = endIndex && endIndex <= this.Count - 1 ? endIndex : this.Count - 1;
+      let index = -1;
+      for (let i = endIndex; i >= startIndex && index === -1; i--) {
+        const element = this.Item[i];
+        if (match(element)) {
+          index = i;
+        }
+      }
+      return index;
+    }
+
     //#region Private implementation 'helpers'
 
     private updateProperties(): void {
