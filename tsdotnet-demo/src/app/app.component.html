@@ -1,0 +1,20 @@
+<h1>tsdotnet demo</h1>
+
+<input type="text" [(ngModel)]="itemToAdd" (keydown.enter)="addItem()">
+<button (click)="addItem()">Add</button>
+
+<input type="text" [(ngModel)]="itemToRemove" (keydown.enter)="removeItem()">
+<button (click)="removeItem()">Remove</button>
+
+<br>
+
+<input type="text" [(ngModel)]="itemToFind" (keydown.enter)="findIndex()">
+<button (click)="findIndex()">Find Index</button>
+
+<ul>
+  <li *ngFor="let item of list.Item">{{item}}</li>
+</ul>
+
+<button (click)="clear()">Clear</button>
+
+<button (click)="test()">Test</button>

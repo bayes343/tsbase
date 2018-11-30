@@ -1,8 +1,6 @@
 # Dependencies
-node_modules
-
 # Artifacts
-src/**/*.js
-**/*.js.map
 dist
-coverage
+**/*/dist
+**/*/coverage
+**/*/node_modules

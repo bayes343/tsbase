@@ -1,9 +1,11 @@
 {
-  "name": "typescript-list",
+  "name": "tsdotnet-dev",
   "version": "1.0.0",
-  "description": "This is an implementation of \"part\" of the C# List class using TyepScript, and essentially a theoretical exercise using generics in TypeScript.",
+  "description": "",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "tsdotnet": "file:dist"
+  },
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
     "jasmine-core": "^2.5.2",
@@ -11,10 +13,11 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.1.0",
     "karma-typescript": "^3.0.13",
-    "typescript": "^2.2.1"
+    "typescript": "^2.9.2"
   },
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && cp -R ../dist ../tsdotnet-demo/tsdotnet"
   },
   "author": "Joseph Bayes",
   "license": "ISC"
