@@ -1,6 +1,6 @@
 // Documentation copied from C# reference: https://msdn.microsoft.com/en-us/library/6sh2ey19(v=vs.110).aspx
 
-namespace Collections {
+namespace System.Collections.Generic {
 
   export class List<T> {
     /**

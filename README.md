@@ -1,10 +1,9 @@
-# TypeScript Generic List
+# tsdotnet
 
-This is an implementation of "part" of the C# List class using TyepScript, and essentially a theoretical exercise using generics in TypeScript.
+Theoretical / academic implementation of .Net apis using TypeScript.
 
-I wouldn't recommend using this on production sites, since it essentially is just a wrapper for the JavaScript Array type. 
-
-*This is a theoretical activity I've decided to publish.
+## Intsall
+- run cmd: `npm install`
 
 ## Test
 - run cmd: `npm install` - installs deps. for testing
