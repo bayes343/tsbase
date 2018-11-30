@@ -54,25 +54,12 @@ export class AppComponent {
 
     console.log('Logging all people');
     people.ForEach(item => {
+      item.Friends = new List<Person>(people.Item);
       console.log(item);
     });
 
-    this.test2();
-  }
-
-  public async test2() {
-    for (let i = 0; i < 5; i++) {
-      const count = await this.delay(500, i);
-      console.log(count);
-    }
-  }
-
-  private delay(milliseconds: number, count: number): Promise<number> {
-    return new Promise<number>(resolve => {
-      setTimeout(() => {
-        resolve(count);
-      }, milliseconds);
-    });
+    people.RemoveAt(people.Count - 1);
+    console.log(people);
   }
 
 }

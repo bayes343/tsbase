@@ -11,9 +11,15 @@ describe('List', () => {
     expect(classUnderTest).toBeDefined();
   });
 
-  it('should be constructed with a parameter array', () => {
+  it('should be constructed with a parameter array - making a copy of the passed array', () => {
     classUnderTest = new List<number>([1, 2, 3]);
     expect(classUnderTest.Count).toEqual(3);
+
+    // Ensure array is copied
+    const newList = new List<number>(classUnderTest.Item);
+    classUnderTest.RemoveAt(classUnderTest.Count - 1);
+    expect(classUnderTest.Item.length).toEqual(2);
+    expect(newList.Item.length).toEqual(3);
   });
 
   it('should add objects to the collection', () => {
@@ -274,5 +280,6 @@ describe('List', () => {
     expect(classUnderTest.Item[1]).toEqual('4');
     expect(classUnderTest.Item[3]).toEqual('2');
   });
+
 });
 

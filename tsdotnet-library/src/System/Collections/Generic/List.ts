@@ -17,7 +17,11 @@ export class List<T> {
   constructor(initParam: Array<T>);
   constructor(initParam?: any) {
     if (initParam && initParam.length) {
-      this.Item = initParam;
+      this.Item = new Array<T>();
+      for (let index = 0; index < initParam.length; index++) {
+        const element = initParam[index];
+        this.Item.push(element);
+      }
     }
 
     this.updateProperties();
