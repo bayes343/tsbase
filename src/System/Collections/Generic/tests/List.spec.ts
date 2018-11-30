@@ -1,4 +1,4 @@
-import List = System.Collections.Generic.List;
+import { List } from "../List";
 
 describe('List', () => {
   let classUnderTest: List<any>;
