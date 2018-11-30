@@ -345,6 +345,11 @@ namespace Collections {
       }
     }
 
+    /**
+     * Removes a range of elements from the List<T>.
+     * @param index 
+     * @param count 
+     */
     public RemoveRange(index: number, count: number): void {
       if (index >= 0 && this.Item.length >= index && this.Item.length >= index + count) {
         this.Item.splice(index, count);
@@ -352,6 +357,24 @@ namespace Collections {
       } else {
         throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index} | Passed count: ${count}`);
       }
+    }
+
+    /**
+     * Reverses the order of the elements in the entire List<T>.
+     */
+    public Reverse(): void {
+      this.Item.reverse();
+    }
+
+    /**
+     * Reverses the order of the elements in the specified range.
+     * @param index 
+     * @param count 
+     */
+    public ReverseRange(index: number, count: number): void {
+      const arraySegment = this.Item.splice(index, count);
+      arraySegment.reverse();
+      this.InsertRange(index, new List<T>(arraySegment));
     }
 
     //#region Private implementation 'helpers'

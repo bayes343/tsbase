@@ -253,5 +253,26 @@ describe('List', () => {
       classUnderTest.RemoveRange(0, 5);
     }).toThrow('IndexOutOfRange - Range: 0-3 | Passed index: 0 | Passed count: 5');
   });
+
+  it('should remove a range of elements from the list', () => {
+    classUnderTest.AddRange(['1', '2', '3', '4', '5']);
+    classUnderTest.RemoveRange(1, 3);
+    expect(classUnderTest.Count).toEqual(2);
+  });
+
+  it('should reverse the elements in the list', () => {
+    classUnderTest.AddRange(['1', '2', '3', '4', '5']);
+    classUnderTest.Reverse();
+    expect(classUnderTest.Item[0]).toEqual('5');
+    expect(classUnderTest.Item[4]).toEqual('1');
+  });
+
+  it('should reverse a range of elements within the list', () => {
+    classUnderTest.AddRange(['1', '2', '3', '4', '5']);
+    classUnderTest.ReverseRange(1, 3);
+    expect(classUnderTest.Item[0]).toEqual('1');
+    expect(classUnderTest.Item[1]).toEqual('4');
+    expect(classUnderTest.Item[3]).toEqual('2');
+  });
 });
 
