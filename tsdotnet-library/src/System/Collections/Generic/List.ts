@@ -15,7 +15,7 @@ export class List<T> extends Enumerable<T> {
    * Implement abstract enumerable contract
    * @param item 
    */
-  public Clone(item: Array<T>): Enumerable<T> {
+  protected Clone(item: Array<T>): Enumerable<T> {
     return new List<T>(item);
   }
 
@@ -28,11 +28,7 @@ export class List<T> extends Enumerable<T> {
   constructor(initParam?: any) {
     super();
     if (initParam && initParam.length) {
-      this.Item = new Array<T>();
-      for (let index = 0; index < initParam.length; index++) {
-        const element = initParam[index];
-        this.Item.push(element);
-      }
+      this.Item = initParam.slice();
     }
 
     this.updateProperties();
@@ -285,7 +281,7 @@ export class List<T> extends Enumerable<T> {
       this.Item.splice(index, 0, item);
       this.updateProperties();
     } else {
-      throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
     }
   }
 
@@ -302,7 +298,7 @@ export class List<T> extends Enumerable<T> {
       }
       this.updateProperties();
     } else {
-      throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
     }
   }
 
@@ -347,7 +343,7 @@ export class List<T> extends Enumerable<T> {
       this.Item.splice(index, 1);
       this.updateProperties();
     } else {
-      throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
     }
   }
 
@@ -361,7 +357,7 @@ export class List<T> extends Enumerable<T> {
       this.Item.splice(index, count);
       this.updateProperties();
     } else {
-      throw (`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index} | Passed count: ${count}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index} | Passed count: ${count}`);
     }
   }
 

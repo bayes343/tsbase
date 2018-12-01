@@ -166,5 +166,59 @@ describe('Enumerable', () => {
     expect((oneItem as List<{ key: string, value: number }>).Count).toEqual(1);
   });
 
+  it('should aggregate the elements based on input parameter accumulator and result functions', () => {
+    // custom aggregation
+    classUnderTest.AddRange([1, 1, 2, 2, 2, 3]);
+    const three = classUnderTest.Aggregate(
+      1,
+      (largest, next) => largest > next ? largest : next,
+      item => item.toString()
+    );
+    expect(three).toEqual('3');
+
+    // simple aggregation
+    const eleven = classUnderTest.Aggregate(
+      0,
+      (current, next) => current + next,
+      item => item.toString()
+    );
+    expect(eleven).toEqual('11');
+  });
+
+  it('should sum the value of elements as numbers or based on a given function', () => {
+    classUnderTest.AddRange([1, 1, 2, 2, 2, 3]);
+    const eleven = classUnderTest.Sum();
+    expect(eleven).toEqual(11);
+    const twentyTwo = classUnderTest.Sum(item => item * 2);
+    expect(twentyTwo).toEqual(22);
+
+    // error
+    classUnderTest.Add('notanumber');
+    expect(() => {
+      classUnderTest.Sum();
+    }).toThrowError('Could not parse \'notanumber\' as a number');
+  });
+
+  it('should average the value of elements as numbers or based on a given function', () => {
+    classUnderTest.AddRange([2, 2, 2, 2, 2, 2]);
+    const two = classUnderTest.Average();
+    expect(two).toEqual(2);
+    // Custom use case
+    classUnderTest.Clear()
+    classUnderTest.AddRange([
+      { name: 'Billy' },
+      { name: 'Adam' },
+      { name: 'David' },
+      { name: 'Charley' }
+    ]);
+    const averageLength = classUnderTest.Average(item => item.name.length);
+    expect(averageLength).toEqual(5.25);
+
+    // error
+    classUnderTest.Clear();
+    expect(() => {
+      classUnderTest.Average();
+    }).toThrowError('Cannot calculate an average from a collection with no elements');
+  });
 });
 

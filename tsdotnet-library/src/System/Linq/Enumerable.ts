@@ -7,10 +7,27 @@ export abstract class Enumerable<T> {
   public Item: Array<T> = new Array<T>();
 
   /**
-   * Each extender should define how it should be cloned - allows functional chaining of a data structure that maintains state
+   * Each extender should define how it should be cloned *structurally* - allows functional chaining of a data structure that maintains state
    * @param item 
    */
-  public abstract Clone(item: Array<T>): Enumerable<T>;
+  protected abstract Clone(item: Array<T>): Enumerable<T>;
+
+  /**
+   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
+   * @param seed 
+   * @param func 
+   */
+  public Aggregate<TResult, TAccumulate>(
+    seed: TAccumulate,
+    func: (current: TAccumulate, next: T) => TAccumulate,
+    resultSelector: (item: TAccumulate) => TResult
+  ): TResult {
+    let value = seed;
+    for (let index = 0; index < this.Item.length; index++) {
+      value = func(value, this.Item[index]);
+    }
+    return resultSelector(value);
+  }
 
   /**
    * Determines whether all elements of a sequence satisfy a condition.
@@ -28,6 +45,46 @@ export abstract class Enumerable<T> {
   public Any(func: (item: T) => boolean): boolean {
     const itemsThatSatisfy = this.Item.filter(func);
     return itemsThatSatisfy.length >= 1 ? true : false;
+  }
+
+  /**
+   * Computes the average of a sequence of numeric values, or the average result of the given function
+   * @param func 
+   */
+  public Average(func?: (item: T) => any): number {
+    if (this.Item.length >= 1) {
+      let average = 0;
+      if (func) {
+        average = this.Sum(func) / this.Item.length;
+      } else {
+        average = this.Sum() / this.Item.length;
+      }
+      return average;
+    } else {
+      throw new Error('Cannot calculate an average from a collection with no elements');
+    }
+  }
+
+  /**
+   * Computes the sum of a sequence of numeric values, or the sum result of the given function
+   * @param func 
+   */
+  public Sum(func?: (item: T) => number): number {
+    let sum = 0;
+    if (func) {
+      this.Item.forEach(element => {
+        sum += func(element);
+      });
+    } else {
+      this.Item.forEach(element => {
+        const tNumber = parseFloat(element.toString());
+        if (isNaN(tNumber)) {
+          throw new Error(`Could not parse \'${element}\' as a number`);
+        }
+        sum += tNumber;
+      });
+    }
+    return sum;
   }
 
   /**
