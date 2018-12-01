@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "tsdotnet": "file:dist"
-  },
   "devDependencies": {
     "@types/jasmine": "^2.8.8",
     "jasmine-core": "^2.5.2",

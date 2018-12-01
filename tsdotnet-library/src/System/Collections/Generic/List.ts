@@ -1,4 +1,6 @@
-export class List<T> {
+import { Enumerable } from '../../Linq/Enumerable';
+
+export class List<T> extends Enumerable<T> {
   /**
    * Gets the number of elements contained in the List<T>.
    */
@@ -10,12 +12,21 @@ export class List<T> {
   public Item: Array<T> = new Array<T>();
 
   /**
+   * Implement abstract enumerable contract
+   * @param item 
+   */
+  public Clone(item: Array<T>): Enumerable<T> {
+    return new List<T>(item);
+  }
+
+  /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
    * List<T>(IEnumerable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
    */
   constructor();
   constructor(initParam: Array<T>);
   constructor(initParam?: any) {
+    super();
     if (initParam && initParam.length) {
       this.Item = new Array<T>();
       for (let index = 0; index < initParam.length; index++) {
@@ -230,15 +241,6 @@ export class List<T> {
   }
 
   /**
-   * Copies the elements of the List<T> to a new array.
-   */
-  public ToArray(): Array<T> {
-    let newItemArray = new Array<T>();
-    newItemArray = newItemArray.concat(this.Item);
-    return newItemArray;
-  }
-
-  /**
    * Determines whether every element in the List<T> matches the conditions defined by the specified predicate.
    * @param match 
    */
@@ -257,16 +259,20 @@ export class List<T> {
    * Sorts the elements or a portion of the elements in the List<T> using either the specified or default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
    * @param comparison 
    */
-  public Sort(comparison: (item: T) => any): void {
-    this.Item.sort((a: T, b: T) => {
-      if (comparison(a) < comparison(b)) {
-        return -1;
-      } else if (comparison(a) > comparison(b)) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+  public Sort(comparison?: (item: T) => any): void {
+    if (comparison) {
+      this.Item.sort((a: T, b: T) => {
+        if (comparison(a) < comparison(b)) {
+          return -1;
+        } else if (comparison(a) > comparison(b)) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    } else {
+      this.Item.sort();
+    }
   }
 
   /**

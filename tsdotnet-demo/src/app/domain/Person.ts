@@ -1,9 +1,11 @@
 import { List } from 'tsdotnet';
+import { Pet } from './Pet';
 
 export class Person {
   constructor(
     public firstName: string,
     public lastName: string,
-    public Friends?: List<Person>,
+    public friends?: List<Person>,
+    public pets?: List<Pet>
   ) { }
 }

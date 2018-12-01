@@ -180,6 +180,12 @@ describe('List', () => {
     classUnderTest.Sort(item => parseInt(item));
     expect(classUnderTest.Item[0]).toEqual('0');
     expect(classUnderTest.Item[5]).toEqual('21');
+
+    classUnderTest.Clear();
+    classUnderTest.AddRange([1, 3, 8, 2, 1]);
+    classUnderTest.Sort();
+    expect(classUnderTest.Item[1]).toEqual(1);
+    expect(classUnderTest.Item[4]).toEqual(8);
   });
 
   it('should get the index of an item, considering any range passed', () => {

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { List } from 'tsdotnet';
 import { Person } from './domain/Person';
+import { Pet } from './domain/Pet';
 
 @Component({
   selector: 'app-root',
@@ -52,12 +53,22 @@ export class AppComponent {
     console.log('Inserting Shauna into list at position 2 / index 1');
     people.Insert(1, new Person('Shauna', 'Bayes'));
 
+    console.log('Adding pets to Joey, Shauna, and Newman');
+    const bayesPets = new List<Pet>([new Pet('Loki', 'Cat'), new Pet('Freya', 'Dog')]);
+    const joey = people.Find(item => item.firstName === 'Joseph');
+    joey.pets = bayesPets;
+    const shauna = people.Find(item => item.firstName === 'Shauna');
+    shauna.pets = bayesPets;
+    const newman = people.Find(item => item.lastName === 'Newman');
+    newman.pets = new List<Pet>([new Pet('Heidi', 'Dog')]);
+
     console.log('Logging all people');
     people.ForEach(item => {
-      item.Friends = new List<Person>(people.Item);
+      item.friends = new List<Person>(people.Item);
       console.log(item);
     });
 
+    console.log('Removing the last person in the people list');
     people.RemoveAt(people.Count - 1);
     console.log(people);
   }
