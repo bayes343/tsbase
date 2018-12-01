@@ -16,7 +16,7 @@ export abstract class Enumerable<T> {
    * Determines whether all elements of a sequence satisfy a condition.
    * @param func 
    */
-  public All(func: (item: T) => any): boolean {
+  public All(func: (item: T) => boolean): boolean {
     const itemsThatSatisfy = this.Item.filter(func);
     return itemsThatSatisfy.length === this.Item.length;
   }
@@ -25,7 +25,7 @@ export abstract class Enumerable<T> {
    * Determines whether any element of a sequence exists or satisfies a condition.
    * @param func 
    */
-  public Any(func: (item: T) => any): boolean {
+  public Any(func: (item: T) => boolean): boolean {
     const itemsThatSatisfy = this.Item.filter(func);
     return itemsThatSatisfy.length >= 1 ? true : false;
   }
@@ -34,7 +34,7 @@ export abstract class Enumerable<T> {
    * Filters a sequence of values based on a predicate.
    * @param func 
    */
-  public Where(func: (item: T) => any): Enumerable<T> {
+  public Where(func: (item: T) => boolean): Enumerable<T> {
     const collection: Enumerable<T> = this.Clone(this.Item);
     collection.Item = collection.Item.filter(func);
     return collection;
@@ -99,21 +99,10 @@ export abstract class Enumerable<T> {
   }
 
   /**
-   * Takes the last item in a sequence
-   * @param count 
-   */
-  public TakeLast(count: number): Enumerable<T> {
-    const itemsToTake = this.Item.slice(0, count);
-    const lastItem = itemsToTake[itemsToTake.length - 1];
-    const enumerableToReturn = this.Clone([lastItem]);
-    return enumerableToReturn;
-  }
-
-  /**
    * Returns elements from a sequence as long as a specified condition is true.
    * @param func 
    */
-  public TakeWhile(func: (item: T) => any): Enumerable<T> {
+  public TakeWhile(func: (item: T) => boolean): Enumerable<T> {
     const itemsToReturn = [];
     let index = 0;
     let conditionPassed = true;
@@ -130,6 +119,47 @@ export abstract class Enumerable<T> {
         conditionPassed = false;
       }
     } while (conditionPassed);
+    return this.Clone(itemsToReturn);
+  }
+
+  /**
+   * Returns distinct elements from a sequence.
+   * @param func 
+   */
+  public Distinct(): Enumerable<T> {
+    const itemsToReturn = [];
+    for (let index = 0; index < this.Item.length; index++) {
+      const element = this.Item[index];
+      const stringifiedItems = JSON.stringify(itemsToReturn);
+      if (stringifiedItems.indexOf(JSON.stringify(element)) === -1) {
+        itemsToReturn.push(element);
+      }
+    }
+    return this.Clone(itemsToReturn);
+  }
+
+  /**
+   * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
+   * @param count 
+   */
+  public Skip(count: number): Enumerable<T> {
+    const itemsToReturn = this.Item.slice(count, this.Item.length);
+    return this.Clone(itemsToReturn);
+  }
+
+  /**
+   * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
+   * @param func 
+   */
+  public SkipWhile(func: (item: T) => boolean): Enumerable<T> {
+    let startIndex = 0;
+    for (let index = 0; index < this.Item.length && startIndex === 0; index++) {
+      const element = this.Item[index];
+      if (!func(element)) {
+        startIndex = index;
+      }
+    }
+    const itemsToReturn = this.Item.slice(startIndex, this.Item.length);
     return this.Clone(itemsToReturn);
   }
 

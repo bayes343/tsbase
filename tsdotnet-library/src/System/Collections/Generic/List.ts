@@ -98,7 +98,7 @@ export class List<T> extends Enumerable<T> {
    * Determines whether the List<T> contains elements that match the conditions defined by the specified predicate.
    * @param match
    */
-  public Exists(match: (item: T) => any): boolean {
+  public Exists(match: (item: T) => boolean): boolean {
     let answer = false;
     for (let index = 0; index < this.Item.length && !answer; index++) {
       const element = this.Item[index];
@@ -113,7 +113,7 @@ export class List<T> extends Enumerable<T> {
    * Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire List<T>.
    * @param match
    */
-  public Find(match: (item: T) => any): T | null {
+  public Find(match: (item: T) => boolean): T | null {
     for (let index = 0; index < this.Item.length; index++) {
       const element = this.Item[index];
       if (match(element)) {
@@ -127,7 +127,7 @@ export class List<T> extends Enumerable<T> {
    * Retrieves all the elements that match the conditions defined by the specified predicate.
    * @param match 
    */
-  public FindAll(match: (item: T) => any): List<T> {
+  public FindAll(match: (item: T) => boolean): List<T> {
     const matchingElements = this.Item.filter(item => match(item));
     return new List<T>(matchingElements);
   }
@@ -138,7 +138,7 @@ export class List<T> extends Enumerable<T> {
    * @param startIndex 
    * @param endIndex 
    */
-  public FindIndex(match: (item: T) => any, startIndex?: number, endIndex?: number): number {
+  public FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
     endIndex = endIndex ? endIndex : this.Item.length;
     let index = -1;
@@ -155,7 +155,7 @@ export class List<T> extends Enumerable<T> {
    * Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire List<T>.
    * @param match
    */
-  public FindLast(match: (item: T) => any): T | null {
+  public FindLast(match: (item: T) => boolean): T | null {
     for (let index = this.Count - 1; index >= 0; index--) {
       const element = this.Item[index];
       if (match(element)) {
@@ -171,7 +171,7 @@ export class List<T> extends Enumerable<T> {
    * @param startIndex 
    * @param endIndex 
    */
-  public FindLastIndex(match: (item: T) => any, startIndex?: number, endIndex?: number): number {
+  public FindLastIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
     endIndex = endIndex && endIndex <= this.Count - 1 ? endIndex : this.Count - 1;
     let index = -1;
@@ -244,7 +244,7 @@ export class List<T> extends Enumerable<T> {
    * Determines whether every element in the List<T> matches the conditions defined by the specified predicate.
    * @param match 
    */
-  public TrueForAll(match: (item: T) => any): boolean {
+  public TrueForAll(match: (item: T) => boolean): boolean {
     let result = true;
     for (let index = 0; index < this.Item.length && result === true; index++) {
       const element = this.Item[index];
@@ -325,7 +325,7 @@ export class List<T> extends Enumerable<T> {
    * Removes all the elements that match the conditions defined by the specified predicate.
    * @param match 
    */
-  public RemoveAll(match: (item: T) => any): number {
+  public RemoveAll(match: (item: T) => boolean): number {
     let count = 0;
     for (let index = 0; index < this.Item.length; index++) {
       const element = this.Item[index];

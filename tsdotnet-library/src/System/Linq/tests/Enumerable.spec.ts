@@ -105,20 +105,6 @@ describe('Enumerable', () => {
     expect((first3 as List<{ key: string, value: number }>).Count).toEqual(3);
   });
 
-  it('should take the last item in the sequence', () => {
-    classUnderTest.AddRange([
-      { key: '1', value: 1 },
-      { key: '2', value: 2 },
-      { key: '3', value: 3 },
-      { key: '4', value: 4 },
-      { key: '5', value: 5 },
-      { key: '6', value: 6 },
-      { key: '7', value: 7 }
-    ]);
-    const lastOf3 = classUnderTest.TakeLast(3);
-    expect(lastOf3.Item[0]).toEqual({ key: '3', value: 3 });
-  });
-
   it('should take items while a condition is met', () => {
     classUnderTest.Clear();
     const emptyList = classUnderTest.TakeWhile(item => item.key.length >= 1);
@@ -139,6 +125,45 @@ describe('Enumerable', () => {
 
     const first4 = classUnderTest.TakeWhile(item => item.value < 5);
     expect((first4 as List<{ key: string, value: number }>).Count).toEqual(4);
+  });
+
+  it('should return distinct elements from the enumerable collection', () => {
+    classUnderTest.AddRange([
+      { key: '1', value: 1 },
+      { key: '1', value: 1 },
+      { key: '1', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 3 }
+    ]);
+    const distinctElements = classUnderTest.Distinct();
+    expect((distinctElements as List<{ key: '2', value: 3 }>).Count).toEqual(4);
+  });
+
+  it('should skip a sequence of items and return the rest', () => {
+    classUnderTest.AddRange([
+      { key: '1', value: 1 },
+      { key: '1', value: 1 },
+      { key: '1', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 3 }
+    ]);
+    const last3 = classUnderTest.Skip(3);
+    expect((last3 as List<{ key: string, value: number }>).Count).toEqual(3);
+  });
+
+  it('should skip items while a condition is true then return the rest', () => {
+    classUnderTest.AddRange([
+      { key: '1', value: 1 },
+      { key: '1', value: 1 },
+      { key: '1', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 3 }
+    ]);
+    const oneItem = classUnderTest.SkipWhile(item => item.value < 3);
+    expect((oneItem as List<{ key: string, value: number }>).Count).toEqual(1);
   });
 
 });
