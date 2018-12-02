@@ -98,23 +98,28 @@ export abstract class Enumerable<T> {
   }
 
   /**
-   * Sorts the elements of a sequence in ascending order.
-   * @param func 
+   * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
+   * @param funcs 
    */
-  public OrderBy(func?: (item: T) => any): Enumerable<T> {
-    const collection: Enumerable<T> = this.Clone(this.Item);
-    if (func) {
-      collection.Item.sort((a: T, b: T) => {
-        if (func(a) < func(b)) {
-          return -1;
-        } else if (func(a) > func(b)) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
+  public OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T> {
+    const collection = this.Clone(this.Item);
+    if (!funcs) {
       collection.Item.sort();
+    } else {
+      collection.Item.sort((a: T, b: T) => {
+        let result = 0;
+        for (let index = 0; index < funcs.length; index++) {
+          const func = funcs[index];
+          if (func(a) < func(b)) {
+            result = -1;
+            break;
+          } else if (func(a) > func(b)) {
+            result = 1;
+            break;
+          }
+        }
+        return result;
+      });
     }
     return collection;
   }
@@ -123,8 +128,12 @@ export abstract class Enumerable<T> {
    * Sorts the elements of a sequence in descending order.
    * @param func 
    */
-  public OrderByDescending(func?: (item: T) => any): Enumerable<T> {
-    const collection = this.OrderBy(func);
+  public OrderByDescending(funcs?: Array<(item: T) => any>): Enumerable<T> {
+    let collection: Enumerable<T>;
+    if (funcs) {
+      collection = this.OrderBy(funcs);
+    }
+    collection = this.OrderBy();
     collection.Item.reverse();
     return collection;
   }

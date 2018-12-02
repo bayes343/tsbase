@@ -22,7 +22,7 @@ describe('Enumerable', () => {
 
     classUnderTest.Clear();
     classUnderTest.AddRange(['4', '5', '1', '3', '1']);
-    const resultsPredicate = classUnderTest.OrderBy(item => parseInt(item));
+    const resultsPredicate = classUnderTest.OrderBy([item => parseInt(item)]);
     expect(resultsPredicate.Item[0]).toEqual('1');
     expect(resultsPredicate.Item[4]).toEqual('5');
   });
@@ -35,9 +35,34 @@ describe('Enumerable', () => {
 
     classUnderTest.Clear();
     classUnderTest.AddRange(['4', '5', '1', '3', '1']);
-    const resultsPredicate = classUnderTest.OrderByDescending(item => parseInt(item));
+    const resultsPredicate = classUnderTest.OrderByDescending([item => parseInt(item)]);
     expect(resultsPredicate.Item[0]).toEqual('5');
     expect(resultsPredicate.Item[4]).toEqual('1');
+  });
+
+  it('should orderby many funcs by descending precedence', () => {
+    // ascending
+    classUnderTest.AddRange([
+      { lastName: 'A', firstName: 'Z', age: 18 },
+      { lastName: 'A', firstName: 'Y', age: 24 },
+      { lastName: 'C', firstName: 'X', age: 19 },
+      { lastName: 'C', firstName: 'W', age: 26 },
+      { lastName: 'E', firstName: 'V', age: 32 }
+    ]);
+    const lastFirstAge = classUnderTest.OrderBy([
+      item => item.lastName,
+      item => item.firstName,
+      item => item.age
+    ]);
+    expect(lastFirstAge.Item[0].age).toEqual(24);
+
+    // descending
+    const ageFirstLast = classUnderTest.OrderByDescending([
+      item => item.age,
+      item => item.firstName,
+      item => item.lastName
+    ]);
+    expect(ageFirstLast.Item[0].age).toEqual(32);
   });
 
   it('should find results where a condition is met and return them based on a user defined sort', () => {
@@ -49,7 +74,7 @@ describe('Enumerable', () => {
     ]);
     const query = classUnderTest
       .Where(item => item.name.length >= 3)
-      .OrderBy(item => item.name) as List<{ name: string }>;
+      .OrderBy([item => item.name]).ToList();
     expect(query.Item[0].name).toEqual('Adam');
     expect(query.Item[3].name).toEqual('David');
   });
