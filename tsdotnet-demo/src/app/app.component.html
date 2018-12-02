@@ -18,3 +18,20 @@
 <button (click)="clear()">Clear</button>
 
 <button (click)="test()">Test</button>
+
+<hr>
+
+<table>
+  <tr>
+    <th>Last Name</th>
+    <th>First Name</th>
+    <th>Age</th>
+  </tr>
+  <tr *ngFor="let person of people.Item">
+    <td>{{person.firstName}}</td>
+    <td>{{person.lastName}}</td>
+    <td>{{person.age}}</td>
+  </tr>
+</table>
+
+<button (click)="customSort()">Sort</button>

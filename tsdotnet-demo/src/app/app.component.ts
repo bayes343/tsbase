@@ -10,6 +10,19 @@ import { Pet } from './domain/Pet';
 })
 export class AppComponent {
   public list = new List<string>(['1', '2', '3']);
+  public bayesPets = new List<Pet>([
+    { name: 'Freya', kind: 'Dog' },
+    { name: 'Loki', kind: 'Cat' },
+  ]);
+  public people = new List<Person>([
+    { lastName: 'Bayes', firstName: 'Tristan', age: 1, pets: this.bayesPets },
+    { lastName: 'Beelman', firstName: 'Kiefer', age: 29, },
+    { lastName: 'Bayes', firstName: 'Joseph', age: 28, pets: this.bayesPets },
+    { lastName: 'Newman', firstName: 'Christopher', age: 29, pets: new List<Pet>([{ name: 'Heidi', kind: 'Dog' }]) },
+    { lastName: 'Bayes', firstName: 'Karoline', age: 3, pets: this.bayesPets },
+    { lastName: 'Powers', firstName: 'Eric', age: 28, },
+    { lastName: 'Bayes', firstName: 'Shauna', age: 28, pets: this.bayesPets },
+  ]);
   public itemToAdd: string;
   public itemToRemove: string;
   public itemToFind: string;
@@ -73,4 +86,29 @@ export class AppComponent {
     console.log(people);
   }
 
+  public customSort(): void {
+    this.people.InsertRange(2, new List<Person>([
+      new Person('Jeb', 'Schiefer', 26),
+      new Person('Johnathon', 'Kalbaugh', 40),
+      new Person('Jim', 'Driscoll', 45),
+      new Person('Kory', 'Koch', 30)
+    ]));
+
+    const kory = this.people.Find(item => item.firstName === 'Kory');
+    this.people.Remove(kory);
+
+    const jimIndex = this.people.FindIndex(item => item.firstName === 'Jim');
+    this.people.RemoveAt(jimIndex);
+
+    const query = this.people
+      .Take(5)
+      .Where(item => item.lastName.startsWith('B'))
+      .OrderBy([
+        item => item.age,
+        item => item.firstName
+      ]);
+    this.people = query.ToList();
+
+    this.people.Reverse();
+  }
 }
