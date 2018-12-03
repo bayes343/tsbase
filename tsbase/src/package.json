@@ -1,14 +1,17 @@
 {
-  "name": "tsdotnet",
+  "name": "tsbase",
   "author": {
     "name": "Joseph Bayes"
   },
   "keywords": [
     "dotnet",
-    "typescript"
+    "typescript",
+    "generic",
+    "collections",
+    "list"
   ],
   "version": "0.0.1",
-  "description": "Theoretical implementation of Dotnet apis in TypeScript",
+  "description": "TypeScript base class libraries",
   "private": true,
   "main": "./public_api.js",
   "types": "./public_api.d.ts"
