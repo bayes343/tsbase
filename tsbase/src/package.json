@@ -12,7 +12,7 @@
   ],
   "version": "0.0.1",
   "description": "TypeScript base class libraries",
-  "private": true,
+  "private": false,
   "main": "./public_api.js",
   "types": "./public_api.d.ts"
 }

@@ -19,7 +19,6 @@ So far, I've focused on collections.  The abstract class Enumerable and the conc
 
     Properties:
     ```ts
-    Count: number;
     Item: Array<T>;
     ```
 
@@ -53,6 +52,7 @@ So far, I've focused on collections.  The abstract class Enumerable and the conc
 
     Properties:
     ```ts
+    Count: number;
     Item: Array<T>;
     ```
 
@@ -83,4 +83,22 @@ So far, I've focused on collections.  The abstract class Enumerable and the conc
    RemoveRange(index: number, count: number): void;
    Reverse(): void;
    ReverseRange(index: number, count: number): void;
+   ```
+
+   Usage example:
+   ```ts
+   // Create a collection
+   const people = new List<Person>();
+   // or
+   const people = new List<Person>([
+      new Person('John', 'Doe'),
+      new Person('Jane', 'Doe')
+   ]);
+
+   // Add members
+   people.Add(new Person('Jennifer', 'Doe'));
+   // or
+   people.AddRange([
+      
+   ]);
    ```
