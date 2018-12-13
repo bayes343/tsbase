@@ -12,13 +12,21 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-chrome-launcher',
       'karma-phantomjs-launcher',
-      'karma-junit-reporter'
+      'karma-junit-reporter',
+      'karma-coverage'
     ],
     preprocessors: {
       '**/*.ts': ['karma-typescript']
     },
-    reporters: ['progress', 'karma-typescript', 'junit'],
-    browsers: ['ChromeHeadless']
+    reporters: ['progress', 'karma-typescript', 'junit', 'coverage'],
+    browsers: ['ChromeHeadless'],
+    coverageReporter: {
+      dir: 'coverage/',
+      reporters: [
+        { type: 'html', subdir: 'report-html' },
+        { type: 'cobertura', subdir: '.', file: 'cobertura.xml' }
+      ]
+    },
   })
 }
 
