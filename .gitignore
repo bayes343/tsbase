@@ -4,3 +4,4 @@ dist
 **/*/dist
 **/*/coverage
 **/*/node_modules
+**/**/TESTS*.xml

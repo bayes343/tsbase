@@ -19,5 +19,9 @@
     "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsdotnet-demo/tsdotnet && cp -R ../dist ../tsdotnet-demo/tsdotnet"
   },
   "author": "Joseph Bayes",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "karma-junit-reporter": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
 }
