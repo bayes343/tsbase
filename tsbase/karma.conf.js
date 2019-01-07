@@ -27,6 +27,9 @@ module.exports = function (config) {
         { type: 'cobertura', subdir: '.', file: 'cobertura.xml' }
       ]
     },
+    karmaTypescriptConfig: {
+      tsconfig: "./tsconfig.json"
+    }
   })
 }
 
