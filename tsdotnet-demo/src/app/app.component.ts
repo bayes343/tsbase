@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { List } from 'tsdotnet';
 import { Person } from './domain/Person';
 import { Pet } from './domain/Pet';
+import { HttpClient } from 'tsdotnet/System/Net/Http/HttpClient';
 
 @Component({
   selector: 'app-root',
@@ -110,5 +111,12 @@ export class AppComponent {
     this.people = query.ToList();
 
     this.people.Reverse();
+  }
+
+  public async testHttpClient() {
+    const client = new HttpClient();
+    const uri = 'https://foaas.com/cup/Joey';
+    const response = await client.GetAsync(uri);
+    alert(response);
   }
 }

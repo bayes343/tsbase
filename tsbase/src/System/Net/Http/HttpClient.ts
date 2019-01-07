@@ -6,17 +6,15 @@ export class HttpClient {
   /**
    * Gets the headers which should be sent with each request.
    */
-  public DefaultRequestHeaders: Array<string> = [];
+  public DefaultRequestHeaders: Array<{ key: string, value: string }> = [];
   /**
    * Gets or sets the maximum number of bytes to buffer when reading the response content.
    */
   public MaxResponseContentBufferSize: number = 0;
   /**
-   * Gets or sets the timespan to wait before the request times out.
+   * Gets or sets the time in seconds to wait before the request times out.
    */
   public Timeout: number = 10;
-
-  constructor() { }
 
   public CancelPendingRequests() {
     throw new Error('CancelPendingRequests not yet implemented');
@@ -30,8 +28,19 @@ export class HttpClient {
     throw new Error('Dispose not yet implemented');
   }
 
-  public GetAsync() {
-    throw new Error('GetAsync not yet implemented');
+  /**
+   * Send a GET request to the specified Uri as an asynchronous operation.
+   * @param uri 
+   */
+  public async GetAsync(uri: string): Promise<any> {
+    return await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      uri = this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
+      xhr.open("GET", uri, true);
+      xhr.onload = () => resolve(xhr.responseText);
+      xhr.onerror = () => reject(xhr.statusText);
+      xhr.send();
+    });
   }
 
   public GetByteArrayAsync() {
@@ -61,5 +70,16 @@ export class HttpClient {
   public SendAsync() {
     throw new Error('SendAsync not yet implemented');
   }
+
+  //#region Helpers
+  private getXhrRequest(): XMLHttpRequest {
+    var xhr = new XMLHttpRequest();
+    xhr.timeout = this.Timeout * 1000;
+    this.DefaultRequestHeaders.forEach(element => {
+      xhr.setRequestHeader(element.key, element.value);
+    });
+    return xhr;
+  }
+  //#endregion
 
 }
