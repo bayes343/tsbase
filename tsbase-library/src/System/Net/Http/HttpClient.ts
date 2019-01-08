@@ -1,9 +1,11 @@
 import { HttpResponseMessage } from './HttpResponseMessage';
 import { HttpMethod } from '../HttpMethod';
 import { IXhrRequestHandler } from './IXhrRequestHandler';
-import { XhrRequestHandler } from './XhrRequestHandler';
+import { XhrRequestHandler } from './XhrRequestHandler/XhrRequestHandler';
 import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
+import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
+
 
 export class HttpClient {
   /**
@@ -29,7 +31,7 @@ export class HttpClient {
    * @param xhrRequestHandler optional parameter used for dependency injection
    */
   constructor(xhrRequestHandler?: IXhrRequestHandler) {
-    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new XhrRequestHandler(this);
+    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new BrowserXhrRequestHandler(this);
   }
 
   /**

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { List } from 'tsbase';
 import { Person } from './domain/Person';
 import { Pet } from './domain/Pet';
-import { HttpClient } from 'tsbase/System/Net/Http/HttpClient';
+import { HttpClient } from 'tsbase';
 
 @Component({
   selector: 'app-root',

@@ -19,14 +19,16 @@
   "scripts": {
     "test": "karma start",
     "test-once": "karma start --singleRun",
-    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsbase-demo/tsbase && cp -R ../dist ../tsbase-demo/tsbase && cp -R ../dist ../tsbase-cli-demo/tsbase"
+    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsbase-demo/tsbase && cp -R ../dist ../tsbase-demo/tsbase && rm -rf ../tsbase-cli-demo/tsbase && cp -R ../dist ../tsbase-cli-demo/tsbase"
   },
   "author": "Joseph Bayes",
   "license": "ISC",
   "dependencies": {
     "@types/es6-promise": "^3.3.0",
+    "@types/node": "^10.12.18",
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "xmlhttprequest": "^1.8.0"
   }
 }
