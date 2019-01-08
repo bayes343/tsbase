@@ -1,5 +1,7 @@
 import { HttpClient } from "../HttpClient";
 import { MockXhrRequestHandler } from './MockXhrRequestHandler';
+import { HttpRequestMessage } from '../HttpRequestMessage';
+import { HttpMethod } from '../../HttpMethod';
 
 describe('HttpClient', () => {
   let classUnderTest: HttpClient;
@@ -73,6 +75,18 @@ describe('HttpClient', () => {
   it('should put async', async () => {
     const response = await classUnderTest.PutAsync('ok', { fake: 'fake' });
     expect(response.StatusCode.Code).toEqual(200);
+  });
+
+  it('should send request async', async () => {
+    const request1 = new HttpRequestMessage(HttpMethod.GET, 'ok');
+    const response1 = await classUnderTest.SendAsync(request1);
+    expect(response1.StatusCode.Code).toEqual(200);
+
+    const request2 = new HttpRequestMessage();
+    request2.RequestUri = 'ok';
+    request2.Headers.push({ key: 'fake', value: 'header' });
+    const response2 = await classUnderTest.SendAsync(request2);
+    expect(response2.Content).toEqual('OK');
   });
 
 });

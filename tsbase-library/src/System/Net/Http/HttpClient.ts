@@ -2,6 +2,8 @@ import { HttpResponseMessage } from './HttpResponseMessage';
 import { HttpMethod } from '../HttpMethod';
 import { IXhrRequestHandler } from './IXhrRequestHandler';
 import { XhrRequestHandler } from './XhrRequestHandler';
+import { KeyValue } from '../../TypeLiterals';
+import { HttpRequestMessage } from './HttpRequestMessage';
 
 export class HttpClient {
   /**
@@ -11,7 +13,7 @@ export class HttpClient {
   /**
    * Gets the headers which should be sent with each request.
    */
-  public DefaultRequestHeaders = new Array<{ key: string, value: string }>();
+  public DefaultRequestHeaders = new Array<KeyValue>();
   /**
    * Gets or sets the maximum number of bytes to buffer when reading the response content.
    */
@@ -30,18 +32,21 @@ export class HttpClient {
     this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new XhrRequestHandler(this);
   }
 
+  /**
+   * Cancel all pending requests on this instance.
+   */
   public CancelPendingRequests() {
     this.xhrRequestHandler.AbortPendingRequests();
   }
 
+  /**
+   * Send a DELETE request to the specified Uri as an asynchronous operation.
+   * @param uri 
+   */
   public async DeleteAsync(uri: string): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.DELETE);
     return response;
-  }
-
-  public Dispose() {
-    throw new Error('Dispose not yet implemented');
   }
 
   /**
@@ -60,29 +65,52 @@ export class HttpClient {
     return response.Content;
   }
 
+  /**
+   * Send a PATCH request to the specified Uri as an asynchronous operation.
+   * @param uri 
+   * @param payload 
+   */
   public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PATCH, payload);
     return response;
   }
 
+  /**
+   * Send a POST request to the specified Uri as an asynchronous operation.
+   * @param uri 
+   * @param payload 
+   */
   public async PostAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.POST, payload);
     return response;
   }
 
+  /**
+   * Send a PUT request to the specified Uri as an asynchronous operation.
+   * @param uri 
+   * @param payload 
+   */
   public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PUT, payload);
     return response;
   }
 
-  public SendAsync() {
-    throw new Error('SendAsync not yet implemented');
+  /**
+   * Send an HTTP request as an asynchronous operation.
+   * @param httpRequestMessage 
+   */
+  public async SendAsync(httpRequestMessage: HttpRequestMessage) {
+    httpRequestMessage.RequestUri = this.getFullUri(httpRequestMessage.RequestUri);
+    const response = await this.xhrRequestHandler.SendXhrRequestMessage(httpRequestMessage);
+    return response;
   }
 
+  //#region Helpers
   private getFullUri(uri: string): string {
     return this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
   }
+  //#endregion
 }
