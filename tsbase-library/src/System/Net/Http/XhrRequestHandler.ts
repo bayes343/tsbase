@@ -5,10 +5,11 @@
 import { HttpClient } from './HttpClient';
 import { HttpResponseMessage } from './HttpResponseMessage';
 import { HttpMethod } from '../HttpMethod';
+import { IXhrRequestHandler } from './IXhrRequestHandler';
 
 const BadRequest = new HttpResponseMessage('BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have its own error code.', { Code: 400, Text: 'BadRequest' });
 
-export class XhrRequestHandler {
+export class XhrRequestHandler implements IXhrRequestHandler {
   private httpClient: HttpClient;
   private xhrRequests = new Array<XMLHttpRequest>();
 
@@ -16,7 +17,7 @@ export class XhrRequestHandler {
     this.httpClient = httpClient;
   }
 
-  public async SendXhrRequest(uri: string, method: HttpMethod): Promise<HttpResponseMessage> {
+  public async SendXhrRequest(uri: string, method: HttpMethod, payload?: any): Promise<HttpResponseMessage> {
     return await new Promise<HttpResponseMessage>((resolve) => {
       const xhr = this.getXhrRequest();
       xhr.open(method, uri, true);
@@ -25,7 +26,7 @@ export class XhrRequestHandler {
         new HttpResponseMessage(xhr.responseText, { Code: xhr.status, Text: xhr.statusText })
       );
       xhr.onerror = () => resolve(BadRequest);
-      xhr.send();
+      xhr.send(payload ? JSON.stringify(payload) : null);
     });
   }
 

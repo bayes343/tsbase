@@ -10,6 +10,7 @@ describe('HttpClient', () => {
     classUnderTest.BaseAddress = 'https://fake.com';
   });
 
+  //#region Integration tests
   it('should get async - integration test with included XhrRequestHandler', async () => {
     classUnderTest = new HttpClient();
     classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
@@ -28,6 +29,15 @@ describe('HttpClient', () => {
     expect(response2.IsSuccessStatusCode).toBeFalsy();
   });
 
+
+  it('should cancel requests | integration test', () => {
+    classUnderTest = new HttpClient();
+    const uri = 'https://foaas.com/cup/Joey';
+    classUnderTest.GetAsync(uri);
+    classUnderTest.CancelPendingRequests();
+  });
+  //#endregion
+
   it('should allow base address setting', async () => {
     classUnderTest.BaseAddress = 'https://fake.com';
     const uri = 'ok';
@@ -40,16 +50,30 @@ describe('HttpClient', () => {
     expect(response).toEqual('OK');
   });
 
-  it('should cancel requests | integration test', () => {
-    classUnderTest = new HttpClient();
-    const uri = 'https://foaas.com/cup/Joey';
-    classUnderTest.GetAsync(uri);
-    classUnderTest.CancelPendingRequests();
-  });
-
   it('should cancel requests', () => {
     classUnderTest.GetStringAsync('ok');
     classUnderTest.CancelPendingRequests();
   });
+
+  it('should delete async', async () => {
+    const response = await classUnderTest.DeleteAsync('delete');
+    expect(response.StatusCode.Code).toEqual(200);
+  });
+
+  it('should patch async', async () => {
+    const response = await classUnderTest.PatchAsync('ok', { fake: 'fake' });
+    expect(response.StatusCode.Code).toEqual(200);
+  });
+
+  it('should post async', async () => {
+    const response = await classUnderTest.PostAsync('ok', { fake: 'fake' });
+    expect(response.StatusCode.Code).toEqual(200);
+  });
+
+  it('should put async', async () => {
+    const response = await classUnderTest.PutAsync('ok', { fake: 'fake' });
+    expect(response.StatusCode.Code).toEqual(200);
+  });
+
 });
 

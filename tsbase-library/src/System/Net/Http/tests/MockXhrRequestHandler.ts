@@ -11,7 +11,7 @@ export class MockXhrRequestHandler implements IXhrRequestHandler {
     public httpClient: HttpClient
   ) { }
 
-  public async SendXhrRequest(uri: string, method: HttpMethod): Promise<HttpResponseMessage> {
+  public async SendXhrRequest(uri: string, method: HttpMethod, payload?: any): Promise<HttpResponseMessage> {
     return await new Promise<HttpResponseMessage>((resolve) => {
       switch (uri) {
         case 'https://fake.com/ok':
@@ -19,6 +19,8 @@ export class MockXhrRequestHandler implements IXhrRequestHandler {
           break;
         case 'https://fake.com/bad':
           resolve(BadRequest);
+        case 'https://fake.com/delete':
+          resolve(OkRequest);
       }
     });
   }

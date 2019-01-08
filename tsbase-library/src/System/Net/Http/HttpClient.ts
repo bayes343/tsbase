@@ -34,8 +34,10 @@ export class HttpClient {
     this.xhrRequestHandler.AbortPendingRequests();
   }
 
-  public DeleteAsync() {
-    throw new Error('DeleteAsync not yet implemented');
+  public async DeleteAsync(uri: string): Promise<HttpResponseMessage> {
+    uri = this.getFullUri(uri);
+    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.DELETE);
+    return response;
   }
 
   public Dispose() {
@@ -52,22 +54,28 @@ export class HttpClient {
     return response;
   }
 
-  public async GetStringAsync(uri: string) {
+  public async GetStringAsync(uri: string): Promise<string> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
     return response.Content;
   }
 
-  public PatchAsync() {
-    throw new Error('PatchAsync not yet implemented');
+  public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
+    uri = this.getFullUri(uri);
+    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PATCH, payload);
+    return response;
   }
 
-  public PostAsync() {
-    throw new Error('PostAsync not yet implemented');
+  public async PostAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
+    uri = this.getFullUri(uri);
+    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.POST, payload);
+    return response;
   }
 
-  public PutAsync() {
-    throw new Error('PutAsync not yet implemented');
+  public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
+    uri = this.getFullUri(uri);
+    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PUT, payload);
+    return response;
   }
 
   public SendAsync() {
