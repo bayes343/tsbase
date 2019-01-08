@@ -1,0 +1,32 @@
+{
+  "name": "tsbase-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/core-js": "^2.5.0",
+    "@types/jasmine": "^2.8.8",
+    "core-js": "^2.6.1",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.2",
+    "karma-jasmine": "^1.1.0",
+    "karma-typescript": "^3.0.13",
+    "puppeteer": "^1.11.0",
+    "typescript": "^2.9.2"
+  },
+  "scripts": {
+    "test": "karma start",
+    "test-once": "karma start --singleRun",
+    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsbase-demo/tsbase && cp -R ../dist ../tsbase-demo/tsbase"
+  },
+  "author": "Joseph Bayes",
+  "license": "ISC",
+  "dependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "tslib": "^1.9.3"
+  }
+}

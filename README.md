@@ -1,8 +1,8 @@
-# tsdotnet
+# tsbase
 
 A work in progress TypeScript framework / set of base class libraries - not a frontend framework.
 
-* Run below commands in the tsbase directory.
+* Run below commands in the tsbase-library directory.
 
 ## Intsall
 - run cmd: `npm install`
