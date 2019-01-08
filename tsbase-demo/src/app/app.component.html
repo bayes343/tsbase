@@ -36,4 +36,10 @@
 
 <button (click)="customSort()">Sort</button>
 
-<button (click)="testHttpClient()">Test HttpClient</button>
+<hr>
+
+<div>
+  <input [(ngModel)]="requestUri" type="text">
+  <button (click)="testHttpClient()">Test HttpClient</button>
+  <div [innerHTML]="requestResponse"></div>
+</div>

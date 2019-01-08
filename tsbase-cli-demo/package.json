@@ -1,0 +1,25 @@
+{
+  "name": "tsbase-demo-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./node_modules/ts-node/dist/bin.js index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/core-js": "^2.5.0",
+    "ts-node": "^7.0.1",
+    "core-js": "^2.6.1",
+    "typescript": "^3.2.2",
+    "tsbase": "file:tsbase"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "@types/es6-promise": "^3.3.0",
+    "tslib": "^1.9.3"
+  }
+}

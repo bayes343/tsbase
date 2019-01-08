@@ -27,6 +27,8 @@ export class AppComponent {
   public itemToAdd: string;
   public itemToRemove: string;
   public itemToFind: string;
+  public requestUri = '';
+  public requestResponse = '';
 
   public addItem(): void {
     this.list.Add(this.itemToAdd);
@@ -115,8 +117,10 @@ export class AppComponent {
 
   public async testHttpClient() {
     const client = new HttpClient();
-    const uri = 'https://foaas.com/cup/Joey';
+    client.BaseAddress = 'https://foaas.com';
+    const uri = this.requestUri;
+    console.log(uri);
     const response = await client.GetAsync(uri);
-    alert(response);
+    this.requestResponse = response.Content;
   }
 }
