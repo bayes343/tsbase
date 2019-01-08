@@ -7,6 +7,7 @@ describe('HttpClient', () => {
   beforeEach(() => {
     classUnderTest = new HttpClient(new MockXhrRequestHandler(classUnderTest));
     classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
+    classUnderTest.BaseAddress = 'https://fake.com';
   });
 
   it('should get async - integration test with included XhrRequestHandler', async () => {
@@ -32,6 +33,23 @@ describe('HttpClient', () => {
     const uri = 'ok';
     const response = await classUnderTest.GetAsync(uri);
     expect(response.StatusCode.Code).toEqual(200);
+  });
+
+  it('should get string from response GetStringAsync', async () => {
+    const response = await classUnderTest.GetStringAsync('ok');
+    expect(response).toEqual('OK');
+  });
+
+  it('should cancel requests | integration test', () => {
+    classUnderTest = new HttpClient();
+    const uri = 'https://foaas.com/cup/Joey';
+    classUnderTest.GetAsync(uri);
+    classUnderTest.CancelPendingRequests();
+  });
+
+  it('should cancel requests', () => {
+    classUnderTest.GetStringAsync('ok');
+    classUnderTest.CancelPendingRequests();
   });
 });
 

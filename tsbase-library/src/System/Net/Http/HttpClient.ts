@@ -23,8 +23,15 @@ export class HttpClient {
 
   private xhrRequestHandler: IXhrRequestHandler;
 
+  /**
+   * @param xhrRequestHandler optional parameter used for dependency injection
+   */
+  constructor(xhrRequestHandler?: IXhrRequestHandler) {
+    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new XhrRequestHandler(this);
+  }
+
   public CancelPendingRequests() {
-    throw new Error('CancelPendingRequests not yet implemented');
+    this.xhrRequestHandler.AbortPendingRequests();
   }
 
   public DeleteAsync() {
@@ -36,33 +43,19 @@ export class HttpClient {
   }
 
   /**
-   * 
-   * @param xhrRequestHandler optional parameter used for dependency injection
-   */
-  constructor(xhrRequestHandler?: IXhrRequestHandler) {
-    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new XhrRequestHandler(this);
-  }
-
-  /**
    * Send a GET request to the specified Uri as an asynchronous operation.
    * @param uri 
    */
   public async GetAsync(uri: string): Promise<HttpResponseMessage> {
-    uri = this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
+    uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
     return response;
   }
 
-  public GetByteArrayAsync() {
-    throw new Error('GetByteArrayAsync not yet implemented');
-  }
-
-  public GetStreamAsync() {
-    throw new Error('GetStreamAsync not yet implemented');
-  }
-
-  public GetStringAsync() {
-    throw new Error('GetStringAsync not yet implemented');
+  public async GetStringAsync(uri: string) {
+    uri = this.getFullUri(uri);
+    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
+    return response.Content;
   }
 
   public PatchAsync() {
@@ -79,5 +72,9 @@ export class HttpClient {
 
   public SendAsync() {
     throw new Error('SendAsync not yet implemented');
+  }
+
+  private getFullUri(uri: string): string {
+    return this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
   }
 }

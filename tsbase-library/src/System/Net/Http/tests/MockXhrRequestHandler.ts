@@ -22,4 +22,8 @@ export class MockXhrRequestHandler implements IXhrRequestHandler {
       }
     });
   }
+
+  public AbortPendingRequests(): void {
+    // mock response
+  }
 }

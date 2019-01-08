@@ -10,6 +10,7 @@ const BadRequest = new HttpResponseMessage('BadRequest is sent when no other err
 
 export class XhrRequestHandler {
   private httpClient: HttpClient;
+  private xhrRequests = new Array<XMLHttpRequest>();
 
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient;
@@ -28,9 +29,16 @@ export class XhrRequestHandler {
     });
   }
 
+  public AbortPendingRequests(): void {
+    this.xhrRequests.forEach(element => {
+      element.abort();
+    });
+  }
+
   private getXhrRequest(): XMLHttpRequest {
     var xhr = new XMLHttpRequest();
     xhr.timeout = this.httpClient.Timeout * 1000;
+    this.xhrRequests.push(xhr);
     return xhr;
   }
 
