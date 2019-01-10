@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { List } from 'tsbase';
+import { List, JsonSerializer } from 'tsbase';
 import { Person } from './domain/Person';
 import { Pet } from './domain/Pet';
 import { HttpClient } from 'tsbase';
@@ -119,8 +119,33 @@ export class AppComponent {
     const client = new HttpClient();
     client.BaseAddress = 'https://foaas.com';
     const uri = this.requestUri;
-    console.log(uri);
     const response = await client.GetAsync(uri);
     this.requestResponse = response.Content;
   }
+
+  public testSerializer(): void {
+    // tslint:disable-next-line:max-line-length
+    const stubUserDrupalResponse = { 'node': { 'uid': [{ 'value': 1 }], 'uuid': [{ 'value': 'c3fba15b-5ac1-423c-8bca-43455b157053' }], 'langcode': [{ 'value': 'en' }], 'preferred_langcode': [{ 'value': 'en' }], 'preferred_admin_langcode': [], 'name': [{ 'value': 'jwbayes' }], 'mail': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'timezone': [{ 'value': 'America\/New_York' }], 'status': [{ 'value': true }], 'created': [{ 'value': '2018-01-25T16:23:59+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'changed': [{ 'value': '2018-01-25T16:27:54+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'access': [{ 'value': '2018-04-29T04:16:56+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'login': [{ 'value': '2018-04-27T17:14:21+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'init': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'roles': [{ 'target_id': 'administrator', 'target_type': 'user_role', 'target_uuid': '1e6632cf-40bf-454b-84f6-9a39fccb8b82' }], 'default_langcode': [{ 'value': true }], 'path': [{ 'alias': 'profile/jwbayes', 'pid': 123, 'langcode': 'en' }], 'field_display_name': [{ 'value': 'Joey Bayes' }], 'field_employee_id': [{ 'value': '78749' }], 'field_given_name': [{ 'value': 'Joseph' }], 'field_mobile': [{ 'value': '5402675986' }], 'field_surname': [{ 'value': 'Bayes' }], 'number_list': [{ 'value': 1 }, { 'value': 2 }, { 'value': 3 }] } };
+    const serializer = new JsonSerializer<User>();
+    const user = serializer.Serialize(User, stubUserDrupalResponse.node);
+    console.log(user);
+  }
+}
+
+class Path {
+  public alias = '';
+  public pid = '';
+  public langcode = '';
+}
+class User {
+  public uid = 0;
+  public name = '';
+  public mail = '';
+  public givenName = '';
+  public surName = '';
+  public mobile = '';
+  public employeeId = '';
+  public displayName = '';
+  public path = new Path();
+  public numberList = [];
 }
