@@ -10,4 +10,10 @@ export class HttpResponseMessage {
   ) {
     this.IsSuccessStatusCode = this.StatusCode.Code < 400;
   }
+
+  public EnsureSuccessStatusCode(): void {
+    if (!this.IsSuccessStatusCode) {
+      throw new Error('Success code does not indicate success, and \"EnsureSuccessStatusCode\" was called.');
+    }
+  }
 }
