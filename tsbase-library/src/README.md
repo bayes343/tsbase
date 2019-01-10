@@ -3,7 +3,7 @@ TypeScript base class libraries
 
 [![Build status](https://joseph-w-bayes.visualstudio.com/tsbase/_apis/build/status/Test,%20Build,%20Archive)](https://joseph-w-bayes.visualstudio.com/tsbase/_build/latest?definitionId=7)
 
-**Code coverage - 94% statement | 89% branch**
+**Code coverage - 95% statement | 91% branch**
 
 TypeScript is awesome, especially if you're coming from a .Net background.  If you're like me though, much of the joy of working with C# comes from the **ubiquitous** wealth of base class libraries offered by the .Net framework.  There are plenty of frontend frameworks, and much of this pain is eliminated by picking one, however, these usually, and I would say rightfully, focus on presentation layer concerns and are much higher level than .Net's Generic Collection and Linq libraries.  I would say Angular, Vue, React, etc. sit much closer to ASP.Net MVC, WPF, or UWP than they do to the .Net base class libraries (.Net Framework).
 
@@ -106,4 +106,15 @@ This project is very heavily influenced by the .Net framework; that is intention
    public async PostAsync(uri: string, payload: any):  Promise<HttpResponseMessage>;
    public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage>;
    public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>;
+   ```
+
+### JsonSerializer
+
+   ```ts
+   class JsonSerializer<T> implements ISerializer<T>
+   ```
+
+   Methods
+   ```ts
+   public Serialize(t: { new(): T; }, json: any): T;
    ```
