@@ -1,5 +1,44 @@
 import { JsonSerializer } from "../JsonSerializer";
+import { stubLoanResponse } from './stubLoanResponse';
 
+//#region Fake classes for testing
+export class AmortizationSchedule {
+  public indexNumber = 0;
+  public beginningBalance = 0;
+  public interest = 0;
+  public principal = 0;
+  public endingBalance = 0;
+}
+
+export enum LoanFrequency {
+  Yearly = 1,
+  Monthly = 12,
+  Weekly = 52
+}
+
+export class LoanItem {
+  public principalAmount = 0;
+  public numberOfPayments = 0;
+  public interestRate = 0;
+  public paymentAmount = 0;
+  public loanFrequency: LoanFrequency = 12;
+}
+
+export class ValidationResultsItem {
+  public argument = '';
+  public message = '';
+}
+
+export class LoanResults {
+  public paymentAmount = 0;
+  public totalInterest = 0;
+  public totalCost = 0;
+  public totalPrincipal = 0;
+  public amortizationMonthlySchedule = [new AmortizationSchedule()];
+  public amortizationYearlySchedule = [new AmortizationSchedule()];
+  public loanItem = new LoanItem();
+  public validationResultsItemList = [new ValidationResultsItem()];
+}
 class Person {
   public FirstName = '';
   public LastName = '';
@@ -25,7 +64,7 @@ class User {
   public path = new Path();
   public numberList = [];
 }
-
+//#endregion
 
 const stubUserJsonResponse = { 'node': { 'uid': [{ 'value': 1 }], 'uuid': [{ 'value': 'c3fba15b-5ac1-423c-8bca-43455b157053' }], 'langcode': [{ 'value': 'en' }], 'preferred_langcode': [{ 'value': 'en' }], 'preferred_admin_langcode': [], 'name': [{ 'value': 'jwbayes' }], 'mail': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'timezone': [{ 'value': 'America\/New_York' }], 'status': [{ 'value': true }], 'created': [{ 'value': '2018-01-25T16:23:59+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'changed': [{ 'value': '2018-01-25T16:27:54+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'access': [{ 'value': '2018-04-29T04:16:56+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'login': [{ 'value': '2018-04-27T17:14:21+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'init': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'roles': [{ 'target_id': 'administrator', 'target_type': 'user_role', 'target_uuid': '1e6632cf-40bf-454b-84f6-9a39fccb8b82' }], 'default_langcode': [{ 'value': true }], 'path': [{ 'alias': 'profile/jwbayes', 'pid': 123, 'langcode': 'en' }], 'field_display_name': [{ 'value': 'Joey Bayes' }], 'field_employee_id': [{ 'value': '78749' }], 'field_given_name': [{ 'value': 'Joseph' }], 'field_mobile': [{ 'value': '5402675986' }], 'field_surname': [{ 'value': 'Bayes' }], 'number_list': [{ 'value': 1 }, { 'value': 2 }, { 'value': 3 }] } };
 
@@ -87,6 +126,16 @@ describe('JsonSerializer', () => {
     classUnderTest = new JsonSerializer<User>();
     const userInstance: User = classUnderTest.Serialize(User, stubUserJsonResponse.node);
     expect(userInstance.path.langcode).toEqual('en');
+  });
+
+  it('should serialize a loan response from wbcw', () => {
+    classUnderTest = new JsonSerializer<LoanResults>();
+    const loanInstance: LoanResults = classUnderTest.Serialize(LoanResults, stubLoanResponse);
+    for (const element of loanInstance.amortizationYearlySchedule) {
+      console.log(element);
+    }
+    expect(loanInstance.amortizationMonthlySchedule.length).toEqual(60);
+    expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
   });
 });
 

@@ -14,12 +14,21 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
     jsonKeys.forEach(element => {
       const instanceKey = this.getInstanceKey(classProperties, element);
-      if (instanceKey !== '') {
+      const jsonElement = json[element];
+      if (instanceKey !== '' && jsonElement) {
         const property = object[instanceKey];
-        const jsonElement = json[element];
 
-        if (Array.isArray(property) || typeof property !== 'object') {
+        if (
+          Array.isArray(property) && typeof property[0] !== 'object' || typeof property !== 'object'
+        ) {
           this.serializeSimpleField(jsonElement, object, instanceKey);
+        } else if (Array.isArray(property) && typeof property[0] === 'object') {
+          const values = [];
+          for (const element of jsonElement) {
+            const newSerializer = new JsonSerializer<any>();
+            values.push(newSerializer.Serialize(property[0].constructor, element));
+          }
+          object[instanceKey] = values;
         } else {
           const newSerializer = new JsonSerializer<any>();
           let sourceJson = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
