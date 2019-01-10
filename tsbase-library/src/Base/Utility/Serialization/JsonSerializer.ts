@@ -9,7 +9,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
   public Serialize(t: { new(): T; }, json: any): T {
     const object: any = new t();
 
-    const classProperties = Object.keys(object);;
+    const classProperties = Object.keys(object);
     const jsonKeys = Object.keys(json);
 
     jsonKeys.forEach(element => {
@@ -22,7 +22,8 @@ export class JsonSerializer<T> implements ISerializer<T> {
           this.serializeSimpleField(jsonElement, object, instanceKey);
         } else {
           const newSerializer = new JsonSerializer<any>();
-          object[instanceKey] = newSerializer.Serialize(property.constructor, jsonElement[0]);
+          let sourceJson = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
+          object[instanceKey] = newSerializer.Serialize(property.constructor, sourceJson);
         }
       }
     });
