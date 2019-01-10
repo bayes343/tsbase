@@ -17,10 +17,6 @@ export class HttpClient {
    */
   public DefaultRequestHeaders = new Array<KeyValue>();
   /**
-   * Gets or sets the maximum number of bytes to buffer when reading the response content.
-   */
-  public MaxResponseContentBufferSize = 0;
-  /**
    * Gets or sets the time in seconds to wait before the request times out.
    */
   public Timeout = 10;
@@ -37,7 +33,7 @@ export class HttpClient {
   /**
    * Cancel all pending requests on this instance.
    */
-  public CancelPendingRequests() {
+  public CancelPendingRequests(): void {
     this.xhrRequestHandler.AbortPendingRequests();
   }
 
@@ -104,7 +100,7 @@ export class HttpClient {
    * Send an HTTP request as an asynchronous operation.
    * @param httpRequestMessage 
    */
-  public async SendAsync(httpRequestMessage: HttpRequestMessage) {
+  public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage> {
     httpRequestMessage.RequestUri = this.getFullUri(httpRequestMessage.RequestUri);
     const response = await this.xhrRequestHandler.SendXhrRequestMessage(httpRequestMessage);
     return response;

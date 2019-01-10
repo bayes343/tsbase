@@ -1,6 +1,11 @@
 import { XhrRequestHandler } from './XhrRequestHandler';
 
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+try {
+  var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+} catch (error) {
+  // TODO: Prevents compilation error for browser builds
+}
+
 
 export class NodeXhrRequestHandler extends XhrRequestHandler {
   GetXhrRequest(): XMLHttpRequest {
