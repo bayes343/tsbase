@@ -16,3 +16,7 @@ export * from './Base/Net/Http/XhrRequestHandler/XhrRequestHandler';
 export * from './Base/Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
 export * from './Base/Net/Http/XhrRequestHandler/NodeXhrRequestHandler';
 export * from './Base/Net/Http/HttpClient';
+
+// Utility
+export * from './Base/Utility/Serialization/ISerializer';
+export * from './Base/Utility/Serialization/JsonSerializer';
