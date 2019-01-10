@@ -86,7 +86,6 @@ describe('JsonSerializer', () => {
   it('should serialize nested classes from complex json', () => {
     classUnderTest = new JsonSerializer<User>();
     const userInstance: User = classUnderTest.Serialize(User, stubUserJsonResponse.node);
-    console.log(userInstance);
     expect(userInstance.path.langcode).toEqual('en');
   });
 });
