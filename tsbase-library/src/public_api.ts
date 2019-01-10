@@ -3,16 +3,16 @@
  */
 
 // Collections / Linq
-export * from './System/Collections/Generic/List';
-export * from './System/Linq/Enumerable';
+export * from './Base/Collections/Generic/List';
+export * from './Base/Linq/Enumerable';
 
 // Net
-export * from './System/Net/HttpMethod';
-export * from './System/Net/HttpStatusCode';
-export * from './System/Net/Http/HttpRequestMessage';
-export * from './System/Net/Http/HttpResponseMessage';
-export * from './System/Net/Http/IXhrRequestHandler';
-export * from './System/Net/Http/XhrRequestHandler/XhrRequestHandler';
-export * from './System/Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
-export * from './System/Net/Http/XhrRequestHandler/NodeXhrRequestHandler';
-export * from './System/Net/Http/HttpClient';
+export * from './Base/Net/HttpMethod';
+export * from './Base/Net/HttpStatusCode';
+export * from './Base/Net/Http/HttpRequestMessage';
+export * from './Base/Net/Http/HttpResponseMessage';
+export * from './Base/Net/Http/IXhrRequestHandler';
+export * from './Base/Net/Http/XhrRequestHandler/XhrRequestHandler';
+export * from './Base/Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
+export * from './Base/Net/Http/XhrRequestHandler/NodeXhrRequestHandler';
+export * from './Base/Net/Http/HttpClient';
