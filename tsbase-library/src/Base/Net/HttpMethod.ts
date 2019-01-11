@@ -1,3 +1,6 @@
+/**
+ * Enumerates supported http methods
+ */
 export enum HttpMethod {
   GET = 'GET',
   PUT = 'PUT',

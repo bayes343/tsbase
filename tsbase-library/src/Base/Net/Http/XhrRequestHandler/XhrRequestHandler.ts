@@ -1,6 +1,3 @@
-/**
- * Abstracts interactions between an HttpClient and JavaScript's XHR apis.
- */
 
 import { HttpClient } from '../HttpClient';
 import { HttpResponseMessage } from '../HttpResponseMessage';
@@ -12,6 +9,9 @@ import { IXhrRequestHandler } from '../IXhrRequestHandler';
 const BadRequest = new HttpResponseMessage('BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have its own error code.', { Code: 400, Text: 'BadRequest' });
 export const NoClientError = 'HttpClient not set - if overriding the default XhrRequestHandler, ensure that you set the HttpClient property to the HttpClient instance the handler belongs to.';
 
+/**
+ * Base class for an object that implements IXhrRequestHandler - descendants implement xhr object creation.
+ */
 export abstract class XhrRequestHandler implements IXhrRequestHandler {
   protected xhrRequests = new Array<XMLHttpRequest>();
 

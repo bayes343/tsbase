@@ -6,7 +6,9 @@ try {
   // TODO: Prevents compilation error for browser builds
 }
 
-
+/**
+ * An XhrRequestHandler implementation that works in node.js contexts
+ */
 export class NodeXhrRequestHandler extends XhrRequestHandler {
   GetXhrRequest(): XMLHttpRequest {
     if (!this.HttpClient) {

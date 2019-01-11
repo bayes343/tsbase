@@ -1,7 +1,6 @@
 import { HttpResponseMessage } from './HttpResponseMessage';
 import { HttpMethod } from '../HttpMethod';
 import { IXhrRequestHandler } from './IXhrRequestHandler';
-import { XhrRequestHandler } from './XhrRequestHandler/XhrRequestHandler';
 import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
 import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';

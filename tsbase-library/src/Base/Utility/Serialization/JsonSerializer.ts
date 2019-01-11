@@ -1,21 +1,37 @@
 import { ISerializer } from './ISerializer';
 import { List } from '../../Collections/Generic/List';
 
+/**
+ * Keys to check for simple values when data is structured as shown here:
+ * example: field: [ { value: '1' } ]
+ */
 const keysToCheck = [
   'value',
   'target_id'
 ];
 
+/**
+ * Serializes raw json data into an instance of T
+ * **Some conventions are necessary - see wiki for full details**
+ * - No ***required*** constructor params
+ * - Init all property values
+ * - Array<T> / List<T> values must be initialized with a single instance inside
+ */
 export class JsonSerializer<T> implements ISerializer<T> {
-  public Serialize(t: { new(): T; }, json: any): T {
+  /**
+   * Recursively serializes the data passed into an instance of t
+   * @param t class type to instantiate
+   * @param data data to initialize on instantiated class
+   */
+  public Serialize(t: { new(): T; }, data: any): T {
     const object: any = new t();
 
     const classProperties = Object.keys(object);
-    const jsonKeys = Object.keys(json);
+    const jsonKeys = Object.keys(data);
 
     jsonKeys.forEach(element => {
       const instanceKey = this.getInstanceKey(classProperties, element);
-      const jsonElement = json[element];
+      const jsonElement = data[element];
       if (instanceKey !== '' && jsonElement) {
         const property = object[instanceKey];
 
