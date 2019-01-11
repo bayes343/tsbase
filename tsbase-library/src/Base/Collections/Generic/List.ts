@@ -12,14 +12,6 @@ export class List<T> extends Enumerable<T> {
   public Item: Array<T> = new Array<T>();
 
   /**
-   * Implement abstract enumerable contract
-   * @param item 
-   */
-  protected Clone(item: Array<T>): Enumerable<T> {
-    return new List<T>(item);
-  }
-
-  /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
    * List<T>(IEnumerable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
    */
@@ -30,8 +22,15 @@ export class List<T> extends Enumerable<T> {
     if (initParam && initParam.length) {
       this.Item = initParam.slice();
     }
-
     this.updateProperties();
+  }
+
+  /**
+   * Implement abstract enumerable contract
+   * @param item 
+   */
+  protected Clone(item: Array<T>): Enumerable<T> {
+    return new List<T>(item);
   }
 
   /**

@@ -1,5 +1,6 @@
 import { JsonSerializer } from "../JsonSerializer";
 import { stubLoanResponse } from './stubLoanResponse';
+import { List } from '../../../Collections/Generic/List';
 
 //#region Fake classes for testing
 export class AmortizationSchedule {
@@ -39,11 +40,19 @@ export class LoanResults {
   public loanItem = new LoanItem();
   public validationResultsItemList = [new ValidationResultsItem()];
 }
+
+class Pet {
+  public name = '';
+  public breed = '';
+}
+
 class Person {
   public FirstName = '';
   public LastName = '';
   public Age = 0;
-  public Titles = new Array<string>();
+  public Titles = new List<string>();
+  public Pets = new List<Pet>([new Pet()]);
+  public ArrayPets = [new Pet()];
 }
 
 class Path {
@@ -106,6 +115,10 @@ describe('JsonSerializer', () => {
   });
 
   it('should serialized array values from json', () => {
+    const pet = {
+      name: 'Freya',
+      breed: 'GSD'
+    };
     const personInstance: Person = classUnderTest.Serialize(Person, {
       FirstName: 'John',
       LastName: 'Doe',
@@ -116,10 +129,15 @@ describe('JsonSerializer', () => {
         'Superman',
         'Genius',
         'Tiny god'
-      ]
+      ],
+      Pets: [pet],
+      ArrayPets: [pet, pet]
     });
-
-    expect(personInstance.Titles.length).toEqual(5);
+    expect(personInstance.Titles.Count).toEqual(5);
+    expect(personInstance.Titles.Contains('Daddy')).toBeTruthy();
+    expect(personInstance.Pets.FindAll(item => item.name === 'Freya').Count).toEqual(1);
+    expect(personInstance.ArrayPets.length).toEqual(2);
+    expect(personInstance.ArrayPets[0].name).toEqual('Freya');
   });
 
   it('should serialize nested classes from complex json', () => {
@@ -131,9 +149,6 @@ describe('JsonSerializer', () => {
   it('should serialize a loan response from wbcw', () => {
     classUnderTest = new JsonSerializer<LoanResults>();
     const loanInstance: LoanResults = classUnderTest.Serialize(LoanResults, stubLoanResponse);
-    for (const element of loanInstance.amortizationYearlySchedule) {
-      console.log(element);
-    }
     expect(loanInstance.amortizationMonthlySchedule.length).toEqual(60);
     expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
   });

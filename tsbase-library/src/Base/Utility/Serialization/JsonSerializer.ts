@@ -1,4 +1,5 @@
 import { ISerializer } from './ISerializer';
+import { List } from '../../Collections/Generic/List';
 
 const keysToCheck = [
   'value',
@@ -18,21 +19,26 @@ export class JsonSerializer<T> implements ISerializer<T> {
       if (instanceKey !== '' && jsonElement) {
         const property = object[instanceKey];
 
-        if (
-          Array.isArray(property) && typeof property[0] !== 'object' || typeof property !== 'object'
-        ) {
+        if (this.propertyIsSimple(property)) {
           this.serializeSimpleField(jsonElement, object, instanceKey);
-        } else if (Array.isArray(property) && typeof property[0] === 'object') {
-          const values = [];
-          for (const element of jsonElement) {
-            const newSerializer = new JsonSerializer<any>();
-            values.push(newSerializer.Serialize(property[0].constructor, element));
+
+        } else if (this.propertyIsGenericList(property)) {
+          if (jsonElement.length && typeof jsonElement[0] !== 'object') {
+            this.serializeSimpleField(jsonElement, object, instanceKey);
+            object[instanceKey] = new List<any>(object[instanceKey]);
+          } else {
+            const values = this.getArrayValuesFromSerializer(property.Item[0], jsonElement);
+            object[instanceKey] = new List<any>(values);
           }
+
+        } else if (this.propertyIsArrayOfObjects(property)) {
+
+          const values = this.getArrayValuesFromSerializer(property[0], jsonElement);
           object[instanceKey] = values;
+
         } else {
-          const newSerializer = new JsonSerializer<any>();
-          let sourceJson = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
-          object[instanceKey] = newSerializer.Serialize(property.constructor, sourceJson);
+          let json = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
+          object[instanceKey] = this.getValueFromSerializer(property, json);
         }
       }
     });
@@ -56,6 +62,33 @@ export class JsonSerializer<T> implements ISerializer<T> {
   private cleanString(stringToClean: string): string {
     stringToClean = stringToClean.replace('field_', '');
     return stringToClean.replace(/[^a-zA-Z0-9 -]/g, '').trim().replace(/ +/g, '-').toLowerCase();
+  }
+
+  private propertyIsSimple(property: any): boolean {
+    return Array.isArray(property) && typeof property[0] !== 'object' || typeof property !== 'object';
+  }
+
+  private propertyIsArrayOfObjects(property: any): boolean {
+    return Array.isArray(property) && typeof property[0] === 'object';
+  }
+
+  private propertyIsGenericList(property: any): boolean {
+    return property && property.constructor && property.constructor.name === 'List';
+  }
+
+  private getValueFromSerializer(property: any, json: any): any {
+    const newSerializer = new JsonSerializer<any>();
+    return newSerializer.Serialize(property.constructor, json);
+  }
+
+  private getArrayValuesFromSerializer(property: any, json: any): Array<any> {
+    const values = [];
+    if (property) {
+      for (const element of json) {
+        values.push(this.getValueFromSerializer(property, element));
+      }
+    }
+    return values;
   }
 
   private serializeSimpleField(jsonElement: any, object: any, instanceKey: string): void {
