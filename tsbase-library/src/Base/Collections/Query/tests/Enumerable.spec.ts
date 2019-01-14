@@ -1,4 +1,4 @@
-import { List } from '../../Collections/Generic/List';
+import { List } from '../../List';
 
 describe('Enumerable', () => {
   let classUnderTest: List<any>;

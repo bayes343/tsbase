@@ -2,9 +2,9 @@
  * Public API Surface of tsbase
  */
 
-// Collections / Linq
-export * from './Base/Collections/Generic/List';
-export * from './Base/Query/Enumerable';
+// Collections
+export * from './Base/Collections/List';
+export * from './Base/Collections/Query/Enumerable';
 
 // Net
 export * from './Base/Net/HttpMethod';

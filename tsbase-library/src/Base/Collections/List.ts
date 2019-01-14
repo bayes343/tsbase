@@ -1,4 +1,4 @@
-import { Enumerable } from '../../Query/Enumerable';
+import { Enumerable } from './Query/Enumerable';
 
 export class List<T> extends Enumerable<T> {
   /**

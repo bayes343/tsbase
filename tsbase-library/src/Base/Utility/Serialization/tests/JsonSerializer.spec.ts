@@ -1,6 +1,6 @@
 import { JsonSerializer } from "../JsonSerializer";
 import { stubLoanResponse } from './stubLoanResponse';
-import { List } from '../../../Collections/Generic/List';
+import { List } from '../../../Collections/List';
 
 //#region Fake classes for testing
 export class AmortizationSchedule {

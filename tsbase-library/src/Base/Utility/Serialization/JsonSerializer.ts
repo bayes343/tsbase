@@ -1,5 +1,5 @@
 import { ISerializer } from './ISerializer';
-import { List } from '../../Collections/Generic/List';
+import { List } from '../../Collections/List';
 
 /**
  * Keys to check for simple values when data is structured as shown here:
