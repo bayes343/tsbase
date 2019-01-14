@@ -9,16 +9,6 @@
           <h3>Source Data</h3>
           <pre>
 { 
-  "pets": [
-    {
-      "name": "Freya",
-      "species": "Dog"
-    },
-    {
-      "name": "Loki",
-      "species": "Cat"
-    }
-  ],
   "people": [
     {
       "firstName": "Joseph",
@@ -120,6 +110,20 @@ class Pet {
         </div>
       </div>
     </div>
+    <div class="summary">
+      <h2>Summary</h2>
+      <p>The above example shows how the JsonSerializer can take raw json data and use it to instantiate class instances.</p>
+      <p>This allows you to call methods and use other instance members normally available to class instances but not, say, stringified json objects.</p>
+
+      <h3>Example code:</h3>
+      <pre>
+    const peopleDataObj = JSON.parse(peopleData);
+    const serializer = new JsonSerializer&lt;Person&gt;();
+    for (const person of peopleDataObj["people"]) {
+      this.people.Add(serializer.Serialize(Person, person));
+    }
+      </pre>
+    </div>
   </div>
 </template>
 
@@ -194,6 +198,15 @@ export default class SerializerPage extends Vue {
   }
   button {
     height: 40px;
+  }
+}
+.summary {
+  margin-top: 50px;
+  margin-bottom: 100px;
+  pre {
+    display: flex;
+    justify-content: center;
+    text-align: left;
   }
 }
 </style>
