@@ -4,7 +4,7 @@
 
 // Collections / Linq
 export * from './Base/Collections/Generic/List';
-export * from './Base/Linq/Enumerable';
+export * from './Base/Query/Enumerable';
 
 // Net
 export * from './Base/Net/HttpMethod';
