@@ -76,7 +76,7 @@
         </div>
 
         <div class="right-section">
-          <h3>Desired Class Instances</h3>
+          <h3>Desired Classes</h3>
           <pre>
 class Person {
   public firstName = '';
@@ -115,14 +115,21 @@ class Pet {
       <p>The above example shows how the JsonSerializer can take raw json data and use it to instantiate class instances.</p>
       <p>This allows you to call methods and use other instance members normally available to class instances but not, say, stringified json objects.</p>
 
-      <h3>Example code:</h3>
-      <pre>
-    const peopleDataObj = JSON.parse(peopleData);
-    const serializer = new JsonSerializer&lt;Person&gt;();
-    for (const person of peopleDataObj["people"]) {
-      this.people.Add(serializer.Serialize(Person, person));
-    }
-      </pre>
+      <div class="code-example">
+        <h3>Example code:</h3>
+        <code>
+          <p class="comment">// Get your JSON data</p>
+          <p>const peopleDataObj = JSON.parse(peopleRestResponse);</p>
+          <p class="comment">// Instantiate a JsonSerailizer</p>
+          <p>const serializer = new JsonSerializer&lt;Person&gt;();</p>
+          <p class="comment">// Use the serializer to trade JSON data for class instances</p>
+          <pre>
+for (const person of peopleDataObj["people"]) {
+  this.people.Add(serializer.Serialize(Person, person));
+}
+        </pre>
+        </code>
+      </div>
     </div>
   </div>
 </template>
@@ -172,6 +179,8 @@ export default class SerializerPage extends Vue {
 </script>
 
 <style lang="scss" scoped>
+$dark-grey: #1e1e1e;
+$green: #6a9955;
 .action-area {
   margin-top: 50px;
   margin-left: 6%;
@@ -181,8 +190,10 @@ export default class SerializerPage extends Vue {
   justify-content: center;
   .left-section,
   .right-section {
+    border: 1px solid black;
+    margin: 20px;
     padding: 20px;
-    max-height: 50vh;
+    max-height: 65vh;
     width: calc(50% - 100px);
     overflow: scroll;
     overflow-x: hidden;
@@ -203,10 +214,29 @@ export default class SerializerPage extends Vue {
 .summary {
   margin-top: 50px;
   margin-bottom: 100px;
-  pre {
-    display: flex;
-    justify-content: center;
+}
+.code-example {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  h1,
+  h2,
+  h3 {
+    width: 100%;
+  }
+  code {
+    padding: 20px;
     text-align: left;
+    background-color: $dark-grey;
+    color: white;
+    .comment {
+      color: $green;
+      margin-bottom: 0;
+    }
+    pre {
+      margin: 0;
+      padding: 0;
+    }
   }
 }
 </style>
