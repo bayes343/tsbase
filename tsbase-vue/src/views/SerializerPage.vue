@@ -139,6 +139,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { JsonSerializer, List } from "tsbase";
 import { Person } from "../domain/Person";
 import { peopleData } from "../stub-data";
+import { DomStoragePersister } from "tsbase";
 
 @Component
 export default class SerializerPage extends Vue {
