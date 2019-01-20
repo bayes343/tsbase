@@ -19,7 +19,12 @@ export default new Router({
     {
       path: '/serializer',
       name: 'serializer',
-      component: () => import(/* webpackChunkName: "about" */ './views/SerializerPage.vue'),
+      component: () => import(/* webpackChunkName: "serializer" */ './views/SerializerPage.vue'),
+    },
+    {
+      path: '/repository',
+      name: 'repository',
+      component: () => import(/* webpackChunkName: "repository" */ './views/RepositoryPage.vue'),
     },
   ],
 });

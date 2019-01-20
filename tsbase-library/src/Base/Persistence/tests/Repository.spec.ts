@@ -16,7 +16,7 @@ describe('Repository', () => {
 
   //#region Integeation tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
-    const db = classUnderTest.data;
+    const db = classUnderTest.Data;
     db.Add("delete this");
     classUnderTest.Save();
     classUnderTest.PurgeData();
@@ -25,7 +25,7 @@ describe('Repository', () => {
 
   it('should persist data through a persister - local', () => {
     // add data
-    const db = classUnderTest.data;
+    const db = classUnderTest.Data;
     db.Add('Test 1');
     db.Add('Test 2');
     db.Add('Test 3');
@@ -35,7 +35,7 @@ describe('Repository', () => {
     const dupRepo = new Repository<string>(
       new DomStoragePersister('test', 'local')
     );
-    expect(dupRepo.data.Count).toEqual(4);
+    expect(dupRepo.Data.Count).toEqual(4);
     dupRepo.PurgeData();
   });
 
@@ -44,7 +44,7 @@ describe('Repository', () => {
     classUnderTest = new Repository<string>(
       new DomStoragePersister('test', 'session')
     );
-    const db = classUnderTest.data;
+    const db = classUnderTest.Data;
     db.Add('Test 1');
     db.Add('Test 2');
     db.Add('Test 3');
@@ -54,7 +54,7 @@ describe('Repository', () => {
     const dupRepo = new Repository<string>(
       new DomStoragePersister('test', 'session')
     );
-    expect(dupRepo.data.Count).toEqual(4);
+    expect(dupRepo.Data.Count).toEqual(4);
     dupRepo.PurgeData();
   });
   //#endregion

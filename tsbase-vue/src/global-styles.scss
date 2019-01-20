@@ -1,0 +1,30 @@
+$dark-grey: #1e1e1e;
+$green: #6a9955;
+.code-example {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  h1,
+  h2,
+  h3 {
+    width: 100%;
+  }
+  p {
+    margin: 0;
+  }
+  code {
+    padding: 20px;
+    text-align: left;
+    background-color: $dark-grey;
+    color: white;
+    .comment {
+      color: $green;
+      margin-bottom: 0;
+      margin-top: 10px;
+    }
+    pre {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

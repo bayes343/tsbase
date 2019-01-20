@@ -179,9 +179,8 @@ export default class SerializerPage extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-$dark-grey: #1e1e1e;
-$green: #6a9955;
+<style lang="scss">
+@import "../global-styles.scss";
 .action-area {
   margin-top: 50px;
   margin-left: 6%;
@@ -215,30 +214,6 @@ $green: #6a9955;
 .summary {
   margin-top: 50px;
   margin-bottom: 100px;
-}
-.code-example {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  h1,
-  h2,
-  h3 {
-    width: 100%;
-  }
-  code {
-    padding: 20px;
-    text-align: left;
-    background-color: $dark-grey;
-    color: white;
-    .comment {
-      color: $green;
-      margin-bottom: 0;
-    }
-    pre {
-      margin: 0;
-      padding: 0;
-    }
-  }
 }
 </style>
 
