@@ -222,7 +222,7 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
    Methods
    ```ts
    public SaveChanges(): void;
-   public PurgeData();
+   public PurgeData(): void;
    ```
 
    #### Usage Example:
@@ -230,7 +230,7 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
    // Instantiate repository
    // *Repository will init with previously stored data if available
    public peopleRepo = new Repository<Person>(
-    new DomStoragePersister( // <- Used to store data using Dom Storage APIs
+    new WebStoragePersister( // <- Used to store data using Dom Storage APIs
        "people", // <- key
        "local" // <- Dom Storage Type (session or local)
        )

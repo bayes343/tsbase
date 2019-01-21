@@ -62,7 +62,7 @@
         <code>
           <p class="comment">// Instantiate a repository</p>
           <pre>public peopleRepo = new Repository&lt;Person&gt;(
-  new DomStoragePersister("people", "local")
+  new WebStoragePersister("people", "local")
 );</pre>
           <p class="comment">// Add something to the repo</p>
           <p>const person = new Person();
@@ -89,12 +89,12 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { JsonSerializer, List, Repository } from "tsbase";
 import { Person } from "../domain/Person";
 import { peopleData } from "../stub-data";
-import { DomStoragePersister } from "tsbase";
+import { WebStoragePersister } from "tsbase";
 
 @Component
 export default class RepositoryPage extends Vue {
   public peopleRepo = new Repository<Person>(
-    new DomStoragePersister("people", "local")
+    new WebStoragePersister("people", "local")
   );
 
   public fName = "";

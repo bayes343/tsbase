@@ -24,4 +24,4 @@ export * from './Base/Utility/Serialization/JsonSerializer';
 // Persistence
 export * from './Base/Persistence/Repository';
 export * from './Base/Persistence/IPersistable';
-export * from './Base/Persistence/DomStoragePersister';
+export * from './Base/Persistence/WebStoragePersister';

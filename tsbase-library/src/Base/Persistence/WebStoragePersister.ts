@@ -1,15 +1,14 @@
 import { IPersistable } from './IPersistable';
-import { List } from '../Collections/List';
 
 type StorageType = 'local' | 'session';
 
-export class DomStoragePersister implements IPersistable {
+export class WebStoragePersister implements IPersistable {
   constructor(
     private key: string,
     private storageType: StorageType
   ) {
     if (typeof (Storage) === 'undefined') {
-      throw new Error('Unable to use DomStoragePersister since, \"Storage\" is not defined');
+      throw new Error('Unable to use WebStoragePersister since, \"Storage\" is not defined');
     }
   }
 

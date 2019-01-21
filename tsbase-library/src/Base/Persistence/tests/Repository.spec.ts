@@ -1,12 +1,12 @@
 import { Repository } from "../Repository";
-import { DomStoragePersister } from '../DomStoragePersister';
+import { WebStoragePersister } from '../WebStoragePersister';
 
 describe('Repository', () => {
   let classUnderTest: Repository<string>;
 
   beforeEach(() => {
     classUnderTest = new Repository<string>(
-      new DomStoragePersister('test', 'local')
+      new WebStoragePersister('test', 'local')
     );
   });
 
@@ -32,7 +32,7 @@ describe('Repository', () => {
     db.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = new Repository<string>(
-      new DomStoragePersister('test', 'local')
+      new WebStoragePersister('test', 'local')
     );
     expect(dupRepo.Count).toEqual(4);
     dupRepo.PurgeData();
@@ -41,7 +41,7 @@ describe('Repository', () => {
   it('should persist data through a persister - session', () => {
     // add data
     classUnderTest = new Repository<string>(
-      new DomStoragePersister('test', 'session')
+      new WebStoragePersister('test', 'session')
     );
     const db = classUnderTest;
     db.Add('Test 1');
@@ -51,7 +51,7 @@ describe('Repository', () => {
     classUnderTest.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = new Repository<string>(
-      new DomStoragePersister('test', 'session')
+      new WebStoragePersister('test', 'session')
     );
     expect(dupRepo.Count).toEqual(4);
     dupRepo.PurgeData();
