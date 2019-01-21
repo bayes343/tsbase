@@ -1,22 +1,22 @@
 import { List } from '../Collections/List';
 import { IPersistable } from './IPersistable';
 
-export class Repository<T> {
-  public Data: List<T>;
-
+export class Repository<T> extends List<T> {
   constructor(
     private persister: IPersistable
   ) {
+    super();
     const initialData = persister.Retrieve();
-    this.Data = initialData && initialData.Count >= 1 ? initialData : new List<T>();
+    this.Item = initialData && initialData.length >= 1 ? initialData : new Array<T>();
+    this.updateProperties();
   }
 
-  public Save(): void {
-    this.persister.Persist(this.Data);
+  public SaveChanges(): void {
+    this.persister.Persist(this.Item);
   }
 
   public PurgeData(): void {
     this.persister.Purge();
-    this.Data.Clear();
+    this.Clear();
   }
 }

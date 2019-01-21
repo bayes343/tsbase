@@ -1,7 +1,7 @@
 import { List } from '../Collections/List';
 
 export interface IPersistable {
-  Retrieve(): List<any>;
-  Persist(items: List<any>): void;
+  Retrieve(): Array<any>;
+  Persist(items: Array<any>): void;
   Purge(): void;
 }

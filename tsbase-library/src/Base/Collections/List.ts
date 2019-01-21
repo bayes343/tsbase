@@ -379,7 +379,7 @@ export class List<T> extends Enumerable<T> {
   }
 
   //#region Private implementation 'helpers'
-  private updateProperties(): void {
+  protected updateProperties(): void {
     this.Count = this.Item.length;
   }
   //#endregion

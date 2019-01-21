@@ -16,26 +16,25 @@ describe('Repository', () => {
 
   //#region Integeation tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
-    const db = classUnderTest.Data;
-    db.Add("delete this");
-    classUnderTest.Save();
+    classUnderTest.Add("delete this");
+    classUnderTest.SaveChanges();
     classUnderTest.PurgeData();
-    expect(db.Count).toEqual(0);
+    expect(classUnderTest.Count).toEqual(0);
   });
 
   it('should persist data through a persister - local', () => {
     // add data
-    const db = classUnderTest.Data;
+    const db = classUnderTest;
     db.Add('Test 1');
     db.Add('Test 2');
     db.Add('Test 3');
     db.Add('Test 4');
-    classUnderTest.Save();
+    db.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = new Repository<string>(
       new DomStoragePersister('test', 'local')
     );
-    expect(dupRepo.Data.Count).toEqual(4);
+    expect(dupRepo.Count).toEqual(4);
     dupRepo.PurgeData();
   });
 
@@ -44,17 +43,17 @@ describe('Repository', () => {
     classUnderTest = new Repository<string>(
       new DomStoragePersister('test', 'session')
     );
-    const db = classUnderTest.Data;
+    const db = classUnderTest;
     db.Add('Test 1');
     db.Add('Test 2');
     db.Add('Test 3');
     db.Add('Test 4');
-    classUnderTest.Save();
+    classUnderTest.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = new Repository<string>(
       new DomStoragePersister('test', 'session')
     );
-    expect(dupRepo.Data.Count).toEqual(4);
+    expect(dupRepo.Count).toEqual(4);
     dupRepo.PurgeData();
   });
   //#endregion

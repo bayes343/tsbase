@@ -21,20 +21,13 @@ export class DomStoragePersister implements IPersistable {
     }
   }
 
-  Retrieve(): List<any> {
-    let result = new List<any>();
+  Retrieve(): Array<any> {
     let storedData = this.getItemFromDomStorage(this.key);
     storedData = JSON.parse(storedData);
-    if (storedData) {
-      result = Object.assign(new List<any>(), {
-        Item: storedData['Item'],
-        Count: storedData['Count']
-      });
-    }
-    return result;
+    return storedData ? storedData : [];
   }
 
-  Persist(items: List<any>): void {
+  Persist(items: Array<any>): void {
     const stringifiedItems = JSON.stringify(items);
     this.Purge();
     this.saveItemToDomStorage(this.key, stringifiedItems);
