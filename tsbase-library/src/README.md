@@ -9,10 +9,19 @@ TypeScript is awesome, especially if you're coming from a .Net background.  If y
 
 My goal with this project is to build out a more pure TypeScript framework.  Not a frontend framework, but a set of base class libraries that can be taken with you regardless of what *presentation* technology (Angular, React, etc.) is used.
 
-This project is very heavily influenced by the .Net framework; that is intentional, though the specifics of implementation and general design will diverge as needed.
+This project is very heavily influenced by the .Net framework; in many cases that is intentional.  These APIs in particular have their public interfaces modeled very closely after their .Net Framework equivalents:
+- Enumerable\<T> (IEnumerable\<T>)
+- List\<T>
+- HttpClient
+
+All glory to Microsoft for developing such awesome interfaces.
+
+---
 
 ## Available APIs
-### Enumerable 
+### Enumerable
+
+Provides a generic interface for interacting with and querying a collection of things.
    
    ```ts
    abstract class Enumerable<T>
@@ -42,7 +51,11 @@ This project is very heavily influenced by the .Net framework; that is intention
    SkipWhile(func: (item: T) => boolean): Enumerable<T>;
    ```
 
+---
+
 ### List
+
+Provides a generic interface for mutably interacting with a collection of things.
     
    ```ts
    class List<T> extends Enumerable<T>
@@ -83,7 +96,11 @@ This project is very heavily influenced by the .Net framework; that is intention
    ReverseRange(index: number, count: number): void;
    ```
 
+---
+
 ### HttpClient
+
+Provides an abstraction for making HTTP requests that can be `async await`ed.
 
    ```ts
    class HttpClient
@@ -108,7 +125,11 @@ This project is very heavily influenced by the .Net framework; that is intention
    public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>;
    ```
 
+---
+
 ### JsonSerializer
+
+Solves a common problem of getting class instances from anonymous objects in JavaScript.
 
    ```ts
    class JsonSerializer<T> implements ISerializer<T>
@@ -117,4 +138,20 @@ This project is very heavily influenced by the .Net framework; that is intention
    Methods
    ```ts
    public Serialize(t: { new(): T; }, json: any): T;
+   ```
+
+---
+
+### Repository
+
+Manages persisting a List\<T>, to include retrieval of previously persisted data on instantiation. 
+
+   ```ts
+   class Repository<T>
+   ```
+
+   Methods
+   ```ts
+   public Save(): void;
+   public PurgeData();
    ```
