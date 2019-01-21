@@ -44,7 +44,7 @@
             <th>Last name</th>
             <th>Age name</th>
           </tr>
-          <tr v-for="person in peopleRepo.Data.Item">
+          <tr v-for="person in peopleRepo.Item">
             <td>{{person.firstName}}</td>
             <td>{{person.lastName}}</td>
             <td>{{person.age}}</td>
@@ -70,7 +70,7 @@
             <br>person.lastName = this.lName;
             <br>person.age = parseInt(this.age);
             <br>
-            <br>this.peopleRepo.Data.Add(person);
+            <br>this.peopleRepo.Add(person);
           </p>
 
           <p class="comment">// Save the repo</p>
@@ -107,11 +107,11 @@ export default class RepositoryPage extends Vue {
     person.lastName = this.lName;
     person.age = parseInt(this.age);
 
-    this.peopleRepo.Data.Add(person);
+    this.peopleRepo.Add(person);
   }
 
   public saveRepo(): void {
-    this.peopleRepo.Save();
+    this.peopleRepo.SaveChanges();
   }
 
   public purgeRepo(): void {

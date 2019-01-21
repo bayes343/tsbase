@@ -51,6 +51,30 @@ Provides a generic interface for interacting with and querying a collection of t
    SkipWhile(func: (item: T) => boolean): Enumerable<T>;
    ```
 
+   #### Usage Example:
+   ```ts
+   // Instantiate class that extends Enumerable<T>
+   public people = new List<Person>([
+      new Person('John Doe', 18),
+      new Person('James Doe', 27),
+      new Person('Joe Doe', 18),
+      new Person('Jack Doe', 45)
+   ]);
+
+   // Use APIs as desired
+   // Where example:
+   const jack = people.Where(item => item.Name === 'Jack Doe')[0];
+
+   // OrderBy example:
+   const youngestAlphaSort = people.OrderBy([
+      item => item.Age,
+      item => item.Name
+   ]);
+
+   // Sum example:
+   const sumOfAges = people.Sum(item => item.Age);
+   ```
+
 ---
 
 ### List
@@ -96,6 +120,24 @@ Provides a generic interface for mutably interacting with a collection of things
    ReverseRange(index: number, count: number): void;
    ```
 
+   #### Usage Example:
+   ```ts
+   // Instantiate a List<T>
+   public people = new List<Person>([
+      new Person('John Doe', 18),
+      new Person('James Doe', 27),
+      new Person('Joe Doe', 18),
+      new Person('Jack Doe', 45)
+   ]);
+
+   // Use APIs as desired
+   // Sort example:
+   people.Sort(item => item.Age);
+
+   // Find / Remove example:
+   const jack = people.Find(item => item.Name === 'Jack Doe');
+   people.Remove(jack);
+   ```
 ---
 
 ### HttpClient
@@ -125,6 +167,18 @@ Provides an abstraction for making HTTP requests that can be `async await`ed.
    public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>;
    ```
 
+   #### Usage Example:
+   ```ts
+   // Instantiate an HttpClient
+   const client = new HttpClient();
+
+   // Configure base address if desired
+   client.BaseAddress = 'https://foaas.com';
+   
+   // Await a request
+   const response = await client.GetStringAsync('cup/Joe');
+   ```
+
 ---
 
 ### JsonSerializer
@@ -140,18 +194,55 @@ Solves a common problem of getting class instances from anonymous objects in Jav
    public Serialize(t: { new(): T; }, json: any): T;
    ```
 
+   #### Usage Example:
+   ```ts
+   // Get your JSON data
+   const peopleDataObj = JSON.parse(peopleData);
+   
+   // Instantiate a JsonSerializer
+   const serializer = new JsonSerializer<Person>();
+   
+   // Trade anonymous objects for class instances and use their instance members
+   for (const person of peopleDataObj["people"]) {
+      const personInstance = serializer.Serialize(Person, person);
+      personInstance.MakePhoneCall();
+   }
+   ```
+
 ---
 
 ### Repository
 
-Manages persisting a List\<T>, to include retrieval of previously persisted data on instantiation. 
+Extends the generic List<T> with persistence capabilities, to include retrieval of previously persisted data on instantiation. 
 
    ```ts
-   class Repository<T>
+   class Repository<T> extends List<T>
    ```
 
    Methods
    ```ts
-   public Save(): void;
+   public SaveChanges(): void;
    public PurgeData();
+   ```
+
+   #### Usage Example:
+   ```ts
+   // Instantiate repository
+   // *Repository will init with previously stored data if available
+   public peopleRepo = new Repository<Person>(
+    new DomStoragePersister( // <- Used to store data using Dom Storage APIs
+       "people", // <- key
+       "local" // <- Dom Storage Type (session or local)
+       )
+   );
+
+   // Add items, just as with any other list
+   const person = new Person();
+   this.peopleRepo.Add(person);
+
+   // Save changes
+   this.peopleRepo.SaveChanges();
+
+   // Delete persisted data
+   this.peopleRepo.PurgeData();
    ```
