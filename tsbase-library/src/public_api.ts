@@ -25,3 +25,6 @@ export * from './Base/Utility/Serialization/JsonSerializer';
 export * from './Base/Persistence/Repository';
 export * from './Base/Persistence/IPersistable';
 export * from './Base/Persistence/WebStoragePersister';
+
+// Other
+export * from './Base/TypeLiterals';
