@@ -56,6 +56,10 @@ export class HttpClient {
     return response;
   }
 
+  /**
+   * Send a GET request to the specified Uri as an asynchronous operation and have the response body returned as a string.
+   * @param uri 
+   */
   public async GetStringAsync(uri: string): Promise<string> {
     uri = this.getFullUri(uri);
     const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);

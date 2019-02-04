@@ -2,6 +2,9 @@ import { IPersistable } from './IPersistable';
 
 type StorageType = 'local' | 'session';
 
+/**
+ * Persists data using the html WebStorage apis (local and session)
+ */
 export class WebStoragePersister implements IPersistable {
   constructor(
     private key: string,
@@ -12,6 +15,9 @@ export class WebStoragePersister implements IPersistable {
     }
   }
 
+  /**
+   * Delete all data previously stored in WebStorage
+   */
   Purge(): void {
     if (this.storageType == 'session') {
       window.sessionStorage.removeItem(this.key);
@@ -20,12 +26,19 @@ export class WebStoragePersister implements IPersistable {
     }
   }
 
+  /**
+   * Retrieve the collection of data previously stored in WebStorage
+   */
   Retrieve(): Array<any> {
     let storedData = this.getItemFromDomStorage(this.key);
     storedData = JSON.parse(storedData);
     return storedData ? storedData : [];
   }
 
+  /**
+   * Persist the given collection in WebStorage
+   * @param items 
+   */
   Persist(items: Array<any>): void {
     const stringifiedItems = JSON.stringify(items);
     this.Purge();

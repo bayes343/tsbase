@@ -20,8 +20,10 @@ export class MockXhrRequestHandler implements IXhrRequestHandler {
           break;
         case 'https://fake.com/bad':
           resolve(BadRequest);
+          break;
         case 'https://fake.com/delete':
           resolve(OkRequest);
+          break;
         default:
           break;
       }
@@ -36,8 +38,10 @@ export class MockXhrRequestHandler implements IXhrRequestHandler {
           break;
         case 'https://fake.com/bad':
           resolve(BadRequest);
+          break;
         case 'https://fake.com/delete':
           resolve(OkRequest);
+          break;
         default:
           break;
       }
