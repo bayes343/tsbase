@@ -25,6 +25,9 @@ export class Timer {
     interval ? this.Interval = interval : this.Interval = 0;
   }
 
+  /**
+   * Starts raising the Elapsed event at the specified interval
+   */
   public async Start(): Promise<any> {
     return await new Promise<any>((resolve) => {
       this.Enabled = this.Elapsed.length >= 1;
@@ -42,6 +45,9 @@ export class Timer {
     });
   }
 
+  /**
+   * Stops raising the Elapsed event by setting Enabled to false.
+   */
   public Stop(): void {
     this.Enabled = false;
   }

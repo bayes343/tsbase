@@ -34,21 +34,21 @@ Provides a generic interface for interacting with and querying a collection of t
 
    Methods:
    ```ts
-   Aggregate<TResult, TAccumulate>(seed: TAccumulate, func: (current: TAccumulate, next: T) => TAccumulate, resultSelector: (item: TAccumulate) => TResult): TResult;
-   All(func: (item: T) => boolean): boolean;
-   Any(func: (item: T) => boolean): boolean;
-   Average(func?: (item: T) => any): number;
-   Sum(func?: (item: T) => number): number;
-   Where(func: (item: T) => boolean): Enumerable<T>;
-   OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T>;
-   OrderByDescending(funcs?: Array<(item: T) => any>): Enumerable<T>;
-   ToList(): List<T>;
-   ToArray(): Array<T>;
-   Take(count: number): Enumerable<T>;
-   TakeWhile(func: (item: T) => boolean): Enumerable<T>;
-   Distinct(): Enumerable<T>;
-   Skip(count: number): Enumerable<T>;
-   SkipWhile(func: (item: T) => boolean): Enumerable<T>;
+   Aggregate<TResult, TAccumulate>(seed: TAccumulate, func: (current: TAccumulate, next: T) => TAccumulate, resultSelector: (item: TAccumulate) => TResult): TResult
+   All(func: (item: T) => boolean): boolean
+   Any(func: (item: T) => boolean): boolean
+   Average(func?: (item: T) => any): number
+   Sum(func?: (item: T) => number): number
+   Where(func: (item: T) => boolean): Enumerable<T>
+   OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T>
+   OrderByDescending(funcs?: Array<(item: T) => any>): Enumerable<T>
+   ToList(): List<T>
+   ToArray(): Array<T>
+   Take(count: number): Enumerable<T>
+   TakeWhile(func: (item: T) => boolean): Enumerable<T>
+   Distinct(): Enumerable<T>
+   Skip(count: number): Enumerable<T>
+   SkipWhile(func: (item: T) => boolean): Enumerable<T>
    ```
 
    #### Usage Example:
@@ -93,31 +93,31 @@ Provides a generic interface for mutably interacting with a collection of things
 
    Methods:
    ```ts
-   Add(object: T): void;
-   AddRange(elements: Array<T>): void;
-   Clear(): void;
-   Contains(object: T): boolean;
-   CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void;
-   Exists(match: (item: T) => boolean): boolean;
-   Find(match: (item: T) => boolean): T | null;
-   FindAll(match: (item: T) => boolean): List<T>;
-   FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number;
-   FindLast(match: (item: T) => boolean): T | null;
-   FindLastIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number;
-   ForEach(action: (item: T) => any): void;
-   GetRange(index: number, count: number): List<T>;
-   IndexOf(item: T, startIndex?: number): number;
-   LastIndexOf(item: T, endIndex?: number): number;
-   TrueForAll(match: (item: T) => boolean): boolean;
-   Sort(comparison?: (item: T) => any): void;
-   Insert(index: number, item: T): void;
-   InsertRange(index: number, collection: List<T>): void;
-   Remove(item: T): boolean;
-   RemoveAll(match: (item: T) => boolean): number;
-   RemoveAt(index: number): void;
-   RemoveRange(index: number, count: number): void;
-   Reverse(): void;
-   ReverseRange(index: number, count: number): void;
+   Add(object: T): void
+   AddRange(elements: Array<T>): void
+   Clear(): void
+   Contains(object: T): boolean
+   CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void
+   Exists(match: (item: T) => boolean): boolean
+   Find(match: (item: T) => boolean): T | null
+   FindAll(match: (item: T) => boolean): List<T>
+   FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number
+   FindLast(match: (item: T) => boolean): T | null
+   FindLastIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number
+   ForEach(action: (item: T) => any): void
+   GetRange(index: number, count: number): List<T>
+   IndexOf(item: T, startIndex?: number): number
+   LastIndexOf(item: T, endIndex?: number): number
+   TrueForAll(match: (item: T) => boolean): boolean
+   Sort(comparison?: (item: T) => any): void
+   Insert(index: number, item: T): void
+   InsertRange(index: number, collection: List<T>): void
+   Remove(item: T): boolean
+   RemoveAll(match: (item: T) => boolean): number
+   RemoveAt(index: number): void
+   RemoveRange(index: number, count: number): void
+   Reverse(): void
+   ReverseRange(index: number, count: number): void
    ```
 
    #### Usage Example:
@@ -157,14 +157,14 @@ Provides an abstraction for making HTTP requests that can be `async await`ed.
 
    Methods
    ```ts
-   public CancelPendingRequests(): void;
-   public async DeleteAsync(uri: string): Promise<HttpResponseMessage>;
-   public async GetAsync(uri: string): Promise<HttpResponseMessage>;
-   public async GetStringAsync(uri: string): Promise<string>;
-   public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage>;
-   public async PostAsync(uri: string, payload: any):  Promise<HttpResponseMessage>;
-   public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage>;
-   public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>;
+   public CancelPendingRequests(): void
+   public async DeleteAsync(uri: string): Promise<HttpResponseMessage>
+   public async GetAsync(uri: string): Promise<HttpResponseMessage>
+   public async GetStringAsync(uri: string): Promise<string>
+   public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage>
+   public async PostAsync(uri: string, payload: any):  Promise<HttpResponseMessage>
+   public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage>
+   public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>
    ```
 
    #### Usage Example:
@@ -221,8 +221,8 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
 
    Methods
    ```ts
-   public SaveChanges(): void;
-   public PurgeData(): void;
+   public SaveChanges(): void
+   public PurgeData(): void
    ```
 
    #### Usage Example:
@@ -245,4 +245,37 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
 
    // Delete persisted data
    this.peopleRepo.PurgeData();
+   ```
+
+---
+
+### Timer
+
+A wrapper around the setInterval function allowing the consumer to add functions to an array that will be called at a given interval. 
+
+   ```ts
+   class Timer
+   ```
+
+   Methods
+   ```ts
+   public async Start(): Promise<any>
+   public Stop(): void
+   ```
+
+   #### Usage Example:
+   ```ts
+   // Instantiate timer with a desired interval
+   const timer = new Timer(1000);
+   
+   // Add functions the timer should call at the specified interval
+   timer.Elapsed.push(() => {
+      console.log('fake');
+      currenTimeSpan.innerText = new Date(Date.now()).toLocaleTimeString();
+   });
+   
+   timer.AutoReset = true; // set to true if the timer should fire more than once
+   
+   timer.Start(); // start the timer
+   timer.Stop(); // stop the timer
    ```
