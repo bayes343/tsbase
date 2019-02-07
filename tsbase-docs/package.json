@@ -1,0 +1,22 @@
+{
+  "name": "tsbase-docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -w",
+    "build-prod": "webpack --mode=production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tsbase": "file:tsbase"
+  },
+  "devDependencies": {
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.1",
+    "webpack": "^4.29.2",
+    "webpack-cli": "^3.2.3"
+  }
+}

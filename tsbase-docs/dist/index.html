@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>tsbase App Example</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+
+      <div style="margin-top: 40px">
+        <h1>tsbase App Example</h1>
+
+        <input type="text" id="uriTextbox" placeholder="Enter uri to get here">
+        <button id="getUriButton">Get</button>
+        <button id="clearButton">Clear</button>
+        <button id="backButton">Back</button>
+        <button id="forwardButton">Forward</button>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <p id="responseStatus"></p>
+      <label for="responseContainer">Response:</label>
+      <div id="responseContainer"></div>
+    </div>
+
+  </div>
+
+  <script src="./bundle.js"></script>
+</body>
+
+</html>

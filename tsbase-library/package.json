@@ -19,7 +19,7 @@
   "scripts": {
     "test": "karma start",
     "test-once": "karma start --singleRun",
-    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsbase-cli/tsbase && cp -R ../dist ../tsbase-cli/tsbase && rm -rf ../tsbase-vue/tsbase && cp -R ../dist ../tsbase-vue/tsbase"
+    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist && rm -rf ../tsbase-cli/tsbase && cp -R ../dist ../tsbase-cli/tsbase && rm -rf ../tsbase-vue/tsbase && cp -R ../dist ../tsbase-vue/tsbase && rm -rf ../tsbase-docs/tsbase && cp -R ../dist ../tsbase-docs/tsbase"
   },
   "author": "Joseph Bayes",
   "license": "ISC",
