@@ -2,7 +2,7 @@ export class Timer {
   /**
    * Boolean indicating whether the Timer should raise the Elapsed event only once (false) or repeatedly (true).
    */
-  public AutoReset = true;
+  public AutoReset = false;
   /**
    * Boolean indicating whether the Timer should raise the Elapsed event.
    */
@@ -22,7 +22,7 @@ export class Timer {
   constructor();
   constructor(interval?: number)
   constructor(interval?: any) {
-    interval ? this.Interval = interval : this.Interval = 1000;
+    interval ? this.Interval = interval : this.Interval = 0;
   }
 
   public async Start(): Promise<any> {
