@@ -94,7 +94,11 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
   private getValueFromSerializer(property: any, json: any): any {
     const newSerializer = new JsonSerializer<any>();
-    return newSerializer.Serialize(property.constructor, json);
+    try {
+      return newSerializer.Serialize(property.constructor, json);
+    } catch (error) {
+      return null;
+    }
   }
 
   private getArrayValuesFromSerializer(property: any, json: any): Array<any> {
