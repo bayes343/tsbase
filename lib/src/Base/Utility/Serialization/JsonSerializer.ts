@@ -97,7 +97,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
     try {
       return newSerializer.Serialize(property.constructor, json);
     } catch (error) {
-      return null;
+      return new property.constructor();
     }
   }
 

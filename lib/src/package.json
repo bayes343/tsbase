@@ -10,7 +10,7 @@
     "collections",
     "list"
   ],
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",
