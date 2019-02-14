@@ -14,7 +14,6 @@ export * from './Base/Net/Http/HttpResponseMessage';
 export * from './Base/Net/Http/IXhrRequestHandler';
 export * from './Base/Net/Http/XhrRequestHandler/XhrRequestHandler';
 export * from './Base/Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
-export * from './Base/Net/Http/XhrRequestHandler/NodeXhrRequestHandler';
 export * from './Base/Net/Http/HttpClient';
 
 // Utility
