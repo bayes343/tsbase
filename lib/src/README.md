@@ -279,3 +279,26 @@ A wrapper around the setInterval function allowing the consumer to add functions
    timer.Start(); // start the timer
    timer.Stop(); // stop the timer
    ```
+
+### CachedHttpClient
+
+A wrapper around the standard HttpClient offered in this library. It uses a Repository to store Http Get requests, with subsequent requests for the same uri returning the cached HttpResponseMessage instead of executing another Http Get.
+
+   ```ts
+   class CachedHttpClient
+   ```
+
+   Methods
+   ```ts
+   public async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
+   ```
+
+   #### Usage Example:
+   ```ts
+   // Instantiate cached http client
+   cachedClient = new CachedHttpClient(httpClient);
+   
+   // Use client as normal for GetAsync requests
+   const response1 = await cachedClient.GetAsync('https://fake.com/ok');   
+   const response2 = await cachedClient.GetAsync('https://fake.com/ok'); // returns previously saved response
+   ```

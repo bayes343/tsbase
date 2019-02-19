@@ -25,6 +25,7 @@ export * from './Base/Utility/Timers/Timer';
 export * from './Base/Persistence/Repository';
 export * from './Base/Persistence/IPersistable';
 export * from './Base/Persistence/WebStoragePersister';
+export * from './Base/Persistence/CachedHttpClient';
 
 // Other
 export * from './Base/TypeLiterals';
