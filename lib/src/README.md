@@ -119,6 +119,7 @@ Provides a generic interface for mutably interacting with a collection of things
    RemoveRange(index: number, count: number): void
    Reverse(): void
    ReverseRange(index: number, count: number): void
+   Shuffle(): void
    ```
 
    #### Usage Example:

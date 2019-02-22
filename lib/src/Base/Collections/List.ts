@@ -378,6 +378,13 @@ export class List<T> extends Enumerable<T> {
     this.InsertRange(index, new List<T>(arraySegment));
   }
 
+  /**
+   * Shuffles the collection of items stored in the list
+   */
+  public Shuffle(): void {
+    this.shuffle(this.Item);
+  }
+
   //#region Private implementation 'helpers'
   protected updateProperties(): void {
     this.Count = this.Item.length;

@@ -237,7 +237,7 @@ export abstract class Enumerable<T> {
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
   }
 
-  private shuffle(array: Array<T>): Array<T> {
+  protected shuffle(array: Array<T>): Array<T> {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
     while (0 !== currentIndex) {
