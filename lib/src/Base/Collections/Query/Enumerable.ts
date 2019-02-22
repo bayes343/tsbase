@@ -229,4 +229,27 @@ export abstract class Enumerable<T> {
     return this.Clone(itemsToReturn);
   }
 
+  /**
+   * Returns a random item from the collection based on Knuth shuffle
+   */
+  public GetRandom(): T | null {
+    const shuffledItems = this.shuffle(this.ToArray());
+    return shuffledItems.length >= 1 ? shuffledItems[0] : null;
+  }
+
+  private shuffle(array: Array<T>): Array<T> {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
 }

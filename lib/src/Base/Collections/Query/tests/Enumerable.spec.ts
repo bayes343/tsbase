@@ -245,5 +245,11 @@ describe('Enumerable', () => {
       classUnderTest.Average();
     }).toThrowError('Cannot calculate an average from a collection with no elements');
   });
-});
 
+  it('should get a random item from the collection', () => {
+    classUnderTest.AddRange([2, 2, 2, 2, 2, 2]);
+    const randomItem = classUnderTest.GetRandom();
+    expect(randomItem).toBeDefined();
+  });
+
+});

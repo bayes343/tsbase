@@ -49,6 +49,7 @@ Provides a generic interface for interacting with and querying a collection of t
    Distinct(): Enumerable<T>
    Skip(count: number): Enumerable<T>
    SkipWhile(func: (item: T) => boolean): Enumerable<T>
+   GetRandom(): T | null
    ```
 
    #### Usage Example:
