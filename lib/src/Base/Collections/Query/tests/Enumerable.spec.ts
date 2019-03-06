@@ -4,7 +4,7 @@ describe('Enumerable', () => {
   let classUnderTest: List<any>;
 
   beforeEach(() => {
-    classUnderTest = new List<string>();
+    classUnderTest = new List<any>();
   });
 
   it('should query for results WHERE a condition is met', () => {
@@ -250,6 +250,19 @@ describe('Enumerable', () => {
     classUnderTest.AddRange([2, 2, 2, 2, 2, 2]);
     const randomItem = classUnderTest.GetRandom();
     expect(randomItem).toBeDefined();
+  });
+
+  it('should return a new collection with an item appended', () => {
+    classUnderTest.AddRange([1, 2, 3, 4]);
+    const appended = classUnderTest.Append(5);
+    expect(appended.Item[4]).toEqual(5);
+  });
+
+  it('should return a new collection Except for the items passed', () => {
+    classUnderTest.AddRange([1, 2, 3, 4]);
+    const diff = classUnderTest.Except([2, 3]);
+    expect(diff.Item.length).toEqual(2);
+    expect(diff.Item[0]).toEqual(1);
   });
 
 });

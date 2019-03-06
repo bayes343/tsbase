@@ -38,6 +38,8 @@ Provides a generic interface for interacting with and querying a collection of t
    All(func: (item: T) => boolean): boolean
    Any(func: (item: T) => boolean): boolean
    Average(func?: (item: T) => any): number
+   Append(item: T): Enumerable<T>
+   Except(items: Array<T>): Enumerable<T>
    Sum(func?: (item: T) => number): number
    Where(func: (item: T) => boolean): Enumerable<T>
    OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T>

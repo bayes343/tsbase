@@ -48,6 +48,16 @@ export abstract class Enumerable<T> {
   }
 
   /**
+   * Appends a value to the end of the sequence.
+   * @param item 
+   */
+  public Append(item: T): Enumerable<T> {
+    const appendedArray = this.Item.slice();
+    appendedArray.push(item);
+    return this.Clone(appendedArray);
+  }
+
+  /**
    * Computes the average of a sequence of numeric values, or the average result of the given function
    * @param func 
    */
@@ -63,6 +73,17 @@ export abstract class Enumerable<T> {
     } else {
       throw new Error('Cannot calculate an average from a collection with no elements');
     }
+  }
+
+  /**
+   * Produces the set difference of two sequences.
+   * @param items 
+   */
+  public Except(items: Array<T>): Enumerable<T> {
+    let collectionCopy = this.Item.slice();
+    const stringifiedItemsToExclude = JSON.stringify(items);
+    collectionCopy = collectionCopy.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
+    return this.Clone(collectionCopy);
   }
 
   /**
@@ -239,16 +260,16 @@ export abstract class Enumerable<T> {
 
   protected shuffle(array: Array<T>): Array<T> {
     var currentIndex = array.length, temporaryValue, randomIndex;
-  
+
     while (0 !== currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-  
+
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-  
+
     return array;
   }
 
