@@ -87,6 +87,22 @@ export abstract class Enumerable<T> {
   }
 
   /**
+   * Returns the first element of a sequence or null if the sequence is empty.
+   */
+  public First(): T | null {
+    const firstElement = this.Item.length >= 1 ? this.Item[0] : null;
+    return firstElement;
+  }
+
+  /**
+   * Returns the last element of a sequence or null if the sequence is empty.
+   */
+  public Last(): T | null {
+    const lastElement = this.Item.length >= 1 ? this.Item[this.Item.length - 1] : null;
+    return lastElement;
+  }
+
+  /**
    * Computes the sum of a sequence of numeric values, or the sum result of the given function
    * @param func 
    */

@@ -265,4 +265,20 @@ describe('Enumerable', () => {
     expect(diff.Item[0]).toEqual(1);
   });
 
+  it('should return the first element in the sequence', () => {
+    const nullEl = classUnderTest.First();
+    expect(nullEl).toBeNull();
+    classUnderTest.AddRange([1, 2, 3]);
+    const first = classUnderTest.First();
+    expect(first).toEqual(1);
+  });
+
+  it('should return the last element in the sequence', () => {
+    const nullEl = classUnderTest.Last();
+    expect(nullEl).toBeNull();
+    classUnderTest.AddRange([1, 2, 3]);
+    const last = classUnderTest.Last();
+    expect(last).toEqual(3);
+  });
+
 });
