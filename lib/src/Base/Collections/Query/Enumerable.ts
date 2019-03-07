@@ -293,9 +293,11 @@ export abstract class Enumerable<T> {
 
   /**
    * Returns a random item from the collection based on Knuth shuffle
+   * @param excluding - optionally exclude an array of items when selecting a random element
    */
-  public GetRandom(): T | null {
-    const shuffledItems = this.shuffle(this.ToArray());
+  public GetRandom(excluding?: Array<T>): T | null {
+    let candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
+    const shuffledItems = this.shuffle(candidateElements);
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
   }
 

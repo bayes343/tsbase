@@ -305,4 +305,12 @@ describe('Enumerable', () => {
     expect(prependedCollection.Item[0]).toEqual(0);
   });
 
+  it('should get a random element excluding a given set', () => {
+    classUnderTest.AddRange([2, 4, 8, 15, 23, 42]);
+    const random = classUnderTest.GetRandom([2, 4, 8, 15, 23]);
+    expect(random).toEqual(42);
+    const randomNull = classUnderTest.GetRandom([2, 4, 8, 15, 23, 42]);
+    expect(randomNull).toBeNull();
+  });
+
 });
