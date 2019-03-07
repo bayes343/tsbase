@@ -40,23 +40,6 @@ describe('List', () => {
     expect(classUnderTest.Count).toEqual(0);
   });
 
-  it('should evaluate if an item is contained within a collection', () => {
-    classUnderTest.AddRange(['1', '2', '3']);
-    const truthy = classUnderTest.Contains('1');
-    const falsy = classUnderTest.Contains('4');
-    expect(truthy).toBeTruthy();
-    expect(falsy).toBeFalsy();
-
-    // complex object
-    classUnderTest = new List<{ name: string, description: string }>();
-    const testObject = { name: 'Joey', description: 'Developer of this library' };
-    classUnderTest.Add(testObject);
-    const truthy2 = classUnderTest.Contains(testObject);
-    const falsy2 = classUnderTest.Contains({ name: 'Fake', description: 'does not exist' });
-    expect(truthy2).toBeTruthy();
-    expect(falsy2).toBeFalsy();
-  });
-
   it('should copy contained elements to an array', () => {
     const fullCopy: Array<string> = [];
     classUnderTest.AddRange(['1', '2', '3']);

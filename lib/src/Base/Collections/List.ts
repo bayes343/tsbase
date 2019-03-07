@@ -60,22 +60,6 @@ export class List<T> extends Enumerable<T> {
   }
 
   /**
-   * Determines whether an element is in the List<T>.
-   * Currently checks if every key on the parameter object matches every key on a member (contained) object
-   * @param object 
-   */
-  public Contains(object: T): boolean {
-    let isContained = this.Item.indexOf(object) >= 0;
-
-    if (!isContained && typeof object === 'object') {
-      const stringifiedList = JSON.stringify(this.Item);
-      const stringifiedObject = JSON.stringify(object);
-      isContained = stringifiedList.indexOf(stringifiedObject) >= 0;
-    }
-    return isContained;
-  }
-
-  /**
    * Copies the List<T> or a portion of it to an array.
    * @param array 
    * @param arrayIndex 

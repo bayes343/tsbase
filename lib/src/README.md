@@ -39,6 +39,8 @@ Provides a generic interface for interacting with and querying a collection of t
    Any(func: (item: T) => boolean): boolean
    Average(func?: (item: T) => any): number
    Append(item: T): Enumerable<T>
+   Prepend(item: T): Enumerable<T>
+   Contains(object: T): boolean
    Except(items: Array<T>): Enumerable<T>
    First(): T | null
    Last(): T | null
@@ -101,7 +103,6 @@ Provides a generic interface for mutably interacting with a collection of things
    Add(object: T): void
    AddRange(elements: Array<T>): void
    Clear(): void
-   Contains(object: T): boolean
    CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void
    Exists(match: (item: T) => boolean): boolean
    Find(match: (item: T) => boolean): T | null

@@ -48,13 +48,22 @@ export abstract class Enumerable<T> {
   }
 
   /**
-   * Appends a value to the end of the sequence.
+   * Returns a collection with the given value Appended to the end of the sequence.
    * @param item 
    */
   public Append(item: T): Enumerable<T> {
     const appendedArray = this.Item.slice();
     appendedArray.push(item);
     return this.Clone(appendedArray);
+  }
+
+  /**
+   * Returns a collection with the given value Prepended to the beginning of the sequence.
+   * @param item 
+   */
+  public Prepend(item: T): Enumerable<T> {
+    const prependedArray = [item].concat(this.Item);
+    return this.Clone(prependedArray);
   }
 
   /**
@@ -73,6 +82,22 @@ export abstract class Enumerable<T> {
     } else {
       throw new Error('Cannot calculate an average from a collection with no elements');
     }
+  }
+
+  /**
+   * Determines whether an element is in the collection
+   * Checks if every key on the parameter object matches every key on a member (contained) object
+   * @param object 
+   */
+  public Contains(object: T): boolean {
+    let isContained = this.Item.indexOf(object) >= 0;
+
+    if (!isContained && typeof object === 'object') {
+      const stringifiedCollection = JSON.stringify(this.Item);
+      const stringifiedObject = JSON.stringify(object);
+      isContained = stringifiedCollection.indexOf(stringifiedObject) >= 0;
+    }
+    return isContained;
   }
 
   /**

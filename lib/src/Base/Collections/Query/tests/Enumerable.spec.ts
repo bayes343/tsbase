@@ -281,4 +281,28 @@ describe('Enumerable', () => {
     expect(last).toEqual(3);
   });
 
+  it('should evaluate if an item is contained within a collection', () => {
+    classUnderTest.AddRange(['1', '2', '3']);
+    const truthy = classUnderTest.Contains('1');
+    const falsy = classUnderTest.Contains('4');
+    expect(truthy).toBeTruthy();
+    expect(falsy).toBeFalsy();
+
+    // complex object
+    classUnderTest = new List<{ name: string, description: string }>();
+    const testObject = { name: 'Joey', description: 'Developer of this library' };
+    classUnderTest.Add(testObject);
+    const truthy2 = classUnderTest.Contains(testObject);
+    const falsy2 = classUnderTest.Contains({ name: 'Fake', description: 'does not exist' });
+    expect(truthy2).toBeTruthy();
+    expect(falsy2).toBeFalsy();
+  });
+
+  it('should return a new collection with an item prepended to the beginning of the sequence', () => {
+    classUnderTest.AddRange([1, 2, 3, 4]);
+    const prependedCollection = classUnderTest.Prepend(0);
+    expect(prependedCollection.Item.length).toEqual(5);
+    expect(prependedCollection.Item[0]).toEqual(0);
+  });
+
 });
