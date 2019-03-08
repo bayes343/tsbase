@@ -369,7 +369,7 @@ export class List<T> extends Enumerable<T> {
     this.shuffle(this.Item);
   }
 
-  //#region Private implementation 'helpers'
+  //#region Protected implementation 'helpers'
   protected updateProperties(): void {
     this.Count = this.Item.length;
   }
