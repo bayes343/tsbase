@@ -26,4 +26,27 @@ export class SortedList<T> extends List<T> {
     }
   }
 
+  //#region Overrides
+  /**
+   * Not applicable for SortedList - calling will throw OperationInvalid exception
+   */
+  public Reverse(): void {
+    throw new Error(`OperationInvalid - You cannot reverse a SortedList`);
+  }
+
+  /**
+   * Not applicable for SortedList - calling will throw OperationInvalid exception
+   */
+  public ReverseRange(): void {
+    throw new Error(`OperationInvalid - You cannot reverse a range in a SortedList`);
+  }
+
+  /**
+   * Not applicable for SortedList - calling will throw OperationInvalid exception
+   */
+  public Shuffle(): void {
+    throw new Error(`OperationInvalid - You cannot shuffle a SortedList`);
+  }
+  //#endregion
+
 }

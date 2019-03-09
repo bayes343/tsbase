@@ -101,7 +101,7 @@ export class List<T> extends Enumerable<T> {
    * @param match 
    */
   public FindAll(match: (item: T) => boolean): List<T> {
-    const matchingElements = this.item.filter(item => match(item));
+    const matchingElements = this.Item.filter(item => match(item));
     return new List<T>(matchingElements);
   }
 
@@ -113,10 +113,10 @@ export class List<T> extends Enumerable<T> {
    */
   public FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
-    endIndex = endIndex ? endIndex : this.item.length;
+    endIndex = endIndex ? endIndex : this.Item.length;
     let index = -1;
     for (let i = startIndex; i < endIndex && index === -1; i++) {
-      const element = this.item[i];
+      const element = this.Item[i];
       if (match(element)) {
         index = i;
       }
@@ -130,7 +130,7 @@ export class List<T> extends Enumerable<T> {
    */
   public FindLast(match: (item: T) => boolean): T | null {
     for (let index = this.Count - 1; index >= 0; index--) {
-      const element = this.item[index];
+      const element = this.Item[index];
       if (match(element)) {
         return (element);
       }
@@ -162,7 +162,7 @@ export class List<T> extends Enumerable<T> {
    * @param action 
    */
   public ForEach(action: (item: T) => any): void {
-    this.item.forEach(element => {
+    this.Item.forEach(element => {
       action(element);
     });
   }
@@ -175,7 +175,7 @@ export class List<T> extends Enumerable<T> {
   public GetRange(index: number, count: number): List<T> {
     const range = new List<T>();
     for (let i = index; i < count; i++) {
-      const element = this.item[i];
+      const element = this.Item[i];
       range.Add(element);
     }
     return range;
@@ -189,8 +189,8 @@ export class List<T> extends Enumerable<T> {
   public IndexOf(item: T, startIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
     let index = -1;
-    for (let i = startIndex; i < this.item.length && index === -1; i++) {
-      if (JSON.stringify(item) === JSON.stringify(this.item[i])) {
+    for (let i = startIndex; i < this.Item.length && index === -1; i++) {
+      if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
         index = i;
       }
     }
@@ -206,7 +206,7 @@ export class List<T> extends Enumerable<T> {
     endIndex = endIndex ? endIndex : this.Count - 1;
     let index = -1;
     for (let i = endIndex; i >= 0 && index === -1; i--) {
-      if (JSON.stringify(item) === JSON.stringify(this.item[i])) {
+      if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
         index = i;
       }
     }
