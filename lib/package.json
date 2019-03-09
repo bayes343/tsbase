@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "devDependencies": {
     "@types/core-js": "^2.5.0",
     "@types/jasmine": "^2.8.8",

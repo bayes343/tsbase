@@ -7,11 +7,6 @@ export class List<T> extends Enumerable<T> {
   public Count: number = 0;
 
   /**
-   * Gets or sets the element at the specified index.
-   */
-  public Item: Array<T> = new Array<T>();
-
-  /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
    * List<T>(IEnumerable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
    */

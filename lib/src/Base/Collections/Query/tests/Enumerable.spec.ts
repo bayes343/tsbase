@@ -74,7 +74,7 @@ describe('Enumerable', () => {
     ]);
     const query = classUnderTest
       .Where(item => item.name.length >= 3)
-      .OrderBy([item => item.name]).ToList();
+      .OrderBy([item => item.name]);
     expect(query.Item[0].name).toEqual('Adam');
     expect(query.Item[3].name).toEqual('David');
   });
@@ -112,8 +112,8 @@ describe('Enumerable', () => {
       { name: 'David' },
       { name: 'Charley' }
     ]);
-    const newList = classUnderTest.Where(item => item.name === 'David').ToList();
-    expect(newList.Exists(item => item.name === 'David'));
+    const newList = classUnderTest.Where(item => item.name === 'David');
+    expect(newList.Any(item => item.name === 'David'));
   });
 
   it('should take a sequence of items', () => {

@@ -1,8 +1,6 @@
-import { List } from '../List';
-
 export abstract class Enumerable<T> {
   /**
-   * Enumerable implementation
+   * Gets or sets the element at the specified index.
    */
   public Item: Array<T> = new Array<T>();
 
@@ -198,13 +196,6 @@ export abstract class Enumerable<T> {
     collection = this.OrderBy();
     collection.Item.reverse();
     return collection;
-  }
-
-  /**
-   * Creates a List<T> from an IEnumerable<T>.
-   */
-  public ToList(): List<T> {
-    return new List<T>(this.Item);
   }
 
   /**
