@@ -8,7 +8,6 @@ describe('SortedList', () => {
   });
 
   it('when the collection is modified it should remain sorted by the default comparer', () => {
-    console.log(classUnderTest.Item);
     classUnderTest.AddRange(['a', 'b', 'c']);
     expect(classUnderTest.Item[0]).toEqual('a');
     expect(classUnderTest.Item[classUnderTest.Count - 1]).toEqual('f');
