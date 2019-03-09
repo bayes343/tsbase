@@ -13,6 +13,24 @@ export abstract class Enumerable<T> {
   }
 
   /**
+   * Returns a generic enumerable object providing easy access to the query centric Enumerable api surface for standard arrays
+   * @param array 
+   */
+  public static From<T>(array: Array<T>): Enumerable<T> {
+    class EnumerableArray<T> extends Enumerable<T> {
+      constructor(array: Array<T>) {
+        super();
+        this.item = array;
+      }
+      public Clone(array: Array<T>): Enumerable<T> {
+        return new EnumerableArray<T>(array);
+      }
+    }
+
+    return new EnumerableArray<T>(array);
+  }
+
+  /**
    * Each extender should define how it should be cloned *structurally* - allows functional chaining of a data structure that maintains state
    * @param item 
    */

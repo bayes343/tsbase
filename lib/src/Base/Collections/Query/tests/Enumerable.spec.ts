@@ -1,40 +1,41 @@
 import { List } from '../../List';
+import { Enumerable } from '../Enumerable';
 
 describe('Enumerable', () => {
-  let classUnderTest: List<any>;
+  let classUnderTest: Enumerable<any>;
 
   beforeEach(() => {
     classUnderTest = new List<any>();
   });
 
   it('should query for results WHERE a condition is met', () => {
-    classUnderTest.AddRange([1, 2, 3, 4, 5]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3, 4, 5]);
     const results = classUnderTest.Where(item => item > 2);
     expect(results.Item.length).toEqual(3);
-    expect(classUnderTest.Count).toEqual(5);
+    expect(classUnderTest.Item.length).toEqual(5);
   });
 
   it('should orderby a predicate or the default comparer', () => {
-    classUnderTest.AddRange([4, 5, 1, 3, 1]);
+    (classUnderTest as List<any>).AddRange([4, 5, 1, 3, 1]);
     const results = classUnderTest.OrderBy();
     expect(results.Item[0]).toEqual(1);
     expect(results.Item[4]).toEqual(5);
 
-    classUnderTest.Clear();
-    classUnderTest.AddRange(['4', '5', '1', '3', '1']);
+    (classUnderTest as List<any>).Clear();
+    (classUnderTest as List<any>).AddRange(['4', '5', '1', '3', '1']);
     const resultsPredicate = classUnderTest.OrderBy([item => parseInt(item)]);
     expect(resultsPredicate.Item[0]).toEqual('1');
     expect(resultsPredicate.Item[4]).toEqual('5');
   });
 
   it('should orderby descending by a predicate or the default comparer', () => {
-    classUnderTest.AddRange([4, 5, 1, 3, 1]);
+    (classUnderTest as List<any>).AddRange([4, 5, 1, 3, 1]);
     const results = classUnderTest.OrderByDescending();
     expect(results.Item[0]).toEqual(5);
     expect(results.Item[4]).toEqual(1);
 
-    classUnderTest.Clear();
-    classUnderTest.AddRange(['4', '5', '1', '3', '1']);
+    (classUnderTest as List<any>).Clear();
+    (classUnderTest as List<any>).AddRange(['4', '5', '1', '3', '1']);
     const resultsPredicate = classUnderTest.OrderByDescending([item => parseInt(item)]);
     expect(resultsPredicate.Item[0]).toEqual('5');
     expect(resultsPredicate.Item[4]).toEqual('1');
@@ -42,7 +43,7 @@ describe('Enumerable', () => {
 
   it('should orderby many funcs by descending precedence', () => {
     // ascending
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { lastName: 'A', firstName: 'Z', age: 18 },
       { lastName: 'A', firstName: 'Y', age: 24 },
       { lastName: 'C', firstName: 'X', age: 19 },
@@ -66,7 +67,7 @@ describe('Enumerable', () => {
   });
 
   it('should find results where a condition is met and return them based on a user defined sort', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
       { name: 'David' },
@@ -80,7 +81,7 @@ describe('Enumerable', () => {
   });
 
   it('should know if all items satisfy a condition', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
       { name: 'David' },
@@ -93,7 +94,7 @@ describe('Enumerable', () => {
   });
 
   it('should know if any items satisfy a condition', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
       { name: 'David' },
@@ -106,7 +107,7 @@ describe('Enumerable', () => {
   });
 
   it('should return the enumerable as a list', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
       { name: 'David' },
@@ -117,7 +118,7 @@ describe('Enumerable', () => {
   });
 
   it('should take a sequence of items', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '2', value: 2 },
       { key: '3', value: 3 },
@@ -131,11 +132,11 @@ describe('Enumerable', () => {
   });
 
   it('should take items while a condition is met', () => {
-    classUnderTest.Clear();
+    (classUnderTest as List<any>).Clear();
     const emptyList = classUnderTest.TakeWhile(item => item.key.length >= 1);
     expect((emptyList as List<{ key: '', value: number }>).Count).toEqual(0);
 
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '2', value: 2 },
       { key: '3', value: 3 },
@@ -153,7 +154,7 @@ describe('Enumerable', () => {
   });
 
   it('should return distinct elements from the enumerable collection', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '1', value: 1 },
       { key: '1', value: 2 },
@@ -166,7 +167,7 @@ describe('Enumerable', () => {
   });
 
   it('should skip a sequence of items and return the rest', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '1', value: 1 },
       { key: '1', value: 2 },
@@ -179,7 +180,7 @@ describe('Enumerable', () => {
   });
 
   it('should skip items while a condition is true then return the rest', () => {
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '1', value: 1 },
       { key: '1', value: 2 },
@@ -193,7 +194,7 @@ describe('Enumerable', () => {
 
   it('should aggregate the elements based on input parameter accumulator and result functions', () => {
     // custom aggregation
-    classUnderTest.AddRange([1, 1, 2, 2, 2, 3]);
+    (classUnderTest as List<any>).AddRange([1, 1, 2, 2, 2, 3]);
     const three = classUnderTest.Aggregate(
       1,
       (largest, next) => largest > next ? largest : next,
@@ -211,26 +212,26 @@ describe('Enumerable', () => {
   });
 
   it('should sum the value of elements as numbers or based on a given function', () => {
-    classUnderTest.AddRange([1, 1, 2, 2, 2, 3]);
+    (classUnderTest as List<any>).AddRange([1, 1, 2, 2, 2, 3]);
     const eleven = classUnderTest.Sum();
     expect(eleven).toEqual(11);
     const twentyTwo = classUnderTest.Sum(item => item * 2);
     expect(twentyTwo).toEqual(22);
 
     // error
-    classUnderTest.Add('notanumber');
+    (classUnderTest as List<any>).Add('notanumber');
     expect(() => {
       classUnderTest.Sum();
     }).toThrowError('Could not parse \'notanumber\' as a number');
   });
 
   it('should average the value of elements as numbers or based on a given function', () => {
-    classUnderTest.AddRange([2, 2, 2, 2, 2, 2]);
+    (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
     const two = classUnderTest.Average();
     expect(two).toEqual(2);
     // Custom use case
-    classUnderTest.Clear()
-    classUnderTest.AddRange([
+    (classUnderTest as List<any>).Clear();
+    (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
       { name: 'David' },
@@ -240,26 +241,26 @@ describe('Enumerable', () => {
     expect(averageLength).toEqual(5.25);
 
     // error
-    classUnderTest.Clear();
+    (classUnderTest as List<any>).Clear();
     expect(() => {
       classUnderTest.Average();
     }).toThrowError('Cannot calculate an average from a collection with no elements');
   });
 
   it('should get a random item from the collection', () => {
-    classUnderTest.AddRange([2, 2, 2, 2, 2, 2]);
+    (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
     const randomItem = classUnderTest.GetRandom();
     expect(randomItem).toBeDefined();
   });
 
   it('should return a new collection with an item appended', () => {
-    classUnderTest.AddRange([1, 2, 3, 4]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
     const appended = classUnderTest.Append(5);
     expect(appended.Item[4]).toEqual(5);
   });
 
   it('should return a new collection Except for the items passed', () => {
-    classUnderTest.AddRange([1, 2, 3, 4]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
     const diff = classUnderTest.Except([2, 3]);
     expect(diff.Item.length).toEqual(2);
     expect(diff.Item[0]).toEqual(1);
@@ -268,7 +269,7 @@ describe('Enumerable', () => {
   it('should return the first element in the sequence', () => {
     const nullEl = classUnderTest.First();
     expect(nullEl).toBeNull();
-    classUnderTest.AddRange([1, 2, 3]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3]);
     const first = classUnderTest.First();
     expect(first).toEqual(1);
   });
@@ -276,13 +277,13 @@ describe('Enumerable', () => {
   it('should return the last element in the sequence', () => {
     const nullEl = classUnderTest.Last();
     expect(nullEl).toBeNull();
-    classUnderTest.AddRange([1, 2, 3]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3]);
     const last = classUnderTest.Last();
     expect(last).toEqual(3);
   });
 
   it('should evaluate if an item is contained within a collection', () => {
-    classUnderTest.AddRange(['1', '2', '3']);
+    (classUnderTest as List<any>).AddRange(['1', '2', '3']);
     const truthy = classUnderTest.Contains('1');
     const falsy = classUnderTest.Contains('4');
     expect(truthy).toBeTruthy();
@@ -291,7 +292,7 @@ describe('Enumerable', () => {
     // complex object
     classUnderTest = new List<{ name: string, description: string }>();
     const testObject = { name: 'Joey', description: 'Developer of this library' };
-    classUnderTest.Add(testObject);
+    (classUnderTest as List<any>).Add(testObject);
     const truthy2 = classUnderTest.Contains(testObject);
     const falsy2 = classUnderTest.Contains({ name: 'Fake', description: 'does not exist' });
     expect(truthy2).toBeTruthy();
@@ -299,18 +300,34 @@ describe('Enumerable', () => {
   });
 
   it('should return a new collection with an item prepended to the beginning of the sequence', () => {
-    classUnderTest.AddRange([1, 2, 3, 4]);
+    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
     const prependedCollection = classUnderTest.Prepend(0);
     expect(prependedCollection.Item.length).toEqual(5);
     expect(prependedCollection.Item[0]).toEqual(0);
   });
 
   it('should get a random element excluding a given set', () => {
-    classUnderTest.AddRange([2, 4, 8, 15, 23, 42]);
+    (classUnderTest as List<any>).AddRange([2, 4, 8, 15, 23, 42]);
     const random = classUnderTest.GetRandom([2, 4, 8, 15, 23]);
     expect(random).toEqual(42);
     const randomNull = classUnderTest.GetRandom([2, 4, 8, 15, 23, 42]);
     expect(randomNull).toBeNull();
+  });
+
+  it('should provide a lighter-weight means of consuming enumerable methods without using the list class', () => {
+    const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const query = Enumerable.From(array)
+      .Where(item => item < 5)
+      .ToArray();
+    expect(query.length).toEqual(4);
+
+    const query2 = Enumerable.From(array)
+      .OrderByDescending()
+      .Last();
+    expect(query2).toEqual(1);
+
+    const query3 = Enumerable.From(array).All(item => item > 0);
+    expect(query3).toBeTruthy();
   });
 
 });

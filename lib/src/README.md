@@ -34,6 +34,7 @@ Provides a generic interface for interacting with and querying a collection of t
 
    Methods:
    ```ts
+   static From<T>(array: Array<T>): Enumerable<T>   
    Aggregate<TResult, TAccumulate>(seed: TAccumulate, func: (current: TAccumulate, next: T) => TAccumulate, resultSelector: (item: TAccumulate) => TResult): TResult
    All(func: (item: T) => boolean): boolean
    Any(func: (item: T) => boolean): boolean
@@ -60,13 +61,19 @@ Provides a generic interface for interacting with and querying a collection of t
 
    #### Usage Example:
    ```ts
-   // Instantiate class that extends Enumerable<T>
+   // Instantiate a class that extends Enumerable<T>
    people = new List<Person>([
       new Person('John Doe', 18),
       new Person('James Doe', 27),
       new Person('Joe Doe', 18),
       new Person('Jack Doe', 45)
    ]);
+
+   // OR use the static "From" method to access Enumerable methods when working with standard arrays
+   const sum = Enumerable.From([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).Sum();
+   const oldestPerson = Enumerable.From(people)
+      .OrderBy(item => item.age)
+      .Last();
 
    // Use APIs as desired
    // Where example:

@@ -12,7 +12,7 @@
     "http client",
     "base class library"
   ],
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",
