@@ -6,13 +6,24 @@ export class SortedList<T> extends List<T> {
    */
   public SortingFunction: any;
 
-  constructor(initParam?: Array<T>, sortingFunction?: (item: T) => any) {
-    super(initParam ? initParam : new Array<T>());
-    this.SortingFunction = sortingFunction;
+  /**
+   * Gets or sets the element at the specified index.
+   */
+  protected item = new Array<T>();
+  public get Item(): Array<T> {
+    this.Sort(this.SortingFunction);
+    return this.item;
+  }
+  public set Item(v: Array<T>) {
+    this.item = v;
   }
 
-  protected updateProperties(): void {
-    this.Count = this.Item.length;
-    this.Sort(this.SortingFunction);
+  constructor(initParam?: Array<T>, sortingFunction?: (item: T) => any) {
+    super();
+    this.SortingFunction = sortingFunction;
+    if (initParam && initParam.length) {
+      this.item = initParam.slice();
+    }
   }
+
 }

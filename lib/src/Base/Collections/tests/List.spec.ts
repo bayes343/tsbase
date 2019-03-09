@@ -281,5 +281,11 @@ describe('List', () => {
     expect(itemsShuffled).toBeTruthy();
   });
 
+  it('should properly identify the count of items in the underlying data structure', () => {
+    classUnderTest.AddRange([1, 2, 3]);
+    classUnderTest.Item.push(4);
+    expect(classUnderTest.Count).toEqual(4);
+  });
+
 });
 

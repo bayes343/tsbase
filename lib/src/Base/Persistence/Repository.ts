@@ -13,7 +13,6 @@ export class Repository<T> extends List<T> {
     super();
     const initialData = persister.Retrieve();
     this.Item = initialData && initialData.length >= 1 ? initialData : new Array<T>();
-    this.updateProperties();
   }
 
   /**

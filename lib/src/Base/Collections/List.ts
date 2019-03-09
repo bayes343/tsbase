@@ -4,7 +4,10 @@ export class List<T> extends Enumerable<T> {
   /**
    * Gets the number of elements contained in the List<T>.
    */
-  public Count: number = 0;
+  private count = 0;
+  public get Count(): number {
+    return this.item.length;
+  }
 
   /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
@@ -12,12 +15,11 @@ export class List<T> extends Enumerable<T> {
    */
   constructor();
   constructor(initParam: Array<T>);
-  constructor(initParam?: any) {
+  constructor(initParam?: Array<T> | undefined) {
     super();
     if (initParam && initParam.length) {
-      this.Item = initParam.slice();
+      this.item = initParam.slice();
     }
-    this.updateProperties();
   }
 
   /**
@@ -33,8 +35,7 @@ export class List<T> extends Enumerable<T> {
    * @param object 
    */
   public Add(object: T) {
-    this.Item.push(object);
-    this.updateProperties();
+    this.item.push(object);
   }
 
   /**
@@ -42,16 +43,14 @@ export class List<T> extends Enumerable<T> {
    * @param elements 
    */
   public AddRange(elements: Array<T>) {
-    this.Item = this.Item.concat(elements);
-    this.updateProperties();
+    this.item = this.item.concat(elements);
   }
 
   /**
    * Removes all elements from the List<T>.
    */
   public Clear(): void {
-    this.Item = new Array();
-    this.updateProperties();
+    this.item = new Array();
   }
 
   /**
@@ -61,9 +60,9 @@ export class List<T> extends Enumerable<T> {
    */
   public CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void {
     startIndex = startIndex ? startIndex : 0;
-    endIndex = endIndex ? endIndex : this.Item.length;
+    endIndex = endIndex ? endIndex : this.item.length;
     for (let index = startIndex; index < endIndex; index++) {
-      const element = this.Item[index];
+      const element = this.item[index];
       array.push(element);
     }
   }
@@ -74,8 +73,8 @@ export class List<T> extends Enumerable<T> {
    */
   public Exists(match: (item: T) => boolean): boolean {
     let answer = false;
-    for (let index = 0; index < this.Item.length && !answer; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length && !answer; index++) {
+      const element = this.item[index];
       if (match(element)) {
         answer = true;
       }
@@ -88,8 +87,8 @@ export class List<T> extends Enumerable<T> {
    * @param match
    */
   public Find(match: (item: T) => boolean): T | null {
-    for (let index = 0; index < this.Item.length; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length; index++) {
+      const element = this.item[index];
       if (match(element)) {
         return (element);
       }
@@ -102,7 +101,7 @@ export class List<T> extends Enumerable<T> {
    * @param match 
    */
   public FindAll(match: (item: T) => boolean): List<T> {
-    const matchingElements = this.Item.filter(item => match(item));
+    const matchingElements = this.item.filter(item => match(item));
     return new List<T>(matchingElements);
   }
 
@@ -114,10 +113,10 @@ export class List<T> extends Enumerable<T> {
    */
   public FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
-    endIndex = endIndex ? endIndex : this.Item.length;
+    endIndex = endIndex ? endIndex : this.item.length;
     let index = -1;
     for (let i = startIndex; i < endIndex && index === -1; i++) {
-      const element = this.Item[i];
+      const element = this.item[i];
       if (match(element)) {
         index = i;
       }
@@ -131,7 +130,7 @@ export class List<T> extends Enumerable<T> {
    */
   public FindLast(match: (item: T) => boolean): T | null {
     for (let index = this.Count - 1; index >= 0; index--) {
-      const element = this.Item[index];
+      const element = this.item[index];
       if (match(element)) {
         return (element);
       }
@@ -150,7 +149,7 @@ export class List<T> extends Enumerable<T> {
     endIndex = endIndex && endIndex <= this.Count - 1 ? endIndex : this.Count - 1;
     let index = -1;
     for (let i = endIndex; i >= startIndex && index === -1; i--) {
-      const element = this.Item[i];
+      const element = this.item[i];
       if (match(element)) {
         index = i;
       }
@@ -163,7 +162,7 @@ export class List<T> extends Enumerable<T> {
    * @param action 
    */
   public ForEach(action: (item: T) => any): void {
-    this.Item.forEach(element => {
+    this.item.forEach(element => {
       action(element);
     });
   }
@@ -176,7 +175,7 @@ export class List<T> extends Enumerable<T> {
   public GetRange(index: number, count: number): List<T> {
     const range = new List<T>();
     for (let i = index; i < count; i++) {
-      const element = this.Item[i];
+      const element = this.item[i];
       range.Add(element);
     }
     return range;
@@ -190,8 +189,8 @@ export class List<T> extends Enumerable<T> {
   public IndexOf(item: T, startIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
     let index = -1;
-    for (let i = startIndex; i < this.Item.length && index === -1; i++) {
-      if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
+    for (let i = startIndex; i < this.item.length && index === -1; i++) {
+      if (JSON.stringify(item) === JSON.stringify(this.item[i])) {
         index = i;
       }
     }
@@ -207,7 +206,7 @@ export class List<T> extends Enumerable<T> {
     endIndex = endIndex ? endIndex : this.Count - 1;
     let index = -1;
     for (let i = endIndex; i >= 0 && index === -1; i--) {
-      if (JSON.stringify(item) === JSON.stringify(this.Item[i])) {
+      if (JSON.stringify(item) === JSON.stringify(this.item[i])) {
         index = i;
       }
     }
@@ -220,8 +219,8 @@ export class List<T> extends Enumerable<T> {
    */
   public TrueForAll(match: (item: T) => boolean): boolean {
     let result = true;
-    for (let index = 0; index < this.Item.length && result === true; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length && result === true; index++) {
+      const element = this.item[index];
       if (!match(element)) {
         result = false;
       }
@@ -235,7 +234,7 @@ export class List<T> extends Enumerable<T> {
    */
   public Sort(comparison?: (item: T) => any): void {
     if (comparison) {
-      this.Item.sort((a: T, b: T) => {
+      this.item.sort((a: T, b: T) => {
         if (comparison(a) < comparison(b)) {
           return -1;
         } else if (comparison(a) > comparison(b)) {
@@ -245,7 +244,7 @@ export class List<T> extends Enumerable<T> {
         }
       });
     } else {
-      this.Item.sort();
+      this.item.sort();
     }
   }
 
@@ -255,11 +254,10 @@ export class List<T> extends Enumerable<T> {
    * @param item 
    */
   public Insert(index: number, item: T): void {
-    if (index >= 0 && this.Item.length >= index) {
-      this.Item.splice(index, 0, item);
-      this.updateProperties();
+    if (index >= 0 && this.item.length >= index) {
+      this.item.splice(index, 0, item);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -269,14 +267,13 @@ export class List<T> extends Enumerable<T> {
    * @param collection 
    */
   public InsertRange(index: number, collection: List<T>): void {
-    if (index >= 0 && this.Item.length >= index) {
+    if (index >= 0 && this.item.length >= index) {
       for (let i = 0; i < collection.Count; i++) {
         const element = collection.Item[i];
-        this.Item.splice(index + i, 0, element);
+        this.item.splice(index + i, 0, element);
       }
-      this.updateProperties();
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -287,8 +284,7 @@ export class List<T> extends Enumerable<T> {
   public Remove(item: T): boolean {
     const itemIndex = this.IndexOf(item);
     if (itemIndex >= 0) {
-      this.Item.splice(itemIndex, 1);
-      this.updateProperties();
+      this.item.splice(itemIndex, 1);
       return true;
     } else {
       return false;
@@ -301,8 +297,8 @@ export class List<T> extends Enumerable<T> {
    */
   public RemoveAll(match: (item: T) => boolean): number {
     let count = 0;
-    for (let index = 0; index < this.Item.length; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length; index++) {
+      const element = this.item[index];
       if (match(element)) {
         this.Remove(element);
         index--;
@@ -317,11 +313,10 @@ export class List<T> extends Enumerable<T> {
    * @param index 
    */
   public RemoveAt(index: number): void {
-    if (index >= 0 && this.Item.length >= index) {
-      this.Item.splice(index, 1);
-      this.updateProperties();
+    if (index >= 0 && this.item.length >= index) {
+      this.item.splice(index, 1);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -331,11 +326,10 @@ export class List<T> extends Enumerable<T> {
    * @param count 
    */
   public RemoveRange(index: number, count: number): void {
-    if (index >= 0 && this.Item.length >= index && this.Item.length >= index + count) {
-      this.Item.splice(index, count);
-      this.updateProperties();
+    if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
+      this.item.splice(index, count);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.Item.length} | Passed index: ${index} | Passed count: ${count}`);
+      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
     }
   }
 
@@ -343,7 +337,7 @@ export class List<T> extends Enumerable<T> {
    * Reverses the order of the elements in the entire List<T>.
    */
   public Reverse(): void {
-    this.Item.reverse();
+    this.item.reverse();
   }
 
   /**
@@ -352,7 +346,7 @@ export class List<T> extends Enumerable<T> {
    * @param count 
    */
   public ReverseRange(index: number, count: number): void {
-    const arraySegment = this.Item.splice(index, count);
+    const arraySegment = this.item.splice(index, count);
     arraySegment.reverse();
     this.InsertRange(index, new List<T>(arraySegment));
   }
@@ -361,13 +355,7 @@ export class List<T> extends Enumerable<T> {
    * Shuffles the collection of items stored in the list
    */
   public Shuffle(): void {
-    this.shuffle(this.Item);
+    this.shuffle(this.item);
   }
-
-  //#region Protected implementation 'helpers'
-  protected updateProperties(): void {
-    this.Count = this.Item.length;
-  }
-  //#endregion
 
 }

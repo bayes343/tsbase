@@ -2,7 +2,13 @@ export abstract class Enumerable<T> {
   /**
    * Gets or sets the element at the specified index.
    */
-  public Item: Array<T> = new Array<T>();
+  protected item = new Array<T>();
+  public get Item(): Array<T> {
+    return this.item;
+  }
+  public set Item(v: Array<T>) {
+    this.item = v;
+  }
 
   /**
    * Each extender should define how it should be cloned *structurally* - allows functional chaining of a data structure that maintains state
@@ -21,8 +27,8 @@ export abstract class Enumerable<T> {
     resultSelector: (item: TAccumulate) => TResult
   ): TResult {
     let value = seed;
-    for (let index = 0; index < this.Item.length; index++) {
-      value = func(value, this.Item[index]);
+    for (let index = 0; index < this.item.length; index++) {
+      value = func(value, this.item[index]);
     }
     return resultSelector(value);
   }
@@ -32,8 +38,8 @@ export abstract class Enumerable<T> {
    * @param func 
    */
   public All(func: (item: T) => boolean): boolean {
-    const itemsThatSatisfy = this.Item.filter(func);
-    return itemsThatSatisfy.length === this.Item.length;
+    const itemsThatSatisfy = this.item.filter(func);
+    return itemsThatSatisfy.length === this.item.length;
   }
 
   /**
@@ -41,7 +47,7 @@ export abstract class Enumerable<T> {
    * @param func 
    */
   public Any(func: (item: T) => boolean): boolean {
-    const itemsThatSatisfy = this.Item.filter(func);
+    const itemsThatSatisfy = this.item.filter(func);
     return itemsThatSatisfy.length >= 1 ? true : false;
   }
 
@@ -50,7 +56,7 @@ export abstract class Enumerable<T> {
    * @param item 
    */
   public Append(item: T): Enumerable<T> {
-    const appendedArray = this.Item.slice();
+    const appendedArray = this.item.slice();
     appendedArray.push(item);
     return this.Clone(appendedArray);
   }
@@ -60,7 +66,7 @@ export abstract class Enumerable<T> {
    * @param item 
    */
   public Prepend(item: T): Enumerable<T> {
-    const prependedArray = [item].concat(this.Item);
+    const prependedArray = [item].concat(this.item);
     return this.Clone(prependedArray);
   }
 
@@ -69,12 +75,12 @@ export abstract class Enumerable<T> {
    * @param func 
    */
   public Average(func?: (item: T) => any): number {
-    if (this.Item.length >= 1) {
+    if (this.item.length >= 1) {
       let average = 0;
       if (func) {
-        average = this.Sum(func) / this.Item.length;
+        average = this.Sum(func) / this.item.length;
       } else {
-        average = this.Sum() / this.Item.length;
+        average = this.Sum() / this.item.length;
       }
       return average;
     } else {
@@ -88,10 +94,10 @@ export abstract class Enumerable<T> {
    * @param object 
    */
   public Contains(object: T): boolean {
-    let isContained = this.Item.indexOf(object) >= 0;
+    let isContained = this.item.indexOf(object) >= 0;
 
     if (!isContained && typeof object === 'object') {
-      const stringifiedCollection = JSON.stringify(this.Item);
+      const stringifiedCollection = JSON.stringify(this.item);
       const stringifiedObject = JSON.stringify(object);
       isContained = stringifiedCollection.indexOf(stringifiedObject) >= 0;
     }
@@ -103,7 +109,7 @@ export abstract class Enumerable<T> {
    * @param items 
    */
   public Except(items: Array<T>): Enumerable<T> {
-    let collectionCopy = this.Item.slice();
+    let collectionCopy = this.item.slice();
     const stringifiedItemsToExclude = JSON.stringify(items);
     collectionCopy = collectionCopy.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
     return this.Clone(collectionCopy);
@@ -113,7 +119,7 @@ export abstract class Enumerable<T> {
    * Returns the first element of a sequence or null if the sequence is empty.
    */
   public First(): T | null {
-    const firstElement = this.Item.length >= 1 ? this.Item[0] : null;
+    const firstElement = this.item.length >= 1 ? this.item[0] : null;
     return firstElement;
   }
 
@@ -121,7 +127,7 @@ export abstract class Enumerable<T> {
    * Returns the last element of a sequence or null if the sequence is empty.
    */
   public Last(): T | null {
-    const lastElement = this.Item.length >= 1 ? this.Item[this.Item.length - 1] : null;
+    const lastElement = this.item.length >= 1 ? this.item[this.item.length - 1] : null;
     return lastElement;
   }
 
@@ -132,11 +138,11 @@ export abstract class Enumerable<T> {
   public Sum(func?: (item: T) => number): number {
     let sum = 0;
     if (func) {
-      this.Item.forEach(element => {
+      this.item.forEach(element => {
         sum += func(element);
       });
     } else {
-      this.Item.forEach(element => {
+      this.item.forEach(element => {
         const tNumber = parseFloat(element.toString());
         if (isNaN(tNumber)) {
           throw new Error(`Could not parse \'${element}\' as a number`);
@@ -152,7 +158,7 @@ export abstract class Enumerable<T> {
    * @param func 
    */
   public Where(func: (item: T) => boolean): Enumerable<T> {
-    const collection: Enumerable<T> = this.Clone(this.Item);
+    const collection: Enumerable<T> = this.Clone(this.item);
     collection.Item = collection.Item.filter(func);
     return collection;
   }
@@ -162,7 +168,7 @@ export abstract class Enumerable<T> {
    * @param funcs 
    */
   public OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T> {
-    const collection = this.Clone(this.Item);
+    const collection = this.Clone(this.item);
     if (!funcs) {
       collection.Item.sort();
     } else {
@@ -203,7 +209,7 @@ export abstract class Enumerable<T> {
    */
   public ToArray(): Array<T> {
     let newItemArray = new Array<T>();
-    newItemArray = newItemArray.concat(this.Item);
+    newItemArray = newItemArray.concat(this.item);
     return newItemArray;
   }
 
@@ -212,7 +218,7 @@ export abstract class Enumerable<T> {
    * @param count 
    */
   public Take(count: number): Enumerable<T> {
-    const itemsToTake = this.Item.slice(0, count);
+    const itemsToTake = this.item.slice(0, count);
     const enumerableToReturn = this.Clone(itemsToTake);
     return enumerableToReturn;
   }
@@ -226,8 +232,8 @@ export abstract class Enumerable<T> {
     let index = 0;
     let conditionPassed = true;
     do {
-      if (this.Item.length - 1 >= index) {
-        const element = this.Item[index];
+      if (this.item.length - 1 >= index) {
+        const element = this.item[index];
         if (func(element)) {
           itemsToReturn.push(element);
         } else {
@@ -247,8 +253,8 @@ export abstract class Enumerable<T> {
    */
   public Distinct(): Enumerable<T> {
     const itemsToReturn = [];
-    for (let index = 0; index < this.Item.length; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length; index++) {
+      const element = this.item[index];
       const stringifiedItems = JSON.stringify(itemsToReturn);
       if (stringifiedItems.indexOf(JSON.stringify(element)) === -1) {
         itemsToReturn.push(element);
@@ -262,7 +268,7 @@ export abstract class Enumerable<T> {
    * @param count 
    */
   public Skip(count: number): Enumerable<T> {
-    const itemsToReturn = this.Item.slice(count, this.Item.length);
+    const itemsToReturn = this.item.slice(count, this.item.length);
     return this.Clone(itemsToReturn);
   }
 
@@ -272,13 +278,13 @@ export abstract class Enumerable<T> {
    */
   public SkipWhile(func: (item: T) => boolean): Enumerable<T> {
     let startIndex = 0;
-    for (let index = 0; index < this.Item.length && startIndex === 0; index++) {
-      const element = this.Item[index];
+    for (let index = 0; index < this.item.length && startIndex === 0; index++) {
+      const element = this.item[index];
       if (!func(element)) {
         startIndex = index;
       }
     }
-    const itemsToReturn = this.Item.slice(startIndex, this.Item.length);
+    const itemsToReturn = this.item.slice(startIndex, this.item.length);
     return this.Clone(itemsToReturn);
   }
 
