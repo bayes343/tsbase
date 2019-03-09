@@ -214,21 +214,6 @@ export class List<T> extends Enumerable<T> {
   }
 
   /**
-   * Determines whether every element in the List<T> matches the conditions defined by the specified predicate.
-   * @param match 
-   */
-  public TrueForAll(match: (item: T) => boolean): boolean {
-    let result = true;
-    for (let index = 0; index < this.item.length && result === true; index++) {
-      const element = this.item[index];
-      if (!match(element)) {
-        result = false;
-      }
-    }
-    return result;
-  }
-
-  /**
    * Sorts the elements or a portion of the elements in the List<T> using either the specified or default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
    * @param comparison 
    */

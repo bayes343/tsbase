@@ -150,14 +150,6 @@ describe('List', () => {
     expect(arrayOfList.length).toEqual(4);
   });
 
-  it('should evaluate whether a predicate matches all elements in the array', () => {
-    classUnderTest.AddRange(['1', '2', '3', '21']);
-    const truthy = classUnderTest.TrueForAll(item => item.length >= 1);
-    expect(truthy).toBeTruthy();
-    const falsy = classUnderTest.TrueForAll(item => item.length === 1);
-    expect(falsy).toBeFalsy();
-  });
-
   it('should sort a list based on a comparison function', () => {
     classUnderTest.AddRange(['2', '1', '3', '21', '0', '0']);
     classUnderTest.Sort(item => parseInt(item));

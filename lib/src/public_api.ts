@@ -27,6 +27,8 @@ export * from './Base/Persistence/Repository';
 export * from './Base/Persistence/IPersistable';
 export * from './Base/Persistence/WebStoragePersister';
 export * from './Base/Persistence/CachedHttpClient';
+export * from './Base/Persistence/Integrity/Rule';
+export * from './Base/Persistence/Integrity/Severity';
 
 // Other
 export * from './Base/TypeLiterals';

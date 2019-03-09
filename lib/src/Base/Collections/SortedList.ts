@@ -9,7 +9,6 @@ export class SortedList<T> extends List<T> {
   /**
    * Gets or sets the element at the specified index.
    */
-  protected item = new Array<T>();
   public get Item(): Array<T> {
     this.Sort(this.SortingFunction);
     return this.item;

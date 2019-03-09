@@ -9,7 +9,7 @@ TypeScript is awesome, especially if you're coming from a .Net background.  If y
 
 My goal with this project is to build out a more pure TypeScript framework.  Not a frontend framework, but a set of base class libraries that can be taken with you regardless of what *presentation* technology (Angular, React, etc.) is used.
 
-This project is very heavily influenced by the .Net framework; in many cases that is intentional.  These APIs in particular have their public interfaces modeled very closely after their .Net Framework equivalents:
+This project is very heavily influenced by the .Net framework; in many cases that is intentional.  These APIs in particular have their interfaces modeled very closely after their .Net Framework equivalents:
 - Enumerable\<T> (IEnumerable\<T>)
 - List\<T>
 - HttpClient
@@ -61,7 +61,7 @@ Provides a generic interface for interacting with and querying a collection of t
    #### Usage Example:
    ```ts
    // Instantiate class that extends Enumerable<T>
-   public people = new List<Person>([
+   people = new List<Person>([
       new Person('John Doe', 18),
       new Person('James Doe', 27),
       new Person('Joe Doe', 18),
@@ -95,7 +95,6 @@ Provides a generic interface for mutably interacting with a collection of things
    Properties:
    ```ts
    Count: number;
-   Item: Array<T>;
    ```
 
    Methods:
@@ -114,7 +113,6 @@ Provides a generic interface for mutably interacting with a collection of things
    GetRange(index: number, count: number): List<T>
    IndexOf(item: T, startIndex?: number): number
    LastIndexOf(item: T, endIndex?: number): number
-   TrueForAll(match: (item: T) => boolean): boolean
    Sort(comparison?: (item: T) => any): void
    Insert(index: number, item: T): void
    InsertRange(index: number, collection: List<T>): void
@@ -130,7 +128,7 @@ Provides a generic interface for mutably interacting with a collection of things
    #### Usage Example:
    ```ts
    // Instantiate a List<T>
-   public people = new List<Person>([
+   people = new List<Person>([
       new Person('John Doe', 18),
       new Person('James Doe', 27),
       new Person('Joe Doe', 18),
@@ -156,7 +154,7 @@ Provides a generic interface for mutably interacting with a collection of things
 
    Properties
    ```ts
-   public SortingFunction: any;
+   SortingFunction: any;
    ```
 
 ---
@@ -171,21 +169,21 @@ Provides an abstraction for making HTTP requests that can be `async await`ed.
 
    Properties
    ```ts
-   public BaseAddress = '';
-   public DefaultRequestHeaders = new Array<KeyValue>();
-   public Timeout = 10;
+   BaseAddress = '';
+   DefaultRequestHeaders = new Array<KeyValue>();
+   Timeout = 10;
    ```
 
    Methods
    ```ts
-   public CancelPendingRequests(): void
-   public async DeleteAsync(uri: string): Promise<HttpResponseMessage>
-   public async GetAsync(uri: string): Promise<HttpResponseMessage>
-   public async GetStringAsync(uri: string): Promise<string>
-   public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage>
-   public async PostAsync(uri: string, payload: any):  Promise<HttpResponseMessage>
-   public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage>
-   public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>
+   CancelPendingRequests(): void
+   async DeleteAsync(uri: string): Promise<HttpResponseMessage>
+   async GetAsync(uri: string): Promise<HttpResponseMessage>
+   async GetStringAsync(uri: string): Promise<string>
+   async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage>
+   async PostAsync(uri: string, payload: any):  Promise<HttpResponseMessage>
+   async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage>
+   async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage>
    ```
 
    #### Usage Example:
@@ -212,7 +210,7 @@ Solves a common problem of getting class instances from anonymous objects in Jav
 
    Methods
    ```ts
-   public Serialize(t: { new(): T; }, json: any): T;
+   Serialize(t: { new(): T; }, json: any): T;
    ```
 
    #### Usage Example:
@@ -240,17 +238,23 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
    class Repository<T> extends List<T>
    ```
 
+   Properties
+   ```ts
+   Rules = new Array<Rule<T>>();
+   ```
+
    Methods
    ```ts
-   public SaveChanges(): void
-   public PurgeData(): void
+   SaveChanges(): void
+   PurgeData(): void
+   GetUnsavedElements(): Enumerable<T>
    ```
 
    #### Usage Example:
    ```ts
    // Instantiate repository
    // *Repository will init with previously stored data if available
-   public peopleRepo = new Repository<Person>(
+   peopleRepo = new Repository<Person>(
     new WebStoragePersister( // <- Used to store data using Dom Storage APIs
        "people", // <- key
        "local" // <- Dom Storage Type (session or local)
@@ -280,8 +284,8 @@ A wrapper around the setInterval function allowing the consumer to add functions
 
    Methods
    ```ts
-   public async Start(): Promise<any>
-   public Stop(): void
+   async Start(): Promise<any>
+   Stop(): void
    ```
 
    #### Usage Example:
@@ -311,7 +315,7 @@ A wrapper around the standard HttpClient offered in this library. It uses a Repo
 
    Methods
    ```ts
-   public async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
+   async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
    ```
 
    #### Usage Example:
