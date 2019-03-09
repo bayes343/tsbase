@@ -32,3 +32,4 @@ export * from './Base/Persistence/Integrity/Severity';
 
 // Other
 export * from './Base/TypeLiterals';
+export * from './Base/Functions/BaseFunctions';

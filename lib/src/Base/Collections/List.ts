@@ -1,4 +1,5 @@
 import { Enumerable } from './Query/Enumerable';
+import { BaseFunctions } from '../Functions/BaseFunctions';
 
 export class List<T> extends Enumerable<T> {
   /**
@@ -340,7 +341,7 @@ export class List<T> extends Enumerable<T> {
    * Shuffles the collection of items stored in the list
    */
   public Shuffle(): void {
-    this.shuffle(this.item);
+    BaseFunctions.Shuffle(this.item);
   }
 
 }

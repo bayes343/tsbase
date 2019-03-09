@@ -1,3 +1,5 @@
+import { BaseFunctions } from '../../Functions/BaseFunctions';
+
 export abstract class Enumerable<T> {
   /**
    * Gets or sets the element at the specified index.
@@ -294,23 +296,8 @@ export abstract class Enumerable<T> {
    */
   public GetRandom(excluding?: Array<T>): T | null {
     let candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
-    const shuffledItems = this.shuffle(candidateElements);
+    const shuffledItems = BaseFunctions.Shuffle(candidateElements);
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
-  }
-
-  protected shuffle(array: Array<T>): Array<T> {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-
-    return array;
   }
 
 }
