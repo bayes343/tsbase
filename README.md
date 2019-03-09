@@ -1,14 +1,19 @@
-# tsbase
+# tsbase Quickstart
 
-A work in progress TypeScript framework / set of base class libraries - not a frontend framework.
+[![Build status](https://joseph-w-bayes.visualstudio.com/tsbase/_apis/build/status/Test,%20Build,%20Archive)](https://joseph-w-bayes.visualstudio.com/tsbase/_build/latest?definitionId=7)
 
-* Run below commands in the lib directory.
+The public facing readme is located in the `lib/src` directory.  This readme is intended for maintainers / constributors to tsbase.
 
-## Intsall
+## Local Development
+
+### Pre-requisites 
+- node/npm
+
+### Installation
 - run cmd: `npm install`
 
-## Test
+### Testing
 - run cmd: `npm run test` / `karma start`
 
-## Build
+### Building
 - run cmd `npm run build`

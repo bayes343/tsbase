@@ -8,9 +8,11 @@
     "typescript",
     "generic",
     "collections",
-    "list"
+    "query",
+    "http client",
+    "base class library"
   ],
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",

@@ -147,6 +147,20 @@ Provides a generic interface for mutably interacting with a collection of things
    ```
 ---
 
+### SortedList
+   Extends the List class, maintaining the order of elements stored in the collection by the default comparer or a custom "SortingFunction."
+
+   ```ts
+   export class SortedList<T> extends List<T>
+   ```
+
+   Properties
+   ```ts
+   public SortingFunction: any;
+   ```
+
+---
+
 ### HttpClient
 
 Provides an abstraction for making HTTP requests that can be `async await`ed.
