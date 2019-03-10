@@ -1,6 +1,6 @@
 import { BaseFunctions } from '../../Functions/BaseFunctions';
 
-export abstract class Enumerable<T> {
+export abstract class Queryable<T> {
   /**
    * Gets or sets the element at the specified index.
    */
@@ -13,28 +13,28 @@ export abstract class Enumerable<T> {
   }
 
   /**
-   * Returns a generic enumerable object providing easy access to the query centric Enumerable api surface for standard arrays
+   * Returns a generic Queryable object providing easy access to the query centric Queryable api surface for standard arrays
    * @param array 
    */
-  public static From<T>(array: Array<T>): Enumerable<T> {
-    class EnumerableArray<T> extends Enumerable<T> {
+  public static From<T>(array: Array<T>): Queryable<T> {
+    class QueryableArray<T> extends Queryable<T> {
       constructor(array: Array<T>) {
         super();
         this.item = array;
       }
-      public Clone(array: Array<T>): Enumerable<T> {
-        return new EnumerableArray<T>(array);
+      public Clone(array: Array<T>): Queryable<T> {
+        return new QueryableArray<T>(array);
       }
     }
 
-    return new EnumerableArray<T>(array);
+    return new QueryableArray<T>(array);
   }
 
   /**
    * Each extender should define how it should be cloned *structurally* - allows functional chaining of a data structure that maintains state
    * @param item 
    */
-  protected abstract Clone(item: Array<T>): Enumerable<T>;
+  protected abstract Clone(item: Array<T>): Queryable<T>;
 
   /**
    * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
@@ -75,7 +75,7 @@ export abstract class Enumerable<T> {
    * Returns a collection with the given value Appended to the end of the sequence.
    * @param item 
    */
-  public Append(item: T): Enumerable<T> {
+  public Append(item: T): Queryable<T> {
     const appendedArray = this.item.slice();
     appendedArray.push(item);
     return this.Clone(appendedArray);
@@ -85,7 +85,7 @@ export abstract class Enumerable<T> {
    * Returns a collection with the given value Prepended to the beginning of the sequence.
    * @param item 
    */
-  public Prepend(item: T): Enumerable<T> {
+  public Prepend(item: T): Queryable<T> {
     const prependedArray = [item].concat(this.item);
     return this.Clone(prependedArray);
   }
@@ -128,7 +128,7 @@ export abstract class Enumerable<T> {
    * Produces the set difference of two sequences.
    * @param items 
    */
-  public Except(items: Array<T>): Enumerable<T> {
+  public Except(items: Array<T>): Queryable<T> {
     let collectionCopy = this.item.slice();
     const stringifiedItemsToExclude = JSON.stringify(items);
     collectionCopy = collectionCopy.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
@@ -177,8 +177,8 @@ export abstract class Enumerable<T> {
    * Filters a sequence of values based on a predicate.
    * @param func 
    */
-  public Where(func: (item: T) => boolean): Enumerable<T> {
-    const collection: Enumerable<T> = this.Clone(this.item);
+  public Where(func: (item: T) => boolean): Queryable<T> {
+    const collection: Queryable<T> = this.Clone(this.item);
     collection.Item = collection.Item.filter(func);
     return collection;
   }
@@ -187,7 +187,7 @@ export abstract class Enumerable<T> {
    * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
    * @param funcs 
    */
-  public OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T> {
+  public OrderBy(funcs?: Array<(item: T) => any>): Queryable<T> {
     const collection = this.Clone(this.item);
     if (!funcs) {
       collection.Item.sort();
@@ -214,8 +214,8 @@ export abstract class Enumerable<T> {
    * Sorts the elements of a sequence in descending order.
    * @param func 
    */
-  public OrderByDescending(funcs?: Array<(item: T) => any>): Enumerable<T> {
-    let collection: Enumerable<T>;
+  public OrderByDescending(funcs?: Array<(item: T) => any>): Queryable<T> {
+    let collection: Queryable<T>;
     if (funcs) {
       collection = this.OrderBy(funcs);
     }
@@ -225,7 +225,7 @@ export abstract class Enumerable<T> {
   }
 
   /**
-   * Creates an array from a IEnumerable<T>.
+   * Creates an array from a IQueryable<T>.
    */
   public ToArray(): Array<T> {
     let newItemArray = new Array<T>();
@@ -237,17 +237,17 @@ export abstract class Enumerable<T> {
    * Returns a specified number of contiguous elements from the start of a sequence.
    * @param count 
    */
-  public Take(count: number): Enumerable<T> {
+  public Take(count: number): Queryable<T> {
     const itemsToTake = this.item.slice(0, count);
-    const enumerableToReturn = this.Clone(itemsToTake);
-    return enumerableToReturn;
+    const QueryableToReturn = this.Clone(itemsToTake);
+    return QueryableToReturn;
   }
 
   /**
    * Returns elements from a sequence as long as a specified condition is true.
    * @param func 
    */
-  public TakeWhile(func: (item: T) => boolean): Enumerable<T> {
+  public TakeWhile(func: (item: T) => boolean): Queryable<T> {
     const itemsToReturn = [];
     let index = 0;
     let conditionPassed = true;
@@ -271,7 +271,7 @@ export abstract class Enumerable<T> {
    * Returns distinct elements from a sequence.
    * @param func 
    */
-  public Distinct(): Enumerable<T> {
+  public Distinct(): Queryable<T> {
     const itemsToReturn = [];
     for (let index = 0; index < this.item.length; index++) {
       const element = this.item[index];
@@ -287,7 +287,7 @@ export abstract class Enumerable<T> {
    * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
    * @param count 
    */
-  public Skip(count: number): Enumerable<T> {
+  public Skip(count: number): Queryable<T> {
     const itemsToReturn = this.item.slice(count, this.item.length);
     return this.Clone(itemsToReturn);
   }
@@ -296,7 +296,7 @@ export abstract class Enumerable<T> {
    * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
    * @param func 
    */
-  public SkipWhile(func: (item: T) => boolean): Enumerable<T> {
+  public SkipWhile(func: (item: T) => boolean): Queryable<T> {
     let startIndex = 0;
     for (let index = 0; index < this.item.length && startIndex === 0; index++) {
       const element = this.item[index];

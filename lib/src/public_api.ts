@@ -4,7 +4,7 @@
 
 // Collections
 export * from './Base/Collections/List';
-export * from './Base/Collections/Query/Enumerable';
+export * from './Base/Collections/Query/Queryable';
 export * from './Base/Collections/SortedList';
 
 // Net

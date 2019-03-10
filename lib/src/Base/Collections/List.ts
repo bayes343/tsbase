@@ -1,7 +1,7 @@
-import { Enumerable } from './Query/Enumerable';
+import { Queryable } from './Query/Queryable';
 import { BaseFunctions } from '../Functions/BaseFunctions';
 
-export class List<T> extends Enumerable<T> {
+export class List<T> extends Queryable<T> {
   /**
    * Gets the number of elements contained in the List<T>.
    */
@@ -12,7 +12,7 @@ export class List<T> extends Enumerable<T> {
 
   /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
-   * List<T>(IEnumerable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
+   * List<T>(IQueryable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
    */
   constructor();
   constructor(initParam: Array<T>);
@@ -24,10 +24,10 @@ export class List<T> extends Enumerable<T> {
   }
 
   /**
-   * Implement abstract enumerable contract
+   * Implement abstract Queryable contract
    * @param item 
    */
-  protected Clone(item: Array<T>): Enumerable<T> {
+  protected Clone(item: Array<T>): Queryable<T> {
     return new List<T>(item);
   }
 

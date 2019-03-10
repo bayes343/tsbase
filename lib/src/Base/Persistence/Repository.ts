@@ -1,6 +1,6 @@
 import { List } from '../Collections/List';
 import { IPersistable } from './IPersistable';
-import { Enumerable } from '../Collections/Query/Enumerable';
+import { Queryable } from '../Collections/Query/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
 import { Rule } from './Integrity/Rule';
 import { Severity } from './Integrity/Severity';
@@ -49,7 +49,7 @@ export class Repository<T> extends List<T> {
   /**
    * Returns a collection of elements that have not been saved
    */
-  public GetUnsavedElements(): Enumerable<T> {
+  public GetUnsavedElements(): Queryable<T> {
     return this.Except(this.savedData);
   }
 

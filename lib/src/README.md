@@ -10,7 +10,7 @@ TypeScript is awesome, especially if you're coming from a .Net background.  If y
 My goal with this project is to build out a more pure TypeScript framework.  Not a frontend framework, but a set of base class libraries that can be taken with you regardless of what *presentation* technology (Angular, React, etc.) is used.
 
 This project is very heavily influenced by the .Net framework; in many cases that is intentional.  These APIs in particular have their interfaces modeled very closely after their .Net Framework equivalents:
-- Enumerable\<T> (IEnumerable\<T>)
+- Queryable\<T> (Enumerable\<T>)
 - List\<T>
 - HttpClient
 
@@ -19,12 +19,12 @@ All glory to Microsoft for developing such awesome interfaces.
 ---
 
 ## Available APIs
-### Enumerable
+### Queryable
 
 Provides a generic interface for interacting with and querying a collection of things.
    
    ```ts
-   abstract class Enumerable<T>
+   abstract class Queryable<T>
    ```
 
    Properties:
@@ -34,34 +34,34 @@ Provides a generic interface for interacting with and querying a collection of t
 
    Methods:
    ```ts
-   static From<T>(array: Array<T>): Enumerable<T>   
+   static From<T>(array: Array<T>): Queryable<T>   
    Aggregate<TResult, TAccumulate>(seed: TAccumulate, func: (current: TAccumulate, next: T) => TAccumulate, resultSelector: (item: TAccumulate) => TResult): TResult
    All(func: (item: T) => boolean): boolean
    Any(func: (item: T) => boolean): boolean
    Average(func?: (item: T) => any): number
-   Append(item: T): Enumerable<T>
-   Prepend(item: T): Enumerable<T>
+   Append(item: T): Queryable<T>
+   Prepend(item: T): Queryable<T>
    Contains(object: T): boolean
-   Except(items: Array<T>): Enumerable<T>
+   Except(items: Array<T>): Queryable<T>
    First(): T | null
    Last(): T | null
    Sum(func?: (item: T) => number): number
-   Where(func: (item: T) => boolean): Enumerable<T>
-   OrderBy(funcs?: Array<(item: T) => any>): Enumerable<T>
-   OrderByDescending(funcs?: Array<(item: T) => any>): Enumerable<T>
+   Where(func: (item: T) => boolean): Queryable<T>
+   OrderBy(funcs?: Array<(item: T) => any>): Queryable<T>
+   OrderByDescending(funcs?: Array<(item: T) => any>): Queryable<T>
    ToList(): List<T>
    ToArray(): Array<T>
-   Take(count: number): Enumerable<T>
-   TakeWhile(func: (item: T) => boolean): Enumerable<T>
-   Distinct(): Enumerable<T>
-   Skip(count: number): Enumerable<T>
-   SkipWhile(func: (item: T) => boolean): Enumerable<T>
+   Take(count: number): Queryable<T>
+   TakeWhile(func: (item: T) => boolean): Queryable<T>
+   Distinct(): Queryable<T>
+   Skip(count: number): Queryable<T>
+   SkipWhile(func: (item: T) => boolean): Queryable<T>
    GetRandom(): T | null
    ```
 
    #### Usage Example:
    ```ts
-   // Instantiate a class that extends Enumerable<T>
+   // Instantiate a class that extends Queryable<T>
    people = new List<Person>([
       new Person('John Doe', 18),
       new Person('James Doe', 27),
@@ -69,9 +69,9 @@ Provides a generic interface for interacting with and querying a collection of t
       new Person('Jack Doe', 45)
    ]);
 
-   // OR use the static "From" method to access Enumerable methods when working with standard arrays
-   const sum = Enumerable.From([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).Sum();
-   const oldestPerson = Enumerable.From(people)
+   // OR use the static "From" method to access Queryable methods when working with standard arrays
+   const sum = Queryable.From([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).Sum();
+   const oldestPerson = Queryable.From(people)
       .OrderBy(item => item.age)
       .Last();
 
@@ -96,7 +96,7 @@ Provides a generic interface for interacting with and querying a collection of t
 Provides a generic interface for mutably interacting with a collection of things.
     
    ```ts
-   class List<T> extends Enumerable<T>
+   class List<T> extends Queryable<T>
    ```
 
    Properties:
@@ -254,7 +254,7 @@ Extends the generic List<T> with persistence capabilities, to include retrieval 
    ```ts
    SaveChanges(): void
    PurgeData(): void
-   GetUnsavedElements(): Enumerable<T>
+   GetUnsavedElements(): Queryable<T>
    ```
 
    #### Usage Example:

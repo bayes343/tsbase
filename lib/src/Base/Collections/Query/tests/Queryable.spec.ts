@@ -1,8 +1,8 @@
 import { List } from '../../List';
-import { Enumerable } from '../Enumerable';
+import { Queryable } from '../Queryable';
 
-describe('Enumerable', () => {
-  let classUnderTest: Enumerable<any>;
+describe('Queryable', () => {
+  let classUnderTest: Queryable<any>;
 
   beforeEach(() => {
     classUnderTest = new List<any>();
@@ -106,7 +106,7 @@ describe('Enumerable', () => {
     expect(falsy).toBeFalsy();
   });
 
-  it('should return the enumerable as a list', () => {
+  it('should return the Queryable as a list', () => {
     (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
       { name: 'Adam' },
@@ -153,7 +153,7 @@ describe('Enumerable', () => {
     expect((first4 as List<{ key: string, value: number }>).Count).toEqual(4);
   });
 
-  it('should return distinct elements from the enumerable collection', () => {
+  it('should return distinct elements from the Queryable collection', () => {
     (classUnderTest as List<any>).AddRange([
       { key: '1', value: 1 },
       { key: '1', value: 1 },
@@ -314,19 +314,19 @@ describe('Enumerable', () => {
     expect(randomNull).toBeNull();
   });
 
-  it('should provide a lighter-weight means of consuming enumerable methods without using the list class', () => {
+  it('should provide a lighter-weight means of consuming Queryable methods without using the list class', () => {
     const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const query = Enumerable.From(array)
+    const query = Queryable.From(array)
       .Where(item => item < 5)
       .ToArray();
     expect(query.length).toEqual(4);
 
-    const query2 = Enumerable.From(array)
+    const query2 = Queryable.From(array)
       .OrderByDescending()
       .Last();
     expect(query2).toEqual(1);
 
-    const query3 = Enumerable.From(array).All(item => item > 0);
+    const query3 = Queryable.From(array).All(item => item > 0);
     expect(query3).toBeTruthy();
   });
 
