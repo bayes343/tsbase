@@ -1,23 +1,51 @@
 # tsbase
-TypeScript base class libraries
+Base class libraries for TypeScript
 
 [![Build status](https://joseph-w-bayes.visualstudio.com/tsbase/_apis/build/status/Test,%20Build,%20Archive)](https://joseph-w-bayes.visualstudio.com/tsbase/_build/latest?definitionId=7)
 [![Code coverage](https://img.shields.io/azure-devops/coverage/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg)](https://img.shields.io/azure-devops/coverage/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg)
 
-TypeScript is awesome, especially if you're coming from a .Net background.  If you're like me though, much of the joy of working with C# comes from the **ubiquitous** wealth of base class libraries offered by the .Net framework.  There are plenty of frontend frameworks, and much of this pain is eliminated by picking one, however, these usually, and I would say rightfully, focus on presentation layer concerns and are much higher level than .Net's Generic Collection and Linq libraries.  I would say Angular, Vue, React, etc. sit much closer to ASP.Net MVC, WPF, or UWP than they do to the .Net base class libraries (.Net Framework).
-
-My goal with this project is to build out a more pure TypeScript framework.  Not a frontend framework, but a set of base class libraries that can be taken with you regardless of what *presentation* technology (Angular, React, etc.) is used.
-
-This project is very heavily influenced by the .Net framework; in many cases that is intentional.  These APIs in particular have their interfaces modeled very closely after their .Net Framework equivalents:
-- Queryable\<T> (Enumerable\<T>)
-- List\<T>
-- HttpClient
-
-All glory to Microsoft for developing such awesome interfaces.
+Helpful links:
+- [Home page](https://tsbase.josephbayes.net/)
+- [Project home](https://dev.azure.com/joseph-w-bayes/tsbase)
+- [Wiki](https://dev.azure.com/joseph-w-bayes/tsbase/_wiki/wikis)
 
 ---
 
-## Available APIs
+## Quick-start
+
+Install tsbase inside any npm based project by running `npm i tsbase`
+
+Import the libraries you wish to use like so:
+
+```ts
+import { Queryable, List } from 'tsbase';
+```
+
+Consume available apis:
+
+```ts
+// Instantiate a list of person
+people = new List<Person>([
+   new Person('John Doe', 18),
+   new Person('James Doe', 27),
+   new Person('Joe Doe', 20),
+   new Person('Jack Doe', 45)
+]);
+
+people.Sort(p => p.name); // Sort people alphabetically
+
+const averageAge = people.Average(p => p.age); // 27.5
+
+const youngestPerson = people.OrderBy([p => p.age]).First(); // John Doe / 18
+
+const seniorPeople = people.Where(
+   p => p.age > people.Average(p => p.age));
+```
+
+---
+
+## Current API List
+
 ### Queryable
 
 Provides a generic interface for interacting with and querying a collection of things.
@@ -60,7 +88,13 @@ Provides a generic interface for interacting with and querying a collection of t
 
    #### Usage Example:
    ```ts
-   // Instantiate a class that extends Queryable<T>
+   // Use the static "From" method to access Queryable methods when working with standard arrays
+   const sum = Queryable.From([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).Sum();
+   const oldestPerson = Queryable.From(people)
+      .OrderBy(item => item.age)
+      .Last();
+
+   // OR Instantiate a class that extends Queryable<T>
    people = new List<Person>([
       new Person('John Doe', 18),
       new Person('James Doe', 27),
@@ -68,13 +102,6 @@ Provides a generic interface for interacting with and querying a collection of t
       new Person('Jack Doe', 45)
    ]);
 
-   // OR use the static "From" method to access Queryable methods when working with standard arrays
-   const sum = Queryable.From([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).Sum();
-   const oldestPerson = Queryable.From(people)
-      .OrderBy(item => item.age)
-      .Last();
-
-   // Use APIs as desired
    // Where example:
    const jack = people.Where(item => item.Name === 'Jack Doe')[0];
 
@@ -163,6 +190,16 @@ Provides a generic interface for mutably interacting with a collection of things
    SortingFunction: any;
    ```
 
+   #### Usage example
+   ```ts
+   sortedList = new SortedList<string>(['d', 'e', 'f']);
+   sortedList.AddRange(['a', 'b', 'c']);
+   const a = sortedList.First();
+   const f = sortedList.Last();
+
+   // For more complex scenarios (where the default comparer would not be sufficient), the SortingFunction property allows custom sorting logic.
+   ```
+
 ---
 
 ### HttpClient
@@ -198,10 +235,10 @@ Provides an abstraction for making HTTP requests that can be `async await`ed.
    const client = new HttpClient();
 
    // Configure base address if desired
-   client.BaseAddress = 'https://foaas.com';
+   client.BaseAddress = 'https://myendpoint.com';
    
    // Await a request
-   const response = await client.GetStringAsync('cup/Joe');
+   const response = await client.GetStringAsync('product/1');
    ```
 
 ---
@@ -313,7 +350,7 @@ A wrapper around the setInterval function allowing the consumer to add functions
 
 ### CachedHttpClient
 
-A wrapper around the standard HttpClient offered in this library. It uses a Repository to store Http Get requests, with subsequent requests for the same uri returning the cached HttpResponseMessage instead of executing another Http Get.
+A wrapper around the standard HttpClient offered in this library. It uses a Repository to store Http Get requests/responses, with subsequent requests for the same uri returning the cached HttpResponseMessage instead of executing another Http Get.
 
    ```ts
    class CachedHttpClient
@@ -331,5 +368,5 @@ A wrapper around the standard HttpClient offered in this library. It uses a Repo
    
    // Use client as normal for GetAsync requests
    const response1 = await cachedClient.GetAsync('https://fake.com/ok');   
-   const response2 = await cachedClient.GetAsync('https://fake.com/ok'); // returns previously saved response
+   const response2 = await cachedClient.GetAsync('https://fake.com/ok'); // returns previously saved response - DOES NOT attempt a GET
    ```

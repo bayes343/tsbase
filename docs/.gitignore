@@ -1,3 +1,4 @@
 tsbase
 dist/bundle.js
 firebase-debug.log
+.firebase
