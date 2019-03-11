@@ -31,6 +31,14 @@ header {
   margin-right: 20px;
 }
 
+pre code {
+  border: 0;
+}
+
+.language-javascript {
+  background-color: #1e1e1e !important;
+}
+
 footer {
   height: auto;
   padding: 20px;
