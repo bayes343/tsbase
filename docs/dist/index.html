@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <title>tsbase App Example</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <title>tsbase</title>
+  <meta name="description" content="Base class libraries for TypeScript">
+  <meta name="author" content="Joseph Bayes">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
@@ -32,14 +32,20 @@
 
   <main>
     <section class="hero default-gutters">
-      <div>
+      <div class="content">
         <h1>tsbase</h1>
         <p>Base class libraries for TypeScript</p>
       </div>
 
-      <div class="image-wrapper">
-        <img src="https://via.placeholder.com/300/444444" alt="placeholder">
-      </div>
+      <a href="https://www.npmjs.com/package/tsbase" class="image-wrapper">
+        <p>> npm install tsbase</p>
+        <img src="https://img.shields.io/npm/dt/tsbase.svg" alt="npm downloads badge">
+        <img src="https://img.shields.io/azure-devops/tests/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg"
+          alt="Unit tests">
+        <img
+          src="https://img.shields.io/azure-devops/coverage/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg"
+          alt="Code coverage">
+      </a>
 
       <div class="content-wrapper">
         <a class="button" href="https://dev.azure.com/joseph-w-bayes/tsbase/_wiki/wikis">Get Started</a>
@@ -50,45 +56,59 @@
       <ul>
         <li>
           <div class="highlight">
-            <div>
+            <div class="content">
               <h2>Collections</h2>
               <p>Intuitive collections with enhanced querying capabilities.</p>
+              <p>Use lambda functions to sort, sum, aggregate and otherwise query/manipulate a collection.</p>
+              <p>Statefully manage generic lists of things.</p>
             </div>
             <div class="image-wrapper">
-              <img src="https://via.placeholder.com/300/444444" alt="placeholder">
+              <img src="./images/collections.png" alt="placeholder">
             </div>
           </div>
         </li>
         <li>
           <div class="highlight">
-            <div>
+            <div class="image-wrapper desktop-only">
+              <img src="./images/httpclient.png" alt="placeholder">
+            </div>
+            <div class="content">
               <h2>HttpClient</h2>
               <p>Simple and powerful Async/Await based Http Client.</p>
+              <p>Turns a simple GET into the one-two liner you expect it to be.</p>
             </div>
-            <div class="image-wrapper">
-              <img src="https://via.placeholder.com/300/444444" alt="placeholder">
+            <div class="image-wrapper mobile-and-tablet-only">
+              <img src="./images/httpclient.png" alt="placeholder">
             </div>
           </div>
         </li>
         <li>
           <div class="highlight">
-            <div>
+            <div class="content">
               <h2>Other Generic OOP Goodness</h2>
-              <p>Intuitive collections with enhanced querying capabilities.</p>
+              <p>Libraries for serializing JSON into class instances, handling persistence of data within and beyond a
+                browsing session, and more.</p>
+              <p>All classes are designed with extendability in mind, readily taking advantage of generics and
+                dependency
+                injection.</p>
             </div>
             <div class="image-wrapper">
-              <img src="https://via.placeholder.com/300/444444" alt="placeholder">
+              <img src="./images/serializer.png" alt="placeholder">
             </div>
           </div>
         </li>
       </ul>
+
+      <div class="cta-repeat">
+        <a class="button" href="https://dev.azure.com/joseph-w-bayes/tsbase/_wiki/wikis">Get Started</a>
+      </div>
     </section>
 
   </main>
 
   <footer>
     <img src="https://dev.azure.com/joseph-w-bayes/tsbase/_apis/build/status/Test,%20Build,%20Archive"
-      alt="Build Status">
+      alt="Build status">
     <p><a href="https://dev.azure.com/joseph-w-bayes/tsbase">Project home</a> | <a
         href="https://www.npmjs.com/package/tsbase">npm</a> | <a
         href="https://dev.azure.com/joseph-w-bayes/tsbase/_wiki/wikis">Wiki</a></p>
