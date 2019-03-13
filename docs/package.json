@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "firebase serve",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -w",
-    "build-prod": "webpack --mode=production"
+    "build-prod": "webpack --mode=production",
+    "deploy": "firebase deploy --token $FIREBASE_TOKEN"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,8 @@
     "ts-loader": "^5.3.3",
     "typescript": "^3.3.1",
     "webpack": "^4.29.2",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "firebase-tools": "^6.1.2"
   },
   "dependencies": {
     "tsbase": "0.0.20"
