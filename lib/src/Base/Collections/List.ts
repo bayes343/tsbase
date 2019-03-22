@@ -35,7 +35,7 @@ export class List<T> extends Queryable<T> {
    * Adds an object to the end of the List<T>.
    * @param object 
    */
-  public Add(object: T) {
+  public Add(object: T): void {
     this.item.push(object);
   }
 
@@ -43,7 +43,7 @@ export class List<T> extends Queryable<T> {
    * Adds the elements of the specified collection to the end of the List<T>.
    * @param elements 
    */
-  public AddRange(elements: Array<T>) {
+  public AddRange(elements: Array<T>): void {
     this.item = this.item.concat(elements);
   }
 
