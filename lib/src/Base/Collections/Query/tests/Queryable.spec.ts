@@ -37,8 +37,8 @@ describe('Queryable', () => {
     const orderedByDistaceFromTwo = Queryable.From(numbers).OrderByDescending([
       n => Math.abs(n - 2)
     ]);
-    expect(orderedByDistaceFromTwo.Item[0]).toEqual(2);
-    expect(orderedByDistaceFromTwo.Item[4]).toEqual(5);
+    expect(orderedByDistaceFromTwo.Item[0]).toEqual(5);
+    expect(orderedByDistaceFromTwo.Item[4]).toEqual(2);
   });
 
   it('should orderby many funcs by descending precedence', () => {
