@@ -20,7 +20,7 @@
   "scripts": {
     "test": "karma start",
     "test-once": "karma start --singleRun",
-    "build": "tsc && cp ./src/README.md ../dist && cp ./src/package.json ../dist && npm build ../dist"
+    "build": "tsc && cp ./src/README.md ../dist && cp ./src/License.md ../dist && cp ./src/package.json ../dist && npm build ../dist"
   },
   "author": "Joseph Bayes",
   "license": "ISC",
