@@ -218,8 +218,9 @@ export abstract class Queryable<T> {
     let collection: Queryable<T>;
     if (funcs) {
       collection = this.OrderBy(funcs);
+    } else {
+      collection = this.OrderBy();
     }
-    collection = this.OrderBy();
     collection.Item.reverse();
     return collection;
   }

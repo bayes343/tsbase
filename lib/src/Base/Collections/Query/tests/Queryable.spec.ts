@@ -29,16 +29,16 @@ describe('Queryable', () => {
   });
 
   it('should orderby descending by a predicate or the default comparer', () => {
-    (classUnderTest as List<any>).AddRange([4, 5, 1, 3, 1]);
-    const results = classUnderTest.OrderByDescending();
-    expect(results.Item[0]).toEqual(5);
-    expect(results.Item[4]).toEqual(1);
+    const numbers = [1, 3, 2, 5, 4];
+    const orderedByDefaultComparer = Queryable.From(numbers).OrderByDescending();
+    expect(orderedByDefaultComparer.Item[0]).toEqual(5);
+    expect(orderedByDefaultComparer.Item[4]).toEqual(1);
 
-    (classUnderTest as List<any>).Clear();
-    (classUnderTest as List<any>).AddRange(['4', '5', '1', '3', '1']);
-    const resultsPredicate = classUnderTest.OrderByDescending([item => parseInt(item)]);
-    expect(resultsPredicate.Item[0]).toEqual('5');
-    expect(resultsPredicate.Item[4]).toEqual('1');
+    const orderedByDistaceFromTwo = Queryable.From(numbers).OrderByDescending([
+      n => Math.abs(n - 2)
+    ]);
+    expect(orderedByDistaceFromTwo.Item[0]).toEqual(2);
+    expect(orderedByDistaceFromTwo.Item[4]).toEqual(5);
   });
 
   it('should orderby many funcs by descending precedence', () => {
