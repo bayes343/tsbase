@@ -73,13 +73,7 @@ export class List<T> extends Queryable<T> {
    * @param match
    */
   public Exists(match: (item: T) => boolean): boolean {
-    for (let index = 0; index < this.item.length; index++) {
-      const element = this.item[index];
-      if (match(element)) {
-        return true;
-      }
-    }
-    return false;
+    return this.Any(match);
   }
 
   /**

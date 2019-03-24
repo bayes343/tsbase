@@ -330,4 +330,28 @@ describe('Queryable', () => {
     expect(query3).toBeTruthy();
   });
 
+  it('should find the item with the minimum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Min()).toEqual(1);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Min(o => o.id).id).toEqual(1);
+
+    expect(() => {
+      Queryable.From([]).Min();
+    }).toThrowError('OperationInvalid - you cannot use the Min() function on an empty collection.');
+  });
+
+  it('should find the item with the maximum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Max()).toEqual(10);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Max(o => o.id).id).toEqual(3);
+
+    expect(() => {
+      Queryable.From([]).Max();
+    }).toThrowError('OperationInvalid - you cannot use the Max() function on an empty collection.');
+  });
+
 });

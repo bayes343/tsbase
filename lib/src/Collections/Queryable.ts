@@ -110,7 +110,6 @@ export abstract class Queryable<T> {
 
   /**
    * Determines whether an element is in the collection
-   * Checks if every key on the parameter object matches every key on a member (contained) object
    * @param object 
    */
   public Contains(object: T): boolean {
@@ -317,6 +316,38 @@ export abstract class Queryable<T> {
     let candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
     const shuffledItems = BaseFunctions.Shuffle(candidateElements);
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
+  }
+
+  /**
+   * Returns the element with the minimum value in a sequence of values.
+   * @param func 
+   */
+  public Min(func: (item: T) => any = item => item): T {
+    if (this.item.length < 1) {
+      throw new Error('OperationInvalid - you cannot use the Min() function on an empty collection.');
+    }
+
+    return this.Aggregate<T, T>(
+      this.item[0],
+      (current, next) => func(current) < func(next) ? current : next,
+      item => item
+    );
+  }
+
+  /**
+   * Returns the element with the maximum value in a sequence of values.
+   * @param func 
+   */
+  public Max(func: (item: T) => any = item => item): T {
+    if (this.item.length < 1) {
+      throw new Error('OperationInvalid - you cannot use the Max() function on an empty collection.');
+    }
+
+    return this.Aggregate<T, T>(
+      this.item[0],
+      (current, next) => func(current) > func(next) ? current : next,
+      item => item
+    );
   }
 
 }
