@@ -17,8 +17,5 @@
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.3",
     "firebase-tools": "^6.1.2"
-  },
-  "dependencies": {
-    "tsbase": "0.0.20"
   }
 }
