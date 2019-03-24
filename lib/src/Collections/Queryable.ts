@@ -1,4 +1,4 @@
-import { BaseFunctions } from '../../Functions/BaseFunctions';
+import { BaseFunctions } from '../Functions/BaseFunctions';
 
 export abstract class Queryable<T> {
   /**

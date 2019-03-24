@@ -1,6 +1,6 @@
 import { List } from '../Collections/List';
 import { IPersistable } from './IPersistable';
-import { Queryable } from '../Collections/Query/Queryable';
+import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
 import { Rule } from './Integrity/Rule';
 import { Severity } from './Integrity/Severity';

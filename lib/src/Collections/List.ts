@@ -1,4 +1,4 @@
-import { Queryable } from './Query/Queryable';
+import { Queryable } from './Queryable';
 import { BaseFunctions } from '../Functions/BaseFunctions';
 
 export class List<T> extends Queryable<T> {

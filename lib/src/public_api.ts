@@ -3,33 +3,33 @@
  */
 
 // Collections
-export * from './Base/Collections/List';
-export * from './Base/Collections/Query/Queryable';
-export * from './Base/Collections/SortedList';
+export * from './Collections/List';
+export * from './Collections/Queryable';
+export * from './Collections/SortedList';
 
 // Net
-export * from './Base/Net/HttpMethod';
-export * from './Base/Net/HttpStatusCode';
-export * from './Base/Net/Http/HttpRequestMessage';
-export * from './Base/Net/Http/HttpResponseMessage';
-export * from './Base/Net/Http/IXhrRequestHandler';
-export * from './Base/Net/Http/XhrRequestHandler/XhrRequestHandler';
-export * from './Base/Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
-export * from './Base/Net/Http/HttpClient';
+export * from './Net/HttpMethod';
+export * from './Net/HttpStatusCode';
+export * from './Net/Http/HttpRequestMessage';
+export * from './Net/Http/HttpResponseMessage';
+export * from './Net/Http/IXhrRequestHandler';
+export * from './Net/Http/XhrRequestHandler/XhrRequestHandler';
+export * from './Net/Http/XhrRequestHandler/BrowserXhrRequestHandler';
+export * from './Net/Http/HttpClient';
 
 // Utility
-export * from './Base/Utility/Serialization/ISerializer';
-export * from './Base/Utility/Serialization/JsonSerializer';
-export * from './Base/Utility/Timers/Timer';
+export * from './Utility/Serialization/ISerializer';
+export * from './Utility/Serialization/JsonSerializer';
+export * from './Utility/Timers/Timer';
 
 // Persistence
-export * from './Base/Persistence/Repository';
-export * from './Base/Persistence/IPersistable';
-export * from './Base/Persistence/WebStoragePersister';
-export * from './Base/Persistence/CachedHttpClient';
-export * from './Base/Persistence/Integrity/Rule';
-export * from './Base/Persistence/Integrity/Severity';
+export * from './Persistence/Repository';
+export * from './Persistence/IPersistable';
+export * from './Persistence/WebStoragePersister';
+export * from './Persistence/CachedHttpClient';
+export * from './Persistence/Integrity/Rule';
+export * from './Persistence/Integrity/Severity';
 
 // Other
-export * from './Base/TypeLiterals';
-export * from './Base/Functions/BaseFunctions';
+export * from './TypeLiterals';
+export * from './Functions/BaseFunctions';
