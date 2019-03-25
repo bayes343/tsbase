@@ -1,4 +1,5 @@
 import { HttpStatusCode } from '../HttpStatusCode';
+import { KeyValue } from '../../TypeLiterals';
 
 /**
  * Abstracts the response from an http request
@@ -8,13 +9,20 @@ export class HttpResponseMessage {
    * Value set based on status code
    */
   public IsSuccessStatusCode = false;
-  public Headers = new Array<{ name: string, value: string }>();
+
+  /**
+   * Headers returned by the server responding to the request
+   */
+  public Headers = new Array<KeyValue>();
 
   constructor(
     /**
      * String response body 
      */
     public Content: string,
+    /**
+     * The http status code and corresponding description returned by the server
+     */
     public StatusCode: HttpStatusCode
   ) {
     this.IsSuccessStatusCode = this.StatusCode.Code < 400;
