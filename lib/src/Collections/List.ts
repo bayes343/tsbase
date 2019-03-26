@@ -5,7 +5,6 @@ export class List<T> extends Queryable<T> {
   /**
    * Gets the number of elements contained in the List<T>.
    */
-  private count = 0;
   public get Count(): number {
     return this.item.length;
   }

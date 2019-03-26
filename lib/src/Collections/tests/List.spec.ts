@@ -125,7 +125,7 @@ describe('List', () => {
     // external scope
     let counter = 0;
     classUnderTest.AddRange(['1', '2', '3', '21']);
-    classUnderTest.ForEach(item => {
+    classUnderTest.ForEach(() => {
       counter++
     });
     expect(counter).toEqual(4);

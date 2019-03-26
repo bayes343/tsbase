@@ -20,7 +20,10 @@
   "scripts": {
     "test": "karma start",
     "test-once": "karma start --singleRun",
-    "build": "tsc && cp ./src/README.md ../dist && cp ./src/License.md ../dist && cp ./src/package.json ../dist && npm build ../dist"
+    "clean": "rm -r ../dist/*.map && rm -r ../dist/**/*.map && rm -r ../dist/**/**/*.map && rm -r ../dist/**/**/**/*.map && rm -r ../dist/**/tests && rm -r ../dist/**/**/tests",
+    "tsc": "rm -r ../dist && tsc && npm run clean",
+    "copy-docs": "cp ./src/README.md ../dist && cp ./src/License.md ../dist && cp ./src/package.json ../dist && npm build ../dist",
+    "build": "npm run tsc && npm run copy-docs && npm build ../dist"
   },
   "author": "Joseph Bayes",
   "license": "ISC",
