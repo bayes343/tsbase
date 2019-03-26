@@ -54,13 +54,13 @@ export class Repository<T> extends List<T> {
   }
 
   //#region Overrides
-  public Add(object: T) {
+  public Add(object: T): void {
     if (this.itemIsCompliantWithRules(object)) {
       super.Add(object);
     }
   }
 
-  public AddRange(elements: Array<T>) {
+  public AddRange(elements: Array<T>): void {
     let candidates = new List<T>(elements);
     candidates = candidates.Where(item => this.itemIsCompliantWithRules(item)) as List<T>;
     super.AddRange(candidates.ToArray());
