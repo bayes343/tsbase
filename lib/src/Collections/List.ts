@@ -1,5 +1,6 @@
 import { Queryable } from './Queryable';
 import { BaseFunctions } from '../Functions/BaseFunctions';
+import { Errors } from '../Errors';
 
 export class List<T> extends Queryable<T> {
   /**
@@ -235,7 +236,7 @@ export class List<T> extends Queryable<T> {
     if (index >= 0 && this.item.length >= index) {
       this.item.splice(index, 0, item);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
+      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -251,7 +252,7 @@ export class List<T> extends Queryable<T> {
         this.item.splice(index + i, 0, element);
       }
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
+      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -294,7 +295,7 @@ export class List<T> extends Queryable<T> {
     if (index >= 0 && this.item.length >= index) {
       this.item.splice(index, 1);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index}`);
+      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
     }
   }
 
@@ -307,7 +308,7 @@ export class List<T> extends Queryable<T> {
     if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
       this.item.splice(index, count);
     } else {
-      throw new Error(`IndexOutOfRange - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
+      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
     }
   }
 

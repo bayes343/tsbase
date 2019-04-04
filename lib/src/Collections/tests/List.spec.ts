@@ -1,4 +1,5 @@
 import { List } from "../List";
+import { Errors } from '../../Errors';
 
 describe('List', () => {
   let classUnderTest: List<any>;
@@ -189,7 +190,7 @@ describe('List', () => {
     // error
     expect(() => {
       classUnderTest.Insert(5, '6');
-    }).toThrowError('IndexOutOfRange - Range: 0-3 | Passed index: 5');
+    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 5`);
   });
 
   it('should insert a range into the List at a specified index', () => {
@@ -201,7 +202,7 @@ describe('List', () => {
     // error
     expect(() => {
       classUnderTest.InsertRange(6, new List<string>(['2', '3', '4']));
-    }).toThrowError('IndexOutOfRange - Range: 0-5 | Passed index: 6');
+    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-5 | Passed index: 6`);
   });
 
   it('should remove an element passed', () => {
@@ -227,7 +228,7 @@ describe('List', () => {
     // error
     expect(() => {
       classUnderTest.RemoveAt(3);
-    }).toThrowError('IndexOutOfRange - Range: 0-2 | Passed index: 3');
+    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-2 | Passed index: 3`);
   });
 
   it('should remove a range from the list based on the passed paramaters', () => {
@@ -238,7 +239,7 @@ describe('List', () => {
     // error
     expect(() => {
       classUnderTest.RemoveRange(0, 5);
-    }).toThrowError('IndexOutOfRange - Range: 0-3 | Passed index: 0 | Passed count: 5');
+    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 0 | Passed count: 5`);
   });
 
   it('should remove a range of elements from the list', () => {

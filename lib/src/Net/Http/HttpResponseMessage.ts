@@ -1,5 +1,6 @@
 import { HttpStatusCode } from '../HttpStatusCode';
 import { KeyValue } from '../../TypeLiterals';
+import { Errors } from '../../Errors';
 
 /**
  * Abstracts the response from an http request
@@ -33,7 +34,7 @@ export class HttpResponseMessage {
    */
   public EnsureSuccessStatusCode(): void {
     if (!this.IsSuccessStatusCode) {
-      throw new Error('Success code does not indicate success, and \"EnsureSuccessStatusCode\" was called.');
+      throw new Error(`${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
     }
   }
 }

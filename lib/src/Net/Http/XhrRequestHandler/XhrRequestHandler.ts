@@ -5,9 +5,9 @@ import { HttpMethod } from '../../HttpMethod';
 import { HttpRequestMessage } from '../HttpRequestMessage';
 import { KeyValue } from '../../../TypeLiterals';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { Errors } from '../../../Errors';
 
 const BadRequest = new HttpResponseMessage('BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have its own error code.', { Code: 400, Text: 'BadRequest' });
-export const NoClientError = 'HttpClient not set - if overriding the default XhrRequestHandler, ensure that you set the HttpClient property to the HttpClient instance the handler belongs to.';
 
 /**
  * Base class for an object that implements IXhrRequestHandler - descendants implement xhr object creation.
@@ -55,7 +55,7 @@ export abstract class XhrRequestHandler implements IXhrRequestHandler {
 
   private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Array<KeyValue>): void {
     if (!this.HttpClient) {
-      throw new Error(NoClientError);
+      throw new Error(Errors.NullHttpClient);
     }
     this.HttpClient.DefaultRequestHeaders.forEach(element => {
       xhr.setRequestHeader(element.key, element.value);

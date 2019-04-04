@@ -1,4 +1,5 @@
 import { List } from './List';
+import { Errors } from '../Errors';
 
 export class SortedList<T> extends List<T> {
   /**
@@ -30,21 +31,21 @@ export class SortedList<T> extends List<T> {
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public Reverse(): void {
-    throw new Error(`OperationInvalid - You cannot reverse a SortedList`);
+    throw new Error(`${Errors.InvalidOperation} - You cannot reverse a SortedList`);
   }
 
   /**
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public ReverseRange(): void {
-    throw new Error(`OperationInvalid - You cannot reverse a range in a SortedList`);
+    throw new Error(`${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
   }
 
   /**
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public Shuffle(): void {
-    throw new Error(`OperationInvalid - You cannot shuffle a SortedList`);
+    throw new Error(`${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
   }
   //#endregion
 

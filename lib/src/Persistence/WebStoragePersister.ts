@@ -1,4 +1,5 @@
 import { IPersistable } from './IPersistable';
+import { Errors } from '../Errors';
 
 type StorageType = 'local' | 'session';
 
@@ -11,7 +12,7 @@ export class WebStoragePersister implements IPersistable {
     private storageType: StorageType
   ) {
     if (typeof (Storage) === 'undefined') {
-      throw new Error('Unable to use WebStoragePersister since, \"Storage\" is not defined');
+      throw new Error(Errors.WebStorageUndefined);
     }
   }
 

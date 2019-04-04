@@ -1,4 +1,5 @@
 import { SortedList } from "../SortedList";
+import { Errors } from '../../Errors';
 
 describe('SortedList', () => {
   let classUnderTest: SortedList<any>;
@@ -34,19 +35,19 @@ describe('SortedList', () => {
   it('should throw error when reverse is attempted', () => {
     expect(() => {
       classUnderTest.Reverse();
-    }).toThrowError('OperationInvalid - You cannot reverse a SortedList');
+    }).toThrowError(`${Errors.InvalidOperation} - You cannot reverse a SortedList`);
   });
 
   it('should throw error when reverse range is attempted', () => {
     expect(() => {
       classUnderTest.ReverseRange();
-    }).toThrowError('OperationInvalid - You cannot reverse a range in a SortedList');
+    }).toThrowError(`${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
   });
 
   it('should throw error when shuffle is attempted', () => {
     expect(() => {
       classUnderTest.Shuffle();
-    }).toThrowError('OperationInvalid - You cannot shuffle a SortedList');
+    }).toThrowError(`${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
   });
 
 });

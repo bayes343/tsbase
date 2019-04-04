@@ -1,4 +1,5 @@
 import { HttpResponseMessage } from "../HttpResponseMessage";
+import { Errors } from '../../../Errors';
 
 describe('HttpResponseMessage', () => {
   let classUnderTest: HttpResponseMessage;
@@ -22,7 +23,7 @@ describe('HttpResponseMessage', () => {
 
     expect(() => {
       classUnderTest.EnsureSuccessStatusCode();
-    }).toThrowError('Success code does not indicate success, and \"EnsureSuccessStatusCode\" was called.');
+    }).toThrowError(`${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
   });
 
 });

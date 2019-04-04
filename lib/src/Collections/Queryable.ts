@@ -1,4 +1,5 @@
 import { BaseFunctions } from '../Functions/BaseFunctions';
+import { Errors } from '../Errors';
 
 export abstract class Queryable<T> {
   /**
@@ -104,7 +105,7 @@ export abstract class Queryable<T> {
       }
       return average;
     } else {
-      throw new Error('Cannot calculate an average from a collection with no elements');
+      throw new Error(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
     }
   }
 
@@ -164,7 +165,7 @@ export abstract class Queryable<T> {
       this.item.forEach(element => {
         const tNumber = parseFloat(element.toString());
         if (isNaN(tNumber)) {
-          throw new Error(`Could not parse \'${element}\' as a number`);
+          throw new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
         }
         sum += tNumber;
       });
@@ -324,7 +325,7 @@ export abstract class Queryable<T> {
    */
   public Min(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
-      throw new Error('OperationInvalid - you cannot use the Min() function on an empty collection.');
+      throw new Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
     }
 
     return this.Aggregate<T, T>(
@@ -340,7 +341,7 @@ export abstract class Queryable<T> {
    */
   public Max(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
-      throw new Error('OperationInvalid - you cannot use the Max() function on an empty collection.');
+      throw new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
     }
 
     return this.Aggregate<T, T>(

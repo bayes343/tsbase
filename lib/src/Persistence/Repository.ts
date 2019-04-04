@@ -4,6 +4,7 @@ import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
 import { Rule } from './Integrity/Rule';
 import { Severity } from './Integrity/Severity';
+import { Errors } from '../Errors';
 
 /**
  * An extension of the List<T> class that incorporates persistence functionality 
@@ -84,7 +85,7 @@ export class Repository<T> extends List<T> {
       if (this.serializer && this.serializeAs) {
         classInstances.push(this.serializer.Serialize(this.serializeAs, element));
       } else {
-        throw new Error('OperationInvalid - cannot attempt serialization without a serializer and a class constructor');
+        throw new Error(`${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
       }
     });
     return classInstances;

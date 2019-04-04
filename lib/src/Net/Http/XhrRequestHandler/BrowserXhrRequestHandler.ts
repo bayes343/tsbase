@@ -1,5 +1,6 @@
-import { XhrRequestHandler, NoClientError } from './XhrRequestHandler';
+import { XhrRequestHandler } from './XhrRequestHandler';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { Errors } from '../../../Errors';
 
 /**
  * An XhrRequestHandler implementation that works in browser contexts
@@ -7,7 +8,7 @@ import { IXhrRequestHandler } from '../IXhrRequestHandler';
 export class BrowserXhrRequestHandler extends XhrRequestHandler implements IXhrRequestHandler {
   GetXhrRequest(): XMLHttpRequest {
     if (!this.HttpClient) {
-      throw new Error(NoClientError);
+      throw new Error(Errors.NullHttpClient);
     }
     var xhr = new XMLHttpRequest();
     xhr.timeout = this.HttpClient.Timeout * 1000;

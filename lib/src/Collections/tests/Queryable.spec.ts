@@ -1,5 +1,6 @@
 import { List } from '../List';
 import { Queryable } from '../Queryable';
+import { Errors } from '../../Errors';
 
 describe('Queryable', () => {
   let classUnderTest: Queryable<any>;
@@ -222,7 +223,7 @@ describe('Queryable', () => {
     (classUnderTest as List<any>).Add('notanumber');
     expect(() => {
       classUnderTest.Sum();
-    }).toThrowError('Could not parse \'notanumber\' as a number');
+    }).toThrowError(`${Errors.InvalidOperation} - Could not parse \'notanumber\' as a number`);
   });
 
   it('should average the value of elements as numbers or based on a given function', () => {
@@ -244,7 +245,7 @@ describe('Queryable', () => {
     (classUnderTest as List<any>).Clear();
     expect(() => {
       classUnderTest.Average();
-    }).toThrowError('Cannot calculate an average from a collection with no elements');
+    }).toThrowError(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
   });
 
   it('should get a random item from the collection', () => {
@@ -339,7 +340,7 @@ describe('Queryable', () => {
 
     expect(() => {
       Queryable.From([]).Min();
-    }).toThrowError('OperationInvalid - you cannot use the Min() function on an empty collection.');
+    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
   });
 
   it('should find the item with the maximum result from the defined function or default comparer', () => {
@@ -351,7 +352,7 @@ describe('Queryable', () => {
 
     expect(() => {
       Queryable.From([]).Max();
-    }).toThrowError('OperationInvalid - you cannot use the Max() function on an empty collection.');
+    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
   });
 
 });
