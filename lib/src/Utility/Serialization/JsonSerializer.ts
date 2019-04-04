@@ -53,7 +53,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
           object[instanceKey] = values;
 
         } else {
-          let json = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
+          const json = Array.isArray(jsonElement) ? jsonElement[0] : jsonElement;
           object[instanceKey] = this.getValueFromSerializer(property, json);
         }
       }
@@ -64,7 +64,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
   private getInstanceKey(fields: Array<string>, jsonKey: string): string {
     jsonKey = this.cleanString(jsonKey);
-    let instanceKey: string = '';
+    let instanceKey = '';
 
     fields.forEach(element => {
       if (this.cleanString(element) === jsonKey) {
@@ -137,7 +137,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
   private getArrayValue(array: Array<any>): any {
     const values = new Array<any>();
     array.forEach(element => {
-      if (typeof element != 'object') {
+      if (typeof element !== 'object') {
         values.push(element);
       } else {
         values.push(this.getSingleValue(element));

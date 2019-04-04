@@ -15,16 +15,16 @@ export abstract class Queryable<T> {
 
   /**
    * Returns a generic Queryable object providing easy access to the query centric Queryable api surface for standard arrays
-   * @param array 
+   * @param array
    */
   public static From<T>(array: Array<T>): Queryable<T> {
-    class QueryableArray<T> extends Queryable<T> {
-      constructor(array: Array<T>) {
+    class QueryableArray<T2> extends Queryable<T2> {
+      constructor(array2: Array<T2>) {
         super();
-        this.item = array;
+        this.item = array2;
       }
-      public Clone(array: Array<T>): Queryable<T> {
-        return new QueryableArray<T>(array);
+      public Clone(array2: Array<T2>): Queryable<T2> {
+        return new QueryableArray<T2>(array2);
       }
     }
 
@@ -32,15 +32,17 @@ export abstract class Queryable<T> {
   }
 
   /**
-   * Each extender should define how it should be cloned *structurally* - allows functional chaining of a data structure that maintains state
-   * @param item 
+   * Each extender should define how it should be cloned *structurally* - allows functional
+   * chaining of a data structure that maintains state
+   * @param item
    */
   protected abstract Clone(item: Array<T>): Queryable<T>;
 
   /**
-   * Applies an accumulator function over a sequence. The specified seed value is used as the initial accumulator value, and the specified function is used to select the result value.
-   * @param seed 
-   * @param func 
+   * Applies an accumulator function over a sequence. The specified seed value is used as the
+   * initial accumulator value, and the specified function is used to select the result value.
+   * @param seed
+   * @param func
    */
   public Aggregate<TResult, TAccumulate>(
     seed: TAccumulate,
@@ -56,7 +58,7 @@ export abstract class Queryable<T> {
 
   /**
    * Determines whether all elements of a sequence satisfy a condition.
-   * @param func 
+   * @param func
    */
   public All(func: (item: T) => boolean): boolean {
     const itemsThatSatisfy = this.item.filter(func);
@@ -65,7 +67,7 @@ export abstract class Queryable<T> {
 
   /**
    * Determines whether any element of a sequence exists or satisfies a condition.
-   * @param func 
+   * @param func
    */
   public Any(func: (item: T) => boolean): boolean {
     const itemsThatSatisfy = this.item.filter(func);
@@ -74,7 +76,7 @@ export abstract class Queryable<T> {
 
   /**
    * Returns a collection with the given value Appended to the end of the sequence.
-   * @param item 
+   * @param item
    */
   public Append(item: T): Queryable<T> {
     const appendedArray = this.item.slice();
@@ -84,7 +86,7 @@ export abstract class Queryable<T> {
 
   /**
    * Returns a collection with the given value Prepended to the beginning of the sequence.
-   * @param item 
+   * @param item
    */
   public Prepend(item: T): Queryable<T> {
     const prependedArray = [item].concat(this.item);
@@ -93,7 +95,7 @@ export abstract class Queryable<T> {
 
   /**
    * Computes the average of a sequence of numeric values, or the average result of the given function
-   * @param func 
+   * @param func
    */
   public Average(func?: (item: T) => any): number {
     if (this.item.length >= 1) {
@@ -111,7 +113,7 @@ export abstract class Queryable<T> {
 
   /**
    * Determines whether an element is in the collection
-   * @param object 
+   * @param object
    */
   public Contains(object: T): boolean {
     let isContained = this.item.indexOf(object) >= 0;
@@ -126,7 +128,7 @@ export abstract class Queryable<T> {
 
   /**
    * Produces the set difference of two sequences.
-   * @param items 
+   * @param items
    */
   public Except(items: Array<T>): Queryable<T> {
     let collectionCopy = this.item.slice();
@@ -153,7 +155,7 @@ export abstract class Queryable<T> {
 
   /**
    * Computes the sum of a sequence of numeric values, or the sum result of the given function
-   * @param func 
+   * @param func
    */
   public Sum(func?: (item: T) => number): number {
     let sum = 0;
@@ -175,7 +177,7 @@ export abstract class Queryable<T> {
 
   /**
    * Filters a sequence of values based on a predicate.
-   * @param func 
+   * @param func
    */
   public Where(func: (item: T) => boolean): Queryable<T> {
     const collection: Queryable<T> = this.Clone(this.item);
@@ -185,7 +187,7 @@ export abstract class Queryable<T> {
 
   /**
    * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
-   * @param funcs 
+   * @param funcs
    */
   public OrderBy(funcs?: Array<(item: T) => any>): Queryable<T> {
     const collection = this.Clone(this.item);
@@ -212,7 +214,7 @@ export abstract class Queryable<T> {
 
   /**
    * Sorts the elements of a sequence in descending order.
-   * @param func 
+   * @param func
    */
   public OrderByDescending(funcs?: Array<(item: T) => any>): Queryable<T> {
     let collection: Queryable<T>;
@@ -236,17 +238,17 @@ export abstract class Queryable<T> {
 
   /**
    * Returns a specified number of contiguous elements from the start of a sequence.
-   * @param count 
+   * @param count
    */
   public Take(count: number): Queryable<T> {
     const itemsToTake = this.item.slice(0, count);
-    const QueryableToReturn = this.Clone(itemsToTake);
-    return QueryableToReturn;
+    const queryableToReturn = this.Clone(itemsToTake);
+    return queryableToReturn;
   }
 
   /**
    * Returns elements from a sequence as long as a specified condition is true.
-   * @param func 
+   * @param func
    */
   public TakeWhile(func: (item: T) => boolean): Queryable<T> {
     const itemsToReturn = [];
@@ -270,7 +272,7 @@ export abstract class Queryable<T> {
 
   /**
    * Returns distinct elements from a sequence.
-   * @param func 
+   * @param func
    */
   public Distinct(): Queryable<T> {
     const itemsToReturn = [];
@@ -286,7 +288,7 @@ export abstract class Queryable<T> {
 
   /**
    * Bypasses a specified number of elements in a sequence and then returns the remaining elements.
-   * @param count 
+   * @param count
    */
   public Skip(count: number): Queryable<T> {
     const itemsToReturn = this.item.slice(count, this.item.length);
@@ -295,7 +297,7 @@ export abstract class Queryable<T> {
 
   /**
    * Bypasses elements in a sequence as long as a specified condition is true and then returns the remaining elements.
-   * @param func 
+   * @param func
    */
   public SkipWhile(func: (item: T) => boolean): Queryable<T> {
     let startIndex = 0;
@@ -314,14 +316,14 @@ export abstract class Queryable<T> {
    * @param excluding - optionally exclude an array of items when selecting a random element
    */
   public GetRandom(excluding?: Array<T>): T | null {
-    let candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
+    const candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
     const shuffledItems = BaseFunctions.Shuffle(candidateElements);
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
   }
 
   /**
    * Returns the element with the minimum value in a sequence of values.
-   * @param func 
+   * @param func
    */
   public Min(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
@@ -337,7 +339,7 @@ export abstract class Queryable<T> {
 
   /**
    * Returns the element with the maximum value in a sequence of values.
-   * @param func 
+   * @param func
    */
   public Max(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {

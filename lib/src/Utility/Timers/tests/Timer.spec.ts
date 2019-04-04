@@ -1,4 +1,4 @@
-import { Timer } from "../Timer";
+import { Timer } from '../Timer';
 
 describe('Timer', () => {
   let classUnderTest: Timer;
@@ -17,7 +17,7 @@ describe('Timer', () => {
     classUnderTest.Elapsed.push(() => { });
     await classUnderTest.Start();
     expect(classUnderTest.Enabled).toBeFalsy();
-  })
+  });
 
   it('should stop an enabled timer', () => {
     classUnderTest.Interval = 1;
@@ -28,4 +28,3 @@ describe('Timer', () => {
     expect(classUnderTest.Enabled).toBeFalsy();
   });
 });
-

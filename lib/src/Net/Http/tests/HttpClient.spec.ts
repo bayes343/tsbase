@@ -1,4 +1,4 @@
-import { HttpClient } from "../HttpClient";
+import { HttpClient } from '../HttpClient';
 import { MockXhrRequestHandler } from './MockXhrRequestHandler';
 import { HttpRequestMessage } from '../HttpRequestMessage';
 import { HttpMethod } from '../../HttpMethod';
@@ -30,7 +30,6 @@ describe('HttpClient', () => {
     expect(response2.StatusCode.Code).toEqual(400);
     expect(response2.IsSuccessStatusCode).toBeFalsy();
   });
-
 
   it('should cancel requests | integration test', () => {
     classUnderTest = new HttpClient();
@@ -90,4 +89,3 @@ describe('HttpClient', () => {
   });
 
 });
-

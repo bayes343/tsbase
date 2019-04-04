@@ -5,7 +5,6 @@ import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
 import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
 
-
 export class HttpClient {
   /**
    * Gets or sets the base address of Uniform Resource Identifier (URI) of the Internet resource used when sending requests.
@@ -38,7 +37,7 @@ export class HttpClient {
 
   /**
    * Send a DELETE request to the specified Uri as an asynchronous operation.
-   * @param uri 
+   * @param uri
    */
   public async DeleteAsync(uri: string): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
@@ -48,7 +47,7 @@ export class HttpClient {
 
   /**
    * Send a GET request to the specified Uri as an asynchronous operation.
-   * @param uri 
+   * @param uri
    */
   public async GetAsync(uri: string): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
@@ -58,7 +57,7 @@ export class HttpClient {
 
   /**
    * Send a GET request to the specified Uri as an asynchronous operation and have the response body returned as a string.
-   * @param uri 
+   * @param uri
    */
   public async GetStringAsync(uri: string): Promise<string> {
     uri = this.getFullUri(uri);
@@ -68,8 +67,8 @@ export class HttpClient {
 
   /**
    * Send a PATCH request to the specified Uri as an asynchronous operation.
-   * @param uri 
-   * @param payload 
+   * @param uri
+   * @param payload
    */
   public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
@@ -79,8 +78,8 @@ export class HttpClient {
 
   /**
    * Send a POST request to the specified Uri as an asynchronous operation.
-   * @param uri 
-   * @param payload 
+   * @param uri
+   * @param payload
    */
   public async PostAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
@@ -90,8 +89,8 @@ export class HttpClient {
 
   /**
    * Send a PUT request to the specified Uri as an asynchronous operation.
-   * @param uri 
-   * @param payload 
+   * @param uri
+   * @param payload
    */
   public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
     uri = this.getFullUri(uri);
@@ -101,7 +100,7 @@ export class HttpClient {
 
   /**
    * Send an HTTP request as an asynchronous operation.
-   * @param httpRequestMessage 
+   * @param httpRequestMessage
    */
   public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage> {
     httpRequestMessage.RequestUri = this.getFullUri(httpRequestMessage.RequestUri);

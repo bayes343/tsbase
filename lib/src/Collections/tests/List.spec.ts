@@ -1,4 +1,4 @@
-import { List } from "../List";
+import { List } from '../List';
 import { Errors } from '../../Errors';
 
 describe('List', () => {
@@ -99,7 +99,7 @@ describe('List', () => {
   it('should find the last element that matches a predicate', () => {
     classUnderTest.AddRange(['1', '2', '3']);
     const match = classUnderTest.FindLast(item => item.length === 1);
-    expect(match).toEqual('3')
+    expect(match).toEqual('3');
 
     const noMatch = classUnderTest.FindLast(item => item === '5');
     expect(noMatch).toBeFalsy();
@@ -127,7 +127,7 @@ describe('List', () => {
     let counter = 0;
     classUnderTest.AddRange(['1', '2', '3', '21']);
     classUnderTest.ForEach(() => {
-      counter++
+      counter++;
     });
     expect(counter).toEqual(4);
 
@@ -281,4 +281,3 @@ describe('List', () => {
   });
 
 });
-

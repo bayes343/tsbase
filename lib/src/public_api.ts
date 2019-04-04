@@ -33,3 +33,4 @@ export * from './Persistence/Integrity/Severity';
 // Other
 export * from './TypeLiterals';
 export * from './Functions/BaseFunctions';
+export * from './Errors';

@@ -1,4 +1,4 @@
-import { SortedList } from "../SortedList";
+import { SortedList } from '../SortedList';
 import { Errors } from '../../Errors';
 
 describe('SortedList', () => {
@@ -51,4 +51,3 @@ describe('SortedList', () => {
   });
 
 });
-

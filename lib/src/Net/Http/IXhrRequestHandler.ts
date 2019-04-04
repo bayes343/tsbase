@@ -8,14 +8,14 @@ import { HttpRequestMessage } from './HttpRequestMessage';
 export interface IXhrRequestHandler {
   /**
    * Creates and resolves an http response given the passed parameters
-   * @param uri 
-   * @param method 
-   * @param payload 
+   * @param uri
+   * @param method
+   * @param payload
    */
   SendXhrRequest(uri: string, method: HttpMethod, payload?: any): Promise<HttpResponseMessage>;
   /**
    * Creates and resolves an http response given the passed HttpResponseMessage
-   * @param requestMessage 
+   * @param requestMessage
    */
   SendXhrRequestMessage(requestMessage: HttpRequestMessage): Promise<HttpResponseMessage>;
   /**

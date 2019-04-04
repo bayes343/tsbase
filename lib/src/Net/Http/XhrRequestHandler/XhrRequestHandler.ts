@@ -7,7 +7,9 @@ import { KeyValue } from '../../../TypeLiterals';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
 import { Errors } from '../../../Errors';
 
-const BadRequest = new HttpResponseMessage('BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have its own error code.', { Code: 400, Text: 'BadRequest' });
+const BadRequest = new HttpResponseMessage(
+  'BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have \
+  its own error code.', { Code: 400, Text: 'BadRequest' });
 
 /**
  * Base class for an object that implements IXhrRequestHandler - descendants implement xhr object creation.

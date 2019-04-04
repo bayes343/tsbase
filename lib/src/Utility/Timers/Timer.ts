@@ -19,7 +19,6 @@ export class Timer {
   /**
    * 	Initializes a new instance of the Timer class, and sets all the properties to their initial values.
    */
-  constructor();
   constructor(interval?: number)
   constructor(interval?: any) {
     interval ? this.Interval = interval : this.Interval = 0;

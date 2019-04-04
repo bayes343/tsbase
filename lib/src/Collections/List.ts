@@ -12,7 +12,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * List<T>() Initializes a new instance of the List<T> class that is empty and has the default initial capacity.
-   * List<T>(IQueryable<T>) Initializes a new instance of the List<T> class that contains elements copied from the specified collection and has sufficient capacity to accommodate the number of elements copied.
+   * List<T>(IQueryable<T>) Initializes a new instance of the List<T> class that contains elements copied from the
+   * specified collection and has sufficient capacity to accommodate the number of elements copied.
    */
   constructor();
   constructor(initParam: Array<T>);
@@ -25,7 +26,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Implement abstract Queryable contract
-   * @param item 
+   * @param item
    */
   protected Clone(item: Array<T>): Queryable<T> {
     return new List<T>(item);
@@ -33,7 +34,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Adds an object to the end of the List<T>.
-   * @param object 
+   * @param object
    */
   public Add(object: T): void {
     this.item.push(object);
@@ -41,7 +42,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Adds the elements of the specified collection to the end of the List<T>.
-   * @param elements 
+   * @param elements
    */
   public AddRange(elements: Array<T>): void {
     this.item = this.item.concat(elements);
@@ -56,8 +57,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Copies the List<T> or a portion of it to an array.
-   * @param array 
-   * @param arrayIndex 
+   * @param array
+   * @param arrayIndex
    */
   public CopyTo(array: Array<T>, startIndex?: number, endIndex?: number): void {
     startIndex = startIndex ? startIndex : 0;
@@ -77,7 +78,8 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for an element that matches the conditions defined by the specified predicate, and returns the first occurrence within the entire List<T>.
+   * Searches for an element that matches the conditions defined by the specified predicate, and returns the first
+   * occurrence within the entire List<T>.
    * @param match
    */
   public Find(match: (item: T) => boolean): T | null {
@@ -92,7 +94,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Retrieves all the elements that match the conditions defined by the specified predicate.
-   * @param match 
+   * @param match
    */
   public FindAll(match: (item: T) => boolean): List<T> {
     const matchingElements = this.Item.filter(item => match(item));
@@ -100,10 +102,12 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for an element that matches the conditions defined by a specified predicate, and returns the zero-based index of the first occurrence within the List<T> or a portion of it. This method returns -1 if an item that matches the conditions is not found.
-   * @param match 
-   * @param startIndex 
-   * @param endIndex 
+   * Searches for an element that matches the conditions defined by a specified predicate, and returns the
+   * zero-based index of the first occurrence within the List<T> or a portion of it. This method returns
+   * -1 if an item that matches the conditions is not found.
+   * @param match
+   * @param startIndex
+   * @param endIndex
    */
   public FindIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
@@ -119,7 +123,8 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for an element that matches the conditions defined by the specified predicate, and returns the last occurrence within the entire List<T>.
+   * Searches for an element that matches the conditions defined by the specified predicate, and
+   * returns the last occurrence within the entire List<T>.
    * @param match
    */
   public FindLast(match: (item: T) => boolean): T | null {
@@ -133,10 +138,11 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for an element that matches the conditions defined by a specified predicate, and returns the zero-based index of the last occurrence within the List<T> or a portion of it.
+   * Searches for an element that matches the conditions defined by a specified predicate, and returns the
+   * zero-based index of the last occurrence within the List<T> or a portion of it.
    * @param match
-   * @param startIndex 
-   * @param endIndex 
+   * @param startIndex
+   * @param endIndex
    */
   public FindLastIndex(match: (item: T) => boolean, startIndex?: number, endIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
@@ -153,7 +159,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Performs the specified action on each element of the List<T>.
-   * @param action 
+   * @param action
    */
   public ForEach(action: (item: T) => any): void {
     this.Item.forEach(element => {
@@ -163,8 +169,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Creates a shallow copy of a range of elements in the source List<T>.
-   * @param index 
-   * @param count 
+   * @param index
+   * @param count
    */
   public GetRange(index: number, count: number): List<T> {
     const range = new List<T>();
@@ -176,9 +182,10 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for the specified object and returns the zero-based index of the first occurrence within the range of elements in the List<T> that extends from the specified index to the last element.
-   * @param item 
-   * @param startIndex 
+   * Searches for the specified object and returns the zero-based index of the first occurrence within
+   * the range of elements in the List<T> that extends from the specified index to the last element.
+   * @param item
+   * @param startIndex
    */
   public IndexOf(item: T, startIndex?: number): number {
     startIndex = startIndex ? startIndex : 0;
@@ -193,8 +200,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Returns the zero-based index of the last occurrence of a value in the List<T> or in a portion of it.
-   * @param item 
-   * @param endIndex 
+   * @param item
+   * @param endIndex
    */
   public LastIndexOf(item: T, endIndex?: number): number {
     endIndex = endIndex ? endIndex : this.Count - 1;
@@ -208,8 +215,9 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Sorts the elements or a portion of the elements in the List<T> using either the specified or default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
-   * @param comparison 
+   * Sorts the elements or a portion of the elements in the List<T> using either the specified or
+   * default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
+   * @param comparison
    */
   public Sort(comparison?: (item: T) => any): void {
     if (comparison) {
@@ -229,8 +237,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Inserts an element into the List<T> at the specified index.
-   * @param index 
-   * @param item 
+   * @param index
+   * @param item
    */
   public Insert(index: number, item: T): void {
     if (index >= 0 && this.item.length >= index) {
@@ -242,8 +250,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Inserts the elements of a collection into the List<T> at the specified index.
-   * @param index 
-   * @param collection 
+   * @param index
+   * @param collection
    */
   public InsertRange(index: number, collection: List<T>): void {
     if (index >= 0 && this.item.length >= index) {
@@ -258,7 +266,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Removes the first occurrence of a specific object from the List<T>.
-   * @param item 
+   * @param item
    */
   public Remove(item: T): boolean {
     const itemIndex = this.IndexOf(item);
@@ -272,7 +280,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Removes all the elements that match the conditions defined by the specified predicate.
-   * @param match 
+   * @param match
    */
   public RemoveAll(match: (item: T) => boolean): number {
     let count = 0;
@@ -289,7 +297,7 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Removes the element at the specified index of the List<T>.
-   * @param index 
+   * @param index
    */
   public RemoveAt(index: number): void {
     if (index >= 0 && this.item.length >= index) {
@@ -301,8 +309,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Removes a range of elements from the List<T>.
-   * @param index 
-   * @param count 
+   * @param index
+   * @param count
    */
   public RemoveRange(index: number, count: number): void {
     if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
@@ -321,8 +329,8 @@ export class List<T> extends Queryable<T> {
 
   /**
    * Reverses the order of the elements in the specified range.
-   * @param index 
-   * @param count 
+   * @param index
+   * @param count
    */
   public ReverseRange(index: number, count: number): void {
     const arraySegment = this.item.splice(index, count);

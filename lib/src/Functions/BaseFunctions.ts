@@ -3,10 +3,10 @@ export class BaseFunctions {
 
   /**
    * Returns the given array shuffled based on the knuth shuffle algorithm
-   * @param array 
+   * @param array
    */
   public static Shuffle(array: Array<any>): Array<any> {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (0 !== currentIndex) {
       randomIndex = Math.floor(Math.random() * currentIndex);

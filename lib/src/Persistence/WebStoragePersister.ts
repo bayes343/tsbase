@@ -20,7 +20,7 @@ export class WebStoragePersister implements IPersistable {
    * Delete all data previously stored in WebStorage
    */
   Purge(): void {
-    if (this.storageType == 'session') {
+    if (this.storageType === 'session') {
       window.sessionStorage.removeItem(this.key);
     } else {
       window.localStorage.removeItem(this.key);
@@ -38,7 +38,7 @@ export class WebStoragePersister implements IPersistable {
 
   /**
    * Persist the given collection in WebStorage
-   * @param items 
+   * @param items
    */
   Persist(items: Array<any>): void {
     const stringifiedItems = JSON.stringify(items);

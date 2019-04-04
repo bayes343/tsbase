@@ -18,7 +18,7 @@ export class HttpResponseMessage {
 
   constructor(
     /**
-     * String response body 
+     * String response body
      */
     public Content: string,
     /**

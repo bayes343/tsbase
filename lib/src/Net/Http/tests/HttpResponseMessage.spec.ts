@@ -1,4 +1,4 @@
-import { HttpResponseMessage } from "../HttpResponseMessage";
+import { HttpResponseMessage } from '../HttpResponseMessage';
 import { Errors } from '../../../Errors';
 
 describe('HttpResponseMessage', () => {
@@ -27,4 +27,3 @@ describe('HttpResponseMessage', () => {
   });
 
 });
-

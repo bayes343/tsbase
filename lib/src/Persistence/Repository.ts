@@ -7,9 +7,9 @@ import { Severity } from './Integrity/Severity';
 import { Errors } from '../Errors';
 
 /**
- * An extension of the List<T> class that incorporates persistence functionality 
+ * An extension of the List<T> class that incorporates persistence functionality
  * provided by a class implementing IPersistable.  Previously persisted data is
- * loaded on instantiation using the default persister's "Retrieve" method. 
+ * loaded on instantiation using the default persister's "Retrieve" method.
  */
 export class Repository<T> extends List<T> {
   /**
@@ -77,7 +77,7 @@ export class Repository<T> extends List<T> {
     const candidates = collection.Where(item => this.itemIsCompliantWithRules(item)) as List<T>;
     super.InsertRange(index, candidates);
   }
-  //#endregion 
+  //#endregion
 
   private getSerializedInstancesFromInitialData(initialData: Array<any>): Array<T> {
     const classInstances = new Array<T>();

@@ -1,4 +1,4 @@
-import { Repository } from "../Repository";
+import { Repository } from '../Repository';
 import { WebStoragePersister } from '../WebStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Rule } from '../Integrity/Rule';
@@ -45,6 +45,7 @@ describe('Repository', () => {
     expect(classUnderTest.Count).toEqual(6);
   });
 
+  // tslint:disable-next-line: max-line-length
   it('should not allow elements that dont comply with rules to be added to the repository and log an error if the severity is error', () => {
     classUnderTest.Clear();
     classUnderTest.Rules.push(
@@ -77,7 +78,7 @@ describe('Repository', () => {
 
   //#region Integeation tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
-    classUnderTest.Add("delete this");
+    classUnderTest.Add('delete this');
     classUnderTest.SaveChanges();
     classUnderTest.PurgeData();
     expect(classUnderTest.Count).toEqual(0);

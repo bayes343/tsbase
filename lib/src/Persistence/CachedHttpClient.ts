@@ -25,8 +25,8 @@ export class CachedHttpClient {
   /**
    * Asyncronously get the HttpResponseMessage returned by an Http Get to the request uri.
    * Uses the previously persisted response if available without making an http request.
-   * @param uri 
-   * @param fresh 
+   * @param uri
+   * @param fresh
    */
   public async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
     const cachedResponse = this.repository.Find(item => item.requestUri === uri);

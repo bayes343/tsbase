@@ -1,4 +1,4 @@
-import { JsonSerializer } from "../JsonSerializer";
+import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
 import { List } from '../../../Collections/List';
 
@@ -46,6 +46,11 @@ class Pet {
   public breed = '';
 }
 
+class FakeField {
+  public one = 'one';
+  public two = 'two';
+}
+
 class Person {
   public FirstName = '';
   public LastName = '';
@@ -54,11 +59,6 @@ class Person {
   public Pets = new List<Pet>([new Pet()]);
   public ArrayPets = [new Pet()];
   public FakeField = new FakeField();
-}
-
-class FakeField {
-  public one = 'one';
-  public two = 'two';
 }
 
 class Path {
@@ -81,6 +81,7 @@ class User {
 }
 //#endregion
 
+// tslint:disable-next-line: max-line-length
 const stubUserJsonResponse = { 'node': { 'uid': [{ 'value': 1 }], 'fakeField': [], 'uuid': [{ 'value': 'c3fba15b-5ac1-423c-8bca-43455b157053' }], 'langcode': [{ 'value': 'en' }], 'preferred_langcode': [{ 'value': 'en' }], 'preferred_admin_langcode': [], 'name': [{ 'value': 'jwbayes' }], 'mail': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'timezone': [{ 'value': 'America\/New_York' }], 'status': [{ 'value': true }], 'created': [{ 'value': '2018-01-25T16:23:59+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'changed': [{ 'value': '2018-01-25T16:27:54+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'access': [{ 'value': '2018-04-29T04:16:56+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'login': [{ 'value': '2018-04-27T17:14:21+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'init': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'roles': [{ 'target_id': 'administrator', 'target_type': 'user_role', 'target_uuid': '1e6632cf-40bf-454b-84f6-9a39fccb8b82' }], 'default_langcode': [{ 'value': true }], 'path': [{ 'alias': 'profile/jwbayes', 'pid': 123, 'langcode': 'en' }], 'field_display_name': [{ 'value': 'Joey Bayes' }], 'field_employee_id': [{ 'value': '78749' }], 'field_given_name': [{ 'value': 'Joseph' }], 'field_mobile': [{ 'value': '5402675986' }], 'field_surname': [{ 'value': 'Bayes' }], 'number_list': [{ 'value': 1 }, { 'value': 2 }, { 'value': 3 }] } };
 
 describe('JsonSerializer', () => {
@@ -161,4 +162,3 @@ describe('JsonSerializer', () => {
     expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
   });
 });
-

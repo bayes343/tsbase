@@ -1,5 +1,5 @@
 /**
- * The interface provided by objects that can handle basic persistence, 
+ * The interface provided by objects that can handle basic persistence,
  * retrieval, and deletion of data in any given data store
  */
 export interface IPersistable {

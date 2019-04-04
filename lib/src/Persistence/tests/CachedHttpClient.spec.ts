@@ -1,7 +1,6 @@
-import { CachedHttpClient } from "../CachedHttpClient";
+import { CachedHttpClient } from '../CachedHttpClient';
 import { HttpClient } from '../../Net/Http/HttpClient';
 import { MockXhrRequestHandler } from '../../Net/Http/tests/MockXhrRequestHandler';
-
 
 describe('CachedHttpClient', () => {
   let classUnderTest: CachedHttpClient;
