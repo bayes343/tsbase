@@ -14,14 +14,14 @@ describe('Timer', () => {
 
   it('should fire at given intervals', async () => {
     classUnderTest.Interval = 1;
-    classUnderTest.Elapsed.push(() => { const stub = 'stub'; });
+    classUnderTest.Elapsed.push(() => { });
     await classUnderTest.Start();
     expect(classUnderTest.Enabled).toBeFalsy();
   })
 
   it('should stop an enabled timer', () => {
     classUnderTest.Interval = 1;
-    classUnderTest.Elapsed.push(() => { const fake = 'fake'; });
+    classUnderTest.Elapsed.push(() => { });
     classUnderTest.AutoReset = true;
     classUnderTest.Start();
     classUnderTest.Stop();
