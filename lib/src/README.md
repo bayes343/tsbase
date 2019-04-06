@@ -11,33 +11,4 @@ Helpful links:
 
 ---
 
-## Quick-start
-
-Install tsbase inside any npm based project by running `npm i tsbase`
-
-Import the libraries you wish to use like so:
-
-```ts
-import { Queryable, List } from 'tsbase';
-```
-
-Consume available apis:
-
-```ts
-// Instantiate a list of person
-people = new List<Person>([
-   new Person('John Doe', 18),
-   new Person('James Doe', 27),
-   new Person('Joe Doe', 20),
-   new Person('Jack Doe', 45)
-]);
-
-people.Sort(p => p.name); // Sort people alphabetically
-
-const averageAge = people.Average(p => p.age); // 27.5
-
-const youngestPerson = people.OrderBy([p => p.age]).First(); // John Doe / 18
-
-const seniorPeople = people.Where(
-   p => p.age > people.Average(p => p.age));
-```
+Please reference the wiki (linked above) for information on getting started and documentation and examples of tsbase features.
