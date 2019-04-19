@@ -41,3 +41,8 @@ Queryable
 ```ts
 Search(term: string, minimumKeywordLength = 3, stopWords = new Array<string>()): Queryable<T>
 ```
+
+Guid (new class)
+```ts
+static NewGuid(): string
+```
