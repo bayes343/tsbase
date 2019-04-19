@@ -1,13 +1,20 @@
 import { HttpClient } from '../HttpClient';
-import { MockXhrRequestHandler } from './MockXhrRequestHandler';
 import { HttpRequestMessage } from '../HttpRequestMessage';
 import { HttpMethod } from '../../HttpMethod';
+import { Mock } from 'tsmockit';
+import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { HttpResponseMessage } from '../HttpResponseMessage';
 
 describe('HttpClient', () => {
+  const mockXhrRequestHandler = new Mock<IXhrRequestHandler>();
+  const BadRequest = new HttpResponseMessage('BadRequest', { Code: 400, Text: 'BadRequest' });
+  const OkRequest = new HttpResponseMessage('OK', { Code: 200, Text: 'OK' });
   let classUnderTest: HttpClient;
 
   beforeEach(() => {
-    classUnderTest = new HttpClient(new MockXhrRequestHandler(classUnderTest));
+    setupMockXhrRequestHander(mockXhrRequestHandler, OkRequest, BadRequest);
+
+    classUnderTest = new HttpClient(mockXhrRequestHandler.Object);
     classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
     classUnderTest.BaseAddress = 'https://fake.com';
   });
@@ -89,3 +96,15 @@ describe('HttpClient', () => {
   });
 
 });
+// tslint:disable: max-line-length
+// tslint:disable: promise-function-async
+// tslint:disable-next-line: only-arrow-functions
+function setupMockXhrRequestHander(mockXhrRequestHandler: Mock<IXhrRequestHandler>, OkRequest: HttpResponseMessage, BadRequest: HttpResponseMessage) {
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/ok', HttpMethod.GET, ''), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/bad', HttpMethod.GET, ''), new Promise<HttpResponseMessage>((resolve) => { resolve(BadRequest); }));
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/delete', HttpMethod.DELETE, ''), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/ok')), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/bad')), new Promise<HttpResponseMessage>((resolve) => { resolve(BadRequest); }));
+  mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/delete')), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
+  mockXhrRequestHandler.Setup(x => x.AbortPendingRequests(), null);
+}

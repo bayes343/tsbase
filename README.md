@@ -7,7 +7,7 @@ The public facing readme is located in the `lib/src` directory.  This readme is 
 
 ## Local Development
 
-### Pre-requisites 
+### Pre-requisites
 - node/npm
 
 ### Installation
@@ -15,6 +15,9 @@ The public facing readme is located in the `lib/src` directory.  This readme is 
 
 ### Testing
 - run cmd: `npm run test` / `karma start`
+
+### Linting
+- run cmd: `npm run lint`
 
 ### Building
 - run cmd `npm run build`

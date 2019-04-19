@@ -1,13 +1,21 @@
 import { CachedHttpClient } from '../CachedHttpClient';
 import { HttpClient } from '../../Net/Http/HttpClient';
-import { MockXhrRequestHandler } from '../../Net/Http/tests/MockXhrRequestHandler';
+import { HttpResponseMessage } from '../../Net/Http/HttpResponseMessage';
+import { HttpMethod } from '../../Net/HttpMethod';
+import { Mock } from 'tsmockit';
+import { IXhrRequestHandler } from '../../Net/Http/IXhrRequestHandler';
 
 describe('CachedHttpClient', () => {
+  const OkRequest = new HttpResponseMessage('OK', { Code: 200, Text: 'OK' });
+  const mockXhrRequestHandler = new Mock<IXhrRequestHandler>();
   let classUnderTest: CachedHttpClient;
   let httpClient: HttpClient;
 
   beforeEach(() => {
-    httpClient = new HttpClient(new MockXhrRequestHandler(httpClient));
+    // tslint:disable-next-line: promise-function-async
+    mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/ok', HttpMethod.GET, ''),
+      new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
+    httpClient = new HttpClient(mockXhrRequestHandler.Object);
     classUnderTest = new CachedHttpClient(httpClient);
   });
 
