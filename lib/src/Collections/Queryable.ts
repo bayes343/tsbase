@@ -1,5 +1,7 @@
 import { BaseFunctions } from '../Functions/BaseFunctions';
 import { Errors } from '../Errors';
+import { Regex } from '../Constants/Regex';
+import { Strings } from '../Constants/Strings';
 
 export abstract class Queryable<T> {
   /**
@@ -353,4 +355,52 @@ export abstract class Queryable<T> {
     );
   }
 
+  /**
+   * Perform a full text search on a collection for a given search term. Elements containing the entire search term
+   * are given precedence over keyword matches.
+   * @param term The term being searched for
+   * @param minimumKeywordLength Keywords in the search term with a length less than this won't be considered
+   * @param stopWords Keywords matching these words are not considered
+   */
+  public Search(term: string, minimumKeywordLength = 3, stopWords = new Array<string>()): Queryable<T> {
+    const keywords = this.getKeywordsForTerm(term);
+
+    stopWords.forEach(element => {
+      element = element.toLowerCase();
+    });
+
+    const exactMatches = this.Where(
+      item => JSON.stringify(item).toLowerCase().indexOf(term.toLowerCase()) >= 0).ToArray();
+
+    const keywordMatches = this.getKeywordMatches(keywords, minimumKeywordLength, stopWords);
+
+    const distinctResults = Queryable.From(exactMatches.concat(keywordMatches)).Distinct();
+    return distinctResults;
+  }
+
+  private getKeywordsForTerm(term: string) {
+    const keywords = term.split(Strings.Space);
+
+    keywords.forEach(element => {
+      element = element.replace(Regex.NonAlphaNumeric, Strings.Empty);
+    });
+
+    return keywords;
+  }
+
+  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[]) {
+    let keywordMatches = new Array<any>();
+
+    if (keywords.length > 0) {
+      keywords.forEach(keyword => {
+        if (keyword.length >= minimumKeywordLength &&
+          stopWords.indexOf(keyword.toLowerCase()) < 0) {
+          const keywordMatchesFound = this.Where(item => JSON.stringify(item).toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
+          keywordMatches = keywordMatches.concat(keywordMatchesFound.ToArray());
+        }
+      });
+    }
+
+    return keywordMatches;
+  }
 }

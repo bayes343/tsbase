@@ -21,3 +21,23 @@ The public facing readme is located in the `lib/src` directory.  This readme is 
 
 ### Building
 - run cmd `npm run build`
+
+## Release notes
+
+### 1.2.0
+
+Repository
+```ts
+get PendingChanges(): { PendingSave: Queryable<T>, PendingDeletion: Queryable<T> }
+```
+```ts
+GetUnsavedElements(): Queryable<T>
+```
+```ts
+GetUnpurgedElements(): Queryable<T>
+```
+
+Queryable
+```ts
+Search(term: string, minimumKeywordLength = 3, stopWords = new Array<string>()): Queryable<T>
+```

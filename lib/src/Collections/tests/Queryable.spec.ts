@@ -355,4 +355,42 @@ describe('Queryable', () => {
     }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
   });
 
+  const dataToSearch: Array<{ name: string, age: number, gender: 'male' | 'female' }> = [
+    { name: 'John Doe', age: 18, gender: 'male' },
+    { name: 'Johnny Boy', age: 20, gender: 'male' },
+    { name: 'Johnson Connor', age: 22, gender: 'male' },
+    { name: 'Jane Doe', age: 18, gender: 'female' },
+    { name: 'Jenny Girl', age: 19, gender: 'female' }
+  ];
+
+  it('should search a collection of objects by search term', () => {
+    const johnDoeSearch = Queryable.From(dataToSearch).Search('John Doe');
+    const john = johnDoeSearch.First();
+
+    expect(john !== null && john.name === 'John Doe').toBeTruthy();
+    expect(johnDoeSearch.Item.length).toEqual(4);
+  });
+
+  it('should search and return an empty collection when no results are found', () => {
+    const badSearch = Queryable.From(dataToSearch).Search('Super Fake');
+    expect(badSearch.Item.length).toEqual(0);
+  });
+
+  it('should search a collection with custom keyword length', () => {
+    const ageSearch = Queryable.From(dataToSearch).Search('18', 2);
+    const failedDoeSearch = Queryable.From(dataToSearch).Search('So Doe', 4);
+
+    expect(ageSearch.Item.length).toEqual(2);
+    expect(failedDoeSearch.Item.length).toEqual(0);
+  });
+
+  it('should search a collection with stop words', () => {
+    const stopWords = ['female'];
+    const allMalesSearch = Queryable.From(dataToSearch).Search('female');
+    const johnBoyMaleSearch = Queryable.From(dataToSearch).Search('girl female', 3, stopWords);
+
+    expect(allMalesSearch.Item.length).toEqual(2);
+    expect(johnBoyMaleSearch.Item.length).toEqual(1);
+  });
+
 });
