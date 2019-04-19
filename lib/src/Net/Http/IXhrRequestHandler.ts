@@ -3,7 +3,7 @@ import { HttpMethod } from '../HttpMethod';
 import { HttpRequestMessage } from './HttpRequestMessage';
 
 /**
- * Consumed by HttpClient - handles direct interaction with XHR apis
+ * Consumed by HttpClient - handles direct interaction with XHR api
  */
 export interface IXhrRequestHandler {
   /**
