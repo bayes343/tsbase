@@ -17,6 +17,13 @@ export class Repository<T> extends List<T> {
    * Rules that have a severity of "Error" will not be added
    */
   public Rules = new Array<Rule<T>>();
+  public get PendingChanges(): { PendingSave: Queryable<T>, PendingDeletion: Queryable<T> } {
+    return {
+      PendingSave: this.GetUnsavedElements(),
+      PendingDeletion: this.GetUnpurgedElements()
+    };
+  }
+
   private savedData: Array<T>;
 
   constructor(
@@ -52,6 +59,13 @@ export class Repository<T> extends List<T> {
    */
   public GetUnsavedElements(): Queryable<T> {
     return this.Except(this.savedData);
+  }
+
+  /**
+   * Returns a collection of elements that have not been removed from persistence
+   */
+  public GetUnpurgedElements(): Queryable<T> {
+    return Queryable.From(this.savedData).Except(this.item);
   }
 
   //#region Overrides

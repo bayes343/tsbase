@@ -28,11 +28,30 @@ describe('Repository', () => {
     expect(classUnderTest).toBeDefined();
   });
 
-  it('should get a collection of unsaved elements when requested', () => {
+  it('should get a collection of unsaved elements', () => {
     classUnderTest.AddRange(['fake', 'mock']);
     classUnderTest.SaveChanges();
     classUnderTest.Add('stub');
     expect(classUnderTest.GetUnsavedElements().All(item => item === 'stub')).toBeTruthy();
+  });
+
+  it('should get a collection of unpurged elements', () => {
+    classUnderTest.AddRange(['fake', 'fake2']);
+    classUnderTest.SaveChanges();
+    classUnderTest.Remove('fake');
+    expect(classUnderTest.GetUnpurgedElements().All(item => item === 'fake')).toBeTruthy();
+  });
+
+  it('should get pending changes', () => {
+    classUnderTest.Add(['fake1', 'fake2', 'fake3']);
+    classUnderTest.SaveChanges();
+    classUnderTest.Add('fake4');
+    classUnderTest.Remove('fake1');
+
+    const pendingChanges = classUnderTest.PendingChanges;
+
+    expect(pendingChanges.PendingDeletion.All(item => item === 'fake1'));
+    expect(pendingChanges.PendingSave.All(item => item === 'fake4'));
   });
 
   it('should allow elements that comply with rules to be added to the repository', () => {
