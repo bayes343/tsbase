@@ -7,7 +7,7 @@
   "author": "Joseph Bayes",
   "license": "ISC",
   "scripts": {
-    "test": "karma start",
+    "start": "karma start",
     "test-once": "karma start --singleRun",
     "clean": "rm -r ../dist/**/tests && rm -r ../dist/**/**/tests",
     "tsc": "tsc && npm run clean",
