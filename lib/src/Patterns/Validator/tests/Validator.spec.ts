@@ -35,11 +35,11 @@ class AgeValidation implements IValidation<Person> {
   }
 }
 
-describe('PersonValidator', (() => {
-  let personValidator: Validator<Person>;
+describe('Validator', (() => {
+  let validator: Validator<Person>;
 
   beforeEach(() => {
-    personValidator = new Validator<Person>([
+    validator = new Validator<Person>([
       new NameValidation(),
       new AgeValidation()
     ]);
@@ -48,7 +48,7 @@ describe('PersonValidator', (() => {
   it('should return successful response when no errors are detected', () => {
     const person = new Person('Joey Bayes', 28);
 
-    const validationResult = personValidator.Validate(person);
+    const validationResult = validator.Validate(person);
 
     expect(validationResult.IsSuccess).toBeTruthy();
     expect(validationResult.ErrorMessages.length).toEqual(0);
@@ -57,7 +57,7 @@ describe('PersonValidator', (() => {
   it('should return failed result when one or more errors are detected', () => {
     const person = new Person('', -1);
 
-    const validationResult = personValidator.Validate(person);
+    const validationResult = validator.Validate(person);
 
     expect(validationResult.IsSuccess).toBeFalsy();
     expect(validationResult.ErrorMessages.length).toEqual(2);
