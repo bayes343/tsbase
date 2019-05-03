@@ -1,7 +1,7 @@
 import { Result } from '../Result/Result';
 import { IValidation } from './IValidation';
 
-export abstract class Validator<T> {
+export class Validator<T> {
   private validations: Array<IValidation<T>>;
 
   constructor(validations: Array<IValidation<T>>) {

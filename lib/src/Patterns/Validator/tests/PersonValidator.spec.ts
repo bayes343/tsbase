@@ -6,7 +6,7 @@ class Person {
   constructor(
     public Name: string,
     public Age: number
-  ) {}
+  ) { }
 }
 
 class NameValidation implements IValidation<Person> {
@@ -35,17 +35,11 @@ class AgeValidation implements IValidation<Person> {
   }
 }
 
-class PersonValidator extends Validator<Person> {
-  constructor(personValidations: Array<IValidation<Person>>) {
-    super(personValidations);
-  }
-}
-
 describe('PersonValidator', (() => {
-  let personValidator: PersonValidator;
+  let personValidator: Validator<Person>;
 
   beforeEach(() => {
-    personValidator = new PersonValidator([
+    personValidator = new Validator<Person>([
       new NameValidation(),
       new AgeValidation()
     ]);
