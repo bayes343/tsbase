@@ -30,6 +30,12 @@ export * from './Persistence/CachedHttpClient';
 export * from './Persistence/Integrity/Rule';
 export * from './Persistence/Integrity/Severity';
 
+// Patterns
+export * from './Patterns/Result/Result';
+export * from './Patterns/Result/GenericResult';
+export * from './Patterns/Validator/Validator';
+export * from './Patterns/Validator/IValidation';
+
 // Other
 export * from './TypeLiterals';
 export * from './Functions/BaseFunctions';
