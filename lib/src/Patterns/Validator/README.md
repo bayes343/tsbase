@@ -8,15 +8,7 @@ Use this pattern when you need to execute 'n' number of validations against a gi
 
 ## Implementation steps
 *Code examples pulled from `src/validator/tests/PersonValidator.spec.ts`*
-1. Extend Validator<T>
-```ts
-class PersonValidator extends Validator<Person> {
-  constructor(personValidations: Array<IValidation<Person>>) {
-    super(personValidations);
-  }
-}
-```
-2. Implement `IValidation`(s)
+1. Implement `IValidation`(s)
 ```ts
 class NameValidation implements IValidation<Person> {
   Validate(object: Person): Result {
@@ -31,14 +23,14 @@ class NameValidation implements IValidation<Person> {
   }
 }
 ```
-3. Instantiate validator
+2. Instantiate validator
 ```ts
-personValidator = new PersonValidator([
+personValidator = new Validator([
   new NameValidation(),
   new AgeValidation()
 ]);
 ```
-4. Call `Validate`, passing an object of type `T` and make use of the result returned
+3. Call `Validate`, passing an object of type `T` and make use of the result returned
 ```ts
   // Success unit test example
   it('should return successful response when no errors are detected', () => {
