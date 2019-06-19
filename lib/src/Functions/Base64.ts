@@ -4,7 +4,7 @@ type Base64Encoding = string | ArrayBuffer | null;
 
 export class Base64 {
 
-  public static async GetEncodedBase64(fileToEncode: File): Promise<Base64Encoding> {
+  public static async EncodAsBase64(fileToEncode: File): Promise<Base64Encoding> {
     const reader = new FileReader();
     return await new Promise<Base64Encoding>((resolve) => {
       reader.readAsDataURL(fileToEncode);
@@ -17,7 +17,7 @@ export class Base64 {
     });
   }
 
-  public static GetDecodedBase64(dataurl: string, filename: string): File {
+  public static DecodeFromBase64(dataurl: string, filename: string): File {
     try {
       const arr = dataurl.split(',') as any,
         mime = arr[0].match(/:(.*?);/)[1],
