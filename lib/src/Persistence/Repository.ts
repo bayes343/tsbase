@@ -2,9 +2,9 @@ import { List } from '../Collections/List';
 import { IPersistable } from './IPersistable';
 import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
-import { Rule } from './Integrity/Rule';
-import { Severity } from './Integrity/Severity';
 import { Errors } from '../Errors';
+import { Validator } from '../Patterns/Validator/Validator';
+import { Result } from '../Patterns/Result/Result';
 
 /**
  * An extension of the List<T> class that incorporates persistence functionality
@@ -16,7 +16,6 @@ export class Repository<T> extends List<T> {
    * A set of rules the repository will check against when new elements are added
    * Rules that have a severity of "Error" will not be added
    */
-  public Rules = new Array<Rule<T>>();
   public get PendingChanges(): { PendingSave: Queryable<T>, PendingDeletion: Queryable<T> } {
     return {
       PendingSave: this.GetUnsavedElements(),
@@ -28,6 +27,7 @@ export class Repository<T> extends List<T> {
 
   constructor(
     private persister: IPersistable,
+    private validator: Validator<T> = new Validator<T>([]),
     private serializer?: ISerializer<T>,
     private serializeAs?: { new(): T; }
   ) {
@@ -69,27 +69,51 @@ export class Repository<T> extends List<T> {
   }
 
   //#region Overrides
-  public Add(object: T): void {
-    if (this.itemIsCompliantWithRules(object)) {
+  public Add(object: T): Result {
+    const result = this.itemIsValid(object);
+
+    if (result.IsSuccess) {
       super.Add(object);
     }
+
+    return result;
   }
 
-  public AddRange(elements: Array<T>): void {
-    let candidates = new List<T>(elements);
-    candidates = candidates.Where(item => this.itemIsCompliantWithRules(item)) as List<T>;
-    super.AddRange(candidates.ToArray());
+  public AddRange(elements: Array<T>): Result {
+    const result = new Result();
+
+    elements.forEach(element => {
+      result.ErrorMessages = result.ErrorMessages.concat(this.itemIsValid(element).ErrorMessages);
+    });
+
+    if (result.IsSuccess) {
+      super.AddRange(elements);
+    }
+
+    return result;
   }
 
-  public Insert(index: number, item: T): void {
-    if (this.itemIsCompliantWithRules(item)) {
+  public Insert(index: number, item: T): Result {
+    const result = this.itemIsValid(item);
+
+    if (result.IsSuccess) {
       super.Insert(index, item);
     }
+
+    return result;
   }
 
-  public InsertRange(index: number, collection: List<T>): void {
-    const candidates = collection.Where(item => this.itemIsCompliantWithRules(item)) as List<T>;
-    super.InsertRange(index, candidates);
+  public InsertRange(index: number, collection: List<T>): Result {
+    const result = new Result();
+
+    collection.ForEach(i => result.ErrorMessages =
+      result.ErrorMessages.concat(this.itemIsValid(i).ErrorMessages));
+
+    if (result.IsSuccess) {
+      super.InsertRange(index, collection);
+    }
+
+    return result;
   }
   //#endregion
 
@@ -105,24 +129,7 @@ export class Repository<T> extends List<T> {
     return classInstances;
   }
 
-  private itemIsCompliantWithRules(item: T): boolean {
-    let compliant = true;
-    this.Rules.forEach(element => {
-      if (!element.ComplianceTest(item)) {
-        compliant = element.Severity !== Severity.Error;
-        this.handleNonCompliance(element);
-      }
-    });
-    return compliant;
-  }
-
-  private handleNonCompliance(rule: Rule<T>): void {
-    if (rule.Severity === Severity.Error) {
-      console.error(rule.Description);
-    } else if (rule.Severity === Severity.Warning) {
-      console.warn(rule.Description);
-    } else {
-      console.info(rule.Description);
-    }
+  private itemIsValid(item: T): Result {
+    return this.validator.Validate(item);
   }
 }

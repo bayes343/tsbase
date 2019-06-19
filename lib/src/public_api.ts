@@ -27,8 +27,6 @@ export * from './Persistence/Repository';
 export * from './Persistence/IPersistable';
 export * from './Persistence/WebStoragePersister';
 export * from './Persistence/CachedHttpClient';
-export * from './Persistence/Integrity/Rule';
-export * from './Persistence/Integrity/Severity';
 
 // Patterns
 export * from './Patterns/Result/Result';

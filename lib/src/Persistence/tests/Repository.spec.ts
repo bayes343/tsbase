@@ -1,8 +1,9 @@
 import { Repository } from '../Repository';
 import { WebStoragePersister } from '../WebStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
-import { Rule } from '../Integrity/Rule';
-import { Severity } from '../Integrity/Severity';
+import { Validator } from '../../Patterns/Validator/Validator';
+import { IValidation } from '../../Patterns/Validator/IValidation';
+import { Result } from '../../Patterns/Result/Result';
 import { List } from '../../Collections/List';
 
 class Person {
@@ -15,12 +16,23 @@ class Person {
   }
 }
 
+class StringValidator implements IValidation<string> {
+  public Validate(object: string): Result {
+    const result = new Result();
+    if (!object || object.length < 1) {
+      result.ErrorMessages.push('String is not valid');
+    }
+    return result;
+  }
+}
+
 describe('Repository', () => {
   let classUnderTest: Repository<any>;
 
   beforeEach(() => {
     classUnderTest = new Repository<string>(
-      new WebStoragePersister('test', 'local')
+      new WebStoragePersister('test', 'local'),
+      new Validator([new StringValidator()])
     );
   });
 
@@ -54,45 +66,34 @@ describe('Repository', () => {
     expect(pendingChanges.PendingSave.All(item => item === 'fake4'));
   });
 
-  it('should allow elements that comply with rules to be added to the repository', () => {
-    classUnderTest.Clear();
-    classUnderTest.Rules.push(
-      new Rule<number>(item => item < 10, Severity.Error, 'Items must be less than 10')
-    );
-    classUnderTest.AddRange([1, 2, 3, 4, 5]);
-    classUnderTest.Add(9);
-    expect(classUnderTest.Count).toEqual(6);
+  it('should return a failed result on Add if item is not valid', () => {
+    const result = classUnderTest.Add('');
+    expect(result.IsSuccess).toBeFalsy();
   });
 
-  // tslint:disable-next-line: max-line-length
-  it('should not allow elements that dont comply with rules to be added to the repository and log an error if the severity is error', () => {
-    classUnderTest.Clear();
-    classUnderTest.Rules.push(
-      new Rule<number>(item => item < 10, Severity.Error, 'Items must be less than 10')
-    );
-    classUnderTest.AddRange([1, 2, 3, 4, 5]);
-    classUnderTest.Add(10);
-    expect(classUnderTest.Count).toEqual(5);
+  it('should return a failed result on AddRange if an item is not valid', () => {
+    const result = classUnderTest.AddRange(['', 'fake']);
+    expect(result.IsSuccess).toBeFalsy();
   });
 
-  it('should allow elements to be inserted and log a warning when they do not comply with rules but the severity is warning', () => {
-    classUnderTest.Clear();
-    classUnderTest.Rules.push(
-      new Rule<number>(item => item < 5, Severity.Warning, 'We recommend numbers less than 5')
-    );
-    classUnderTest.InsertRange(0, new List<number>([1, 2, 3, 4]));
-    classUnderTest.Insert(2, 5);
-    expect(classUnderTest.Count).toEqual(5);
+  it('should return a failed result on Insert if item is not valid', () => {
+    const result = classUnderTest.Insert(0, '');
+    expect(result.IsSuccess).toBeFalsy();
   });
 
-  it('should allow elements to be inserted and log an info message when they do not comply with rules but the severity is info', () => {
-    classUnderTest.Clear();
-    classUnderTest.Rules.push(
-      new Rule<number>(item => item < 5, Severity.Info, 'You inserted a number greater than 5')
-    );
-    classUnderTest.InsertRange(0, new List<number>([1, 2, 3, 4]));
-    classUnderTest.Insert(2, 9);
-    expect(classUnderTest.Count).toEqual(5);
+  it('should return a failed result on InsertRange if an item is not valid', () => {
+    const result = classUnderTest.InsertRange(0, new List(['', 'fake']));
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should successfully Insert an item if it is valid', () => {
+    const result = classUnderTest.Insert(0, 'fake');
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should successfully InsertRange if all items are valid', () => {
+    const result = classUnderTest.InsertRange(0, new List(['fakest', 'fake']));
+    expect(result.IsSuccess).toBeTruthy();
   });
 
   //#region Integeation tests using DomStorageAPI
@@ -142,6 +143,7 @@ describe('Repository', () => {
   it('should initialize with serialized classes if serializer and template constructor given', () => {
     classUnderTest = new Repository<Person>(
       new WebStoragePersister('test', 'session'),
+      new Validator([]),
       new JsonSerializer<Person>(),
       Person
     );
@@ -154,11 +156,12 @@ describe('Repository', () => {
 
     const dupRepo = new Repository(
       new WebStoragePersister('test', 'session'),
+      new Validator([]),
       new JsonSerializer<Person>(),
       Person
     );
 
-    dupRepo.ForEach(item => expect(item.complain()).toEqual('woe is me'));
+    dupRepo.ForEach(item => expect((item as Person).complain()).toEqual('woe is me'));
     db.PurgeData();
     dupRepo.PurgeData();
   });
