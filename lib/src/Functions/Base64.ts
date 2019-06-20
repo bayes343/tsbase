@@ -2,7 +2,11 @@ import { Errors } from '../Errors';
 
 export class Base64 {
 
-  public static async EncodAsBase64(fileToEncode: File): Promise<string> {
+  /**
+   * Accepts a File instance and asynchronously returns the Base64 encoded string equivalent.
+   * @param fileToEncode
+   */
+  public static async EncodeAsBase64(fileToEncode: File): Promise<string> {
     const reader = new FileReader();
     return await new Promise<string>((resolve) => {
       reader.readAsDataURL(fileToEncode);
@@ -15,6 +19,11 @@ export class Base64 {
     });
   }
 
+  /**
+   * Accepts a Base64 encoded string and file name, and returns the File instance equivalent.
+   * @param base64
+   * @param filename
+   */
   public static DecodeFromBase64(base64: string, filename: string): File {
     try {
       const arr = base64.split(',') as any,
