@@ -1,4 +1,4 @@
-import { BaseFunctions } from '../Functions/BaseFunctions';
+import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 import { Regex } from '../Constants/Regex';
 import { Strings } from '../Constants/Strings';
@@ -319,7 +319,7 @@ export abstract class Queryable<T> {
    */
   public GetRandom(excluding?: Array<T>): T | null {
     const candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
-    const shuffledItems = BaseFunctions.Shuffle(candidateElements);
+    const shuffledItems = ArrayFunctions.Shuffle(candidateElements);
     return shuffledItems.length >= 1 ? shuffledItems[0] : null;
   }
 

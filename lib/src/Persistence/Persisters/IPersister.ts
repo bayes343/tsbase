@@ -2,7 +2,7 @@
  * The interface provided by objects that can handle basic persistence,
  * retrieval, and deletion of data in any given data store
  */
-export interface IPersistable {
+export interface IPersister {
   /**
    * Retrieves previously persisted data as an array of objects
    */

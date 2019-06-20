@@ -1,15 +1,13 @@
 import { Errors } from '../Errors';
 
-type Base64Encoding = string | ArrayBuffer | null;
-
 export class Base64 {
 
-  public static async EncodAsBase64(fileToEncode: File): Promise<Base64Encoding> {
+  public static async EncodAsBase64(fileToEncode: File): Promise<string> {
     const reader = new FileReader();
-    return await new Promise<Base64Encoding>((resolve) => {
+    return await new Promise<string>((resolve) => {
       reader.readAsDataURL(fileToEncode);
       reader.onload = () => {
-        resolve(reader.result);
+        resolve(reader.result as string);
       };
       reader.onerror = () => {
         throw new Error(Errors.Base64EncodingFailed);
@@ -17,9 +15,9 @@ export class Base64 {
     });
   }
 
-  public static DecodeFromBase64(dataurl: string, filename: string): File {
+  public static DecodeFromBase64(base64: string, filename: string): File {
     try {
-      const arr = dataurl.split(',') as any,
+      const arr = base64.split(',') as any,
         mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]);
 

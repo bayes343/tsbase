@@ -24,8 +24,8 @@ export * from './Utility/Timers/Timer';
 
 // Persistence
 export * from './Persistence/Repository';
-export * from './Persistence/IPersistable';
-export * from './Persistence/WebStoragePersister';
+export * from './Persistence/Persisters/IPersister';
+export * from './Persistence/Persisters/WebStoragePersister';
 export * from './Persistence/CachedHttpClient';
 
 // Patterns
@@ -36,5 +36,7 @@ export * from './Patterns/Validator/IValidation';
 
 // Other
 export * from './TypeLiterals';
-export * from './Functions/BaseFunctions';
+export * from './Functions/ArrayFunctions';
+export * from './Functions/Guid';
+export * from './Functions/Base64';
 export * from './Errors';

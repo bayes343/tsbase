@@ -1,5 +1,5 @@
 import { Queryable } from './Queryable';
-import { BaseFunctions } from '../Functions/BaseFunctions';
+import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 
 export class List<T> extends Queryable<T> {
@@ -342,7 +342,7 @@ export class List<T> extends Queryable<T> {
    * Shuffles the collection of items stored in the list
    */
   public Shuffle(): void {
-    BaseFunctions.Shuffle(this.item);
+    ArrayFunctions.Shuffle(this.item);
   }
 
 }

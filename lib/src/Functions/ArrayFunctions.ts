@@ -1,4 +1,4 @@
-export class BaseFunctions {
+export class ArrayFunctions {
   private constructor() { }
 
   /**

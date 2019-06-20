@@ -1,12 +1,12 @@
-import { IPersistable } from './IPersistable';
-import { Errors } from '../Errors';
+import { IPersister } from './IPersister';
+import { Errors } from '../../Errors';
 
 type StorageType = 'local' | 'session';
 
 /**
  * Persists data using the html WebStorage apis (local and session)
  */
-export class WebStoragePersister implements IPersistable {
+export class WebStoragePersister implements IPersister {
   constructor(
     private key: string,
     private storageType: StorageType

@@ -1,5 +1,5 @@
 import { List } from '../Collections/List';
-import { IPersistable } from './IPersistable';
+import { IPersister } from './Persisters/IPersister';
 import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
 import { Errors } from '../Errors';
@@ -26,7 +26,7 @@ export class Repository<T> extends List<T> {
   private savedData: Array<T>;
 
   constructor(
-    private persister: IPersistable,
+    private persister: IPersister,
     private validator: Validator<T> = new Validator<T>([]),
     private serializer?: ISerializer<T>,
     private serializeAs?: { new(): T; }

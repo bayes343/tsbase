@@ -1,5 +1,5 @@
 import { Repository } from '../Repository';
-import { WebStoragePersister } from '../WebStoragePersister';
+import { WebStoragePersister } from '../Persisters/WebStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
