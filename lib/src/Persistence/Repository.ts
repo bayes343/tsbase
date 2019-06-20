@@ -41,9 +41,19 @@ export class Repository<T> extends List<T> {
   /**
    * Calls the underlying persister's "Persist" method saving the data currently in the list
    */
-  public SaveChanges(): void {
-    this.persister.Persist(this.Item);
-    this.savedData = this.Item;
+  public SaveChanges(): Result {
+    const result = new Result();
+
+    this.GetUnsavedElements().ToArray().forEach(element => {
+      result.ErrorMessages = result.ErrorMessages.concat(this.itemIsValid(element).ErrorMessages);
+    });
+
+    if (result.IsSuccess) {
+      this.persister.Persist(this.Item);
+      this.savedData = this.Item;
+    }
+
+    return result;
   }
 
   /**

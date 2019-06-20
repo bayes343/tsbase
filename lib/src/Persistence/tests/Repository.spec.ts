@@ -96,6 +96,19 @@ describe('Repository', () => {
     expect(result.IsSuccess).toBeTruthy();
   });
 
+  it('should validate unsaved items before saving changes', () => {
+    classUnderTest = new Repository<string>(
+      new WebStoragePersister('test', 'local'),
+      new Validator([new StringValidator()])
+    );
+    classUnderTest.AddRange(['fake', 'test']);
+    classUnderTest.Item[0] = '';
+
+    const result = classUnderTest.SaveChanges();
+
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
   //#region Integeation tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
     classUnderTest.Add('delete this');
