@@ -1,6 +1,7 @@
 import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
 import { List } from '../../../Collections/List';
+import { Strings } from '../../../Constants/Strings';
 
 //#region Fake classes for testing
 export class AmortizationSchedule {
@@ -26,8 +27,8 @@ export class LoanItem {
 }
 
 export class ValidationResultsItem {
-  public argument = '';
-  public message = '';
+  public argument = Strings.Empty;
+  public message = Strings.Empty;
 }
 
 export class LoanResults {
@@ -42,8 +43,8 @@ export class LoanResults {
 }
 
 class Pet {
-  public name = '';
-  public breed = '';
+  public name = Strings.Empty;
+  public breed = Strings.Empty;
 }
 
 class FakeField {
@@ -52,8 +53,8 @@ class FakeField {
 }
 
 class Person {
-  public FirstName = '';
-  public LastName = '';
+  public FirstName = Strings.Empty;
+  public LastName = Strings.Empty;
   public Age = 0;
   public Titles = new List<string>();
   public Pets = new List<Pet>([new Pet()]);
@@ -62,20 +63,20 @@ class Person {
 }
 
 class Path {
-  public alias = '';
-  public pid = '';
-  public langcode = '';
+  public alias = Strings.Empty;
+  public pid = Strings.Empty;
+  public langcode = Strings.Empty;
 }
 
 class User {
   public uid = 0;
-  public name = '';
-  public mail = '';
-  public givenName = '';
-  public surName = '';
-  public mobile = '';
-  public employeeId = '';
-  public displayName = '';
+  public name = Strings.Empty;
+  public mail = Strings.Empty;
+  public givenName = Strings.Empty;
+  public surName = Strings.Empty;
+  public mobile = Strings.Empty;
+  public employeeId = Strings.Empty;
+  public displayName = Strings.Empty;
   public path = new Path();
   public numberList = [];
 }

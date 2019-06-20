@@ -4,12 +4,13 @@ import { IXhrRequestHandler } from './IXhrRequestHandler';
 import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
 import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
+import { Strings } from '../../Constants/Strings';
 
 export class HttpClient {
   /**
    * Gets or sets the base address of Uniform Resource Identifier (URI) of the Internet resource used when sending requests.
    */
-  public BaseAddress = '';
+  public BaseAddress = Strings.Empty;
   /**
    * Gets the headers which should be sent with each request.
    */

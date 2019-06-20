@@ -1,5 +1,6 @@
 import { ISerializer } from './ISerializer';
 import { List } from '../../Collections/List';
+import { Strings } from '../../Constants/Strings';
 
 /**
  * Keys to check for simple values when data is structured as shown here:
@@ -32,7 +33,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
     jsonKeys.forEach(element => {
       const instanceKey = this.getInstanceKey(classProperties, element);
       const jsonElement = data[element];
-      if (instanceKey !== '' && jsonElement) {
+      if (instanceKey !== Strings.Empty && jsonElement) {
         const property = object[instanceKey];
 
         if (this.propertyIsSimple(property)) {
@@ -64,7 +65,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
   private getInstanceKey(fields: Array<string>, jsonKey: string): string {
     jsonKey = this.cleanString(jsonKey);
-    let instanceKey = '';
+    let instanceKey = Strings.Empty;
 
     fields.forEach(element => {
       if (this.cleanString(element) === jsonKey) {
@@ -76,8 +77,8 @@ export class JsonSerializer<T> implements ISerializer<T> {
   }
 
   private cleanString(stringToClean: string): string {
-    stringToClean = stringToClean.replace('field_', '');
-    return stringToClean.replace(/[^a-zA-Z0-9 -]/g, '').trim().replace(/ +/g, '-').toLowerCase();
+    stringToClean = stringToClean.replace('field_', Strings.Empty);
+    return stringToClean.replace(/[^a-zA-Z0-9 -]/g, Strings.Empty).trim().replace(/ +/g, '-').toLowerCase();
   }
 
   private propertyIsSimple(property: any): boolean {

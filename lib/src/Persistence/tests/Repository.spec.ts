@@ -5,6 +5,7 @@ import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Result } from '../../Patterns/Result/Result';
 import { List } from '../../Collections/List';
+import { Strings } from '../../Constants/Strings';
 
 class Person {
   constructor(
@@ -67,22 +68,22 @@ describe('Repository', () => {
   });
 
   it('should return a failed result on Add if item is not valid', () => {
-    const result = classUnderTest.Add('');
+    const result = classUnderTest.Add(Strings.Empty);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should return a failed result on AddRange if an item is not valid', () => {
-    const result = classUnderTest.AddRange(['', 'fake']);
+    const result = classUnderTest.AddRange([Strings.Empty, 'fake']);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should return a failed result on Insert if item is not valid', () => {
-    const result = classUnderTest.Insert(0, '');
+    const result = classUnderTest.Insert(0, Strings.Empty);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should return a failed result on InsertRange if an item is not valid', () => {
-    const result = classUnderTest.InsertRange(0, new List(['', 'fake']));
+    const result = classUnderTest.InsertRange(0, new List([Strings.Empty, 'fake']));
     expect(result.IsSuccess).toBeFalsy();
   });
 
@@ -102,7 +103,7 @@ describe('Repository', () => {
       new Validator([new StringValidator()])
     );
     classUnderTest.AddRange(['fake', 'test']);
-    classUnderTest.Item[0] = '';
+    classUnderTest.Item[0] = Strings.Empty;
 
     const result = classUnderTest.SaveChanges();
 

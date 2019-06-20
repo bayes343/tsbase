@@ -1,6 +1,7 @@
 import { IValidation } from '../IValidation';
 import { Validator } from '../Validator';
 import { Result } from '../../Result/Result';
+import { Strings } from '../../../Constants/Strings';
 
 class Person {
   constructor(
@@ -55,7 +56,7 @@ describe('Validator', (() => {
   });
 
   it('should return failed result when one or more errors are detected', () => {
-    const person = new Person('', -1);
+    const person = new Person(Strings.Empty, -1);
 
     const validationResult = validator.Validate(person);
 

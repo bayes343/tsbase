@@ -1,5 +1,6 @@
 import { List } from '../List';
 import { Errors } from '../../Errors';
+import { Strings } from '../../Constants/Strings';
 
 describe('List', () => {
   let classUnderTest: List<any>;
@@ -132,7 +133,7 @@ describe('List', () => {
     expect(counter).toEqual(4);
 
     // internal scope
-    let currentValue = '';
+    let currentValue = Strings.Empty;
     classUnderTest.ForEach(item => {
       currentValue = item;
     });

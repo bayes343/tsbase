@@ -2,12 +2,13 @@ import { HttpClient } from '../Net/Http/HttpClient';
 import { Repository } from './Repository';
 import { HttpResponseMessage } from '../Net/Http/HttpResponseMessage';
 import { WebStoragePersister } from './Persisters/WebStoragePersister';
+import { Strings } from '../Constants/Strings';
 
 class HttpUriResponse {
   constructor(
-    public requestUri = ''
+    public requestUri = Strings.Empty
   ) { }
-  public httpResponse = new HttpResponseMessage('', { Code: 400, Text: 'Bad Request' });
+  public httpResponse = new HttpResponseMessage(Strings.Empty, { Code: 400, Text: 'Bad Request' });
 }
 
 /**

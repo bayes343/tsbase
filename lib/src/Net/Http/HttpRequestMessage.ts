@@ -1,5 +1,6 @@
 import { HttpMethod } from '../HttpMethod';
 import { KeyValue } from '../../TypeLiterals';
+import { Strings } from '../../Constants/Strings';
 
 /**
  * Abstracts an http request
@@ -8,7 +9,7 @@ export class HttpRequestMessage {
   /**
    * String content to include in response body
    */
-  public Content = '';
+  public Content = Strings.Empty;
   /**
    * Additional headers to apply to this request when sent
    */
@@ -23,6 +24,6 @@ export class HttpRequestMessage {
     /**
      * Http endpoint the request is targeting
      */
-    public RequestUri = ''
+    public RequestUri = Strings.Empty
   ) { }
 }
