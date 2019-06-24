@@ -3,7 +3,7 @@ import { IValidation } from './IValidation';
 
 /**
  * Abstracts the responsibilities of ascertaining whether
- * object passes a given set of validations
+ * an object passes a given set of validations
  */
 export class Validator<T> {
   /**
