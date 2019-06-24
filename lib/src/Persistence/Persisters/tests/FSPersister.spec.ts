@@ -1,8 +1,8 @@
 import { Mock, Times } from 'tsmockit';
-import { IPathResolver } from '../IPathResolver';
 import { IFileSystemAdapter } from '../IFileSystemAdapter';
 import { FSPersister } from '../FSPersister';
 import { Strings } from '../../../Constants/Strings';
+import { IPathResolver } from '../IPathResolver';
 
 const testFileDir = 'dir/';
 const testFilePath = 'testPath';

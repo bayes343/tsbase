@@ -2,6 +2,9 @@ import { IPathResolver } from './IPathResolver';
 import { IFileSystemAdapter } from './IFileSystemAdapter';
 import { IPersister } from './IPersister';
 
+/**
+ * Persists data using the node fs / path api
+ */
 export class FSPersister implements IPersister {
   private get dir(): string {
     return this.pathResolver.resolve(__dirname, this.localFilesDirectory);

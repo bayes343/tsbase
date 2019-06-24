@@ -1,3 +1,6 @@
+/**
+ * An interface that defines FSPersister required methods on the node fs library
+ */
 export interface IFileSystemAdapter {
   constants: { W_OK: any };
   writeFileSync(path: string, data: any): void;
