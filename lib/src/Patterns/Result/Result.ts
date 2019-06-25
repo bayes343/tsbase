@@ -16,4 +16,14 @@ export class Result {
    * Messages indicating why the action returning the result was not successful
    */
   public ErrorMessages = Array<string>();
+
+  /**
+   * Returns a new result containing errors from this result instance as well as the one passed
+   * @param result
+   */
+  public CombineWith(result: Result): Result {
+    const newResult = new Result();
+    newResult.ErrorMessages = this.ErrorMessages.concat(result.ErrorMessages);
+    return newResult;
+  }
 }
