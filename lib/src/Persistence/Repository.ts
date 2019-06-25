@@ -35,7 +35,7 @@ export class Repository<T> extends List<T> {
     let initialData = persister.Retrieve();
     initialData = initialData && initialData.length >= 1 ? initialData : new Array<T>();
     this.Item = serializer && serializeAs ? this.getSerializedInstancesFromInitialData(initialData) : initialData;
-    this.savedData = this.Item;
+    this.savedData = this.Item.slice();
   }
 
   /**
@@ -50,7 +50,7 @@ export class Repository<T> extends List<T> {
 
     if (result.IsSuccess) {
       this.persister.Persist(this.Item);
-      this.savedData = this.Item;
+      this.savedData = this.Item.slice();
     }
 
     return result;
