@@ -23,7 +23,7 @@ export class Repository<T> extends List<T> {
     };
   }
 
-  private savedData: Array<T>;
+  private savedData = { raw: '', referential: [] as Array<T> };
 
   constructor(
     private persister: IPersister,
@@ -35,7 +35,7 @@ export class Repository<T> extends List<T> {
     let initialData = persister.Retrieve();
     initialData = initialData && initialData.length >= 1 ? initialData : new Array<T>();
     this.Item = serializer && serializeAs ? this.getSerializedInstancesFromInitialData(initialData) : initialData;
-    this.savedData = this.Item.slice();
+    this.setSavedData();
   }
 
   /**
@@ -50,7 +50,7 @@ export class Repository<T> extends List<T> {
 
     if (result.IsSuccess) {
       this.persister.Persist(this.Item);
-      this.savedData = this.Item.slice();
+      this.setSavedData();
     }
 
     return result;
@@ -68,14 +68,14 @@ export class Repository<T> extends List<T> {
    * Returns a collection of elements that have not been saved
    */
   public GetUnsavedElements(): Queryable<T> {
-    return this.Except(this.savedData);
+    return this.Where(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0);
   }
 
   /**
    * Returns a collection of elements that have not been removed from persistence
    */
   public GetUnpurgedElements(): Queryable<T> {
-    return Queryable.From(this.savedData).Except(this.item);
+    return Queryable.From(this.savedData.referential).Except(this.item);
   }
 
   //#region Overrides
@@ -140,5 +140,12 @@ export class Repository<T> extends List<T> {
 
   private itemIsValid(item: T): Result {
     return this.validator.Validate(item);
+  }
+
+  private setSavedData(): void {
+    this.savedData = {
+      raw: JSON.stringify(this.Item),
+      referential: this.Item
+    }
   }
 }

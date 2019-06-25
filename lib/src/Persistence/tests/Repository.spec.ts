@@ -110,6 +110,35 @@ describe('Repository', () => {
     expect(result.IsSuccess).toBeFalsy();
   });
 
+  class AgeValidation implements IValidation<Person> {
+    Validate(object: Person): Result {
+      const result = new Result();
+      if (!object.age || object.age < 0) {
+        result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`)
+      }
+      return result;
+    }
+  }
+
+  it('should validate unsaved reference type items before saving', () => {
+    classUnderTest = new Repository<Person>(
+      new WebStoragePersister('test', 'local'),
+      new Validator([new AgeValidation()])
+    );
+    const bill = new Person();
+    bill.age = 1;
+    const bob = new Person();
+    bob.age = 2;
+    classUnderTest.AddRange([bill, bob]);
+    classUnderTest.SaveChanges();
+    bill.age = -1;
+    bob.age = null as any;
+
+    const result = classUnderTest.SaveChanges();
+
+    expect(result.ErrorMessages.length).toEqual(2);
+  });
+
   //#region Integration tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
     classUnderTest.Add('delete this');
