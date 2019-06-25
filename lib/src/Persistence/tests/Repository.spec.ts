@@ -110,7 +110,7 @@ describe('Repository', () => {
     expect(result.IsSuccess).toBeFalsy();
   });
 
-  //#region Integeation tests using DomStorageAPI
+  //#region Integration tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
     classUnderTest.Add('delete this');
     classUnderTest.SaveChanges();

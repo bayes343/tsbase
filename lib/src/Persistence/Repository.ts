@@ -42,10 +42,10 @@ export class Repository<T> extends List<T> {
    * Calls the underlying persister's "Persist" method saving the data currently in the list
    */
   public SaveChanges(): Result {
-    const result = new Result();
+    let result = new Result();
 
     this.GetUnsavedElements().ToArray().forEach(element => {
-      result.ErrorMessages = result.ErrorMessages.concat(this.itemIsValid(element).ErrorMessages);
+      result = result.CombineWith(this.itemIsValid(element));
     });
 
     if (result.IsSuccess) {
@@ -90,10 +90,10 @@ export class Repository<T> extends List<T> {
   }
 
   public AddRange(elements: Array<T>): Result {
-    const result = new Result();
+    let result = new Result();
 
     elements.forEach(element => {
-      result.ErrorMessages = result.ErrorMessages.concat(this.itemIsValid(element).ErrorMessages);
+      result = result.CombineWith(this.itemIsValid(element));
     });
 
     if (result.IsSuccess) {
@@ -114,10 +114,9 @@ export class Repository<T> extends List<T> {
   }
 
   public InsertRange(index: number, collection: List<T>): Result {
-    const result = new Result();
+    let result = new Result();
 
-    collection.ForEach(i => result.ErrorMessages =
-      result.ErrorMessages.concat(this.itemIsValid(i).ErrorMessages));
+    collection.ForEach(i => result = result.CombineWith(this.itemIsValid(i)));
 
     if (result.IsSuccess) {
       super.InsertRange(index, collection);
