@@ -146,6 +146,6 @@ export class Repository<T> extends List<T> {
     this.savedData = {
       raw: JSON.stringify(this.Item),
       referential: this.Item
-    }
+    };
   }
 }
