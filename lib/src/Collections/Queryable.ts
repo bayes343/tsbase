@@ -327,7 +327,7 @@ export abstract class Queryable<T> {
    * Returns the element with the minimum value in a sequence of values.
    * @param func
    */
-  public Min(func: (item: T) => T = item => item): T {
+  public Min(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
       throw new Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
     }
@@ -343,7 +343,7 @@ export abstract class Queryable<T> {
    * Returns the element with the maximum value in a sequence of values.
    * @param func
    */
-  public Max(func: (item: T) => T = item => item): T {
+  public Max(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
       throw new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
     }
