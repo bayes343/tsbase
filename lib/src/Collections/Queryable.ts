@@ -167,7 +167,7 @@ export abstract class Queryable<T> {
       });
     } else {
       this.item.forEach(element => {
-        const tNumber = parseFloat(element.toString());
+        const tNumber = parseFloat((element as {}).toString());
         if (isNaN(tNumber)) {
           throw new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
         }
