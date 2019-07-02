@@ -114,7 +114,7 @@ describe('Repository', () => {
     Validate(object: Person): Result {
       const result = new Result();
       if (!object.age || object.age < 0) {
-        result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`)
+        result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`);
       }
       return result;
     }
