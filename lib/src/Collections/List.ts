@@ -161,7 +161,7 @@ export class List<T> extends Queryable<T> {
    * Performs the specified action on each element of the List<T>.
    * @param action
    */
-  public ForEach(action: (item: T) => any): void {
+  public ForEach(action: (item: T) => void): void {
     this.Item.forEach(element => {
       action(element);
     });
@@ -219,7 +219,7 @@ export class List<T> extends Queryable<T> {
    * default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
    * @param comparison
    */
-  public Sort(comparison?: (item: T) => any): void {
+  public Sort(comparison?: (item: T) => number): void {
     if (comparison) {
       this.item.sort((a: T, b: T) => {
         if (comparison(a) < comparison(b)) {

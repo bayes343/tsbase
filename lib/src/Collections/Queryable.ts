@@ -99,7 +99,7 @@ export abstract class Queryable<T> {
    * Computes the average of a sequence of numeric values, or the average result of the given function
    * @param func
    */
-  public Average(func?: (item: T) => any): number {
+  public Average(func?: (item: T) => number): number {
     if (this.item.length >= 1) {
       let average = 0;
       if (func) {
@@ -191,7 +191,7 @@ export abstract class Queryable<T> {
    * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
    * @param funcs
    */
-  public OrderBy(funcs?: Array<(item: T) => any>): Queryable<T> {
+  public OrderBy(funcs?: Array<(item: T) => number>): Queryable<T> {
     const collection = this.Clone(this.item);
     if (!funcs) {
       collection.Item.sort();
@@ -218,7 +218,7 @@ export abstract class Queryable<T> {
    * Sorts the elements of a sequence in descending order.
    * @param func
    */
-  public OrderByDescending(funcs?: Array<(item: T) => any>): Queryable<T> {
+  public OrderByDescending(funcs?: Array<(item: T) => number>): Queryable<T> {
     let collection: Queryable<T>;
     if (funcs) {
       collection = this.OrderBy(funcs);
@@ -327,7 +327,7 @@ export abstract class Queryable<T> {
    * Returns the element with the minimum value in a sequence of values.
    * @param func
    */
-  public Min(func: (item: T) => any = item => item): T {
+  public Min(func: (item: T) => T = item => item): T {
     if (this.item.length < 1) {
       throw new Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
     }
@@ -343,7 +343,7 @@ export abstract class Queryable<T> {
    * Returns the element with the maximum value in a sequence of values.
    * @param func
    */
-  public Max(func: (item: T) => any = item => item): T {
+  public Max(func: (item: T) => T = item => item): T {
     if (this.item.length < 1) {
       throw new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
     }
@@ -389,7 +389,7 @@ export abstract class Queryable<T> {
   }
 
   private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[]) {
-    let keywordMatches = new Array<any>();
+    let keywordMatches = new Array<T>();
 
     if (keywords.length > 0) {
       keywords.forEach(keyword => {

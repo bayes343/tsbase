@@ -5,7 +5,7 @@ export class ArrayFunctions {
    * Returns the given array shuffled based on the knuth shuffle algorithm
    * @param array
    */
-  public static Shuffle(array: Array<any>): Array<any> {
+  public static Shuffle<T>(array: Array<T>): Array<T> {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (0 !== currentIndex) {
