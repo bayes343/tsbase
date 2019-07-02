@@ -126,8 +126,9 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
   private getSingleValue(object: any): any {
     let value: any = null;
+
     keysToCheck.forEach(element => {
-      if (object[element]) {
+      if (object && object[element]) {
         value = object[element];
       }
     });
