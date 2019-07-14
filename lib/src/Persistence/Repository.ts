@@ -48,6 +48,10 @@ export class Repository<T> extends List<T> {
       result = result.CombineWith(this.itemIsValid(element));
     });
 
+    this.GetUnpurgedElements().ToArray().forEach(element => {
+      result = result.CombineWith(this.itemIsValid(element));
+    });
+
     if (result.IsSuccess) {
       this.persister.Persist(this.Item);
       this.setSavedData();
@@ -145,7 +149,7 @@ export class Repository<T> extends List<T> {
   private setSavedData(): void {
     this.savedData = {
       raw: JSON.stringify(this.Item),
-      referential: this.Item
+      referential: this.Item.slice()
     };
   }
 }

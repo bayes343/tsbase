@@ -9,11 +9,27 @@ import { Strings } from '../../Constants/Strings';
 
 class Person {
   constructor(
-    public name = 'John Doe',
+    public name = 'name',
     public age = 30
   ) { }
   public complain(): string {
     return 'woe is me';
+  }
+}
+
+const john = new Person();
+const bill = new Person();
+const bob = new Person();
+john.name = 'John Doe';
+const people = [john, bill, bob];
+
+class AgeValidation implements IValidation<Person> {
+  Validate(object: Person): Result {
+    const result = new Result();
+    if (!object.age || object.age < 0) {
+      result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`);
+    }
+    return result;
   }
 }
 
@@ -110,26 +126,12 @@ describe('Repository', () => {
     expect(result.IsSuccess).toBeFalsy();
   });
 
-  class AgeValidation implements IValidation<Person> {
-    Validate(object: Person): Result {
-      const result = new Result();
-      if (!object.age || object.age < 0) {
-        result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`);
-      }
-      return result;
-    }
-  }
-
   it('should validate unsaved reference type items before saving', () => {
     classUnderTest = new Repository<Person>(
       new WebStoragePersister('test', 'local'),
       new Validator([new AgeValidation()])
     );
-    const bill = new Person();
-    bill.age = 1;
-    const bob = new Person();
-    bob.age = 2;
-    classUnderTest.AddRange([bill, bob]);
+    classUnderTest.AddRange(people);
     classUnderTest.SaveChanges();
     bill.age = -1;
     bob.age = null as any;
@@ -137,6 +139,46 @@ describe('Repository', () => {
     const result = classUnderTest.SaveChanges();
 
     expect(result.ErrorMessages.length).toEqual(2);
+  });
+
+  // tslint:disable-next-line: only-arrow-functions
+  function getClassUnderTest(): Repository<Person> {
+    return classUnderTest;
+  }
+
+  class NoOrphansValidation implements IValidation<Person> {
+    private references = ['John Doe'];
+
+    public Validate(object: Person): Result {
+      const result = new Result();
+
+      if (this.references.indexOf(object.name) >= 0) {
+        const repository = getClassUnderTest();
+        if (!repository.Find(p => p.name === object.name)) {
+          result.ErrorMessages.push('Item removed still has references');
+        }
+      }
+
+      return result;
+    }
+  }
+
+  it('should validate un-purged reference type items before saving', () => {
+    classUnderTest = new Repository<Person>(
+      new WebStoragePersister('test-person', 'local'),
+      new Validator([new AgeValidation(), new NoOrphansValidation()])
+    );
+    john.age = 30;
+    bill.age = 1;
+    bob.age = 2;
+    classUnderTest.Item = people;
+    classUnderTest.SaveChanges();
+
+    classUnderTest.Remove(john);
+    const result = classUnderTest.SaveChanges();
+
+    expect(result.ErrorMessages.length).toEqual(1);
+    expect(result.IsSuccess).toBeFalsy();
   });
 
   //#region Integration tests using DomStorageAPI
