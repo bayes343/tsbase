@@ -5,7 +5,7 @@ import { Result } from './Result';
  * Ex: return the current state of an item after a save operation succeeded or failed.
  */
 export class GenericResult<T> extends Result {
-  constructor(public Value: T) {
+  constructor(public Value?: T) {
     super();
   }
 }
