@@ -177,6 +177,7 @@ describe('JsonSerializer', () => {
     classUnderTest = new JsonSerializer<Product>();
     const productInstance: Product = classUnderTest.Serialize(Product, JSON.parse(productJson));
 
+    expect(typeof productInstance.categories).toBe('object');
     expect(productInstance.categories.indexOf('toy') >= 0).toBeTruthy();
   });
 });
