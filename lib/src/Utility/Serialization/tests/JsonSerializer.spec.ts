@@ -80,6 +80,11 @@ class User {
   public path = new Path();
   public numberList = [];
 }
+
+class Product {
+  public name = Strings.Empty;
+  public categories = [Strings.Empty];
+}
 //#endregion
 
 // tslint:disable-next-line: max-line-length
@@ -161,5 +166,17 @@ describe('JsonSerializer', () => {
     const loanInstance: LoanResults = classUnderTest.Serialize(LoanResults, stubLoanResponse);
     expect(loanInstance.amortizationMonthlySchedule.length).toEqual(60);
     expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
+  });
+
+  it('should serialize small string array values', () => {
+    const product = new Product();
+    product.name = 'test';
+    product.categories = ['toy'];
+    const productJson = JSON.stringify(product);
+
+    classUnderTest = new JsonSerializer<Product>();
+    const productInstance: Product = classUnderTest.Serialize(Product, JSON.parse(productJson));
+
+    expect(productInstance.categories.indexOf('toy') >= 0).toBeTruthy();
   });
 });

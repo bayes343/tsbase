@@ -8,7 +8,8 @@ import { Strings } from '../../Constants/Strings';
  */
 const keysToCheck = [
   'value',
-  'target_id'
+  'target_id',
+  0
 ];
 
 /**
@@ -117,7 +118,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
       object[instanceKey] = jsonElement;
     } else {
       if (jsonElement.length === 1) {
-        object[instanceKey] = this.getSingleValue(jsonElement[0]);
+        object[instanceKey] = this.getSingleValue(jsonElement);
       } else if (jsonElement.length > 1) {
         object[instanceKey] = this.getArrayValue(jsonElement);
       }
