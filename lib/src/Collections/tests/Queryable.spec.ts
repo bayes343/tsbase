@@ -393,4 +393,13 @@ describe('Queryable', () => {
     expect(johnBoyMaleSearch.Item.length).toEqual(1);
   });
 
+  it('should search a collection using ignorable suffix characters', () => {
+    const words = ['toy'];
+    const ignorableChars = ['s'];
+
+    const toysSearch = Queryable.From(words).Search('toys', 3, [], ignorableChars);
+
+    expect(toysSearch.First()).toEqual('toy');
+  });
+
 });

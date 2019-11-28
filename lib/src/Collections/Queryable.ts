@@ -361,9 +361,15 @@ export abstract class Queryable<T> {
    * @param term The term being searched for
    * @param minimumKeywordLength Keywords in the search term with a length less than this won't be considered
    * @param stopWords Keywords matching these words are not considered
+   * @param ignorableSuffixCharacters Characters that should not prevent a positive match (i.e. allows toy's' to match on toy)
    */
-  public Search(term: string, minimumKeywordLength = 3, stopWords = new Array<string>()): Queryable<T> {
-    const keywords = this.getKeywordsForTerm(term);
+  public Search(
+    term: string,
+    minimumKeywordLength = 3,
+    stopWords = new Array<string>(),
+    ignorableSuffixCharacters = new Array<string>()
+  ): Queryable<T> {
+    const keywords = this.getKeywordsForTerm(term, ignorableSuffixCharacters);
 
     stopWords.forEach(element => {
       element = element.toLowerCase();
@@ -378,11 +384,16 @@ export abstract class Queryable<T> {
     return distinctResults;
   }
 
-  private getKeywordsForTerm(term: string) {
+  private getKeywordsForTerm(term: string, ignorableSuffixCharacters?: Array<string>) {
     const keywords = term.split(Strings.Space);
 
     keywords.forEach(element => {
       element = element.replace(Regex.NonAlphaNumeric, Strings.Empty);
+
+      const lastCharacter = element[element.length - 1];
+      if (ignorableSuffixCharacters && ignorableSuffixCharacters.indexOf(lastCharacter) >= 0) {
+        keywords.push(element.split(lastCharacter)[0]);
+      }
     });
 
     return keywords;
