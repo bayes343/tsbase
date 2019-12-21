@@ -41,6 +41,7 @@ export * from './Patterns/Validator/IValidation';
 export * from './Functions/ArrayFunctions';
 export * from './Functions/Guid';
 export * from './Functions/Base64';
+export * from './Functions/FormUrl';
 
 // Constants
 export * from './Constants/Regex';

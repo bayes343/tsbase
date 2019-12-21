@@ -1,6 +1,7 @@
 import { Errors } from '../Errors';
 
 export class Base64 {
+  private constructor() { }
 
   /**
    * Accepts a File instance and asynchronously returns the Base64 encoded string equivalent.
