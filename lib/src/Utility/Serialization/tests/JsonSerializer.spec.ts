@@ -180,4 +180,21 @@ describe('JsonSerializer', () => {
     expect(typeof productInstance.categories).toBe('object');
     expect(productInstance.categories.indexOf('toy') >= 0).toBeTruthy();
   });
+
+  it('should parse a json key without acknowledging hyphens, capitalization, or spaces', () => {
+    class VerifyResponse {
+      public Success = false;
+      public ErrorCodes = [''];
+    }
+    const jsonString = '{\n  "su-cc-ess": false,\n  "e rror-co des": [\n    "missing-input-response",\n    "missing-input-secret"\n  ]\n}';
+    const json = JSON.parse(jsonString);
+    classUnderTest = new JsonSerializer<VerifyResponse>();
+
+    const verifyResponseInstance: VerifyResponse = classUnderTest.Serialize(VerifyResponse, json);
+
+    expect(verifyResponseInstance.Success).toEqual(false);
+    expect(verifyResponseInstance.ErrorCodes.length).toEqual(2);
+    expect(verifyResponseInstance.ErrorCodes.indexOf('missing-input-response')).toEqual(0);
+    expect(verifyResponseInstance.ErrorCodes.indexOf('missing-input-secret')).toEqual(1);
+  });
 });

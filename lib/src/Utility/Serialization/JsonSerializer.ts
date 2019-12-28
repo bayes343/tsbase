@@ -77,8 +77,10 @@ export class JsonSerializer<T> implements ISerializer<T> {
   }
 
   private cleanString(stringToClean: string): string {
-    stringToClean = stringToClean.replace('field_', Strings.Empty);
-    return stringToClean.replace(/[^a-zA-Z0-9 -]/g, Strings.Empty).trim().replace(/ +/g, '-').toLowerCase();
+    return stringToClean.replace('field_', Strings.Empty)
+      .replace(/[^a-zA-Z0-9]/g, Strings.Empty)
+      .trim()
+      .toLowerCase();
   }
 
   private propertyIsSimple(property: any): boolean {
@@ -139,6 +141,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
 
   private getArrayValue(array: Array<any>): any {
     const values = new Array<any>();
+
     array.forEach(element => {
       if (typeof element !== 'object') {
         values.push(element);
@@ -146,6 +149,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
         values.push(this.getSingleValue(element));
       }
     });
+
     return values;
   }
 
