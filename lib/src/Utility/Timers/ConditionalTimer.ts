@@ -53,7 +53,6 @@ export class ConditionalTimer implements IConditionalTimer {
     });
   }
 
-
   private resetTimer(): void {
     if (this.timer.Enabled) {
       this.Stop();
