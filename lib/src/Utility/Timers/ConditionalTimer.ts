@@ -14,7 +14,7 @@ export class ConditionalTimer implements IConditionalTimer {
 
   /**
    * Short hand for creating a new instance of ConditionalTimer
-   * @param interval 
+   * @param interval
    */
   public static Instance(interval?: number): ConditionalTimer {
     return new ConditionalTimer(new Timer(interval));
@@ -22,8 +22,8 @@ export class ConditionalTimer implements IConditionalTimer {
 
   /**
    * Performs the given action one time after the condition evaluates to true
-   * @param action 
-   * @param condition 
+   * @param action
+   * @param condition
    */
   public async DoWhen(action: Action, condition: Condition): Promise<void> {
     this.resetTimer();
@@ -44,8 +44,8 @@ export class ConditionalTimer implements IConditionalTimer {
 
   /**
    * Performs the given action repeatedly until the condition evaluates to true
-   * @param action 
-   * @param condition 
+   * @param action
+   * @param condition
    */
   public async DoUntil(action: Action, condition: Condition): Promise<void> {
     return this.getRepeatingConditionalTimer(action, condition);
@@ -53,8 +53,8 @@ export class ConditionalTimer implements IConditionalTimer {
 
   /**
    * Performs the given action repeatedly as long as the condition evaluates to true
-   * @param action 
-   * @param condition 
+   * @param action
+   * @param condition
    */
   public async DoWhile(action: Action, condition: Condition): Promise<void> {
     return this.getRepeatingConditionalTimer(action, () => !condition());
