@@ -1,4 +1,6 @@
-export class Timer {
+import { ITimer } from './ITimer';
+
+export class Timer implements ITimer {
   /**
    * Boolean indicating whether the Timer should raise the Elapsed event only once (false) or repeatedly (true).
    */

@@ -1,7 +1,8 @@
+import { ITimer } from '../ITimer';
 import { Timer } from '../Timer';
 
 describe('Timer', () => {
-  let classUnderTest: Timer;
+  let classUnderTest: ITimer;
 
   beforeEach(() => {
     classUnderTest = new Timer();
