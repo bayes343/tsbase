@@ -20,7 +20,10 @@ export * from './Net/Http/HttpClient';
 // Utility
 export * from './Utility/Serialization/ISerializer';
 export * from './Utility/Serialization/JsonSerializer';
+export * from './Utility/Timers/ITimer';
 export * from './Utility/Timers/Timer';
+export * from './Utility/Timers/IConditionalTimer';
+export * from './Utility/Timers/ConditionalTimer';
 
 // Persistence
 export * from './Persistence/Repository';

@@ -1,55 +1,49 @@
-// import { Mock, Times } from 'tsmockit';
-// import { ITimer } from '../ITimer';
 import { IConditionalTimer } from '../IConditionalTimer';
 import { ConditionalTimer } from '../ConditionalTimer';
 import { Timer } from '../Timer';
 
 describe('ConditionalTimer', () => {
-  // const mockTimer = new Mock<ITimer>();
+  let flag = true;
+  let iterator = 0;
+  const action = () => iterator++;
+  const condition = () => flag;
   let classUnderTest: IConditionalTimer;
 
   beforeEach(() => {
-    // mockTimer.Setup(t => t.Elapsed, new Array<Function>());
-    // mockTimer.Setup(t => t.Start());
-
+    iterator = 0;
     classUnderTest = new ConditionalTimer(new Timer(10));
   });
 
-  it('should construct', () => {
+  it('should construct', async () => {
     expect(classUnderTest).toBeDefined();
+    expect(ConditionalTimer.Instance(300)).toBeDefined();
   });
 
   it('should do an action when a condition is met', async () => {
-    const flag = true;
-    let iterator = 0;
-    const action = () => iterator++;
-    const condition = () => flag;
-
+    flag = true;
     await classUnderTest.DoWhen(action, condition);
-
     expect(iterator).toEqual(1);
   });
 
   it('should do an action until a condition is met', async () => {
-    const flag = true;
-    let iterator = 0;
-    const action = () => iterator++;
-    const condition = () => flag;
-
+    flag = true;
     await classUnderTest.DoUntil(action, condition);
-
     expect(iterator).toEqual(1);
   });
 
   it('should do an action while a condition is met', async () => {
-    const flag = false;
-    let iterator = 0;
-    const action = () => iterator++;
-    const condition = () => flag;
-
+    flag = false;
     await classUnderTest.DoWhile(action, condition);
-
     expect(iterator).toEqual(1);
+  });
+
+  it('should stop the underlying timer from executing', () => {
+    flag = true;
+    classUnderTest.DoWhile(action, condition);
+
+    classUnderTest.Stop();
+
+    expect(iterator).toEqual(0);
   });
 
 });

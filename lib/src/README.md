@@ -11,4 +11,4 @@ Helpful links:
 
 ---
 
-Please reference the wiki (linked above) for information on getting started and documentation / examples of tsbase features.
+Please reference the wiki (linked above) for information on getting started, documentation / examples, and release notes.
