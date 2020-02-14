@@ -16,4 +16,16 @@ describe('Strings', () => {
   it('should pascal case a given string', () => {
     expect(Strings.PascalCase('someString')).toEqual('SomeString');
   });
+
+  it('should detect an empty string', () => {
+    expect(Strings.IsEmptyOrWhiteSpace('')).toBeTruthy();
+  });
+
+  it('should detect a whitespace string', () => {
+    expect(Strings.IsEmptyOrWhiteSpace(' ')).toBeTruthy();
+  });
+
+  it('should detect a non-whitespace string with length', () => {
+    expect(Strings.IsEmptyOrWhiteSpace('test')).toBeFalsy();
+  });
 });

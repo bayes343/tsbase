@@ -42,4 +42,13 @@ export class Strings {
       .replace(new RegExp(/\s/, 'g'), '')
       .replace(new RegExp(/\w/), s => s.toUpperCase());
   }
+
+  /**
+   * Returns true if the given string is empty or consists purely of whitespace
+   * @param string
+   */
+  public static IsEmptyOrWhiteSpace(string: string): boolean {
+    string = string.trim();
+    return string.length === 0;
+  }
 }
