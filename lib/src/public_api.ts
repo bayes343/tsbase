@@ -33,22 +33,28 @@ export * from './Persistence/Persisters/IFileSystemAdapter';
 export * from './Persistence/Persisters/WebStoragePersister';
 export * from './Persistence/Persisters/FSPersister';
 export * from './Persistence/CachedHttpClient';
+export * from './Persistence/GenericStorageInterfaces/IGenericStorageInterface';
+export * from './Persistence/GenericStorageInterfaces/DomStorageInterface';
 
 // Patterns
 export * from './Patterns/Result/Result';
 export * from './Patterns/Result/GenericResult';
 export * from './Patterns/Validator/Validator';
 export * from './Patterns/Validator/IValidation';
+export * from './Patterns/CommandQuery/ICommand';
+export * from './Patterns/CommandQuery/Command';
+export * from './Patterns/CommandQuery/IQuery';
+export * from './Patterns/CommandQuery/Query';
 
 // Functions
 export * from './Functions/ArrayFunctions';
 export * from './Functions/Guid';
 export * from './Functions/Base64';
 export * from './Functions/FormUrl';
+export * from './Functions/Strings';
 
 // Constants
 export * from './Constants/Regex';
-export * from './Constants/Strings';
 
 // Other
 export * from './TypeLiterals';

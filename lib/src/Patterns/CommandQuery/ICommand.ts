@@ -1,6 +1,6 @@
 import { Result } from '../Result/Result';
 
 export interface ICommand {
-  Command: () => any;
+  Command: () => void;
   Execute(): Result;
 }
