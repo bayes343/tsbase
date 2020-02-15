@@ -21,8 +21,8 @@ export class DomStorageInterface implements IGenericStorageInterface {
 
   /**
    * Uses stored data to return a class instance of the type specified
-   * @param type 
-   * @param key 
+   * @param type
+   * @param key
    */
   public Get<T>(type: { new(): T; }, key: string): GenericResult<T> {
     return new Query((): T => {
@@ -37,8 +37,8 @@ export class DomStorageInterface implements IGenericStorageInterface {
 
   /**
    * Stores the stringified version of the given object at the specified key
-   * @param key 
-   * @param value 
+   * @param key
+   * @param value
    */
   public Set<T>(key: string, value: T): Result {
     return new Command(() =>
@@ -47,7 +47,7 @@ export class DomStorageInterface implements IGenericStorageInterface {
 
   /**
    * Returns the raw data stored at the given key
-   * @param key 
+   * @param key
    */
   public GetValue(key: string): GenericResult<any> {
     return new Query((): any => {
@@ -62,8 +62,8 @@ export class DomStorageInterface implements IGenericStorageInterface {
 
   /**
    * Stores the raw data of the given value at the given key
-   * @param key 
-   * @param value 
+   * @param key
+   * @param value
    */
   public SetValue(key: string, value: string): Result {
     return new Command(() =>
@@ -72,7 +72,7 @@ export class DomStorageInterface implements IGenericStorageInterface {
 
   /**
    * Removes the stored value at the given key
-   * @param key 
+   * @param key
    */
   public Remove(key: string): Result {
     return new Command(() =>

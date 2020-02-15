@@ -8,7 +8,7 @@ export class Query<T> implements IQuery<T> {
   constructor(public Query: () => T) { }
 
   /**
-   * Executes the query returning a `GenericResult<T>` containing the query return value, 
+   * Executes the query returning a `GenericResult<T>` containing the query return value,
    * as well as capturing any errors as `ErrorMessages`
    */
   public Execute(): GenericResult<T> {
