@@ -21,24 +21,6 @@ describe('HttpClient', () => {
   });
 
   //#region Integration tests
-  it('should get async - integration test with included XhrRequestHandler', async () => {
-    classUnderTest = new HttpClient();
-    classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
-
-    // Ok status check
-    const uri = 'https://foaas.com/cup/Joey';
-    const response = await classUnderTest.GetAsync(uri);
-    expect(response.Content).toBeDefined();
-    expect(response.StatusCode.Code).toEqual(200);
-    expect(response.IsSuccessStatusCode).toBeTruthy();
-
-    // Bad request check
-    const uri2 = 'https://fake-alskjdf/stub';
-    const response2 = await classUnderTest.GetAsync(uri2);
-    expect(response2.StatusCode.Code).toEqual(400);
-    expect(response2.IsSuccessStatusCode).toBeFalsy();
-  });
-
   it('should cancel requests | integration test', () => {
     classUnderTest = new HttpClient();
     const uri = 'https://foaas.com/cup/Joey';
