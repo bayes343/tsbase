@@ -1,6 +1,7 @@
 import { DomStorageMode, DomStorageInterface } from './DomStorageInterface';
 import { Strings } from '../../Functions/Strings';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
+import { IGenericStorageInterface } from './IGenericStorageInterface';
 
 class Car {
   constructor(
@@ -14,7 +15,7 @@ class Car {
 }
 
 describe('DomStorageInterface', () => {
-  let classUnderTest: DomStorageInterface;
+  let classUnderTest: IGenericStorageInterface;
   const key = 'test';
   const myCar = new Car('Mitsubishi', 'Lancer');
 
