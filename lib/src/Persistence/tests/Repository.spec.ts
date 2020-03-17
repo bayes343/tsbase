@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Repository } from '../Repository';
 import { WebStoragePersister } from '../Persisters/WebStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';

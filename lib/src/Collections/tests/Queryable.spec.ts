@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { List } from '../List';
 import { Queryable } from '../Queryable';
 import { Errors } from '../../Errors';

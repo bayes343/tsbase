@@ -136,7 +136,8 @@ export class Repository<T> extends List<T> {
       if (this.serializer && this.serializeAs) {
         classInstances.push(this.serializer.Serialize(this.serializeAs, element));
       } else {
-        throw new Error(`${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
+        throw new Error(
+          `${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
       }
     });
     return classInstances;

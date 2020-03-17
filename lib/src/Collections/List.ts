@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+/* eslint-disable complexity */
 import { Queryable } from './Queryable';
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
@@ -316,7 +318,8 @@ export class List<T> extends Queryable<T> {
     if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
       this.item.splice(index, count);
     } else {
-      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
+      throw new Error(
+        `${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
     }
   }
 

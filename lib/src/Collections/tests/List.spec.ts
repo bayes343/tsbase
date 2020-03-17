@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { List } from '../List';
 import { Errors } from '../../Errors';
 import { Strings } from '../../Constants/Strings';

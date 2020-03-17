@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 import { Regex } from '../Constants/Regex';
@@ -361,7 +362,8 @@ export abstract class Queryable<T> {
    * @param term The term being searched for
    * @param minimumKeywordLength Keywords in the search term with a length less than this won't be considered
    * @param stopWords Keywords matching these words are not considered
-   * @param ignorableSuffixCharacters Characters that should not prevent a positive match (i.e. allows toy's' to match on toy)
+   * @param ignorableSuffixCharacters Characters that should not prevent a positive match
+   * (i.e. allows toy's' to match on toy)
    */
   public Search(
     term: string,
@@ -406,7 +408,8 @@ export abstract class Queryable<T> {
       keywords.forEach(keyword => {
         if (keyword.length >= minimumKeywordLength &&
           stopWords.indexOf(keyword.toLowerCase()) < 0) {
-          const keywordMatchesFound = this.Where(item => JSON.stringify(item).toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
+          const keywordMatchesFound = this.Where(
+            item => JSON.stringify(item).toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
           keywordMatches = keywordMatches.concat(keywordMatchesFound.ToArray());
         }
       });

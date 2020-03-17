@@ -8,7 +8,8 @@ import { Strings } from '../../Constants/Strings';
 
 export class HttpClient {
   /**
-   * Gets or sets the base address of Uniform Resource Identifier (URI) of the Internet resource used when sending requests.
+   * Gets or sets the base address of Uniform Resource Identifier (URI)
+   * of the Internet resource used when sending requests.
    */
   public BaseAddress = Strings.Empty;
   /**
@@ -57,7 +58,8 @@ export class HttpClient {
   }
 
   /**
-   * Send a GET request to the specified Uri as an asynchronous operation and have the response body returned as a string.
+   * Send a GET request to the specified Uri as an asynchronous operation
+   * and have the response body returned as a string.
    * @param uri
    */
   public async GetStringAsync(uri: string): Promise<string> {

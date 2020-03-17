@@ -23,7 +23,8 @@ describe('HttpResponseMessage', () => {
 
     expect(() => {
       classUnderTest.EnsureSuccessStatusCode();
-    }).toThrowError(`${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
+    }).toThrowError(
+      `${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
   });
 
 });

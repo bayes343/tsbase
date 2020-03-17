@@ -1,3 +1,4 @@
+/* eslint-disable complexity*/
 import { ISerializer } from './ISerializer';
 import { List } from '../../Collections/List';
 import { Strings } from '../../Constants/Strings';

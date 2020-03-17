@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Mock, Times } from 'tsmockit';
 import { IFileSystemAdapter } from '../IFileSystemAdapter';
 import { FSPersister } from '../FSPersister';
@@ -11,6 +12,18 @@ const testKey = 'bills';
 const testFileContents = '{"bills": [{"Name": "fake","Notes": "","Company": "Fake","AmountDue": 10,"AmountPaid": 0,"DueDate": 9,"Month": 0}]}';
 const purgedFileContents = '{"bills":[]}';
 const accessConstant = 1;
+
+function getMockFileSystemAdapter(): Mock<IFileSystemAdapter> {
+  const mockFileSystemAdapter = new Mock<IFileSystemAdapter>();
+  mockFileSystemAdapter.Setup(a => a.existsSync(Strings.Empty), true);
+  mockFileSystemAdapter.Setup(a => a.mkdirSync(Strings.Empty), () => null);
+  mockFileSystemAdapter.Setup(a => a.accessSync(Strings.Empty, 0), () => null);
+  mockFileSystemAdapter.Setup(a => a.writeFileSync(Strings.Empty, {}), () => null);
+  mockFileSystemAdapter.Setup(a => a.readFileSync(Strings.Empty, {}), testFileContents);
+  mockFileSystemAdapter.Setup(a => a.constants, { W_OK: accessConstant });
+
+  return mockFileSystemAdapter;
+}
 
 describe('FSPersister', () => {
   let mockPathResolver: Mock<IPathResolver>;
@@ -95,16 +108,3 @@ describe('FSPersister', () => {
   });
 
 });
-
-// tslint:disable-next-line: only-arrow-functions
-function getMockFileSystemAdapter(): Mock<IFileSystemAdapter> {
-  const mockFileSystemAdapter = new Mock<IFileSystemAdapter>();
-  mockFileSystemAdapter.Setup(a => a.existsSync(Strings.Empty), true);
-  mockFileSystemAdapter.Setup(a => a.mkdirSync(Strings.Empty), () => null);
-  mockFileSystemAdapter.Setup(a => a.accessSync(Strings.Empty, 0), () => null);
-  mockFileSystemAdapter.Setup(a => a.writeFileSync(Strings.Empty, {}), () => null);
-  mockFileSystemAdapter.Setup(a => a.readFileSync(Strings.Empty, {}), testFileContents);
-  mockFileSystemAdapter.Setup(a => a.constants, { W_OK: accessConstant });
-
-  return mockFileSystemAdapter;
-}

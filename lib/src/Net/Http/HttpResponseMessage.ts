@@ -34,7 +34,8 @@ export class HttpResponseMessage {
    */
   public EnsureSuccessStatusCode(): void {
     if (!this.IsSuccessStatusCode) {
-      throw new Error(`${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
+      throw new Error(
+        `${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
     }
   }
 }

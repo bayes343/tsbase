@@ -54,7 +54,7 @@ describe('DomStorageInterface', () => {
     const result = classUnderTest.Get(Car, 'fake');
 
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages[0]).toEqual(`Unable to retrieve \"fake\"`);
+    expect(result.ErrorMessages[0]).toEqual('Unable to retrieve \"fake\"');
   });
 
   it('should successfully remove a key value pair', () => {
@@ -75,7 +75,7 @@ describe('DomStorageInterface', () => {
     const result = classUnderTest.GetValue('fake');
 
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages[0]).toEqual(`Unable to retrieve \"fake\"`);
+    expect(result.ErrorMessages[0]).toEqual('Unable to retrieve \"fake\"');
   });
 
 });

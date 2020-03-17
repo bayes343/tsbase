@@ -87,7 +87,7 @@ class Product {
 }
 //#endregion
 
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 const stubUserJsonResponse = { 'node': { 'uid': [{ 'value': 1 }], 'fakeField': [], 'uuid': [{ 'value': 'c3fba15b-5ac1-423c-8bca-43455b157053' }], 'langcode': [{ 'value': 'en' }], 'preferred_langcode': [{ 'value': 'en' }], 'preferred_admin_langcode': [], 'name': [{ 'value': 'jwbayes' }], 'mail': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'timezone': [{ 'value': 'America\/New_York' }], 'status': [{ 'value': true }], 'created': [{ 'value': '2018-01-25T16:23:59+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'changed': [{ 'value': '2018-01-25T16:27:54+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'access': [{ 'value': '2018-04-29T04:16:56+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'login': [{ 'value': '2018-04-27T17:14:21+00:00', 'format': 'Y-m-d\\TH:i:sP' }], 'init': [{ 'value': 'joseph.w.bayes@outlook.com' }], 'roles': [{ 'target_id': 'administrator', 'target_type': 'user_role', 'target_uuid': '1e6632cf-40bf-454b-84f6-9a39fccb8b82' }], 'default_langcode': [{ 'value': true }], 'path': [{ 'alias': 'profile/jwbayes', 'pid': 123, 'langcode': 'en' }], 'field_display_name': [{ 'value': 'Joey Bayes' }], 'field_employee_id': [{ 'value': '78749' }], 'field_given_name': [{ 'value': 'Joseph' }], 'field_mobile': [{ 'value': '5402675986' }], 'field_surname': [{ 'value': 'Bayes' }], 'number_list': [{ 'value': 1 }, { 'value': 2 }, { 'value': 3 }] } };
 
 describe('JsonSerializer', () => {
@@ -182,10 +182,8 @@ describe('JsonSerializer', () => {
   });
 
   it('should parse a json key without acknowledging hyphens, capitalization, or spaces', () => {
-    class VerifyResponse {
-      public Success = false;
-      public ErrorCodes = [''];
-    }
+    class VerifyResponse { public Success = false; public ErrorCodes = ['']; }
+    // eslint-disable-next-line max-len
     const jsonString = '{\n  "su-cc-ess": false,\n  "e rror-co des": [\n    "missing-input-response",\n    "missing-input-secret"\n  ]\n}';
     const json = JSON.parse(jsonString);
     classUnderTest = new JsonSerializer<VerifyResponse>();
