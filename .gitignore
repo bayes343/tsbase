@@ -1,9 +1,9 @@
 # Dependencies
 # Artifacts
-/dist
-**/*/coverage
-**/*/node_modules
-**/**/TESTS*.xml
+dist
+coverage
+node_modules
+TESTS*.xml
 examples
 *debug.log
 vscode
