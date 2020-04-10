@@ -28,7 +28,7 @@ export class Repository<T> extends List<T> {
   constructor(
     private persister: IPersister,
     private validator: Validator<T> = new Validator<T>([]),
-    private serializer?: ISerializer<T>,
+    private serializer?: ISerializer,
     private serializeAs?: { new(): T; }
   ) {
     super();

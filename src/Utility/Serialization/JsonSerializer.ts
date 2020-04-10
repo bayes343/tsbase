@@ -19,13 +19,13 @@ const keysToCheck = [
  * - Init all property values
  * - Array<T> / List<T> values must be initialized with a single instance inside
  */
-export class JsonSerializer<T> implements ISerializer<T> {
+export class JsonSerializer implements ISerializer {
   /**
    * Recursively serializes the data passed into an instance of t
    * @param t class type to instantiate
    * @param data data to initialize on instantiated class
    */
-  public Serialize(t: { new(): T; }, data: any): T {
+  public Serialize<T>(t: { new(): T; }, data: any): T {
     const object: any = new t();
 
     const classProperties = Object.keys(object);
@@ -97,7 +97,7 @@ export class JsonSerializer<T> implements ISerializer<T> {
   }
 
   private getValueFromSerializer(property: any, json: any): any {
-    const newSerializer = new JsonSerializer<any>();
+    const newSerializer = new JsonSerializer();
     try {
       return newSerializer.Serialize(property.constructor, json);
     } catch (error) {

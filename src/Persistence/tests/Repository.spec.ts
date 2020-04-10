@@ -230,7 +230,7 @@ describe('Repository', () => {
     classUnderTest = new Repository<Person>(
       new WebStoragePersister('test', 'session'),
       new Validator([]),
-      new JsonSerializer<Person>(),
+      new JsonSerializer(),
       Person
     );
 
@@ -243,7 +243,7 @@ describe('Repository', () => {
     const dupRepo = new Repository(
       new WebStoragePersister('test', 'session'),
       new Validator([]),
-      new JsonSerializer<Person>(),
+      new JsonSerializer(),
       Person
     );
 
