@@ -44,11 +44,10 @@ export class Strings {
   }
 
   /**
-   * Returns true if the given string is empty or consists purely of whitespace
+   * Returns true if the given string is null, empty, or consists purely of whitespace
    * @param string
    */
-  public static IsEmptyOrWhiteSpace(string: string): boolean {
-    string = string.trim();
-    return string.length === 0;
+  public static IsEmptyOrWhiteSpace(string: string | null | undefined): boolean {
+    return !string || string.trim().length === 0;
   }
 }

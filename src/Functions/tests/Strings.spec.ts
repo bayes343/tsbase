@@ -17,6 +17,16 @@ describe('Strings', () => {
     expect(Strings.PascalCase('someString')).toEqual('SomeString');
   });
 
+  it('should detect a null string (value)', () => {
+    const nullString: string | null = null;
+    expect(Strings.IsEmptyOrWhiteSpace(nullString)).toBeTruthy();
+  });
+
+  it('should detect an undefined string (value)', () => {
+    const undefinedString: string | undefined = undefined;
+    expect(Strings.IsEmptyOrWhiteSpace(undefinedString)).toBeTruthy();
+  });
+
   it('should detect an empty string', () => {
     expect(Strings.IsEmptyOrWhiteSpace('')).toBeTruthy();
   });
