@@ -26,4 +26,14 @@ export class Result {
     newResult.ErrorMessages = this.ErrorMessages.concat(result.ErrorMessages);
     return newResult;
   }
+
+  /**
+   * Adds an error to ErrorMessages only when that error is not already present in the collection
+   * @param error
+   */
+  public AddError(error: string): void {
+    if (this.ErrorMessages.indexOf(error) === -1) {
+      this.ErrorMessages.push(error);
+    }
+  }
 }
