@@ -16,21 +16,24 @@ module.exports = function (config) {
       'karma-coverage'
     ],
     preprocessors: {
-      '**/*.ts': ['karma-typescript']
+      'src/**/*.ts': ['karma-typescript']
     },
     reporters: ['progress', 'karma-typescript', 'junit', 'coverage'],
-    browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: ['--remote-debugging-port=9333']
+      }
+    },
+    browsers: ['ChromeHeadless', 'ChromeDebugging'],
     coverageReporter: {
       dir: 'coverage/',
-      reporters: [
-        { type: 'html', subdir: 'report-html' },
-        { type: 'cobertura', subdir: '.', file: 'cobertura.xml' }
-      ]
+      reporters: [{ type: 'cobertura', subdir: '.', file: 'cobertura.xml' }]
     },
     karmaTypescriptConfig: {
-      tsconfig: "./tsconfig.json"
+      tsconfig: './tsconfig.json'
     }
-  })
-}
+  });
+};
 
-process.env.CHROME_BIN = require('puppeteer').executablePath()
+process.env.CHROME_BIN = require('puppeteer').executablePath();
