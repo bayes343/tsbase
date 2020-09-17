@@ -47,6 +47,8 @@ export * from './Patterns/CommandQuery/IQuery';
 export * from './Patterns/CommandQuery/Query';
 export * from './Patterns/Pipe/IPipe';
 export * from './Patterns/Pipe/Pipeline';
+export * from './Patterns/Observable/IObservable';
+export * from './Patterns/Observable/Observable';
 
 // Functions
 export * from './Functions/ArrayFunctions';
