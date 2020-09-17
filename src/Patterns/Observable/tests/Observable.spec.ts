@@ -40,4 +40,16 @@ describe('Observable', () => {
 
     expect(subscriber).toEqual('one');
   });
+
+  it('should discontinue future calls to subscribers on publish', () => {
+    let subscriber = 'one';
+    classUnderTest.Subscribe((content) => {
+      subscriber = content || Strings.Empty;
+    });
+
+    classUnderTest.Discontinue();
+    classUnderTest.Publish('two');
+
+    expect(subscriber).toEqual('one');
+  });
 });

@@ -21,4 +21,9 @@ export interface IObservable<T> {
    * @param subscriptionId
    */
   Cancel(subscriptionId: string): void;
+
+  /**
+   * Prevents future publish events from calling subscribers
+   */
+  Discontinue(): void;
 }
