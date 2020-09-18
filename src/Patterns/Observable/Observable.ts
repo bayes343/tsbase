@@ -1,4 +1,5 @@
 import { Guid } from '../../Functions/Guid';
+import { Command } from '../CommandQuery/Command';
 import { IObservable } from './IObservable';
 
 export class Observable<T> implements IObservable<T> {
@@ -13,9 +14,16 @@ export class Observable<T> implements IObservable<T> {
 
   public Publish(content?: T): void {
     if (this.active) {
-      this.subscribers.forEach(func => {
-        func(content);
-      });
+      for (const element of this.subscribers) {
+        const key = element[0];
+        const func = element[1];
+
+        const result = new Command(() => func(content)).Execute();
+
+        if (!result.IsSuccess) {
+          this.subscribers.delete(key);
+        }
+      }
     }
   }
 
