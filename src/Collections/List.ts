@@ -85,13 +85,7 @@ export class List<T> extends Queryable<T> {
    * @param match
    */
   public Find(match: (item: T) => boolean): T | null {
-    for (let index = 0; index < this.item.length; index++) {
-      const element = this.item[index];
-      if (match(element)) {
-        return (element);
-      }
-    }
-    return null;
+    return this.Where(match).First();
   }
 
   /**
@@ -130,13 +124,7 @@ export class List<T> extends Queryable<T> {
    * @param match
    */
   public FindLast(match: (item: T) => boolean): T | null {
-    for (let index = this.Count - 1; index >= 0; index--) {
-      const element = this.Item[index];
-      if (match(element)) {
-        return (element);
-      }
-    }
-    return null;
+    return this.Where(match).Last();
   }
 
   /**
@@ -222,19 +210,9 @@ export class List<T> extends Queryable<T> {
    * @param comparison
    */
   public Sort(comparison?: (item: T) => number): void {
-    if (comparison) {
-      this.item.sort((a: T, b: T) => {
-        if (comparison(a) < comparison(b)) {
-          return -1;
-        } else if (comparison(a) > comparison(b)) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-    } else {
+    this.item = comparison ?
+      this.item = this.OrderBy([comparison]).ToArray() :
       this.item.sort();
-    }
   }
 
   /**
@@ -285,16 +263,11 @@ export class List<T> extends Queryable<T> {
    * @param match
    */
   public RemoveAll(match: (item: T) => boolean): number {
-    let count = 0;
-    for (let index = 0; index < this.item.length; index++) {
-      const element = this.item[index];
-      if (match(element)) {
-        this.Remove(element);
-        index--;
-        count++;
-      }
-    }
-    return count;
+    const elementsToRemove = this.Where(match);
+    elementsToRemove.Item.forEach(element => {
+      this.Remove(element);
+    });
+    return elementsToRemove.Item.length;
   }
 
   /**
@@ -347,5 +320,4 @@ export class List<T> extends Queryable<T> {
   public Shuffle(): void {
     ArrayFunctions.Shuffle(this.item);
   }
-
 }
