@@ -56,6 +56,7 @@ export * from './Functions/Guid';
 export * from './Functions/Base64';
 export * from './Functions/FormUrl';
 export * from './Functions/Strings';
+export * from './Functions/Csv';
 
 // Constants
 export * from './Constants/Regex';
