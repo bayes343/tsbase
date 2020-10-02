@@ -7,10 +7,10 @@ import { IPersister } from './IPersister';
  */
 export class FSPersister implements IPersister {
   private get dir(): string {
-    return this.pathResolver.resolve(__dirname, this.localFilesDirectory);
+    return this.pathResolver.resolve(this.localFilesDirectory);
   }
   private get file(): string {
-    return this.pathResolver.resolve(__dirname, this.filePath);
+    return this.pathResolver.resolve(this.localFilesDirectory, this.filePath);
   }
 
   constructor(
@@ -60,7 +60,7 @@ export class FSPersister implements IPersister {
 
   private retrieveDataFileJson(): any {
     const fileContents = this.fileSystemAdapter.readFileSync(
-      this.pathResolver.resolve(__dirname, this.filePath), 'utf8');
+      this.pathResolver.resolve(this.localFilesDirectory, this.filePath), 'utf8');
 
     return JSON.parse(fileContents.toString());
   }
