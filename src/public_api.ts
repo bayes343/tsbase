@@ -24,6 +24,8 @@ export * from './Utility/Timers/ITimer';
 export * from './Utility/Timers/Timer';
 export * from './Utility/Timers/IConditionalTimer';
 export * from './Utility/Timers/ConditionalTimer';
+export * from './Utility/Timers/IGameLoop';
+export * from './Utility/Timers/GameLoop';
 
 // Persistence
 export * from './Persistence/Repository';
