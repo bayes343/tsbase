@@ -7,7 +7,7 @@ const oneSecond = 1000;
 export class GameLoop implements IGameLoop {
   private framesRendered = 0;
   private gameLoopTimer = new Timer();
-  private framerateTimer = new Timer(oneSecond);
+  private framerateTimer = new Timer();
 
   public Framerate = new Observable<number>();
   public GameEvents = new Array<Observable<any>>();
@@ -25,6 +25,7 @@ export class GameLoop implements IGameLoop {
   private startGameLoopTimer(framerate: number) {
     const interval = oneSecond / framerate;
     this.gameLoopTimer.Interval = interval;
+    this.gameLoopTimer.AutoReset = true;
     this.gameLoopTimer.Elapsed = [
       () => this.GameEvents.forEach(e => e.Publish()),
       () => this.framesRendered++
@@ -33,6 +34,8 @@ export class GameLoop implements IGameLoop {
   }
 
   private startFramerateTimer() {
+    this.framerateTimer.Interval = oneSecond;
+    this.framerateTimer.AutoReset = true;
     this.framerateTimer.Elapsed = [
       () => this.Framerate.Publish(this.framesRendered),
       () => this.framesRendered = 0
