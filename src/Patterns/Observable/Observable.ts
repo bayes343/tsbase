@@ -34,4 +34,8 @@ export class Observable<T> implements IObservable<T> {
   public Discontinue(): void {
     this.active = false;
   }
+
+  public Reinstate(): void {
+    this.active = true;
+  }
 }

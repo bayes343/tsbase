@@ -57,6 +57,19 @@ describe('Observable', () => {
     expect(subscriber).toEqual('one');
   });
 
+  it('should reinstate a subscription that was discontinued', () => {
+    let subscriber = 'one';
+    classUnderTest.Subscribe((content) => {
+      subscriber = content || Strings.Empty;
+    });
+    classUnderTest.Discontinue();
+
+    classUnderTest.Reinstate();
+    classUnderTest.Publish('two');
+
+    expect(subscriber).toEqual('two');
+  });
+
   it('should gracefully handle a subscriber that is no longer defined', () => {
     classUnderTest = new Observable<TestClass>();
     let subscriberValue = 'john';
