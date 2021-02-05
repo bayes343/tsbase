@@ -1,4 +1,4 @@
-import { Strings } from '../Constants/Strings';
+import { Strings } from './Strings';
 
 export class FormUrl {
   private constructor() { }

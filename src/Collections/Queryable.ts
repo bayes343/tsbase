@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
-import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
-import { Regex } from '../Constants/Regex';
 import { Strings } from '../Constants/Strings';
+import { Regex } from '../Constants/Regex';
+import { ArrayFunctions } from '../Functions/ArrayFunctions';
 
 export abstract class Queryable<T> {
   /**

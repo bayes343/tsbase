@@ -1,5 +1,5 @@
-import { Strings } from '../Constants/Strings';
 import { Query } from '../Patterns/CommandQuery/Query';
+import { Strings } from './Strings';
 
 export class Csv {
   /**

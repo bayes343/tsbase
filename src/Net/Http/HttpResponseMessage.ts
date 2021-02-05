@@ -1,6 +1,6 @@
-import { HttpStatusCode } from '../HttpStatusCode';
 import { KeyValue } from '../../TypeLiterals';
 import { Errors } from '../../Errors';
+import { HttpStatusCode } from '../HttpStatusCode';
 
 /**
  * Abstracts the response from an http request

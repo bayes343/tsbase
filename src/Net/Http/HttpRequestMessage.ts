@@ -1,6 +1,6 @@
-import { HttpMethod } from '../HttpMethod';
 import { KeyValue } from '../../TypeLiterals';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
+import { HttpMethod } from '../HttpMethod';
 
 /**
  * Abstracts an http request

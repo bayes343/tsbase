@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-import { Queryable } from './Queryable';
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
+import { Queryable } from './Queryable';
 
 export class List<T> extends Queryable<T> {
   /**

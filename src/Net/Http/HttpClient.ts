@@ -4,7 +4,7 @@ import { IXhrRequestHandler } from './IXhrRequestHandler';
 import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
 import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
 
 export class HttpClient {
   /**
