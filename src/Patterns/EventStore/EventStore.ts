@@ -58,7 +58,7 @@ export class EventStore implements IEventStore {
 
     targetObserverKeys.forEach(key => {
       (this.stateObservers.get(key) as Observable<T>).Publish(
-        this.cloneOf(dlv(this.state, key)));
+        this.cloneOf(dlv(this.state, key, null)));
     });
   }
 }
