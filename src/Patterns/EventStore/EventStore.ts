@@ -27,9 +27,14 @@ export class EventStore implements IEventStore {
       fromState: previousState
     });
 
-    Strings.IsEmptyOrWhiteSpace(path) ? this.state = value : dset(this.state, path, value);
-    this.ObservableAt(path).Publish(stateClone);
-    this.publishToChildObservers(path);
+    const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
+    if (rootUpdate) {
+      this.state = value;
+    } else {
+      dset(this.state, path, value);
+    }
+
+    this.publishToDependentObservers(path);
 
     return stateClone;
   }
@@ -50,15 +55,35 @@ export class EventStore implements IEventStore {
     return JSON.parse(JSON.stringify(value));
   }
 
-  private publishToChildObservers<T>(path: string): void {
-    const observerKeys = Array.from(this.stateObservers.keys());
-    const targetObserverKeys = Strings.IsEmptyOrWhiteSpace(path) ?
-      observerKeys.filter(k => !Strings.IsEmptyOrWhiteSpace(k)) :
-      observerKeys.filter(k => k.startsWith(`${path}.`));
+  private publishToDependentObservers<T>(path: string): void {
+    const targetObserverKeys = this.getTargetObservers(path);
 
     targetObserverKeys.forEach(key => {
       (this.stateObservers.get(key) as Observable<T>).Publish(
         this.cloneOf(dlv(this.state, key, null)));
     });
+  }
+
+  private getTargetObservers(path: string): Array<string> {
+    const observerKeys = Array.from(this.stateObservers.keys());
+    return Strings.IsEmptyOrWhiteSpace(path) ?
+      observerKeys.filter(k => !Strings.IsEmptyOrWhiteSpace(k)) :
+      observerKeys.filter(k =>
+        k === Strings.Empty ||
+        k === path ||
+        this.childOf(k, path) ||
+        this.parentOf(k, path));
+  }
+
+  private childOf(parentPath: string, childPath: string): boolean {
+    return parentPath.startsWith(`${childPath}.`) ||
+      parentPath.startsWith(`.${childPath}`) ||
+      parentPath.indexOf(`.${childPath}.`) >= 0;
+  }
+
+  private parentOf(parentPath: string, childPath: string): boolean {
+    return childPath.startsWith(`${parentPath}.`) ||
+      childPath.startsWith(`.${parentPath}`) ||
+      childPath.indexOf(`.${parentPath}.`) >= 0;
   }
 }
