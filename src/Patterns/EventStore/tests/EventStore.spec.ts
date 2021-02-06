@@ -111,6 +111,29 @@ describe('EventStore', () => {
     expect(petsUpdates).toEqual(3);
   });
 
+  it('should publish update events and pass appropriate state to observers down stream from event', () => {
+    let rootUpdateState;
+    let familyUpdateState;
+    let fatherUpdateState;
+    let petsUpdateState;
+    classUnderTest.ObservableAt(Paths.Root).Subscribe((state) => rootUpdateState = state);
+    classUnderTest.ObservableAt(Paths.Family).Subscribe((state) => familyUpdateState = state);
+    classUnderTest.ObservableAt(Paths.Father).Subscribe((state) => fatherUpdateState = state);
+    classUnderTest.ObservableAt(Paths.Pets).Subscribe((state) => petsUpdateState = state);
+
+    classUnderTest.SetStateAt(house, Paths.Root);
+    expect(JSON.parse(JSON.stringify(rootUpdateState))).toEqual(JSON.parse(JSON.stringify(house)));
+
+    classUnderTest.SetStateAt(house.family, Paths.Family);
+    expect(JSON.parse(JSON.stringify(familyUpdateState))).toEqual(JSON.parse(JSON.stringify(house.family)));
+
+    classUnderTest.SetStateAt(updatedFather, Paths.Father);
+    classUnderTest.SetStateAt(updatedPets, Paths.Pets);
+
+    expect(JSON.parse(JSON.stringify(fatherUpdateState))).toEqual(JSON.parse(JSON.stringify(updatedFather)));
+    expect(JSON.parse(JSON.stringify(petsUpdateState))).toEqual(JSON.parse(JSON.stringify(updatedPets)));
+  });
+
   it('should maintain a transaction ledger of state changing events', () => {
     classUnderTest.SetStateAt(house, Paths.Root);
     classUnderTest.SetStateAt(updatedFather, Paths.Father);
