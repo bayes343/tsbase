@@ -29,6 +29,7 @@ export class EventStore implements IEventStore {
 
     Strings.IsEmptyOrWhiteSpace(path) ? this.state = value : dset(this.state, path, value);
     this.ObservableAt(path).Publish(stateClone);
+    this.publishToChildObservers(value, path);
 
     return stateClone;
   }
@@ -47,5 +48,16 @@ export class EventStore implements IEventStore {
 
   private cloneOf<T>(value: T): T {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  private publishToChildObservers<T>(state: T, path: string): void {
+    const observerKeys = Array.from(this.stateObservers.keys());
+    const targetObserverKeys = Strings.IsEmptyOrWhiteSpace(path) ?
+      observerKeys.filter(k => !Strings.IsEmptyOrWhiteSpace(k)) :
+      observerKeys.filter(k => k.startsWith(`${path}.`));
+
+    targetObserverKeys.forEach(key => {
+      (this.stateObservers.get(key) as Observable<T>).Publish(state);
+    });
   }
 }
