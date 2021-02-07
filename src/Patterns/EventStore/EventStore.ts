@@ -116,14 +116,15 @@ export class EventStore<T> implements IEventStore<T> {
 
     targetObserverKeys.forEach(key => {
       (this.stateObservers.get(key) as Observable<T>).Publish(
-        this.cloneOf(dlv(this.state, key, null)));
+        Strings.IsEmptyOrWhiteSpace(key) ?
+          (this.cloneOf(this.state) || {}) :
+          this.cloneOf(dlv(this.state, key)));
     });
   }
 
   private getTargetObservers(path: string): Array<string> {
     const observerKeys = Array.from(this.stateObservers.keys());
-    return Strings.IsEmptyOrWhiteSpace(path) ?
-      observerKeys.filter(k => !Strings.IsEmptyOrWhiteSpace(k)) :
+    return Strings.IsEmptyOrWhiteSpace(path) ? observerKeys :
       observerKeys.filter(k =>
         k === Strings.Empty ||
         k === path ||

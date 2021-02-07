@@ -85,6 +85,8 @@ describe('EventStore', () => {
   });
 
   it('should undo state change(s)', () => {
+    let rootUpdate: any = undefined;
+    classUnderTest.ObservableAt(StatePaths.One).Subscribe(u => rootUpdate = u);
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
     classUnderTest.SetStateAt('one', StatePaths.One);
     classUnderTest.SetStateAt('two', StatePaths.One);
@@ -96,6 +98,7 @@ describe('EventStore', () => {
     classUnderTest.Undo();
     expect(stateAtOne()).toBeUndefined();
     expect(classUnderTest.GetState()).toEqual({});
+    expect(rootUpdate).toEqual({});
   });
 
   it('should return a failed result for an redo when there is no state to redo', () => {
@@ -225,8 +228,8 @@ describe('EventStore', () => {
   it('should publish to children and parents with appropriate state', () => {
     let fatherUpdateState: any = {};
     let petsUpdateState: any = {};
-    classUnderTest.ObservableAt(Paths.Father).Subscribe((state) => fatherUpdateState = state);
-    classUnderTest.ObservableAt(Paths.Pets).Subscribe((state) => petsUpdateState = state);
+    classUnderTest.ObservableAt(Paths.Father).Subscribe(state => fatherUpdateState = state);
+    classUnderTest.ObservableAt(Paths.Pets).Subscribe(state => petsUpdateState = state);
 
     classUnderTest.SetStateAt(house(), Paths.Root);
     classUnderTest.SetStateAt(updatedFather, Paths.Father);
