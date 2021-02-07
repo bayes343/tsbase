@@ -1,4 +1,5 @@
 import { Observable } from '../Observable/module';
+import { GenericResult } from '../Result/GenericResult';
 
 export type Transaction<T> = {
   timestamp: number,
@@ -24,11 +25,12 @@ export interface IEventStore<T> {
   GetStateAt<T>(path: string): T | undefined;
 
   /**
-   *
+   * Sets the state at a given path, returning a result indicating
+   * success and a copy of the state set
    * @param state state to set
    * @param path object path to be set
    */
-  SetStateAt<T>(state: T, path: string): T;
+  SetStateAt<T>(state: T, path: string): GenericResult<T>;
 
   /**
    * Returns an observable which can be subscribed to in order

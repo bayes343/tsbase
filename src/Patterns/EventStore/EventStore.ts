@@ -1,7 +1,10 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { Strings } from '../../Functions/module';
-import { Observable } from '../Observable/module';
+import { Errors } from '../../Errors';
+import { Strings } from '../../Functions/Strings';
+import { Query } from '../CommandQuery/Query';
+import { Observable } from '../Observable/Observable';
+import { GenericResult } from '../Result/GenericResult';
 import { IEventStore, Transaction } from './IEventStore';
 
 export class EventStore<T> implements IEventStore<T> {
@@ -17,26 +20,18 @@ export class EventStore<T> implements IEventStore<T> {
     return this.cloneOf(dlv(this.state as object, path, null)) || undefined;
   }
 
-  public SetStateAt<T>(value: T, path: string): T {
-    const previousState = dlv(this.state, path);
-    const stateClone = this.cloneOf<T>(value);
-    this.ledger.push({
-      path: path,
-      timestamp: Date.now(),
-      toState: stateClone,
-      fromState: previousState
-    });
+  public SetStateAt<T>(value: T, path: string): GenericResult<T> {
+    return new Query<T>(() => {
+      const previousState = dlv(this.state, path);
 
-    const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
-    if (rootUpdate) {
-      this.state = value;
-    } else {
-      dset(this.state, path, value);
-    }
+      if (JSON.stringify(previousState) !== JSON.stringify(value)) {
+        this.updateState<T>(path, previousState, value);
+      } else {
+        throw new Error(Errors.StateChangeUnnecessary);
+      }
 
-    this.publishToDependentObservers(path);
-
-    return stateClone;
+      return this.cloneOf(value);
+    }).Execute();
   }
 
   public ObservableAt<T>(path: string): Observable<T> {
@@ -53,6 +48,24 @@ export class EventStore<T> implements IEventStore<T> {
 
   private cloneOf<T>(value: T): T {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  private updateState<T>(path: string, previousState: any, value: T) {
+    this.ledger.push({
+      path: path,
+      timestamp: Date.now(),
+      toState: this.cloneOf(value),
+      fromState: previousState
+    });
+
+    const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
+    if (rootUpdate) {
+      this.state = value;
+    } else {
+      dset(this.state, path, value);
+    }
+
+    this.publishToDependentObservers(path);
   }
 
   private publishToDependentObservers<T>(path: string): void {
