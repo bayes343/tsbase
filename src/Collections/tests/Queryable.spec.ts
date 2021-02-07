@@ -403,4 +403,15 @@ describe('Queryable', () => {
     expect(toysSearch.First()).toEqual('toy');
   });
 
+  it('should retrieve the first element satisfying a given predicate', () => {
+    const words = ['one', 'two', 'three', 'four'];
+    const firstGreaterThanThreeLengthWord = Queryable.From(words).First(w => w.length > 3);
+    expect(firstGreaterThanThreeLengthWord).toEqual('three');
+  });
+
+  it('should retrieve the last element satisfying a given predicate', () => {
+    const words = ['one', 'two', 'three', 'four'];
+    const firstGreaterThanThreeLengthWord = Queryable.From(words).Last(w => w.length > 3);
+    expect(firstGreaterThanThreeLengthWord).toEqual('four');
+  });
 });

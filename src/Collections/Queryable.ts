@@ -142,18 +142,48 @@ export abstract class Queryable<T> {
 
   /**
    * Returns the first element of a sequence or null if the sequence is empty.
+   * @param func optionally retrieve the first element which satisfies the given predicate
    */
-  public First(): T | null {
-    const firstElement = this.item.length >= 1 ? this.item[0] : null;
-    return firstElement;
+  public First(func?: (item: T) => boolean): T | null {
+    if (func) {
+      let firstSatisfyingElement: T | null = null;
+
+      for (let index = 0; index < this.item.length; index++) {
+        const element = this.item[index];
+        if (func(element)) {
+          firstSatisfyingElement = element;
+          break;
+        }
+      }
+
+      return firstSatisfyingElement;
+    } else {
+      const firstElement = this.item.length >= 1 ? this.item[0] : null;
+      return firstElement;
+    }
   }
 
   /**
    * Returns the last element of a sequence or null if the sequence is empty.
+   * @param func optionally retrieve the last element which satisfies the given predicate
    */
-  public Last(): T | null {
-    const lastElement = this.item.length >= 1 ? this.item[this.item.length - 1] : null;
-    return lastElement;
+  public Last(func?: (item: T) => boolean): T | null {
+    if (func) {
+      let lastSatisfyingElement: T | null = null;
+
+      for (let index = this.item.length - 1; index >= 0; index--) {
+        const element = this.item[index];
+        if (func(element)) {
+          lastSatisfyingElement = element;
+          break;
+        }
+      }
+
+      return lastSatisfyingElement;
+    } else {
+      const lastElement = this.item.length >= 1 ? this.item[this.item.length - 1] : null;
+      return lastElement;
+    }
   }
 
   /**
