@@ -7,8 +7,8 @@ export type Transaction<T> = {
   fromState?: T
 };
 
-export interface IEventStore {
-  GetState<T>(): object & T;
+export interface IEventStore<T> {
+  GetState(): object & T;
   GetStateAt<T>(path: string): T | undefined;
   SetStateAt<T>(state: T, path: string): T;
   ObservableAt<T>(path: string): Observable<T>;

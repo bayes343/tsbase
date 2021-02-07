@@ -4,12 +4,12 @@ import { Strings } from '../../Functions/module';
 import { Observable } from '../Observable/module';
 import { IEventStore, Transaction } from './IEventStore';
 
-export class EventStore implements IEventStore {
+export class EventStore<T> implements IEventStore<T> {
   private state = {};
   private stateObservers = new Map<string, Observable<any>>();
   private ledger = new Array<Transaction<any>>();
 
-  public GetState<T>(): object & T {
+  public GetState(): object & T {
     return this.cloneOf(this.state) as object & T;
   }
 
