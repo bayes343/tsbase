@@ -60,7 +60,7 @@
     "no-multiple-empty-lines": "error",
     "max-len": [
       "error",
-      125
+      150
     ],
     "max-lines": [
       "error",

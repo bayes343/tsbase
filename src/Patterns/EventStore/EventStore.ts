@@ -53,8 +53,7 @@ export class EventStore<T> implements IEventStore<T> {
       const lastVoidableTransaction = queryableLedger.Last(t => !t.voided);
       if (lastVoidableTransaction) {
         lastVoidableTransaction.voided = true;
-        dset(this.state, lastVoidableTransaction.path, this.cloneOf(lastVoidableTransaction.fromState));
-        this.publishToDependentObservers(lastVoidableTransaction.path);
+        this.updateState(lastVoidableTransaction.path, lastVoidableTransaction.toState, lastVoidableTransaction.fromState, false);
       } else {
         throw new Error(Errors.NoTransactionToUndo);
       }
@@ -78,8 +77,7 @@ export class EventStore<T> implements IEventStore<T> {
 
       if (lastRedoableTransaction) {
         lastRedoableTransaction.voided = false;
-        dset(this.state, lastRedoableTransaction.path, this.cloneOf(lastRedoableTransaction.toState));
-        this.publishToDependentObservers(lastRedoableTransaction.path);
+        this.updateState(lastRedoableTransaction.path, lastRedoableTransaction.fromState, lastRedoableTransaction.toState, false);
       } else {
         throw new Error(Errors.NoTransactionToRedo);
       }
@@ -92,14 +90,16 @@ export class EventStore<T> implements IEventStore<T> {
     return value ? JSON.parse(JSON.stringify(value)) : value;
   }
 
-  private updateState<T>(path: string, previousState: any, value: T) {
-    this.ledger.push({
-      path: path,
-      timestamp: Date.now(),
-      toState: this.cloneOf(value),
-      fromState: previousState,
-      voided: false
-    });
+  private updateState<T>(path: string, previousState: any, value: T, updateLedger = true) {
+    if (updateLedger) {
+      this.ledger.push({
+        path: path,
+        timestamp: Date.now(),
+        toState: this.cloneOf(value),
+        fromState: previousState,
+        voided: false
+      });
+    }
 
     const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
     if (rootUpdate) {
