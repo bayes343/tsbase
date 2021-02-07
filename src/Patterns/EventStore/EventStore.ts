@@ -53,10 +53,8 @@ export class EventStore<T> implements IEventStore<T> {
       const lastVoidableTransaction = queryableLedger.Last(t => !t.voided);
       if (lastVoidableTransaction) {
         lastVoidableTransaction.voided = true;
-        dset(
-          this.state,
-          lastVoidableTransaction.path,
-          this.cloneOf(lastVoidableTransaction.fromState));
+        dset(this.state, lastVoidableTransaction.path, this.cloneOf(lastVoidableTransaction.fromState));
+        this.publishToDependentObservers(lastVoidableTransaction.path);
       } else {
         throw new Error(Errors.NoTransactionToUndo);
       }
@@ -80,10 +78,8 @@ export class EventStore<T> implements IEventStore<T> {
 
       if (lastRedoableTransaction) {
         lastRedoableTransaction.voided = false;
-        dset(
-          this.state,
-          lastRedoableTransaction.path,
-          this.cloneOf(lastRedoableTransaction.toState));
+        dset(this.state, lastRedoableTransaction.path, this.cloneOf(lastRedoableTransaction.toState));
+        this.publishToDependentObservers(lastRedoableTransaction.path);
       } else {
         throw new Error(Errors.NoTransactionToRedo);
       }
