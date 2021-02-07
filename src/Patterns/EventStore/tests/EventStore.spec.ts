@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Errors } from '../../../Errors';
 import { EventStore, IEventStore } from '../module';
 
@@ -47,7 +48,8 @@ describe('EventStore', () => {
   });
 
   it('should get an observable at an empty path', () => {
-    expect(classUnderTest.ObservableAt).toBeDefined();
+    expect(classUnderTest.ObservableAt(StatePaths.One)).toBeDefined();
+    expect(classUnderTest.ObservableAt(StatePaths.One)).toBeDefined();
   });
 
   it('should get an observable at a path with entries', () => {
@@ -73,7 +75,65 @@ describe('EventStore', () => {
 
     expect(changeResult.IsSuccess).toBeTruthy();
     expect(noChangeResult.IsSuccess).toBeFalsy();
-    expect(noChangeResult.ErrorMessages.indexOf(Errors.StateChangeUnnecessary) >= 0).toBeTruthy();
+    expect(noChangeResult.ErrorMessages).toContain(Errors.StateChangeUnnecessary);
+  });
+
+  it('should return a failed result for an undo when there is no state to undo', () => {
+    const result = classUnderTest.Undo();
+    expect(result.IsSuccess).toBeFalsy();
+    expect(result.ErrorMessages).toContain(Errors.NoTransactionToUndo);
+  });
+
+  it('should undo state change(s)', () => {
+    const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
+    classUnderTest.SetStateAt('one', StatePaths.One);
+    classUnderTest.SetStateAt('two', StatePaths.One);
+    expect(stateAtOne()).toEqual('two');
+
+    classUnderTest.Undo();
+    expect(stateAtOne()).toEqual('one');
+
+    classUnderTest.Undo();
+    expect(stateAtOne()).toBeUndefined();
+  });
+
+  it('should return a failed result for an redo when there is no state to redo', () => {
+    const result = classUnderTest.Redo();
+    expect(result.IsSuccess).toBeFalsy();
+    expect(result.ErrorMessages).toContain(Errors.NoTransactionToRedo);
+  });
+
+  it('should redo a state change that was voided (via undo)', () => {
+    const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
+    classUnderTest.SetStateAt('one', StatePaths.One);
+    classUnderTest.SetStateAt('two', StatePaths.One);
+    expect(stateAtOne()).toEqual('two');
+    expect(classUnderTest.GetLedger().length).toEqual(2);
+    classUnderTest.Undo();
+    classUnderTest.Undo();
+
+    classUnderTest.Redo();
+    expect(stateAtOne()).toEqual('one');
+
+    classUnderTest.Redo();
+    expect(stateAtOne()).toEqual('two');
+  });
+
+  it('should only allow redos up to the last non-voided transaction', () => {
+    const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
+    classUnderTest.SetStateAt('one', StatePaths.One);
+    classUnderTest.SetStateAt('two', StatePaths.One);
+    expect(stateAtOne()).toEqual('two');
+    expect(classUnderTest.GetLedger().length).toEqual(2);
+    classUnderTest.Undo();
+    classUnderTest.Undo();
+    classUnderTest.SetStateAt('three', StatePaths.One);
+
+    const result = classUnderTest.Redo();
+
+    expect(classUnderTest.GetStateAt<string>(StatePaths.One)).toEqual('three');
+    expect(result.IsSuccess).toBeFalsy();
+    expect(result.ErrorMessages).toContain(Errors.NoTransactionToRedo);
   });
 
   /* ========================= Scenario Tests ========================= */

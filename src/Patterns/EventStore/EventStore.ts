@@ -1,5 +1,6 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
+import { Queryable } from '../../Collections/Queryable';
 import { Errors } from '../../Errors';
 import { Strings } from '../../Functions/Strings';
 import { Query } from '../CommandQuery/Query';
@@ -46,8 +47,53 @@ export class EventStore<T> implements IEventStore<T> {
     return this.ledger.slice();
   }
 
+  public Undo(): GenericResult<T | undefined> {
+    return new Query<T | undefined>(() => {
+      const queryableLedger = Queryable.From(this.ledger);
+      const lastVoidableTransaction = queryableLedger.Last(t => !t.voided);
+      if (lastVoidableTransaction) {
+        lastVoidableTransaction.voided = true;
+        dset(
+          this.state,
+          lastVoidableTransaction.path,
+          this.cloneOf(lastVoidableTransaction.fromState));
+      } else {
+        throw new Error(Errors.NoTransactionToUndo);
+      }
+
+      return this.GetStateAt<T>(lastVoidableTransaction.path);
+    }).Execute();
+  }
+
+  public Redo(): GenericResult<T | undefined> {
+    return new Query<T | undefined>(() => {
+      let lastRedoableTransaction: Transaction<T> | null = null;
+
+      for (let index = this.ledger.length - 1; index >= 0; index--) {
+        const element = this.ledger[index];
+        if (!element.voided) {
+          break;
+        } else {
+          lastRedoableTransaction = element;
+        }
+      }
+
+      if (lastRedoableTransaction) {
+        lastRedoableTransaction.voided = false;
+        dset(
+          this.state,
+          lastRedoableTransaction.path,
+          this.cloneOf(lastRedoableTransaction.toState));
+      } else {
+        throw new Error(Errors.NoTransactionToRedo);
+      }
+
+      return this.GetStateAt<T>(lastRedoableTransaction.path);
+    }).Execute();
+  }
+
   private cloneOf<T>(value: T): T {
-    return JSON.parse(JSON.stringify(value));
+    return value ? JSON.parse(JSON.stringify(value)) : value;
   }
 
   private updateState<T>(path: string, previousState: any, value: T) {
@@ -55,7 +101,8 @@ export class EventStore<T> implements IEventStore<T> {
       path: path,
       timestamp: Date.now(),
       toState: this.cloneOf(value),
-      fromState: previousState
+      fromState: previousState,
+      voided: false
     });
 
     const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);

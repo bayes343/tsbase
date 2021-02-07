@@ -7,5 +7,7 @@ export enum Errors {
   WebStorageUndefined = 'WebStorageUndefined - Unable to use WebStoragePersister since, \"Storage\" is not defined',
   Base64DecodingFailed = 'Unable to decode base64 file',
   Base64EncodingFailed = 'Unable to encode base64 file',
-  StateChangeUnnecessary = 'State change unnecessary - nothing changed'
+  StateChangeUnnecessary = 'State change unnecessary - nothing changed',
+  NoTransactionToUndo = 'No transaction to undo',
+  NoTransactionToRedo = 'No transaction to redo'
 }

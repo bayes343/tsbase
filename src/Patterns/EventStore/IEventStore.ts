@@ -5,7 +5,8 @@ export type Transaction<T> = {
   timestamp: number,
   path: string,
   toState: T,
-  fromState?: T
+  fromState?: T,
+  voided: boolean
 };
 
 /**
@@ -44,4 +45,7 @@ export interface IEventStore<T> {
    * in the current state
    */
   GetLedger(): Array<Transaction<any>>;
+
+  Undo(): GenericResult<T | undefined>;
+  Redo(): GenericResult<T | undefined>;
 }
