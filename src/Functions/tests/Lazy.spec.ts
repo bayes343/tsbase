@@ -8,12 +8,13 @@ describe('Lazy', () => {
   });
 
   it('should return the same instance no matter how many times it is invoked', () => {
-    const one = Lazy(Object);
-    const two = Lazy(Object);
-    const three = Lazy(Object);
+    const lazyObjectFunction = Lazy(Object);
+    const one = lazyObjectFunction();
+    const two = lazyObjectFunction();
+    const three = lazyObjectFunction();
 
-    expect(one()).toEqual(two());
-    expect(two()).toEqual(three());
+    expect(one).toBe(two);
+    expect(two).toBe(three);
   });
 
   it('should return the same instance of a complex object', () => {
