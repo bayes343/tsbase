@@ -95,6 +95,7 @@ describe('EventStore', () => {
 
     classUnderTest.Undo();
     expect(stateAtOne()).toBeUndefined();
+    expect(classUnderTest.GetState()).toEqual({});
   });
 
   it('should return a failed result for an redo when there is no state to redo', () => {

@@ -103,7 +103,7 @@ export class EventStore<T> implements IEventStore<T> {
 
     const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
     if (rootUpdate) {
-      this.state = value;
+      this.state = value || {};
     } else {
       dset(this.state, path, value);
     }
