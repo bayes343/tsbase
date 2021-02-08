@@ -18,7 +18,9 @@ export class EventStore<T> implements IEventStore<T> {
   }
 
   public GetStateAt<T>(path: string): T | undefined {
-    return this.cloneOf(dlv(this.state as object, path, null)) || undefined;
+    return Strings.IsEmptyOrWhiteSpace(path) ?
+      this.GetState() :
+      this.cloneOf(dlv(this.state as object, path));
   }
 
   public SetStateAt<T>(value: T, path: string): GenericResult<T> {
@@ -117,7 +119,7 @@ export class EventStore<T> implements IEventStore<T> {
     targetObserverKeys.forEach(key => {
       (this.stateObservers.get(key) as Observable<T>).Publish(
         Strings.IsEmptyOrWhiteSpace(key) ?
-          (this.cloneOf(this.state) || {}) :
+          this.GetState() :
           this.cloneOf(dlv(this.state, key)));
     });
   }

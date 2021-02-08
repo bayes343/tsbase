@@ -86,7 +86,7 @@ describe('EventStore', () => {
 
   it('should undo state change(s)', () => {
     let rootUpdate: any = undefined;
-    classUnderTest.ObservableAt(StatePaths.One).Subscribe(u => rootUpdate = u);
+    classUnderTest.ObservableAt('').Subscribe(u => rootUpdate = u);
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
     classUnderTest.SetStateAt('one', StatePaths.One);
     classUnderTest.SetStateAt('two', StatePaths.One);
@@ -138,6 +138,16 @@ describe('EventStore', () => {
     expect(classUnderTest.GetStateAt<string>(StatePaths.One)).toEqual('three');
     expect(result.IsSuccess).toBeFalsy();
     expect(result.ErrorMessages).toContain(Errors.NoTransactionToRedo);
+  });
+
+  it('should return the entire state when the root is requested via GetStateAt', () => {
+    const oneState = { one: 'one' };
+    classUnderTest.SetStateAt(oneState, StatePaths.One);
+    const expected = JSON.stringify({ one: oneState });
+
+    const actual = JSON.stringify(classUnderTest.GetStateAt(''));
+
+    expect(actual).toEqual(expected);
   });
 
   /* ========================= Scenario Tests ========================= */
