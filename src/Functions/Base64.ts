@@ -1,4 +1,5 @@
 import { Errors } from '../Errors';
+import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 export class Base64 {
   private constructor() { }
@@ -15,7 +16,9 @@ export class Base64 {
         resolve(reader.result as string);
       };
       reader.onerror = () => {
-        throw new Error(Errors.Base64EncodingFailed);
+        const error = new Error(Errors.Base64EncodingFailed);
+        Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+        throw error;
       };
     });
   }
@@ -40,7 +43,8 @@ export class Base64 {
 
       return new File([u8arr], filename, { type: mime });
     } catch (error) {
-      throw new Error(Errors.Base64DecodingFailed);
+      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      throw error;
     }
   }
 

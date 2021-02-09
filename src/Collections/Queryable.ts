@@ -3,6 +3,7 @@ import { Errors } from '../Errors';
 import { Strings } from '../Constants/Strings';
 import { Regex } from '../Constants/Regex';
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
+import { LogEntry, Logger, LogLevel } from '../Utility/module';
 
 export abstract class Queryable<T> {
   /**
@@ -110,7 +111,9 @@ export abstract class Queryable<T> {
       }
       return average;
     } else {
-      throw new Error(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
+      const error = new Error(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
+      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      throw error;
     }
   }
 
@@ -200,7 +203,9 @@ export abstract class Queryable<T> {
       this.item.forEach(element => {
         const tNumber = parseFloat((element as {}).toString());
         if (isNaN(tNumber)) {
-          throw new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
+          const error = new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
+          Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+          throw error;
         }
         sum += tNumber;
       });
@@ -360,7 +365,9 @@ export abstract class Queryable<T> {
    */
   public Min(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
-      throw new Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
+      const error = Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
+      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      throw error;
     }
 
     return this.Aggregate<T, T>(
@@ -376,7 +383,9 @@ export abstract class Queryable<T> {
    */
   public Max(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
-      throw new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
+      const error = new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
+      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      throw error;
     }
 
     return this.Aggregate<T, T>(

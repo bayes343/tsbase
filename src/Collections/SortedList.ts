@@ -1,5 +1,6 @@
 import { List } from './List';
 import { Errors } from '../Errors';
+import { Command } from '../Patterns/module';
 
 export class SortedList<T> extends List<T> {
   /**
@@ -31,21 +32,27 @@ export class SortedList<T> extends List<T> {
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public Reverse(): void {
-    throw new Error(`${Errors.InvalidOperation} - You cannot reverse a SortedList`);
+    new Command(() => {
+      throw new Error(`${Errors.InvalidOperation} - You cannot reverse a SortedList`);
+    }).Execute();
   }
 
   /**
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public ReverseRange(): void {
-    throw new Error(`${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
+    new Command(() => {
+      throw new Error(`${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
+    }).Execute();
   }
 
   /**
    * Not applicable for SortedList - calling will throw OperationInvalid exception
    */
   public Shuffle(): void {
-    throw new Error(`${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
+    new Command(() => {
+      throw new Error(`${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
+    }).Execute();
   }
   //#endregion
 

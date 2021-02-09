@@ -1,6 +1,7 @@
 import { XhrRequestHandler } from './XhrRequestHandler';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
 import { Errors } from '../../../Errors';
+import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
 /**
  * An XhrRequestHandler implementation that works in browser contexts
@@ -8,7 +9,9 @@ import { Errors } from '../../../Errors';
 export class BrowserXhrRequestHandler extends XhrRequestHandler implements IXhrRequestHandler {
   GetXhrRequest(): XMLHttpRequest {
     if (!this.HttpClient) {
-      throw new Error(Errors.NullHttpClient);
+      const error = new Error(Errors.NullHttpClient);
+      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      throw error;
     }
     const xhr = new XMLHttpRequest();
     xhr.timeout = this.HttpClient.Timeout * 1000;

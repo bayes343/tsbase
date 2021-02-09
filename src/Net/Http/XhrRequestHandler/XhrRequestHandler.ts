@@ -6,6 +6,7 @@ import { HttpRequestMessage } from '../HttpRequestMessage';
 import { KeyValue } from '../../../TypeLiterals';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
 import { Errors } from '../../../Errors';
+import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
 const BadRequest = new HttpResponseMessage(
   'BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have \
@@ -57,7 +58,9 @@ export abstract class XhrRequestHandler implements IXhrRequestHandler {
 
   private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Array<KeyValue>): void {
     if (!this.HttpClient) {
-      throw new Error(Errors.NullHttpClient);
+      const error = new Error(Errors.NullHttpClient);
+      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      throw error;
     }
     this.HttpClient.DefaultRequestHeaders.forEach(element => {
       xhr.setRequestHeader(element.key, element.value);

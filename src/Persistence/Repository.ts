@@ -5,6 +5,7 @@ import { ISerializer } from '../Utility/Serialization/ISerializer';
 import { Errors } from '../Errors';
 import { Validator } from '../Patterns/Validator/Validator';
 import { Result } from '../Patterns/Result/Result';
+import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 /**
  * An extension of the List<T> class that incorporates persistence functionality
@@ -136,8 +137,10 @@ export class Repository<T> extends List<T> {
       if (this.serializer && this.serializeAs) {
         classInstances.push(this.serializer.Serialize(this.serializeAs, element));
       } else {
-        throw new Error(
+        const error = new Error(
           `${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
+        Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+        throw error;
       }
     });
     return classInstances;

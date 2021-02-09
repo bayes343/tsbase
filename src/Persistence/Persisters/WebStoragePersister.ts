@@ -1,5 +1,6 @@
 import { IPersister } from './IPersister';
 import { Errors } from '../../Errors';
+import { Command } from '../../Patterns/module';
 
 type StorageType = 'local' | 'session';
 
@@ -11,9 +12,11 @@ export class WebStoragePersister implements IPersister {
     private key: string,
     private storageType: StorageType
   ) {
-    if (typeof (Storage) === 'undefined') {
-      throw new Error(Errors.WebStorageUndefined);
-    }
+    new Command(() => {
+      if (typeof (Storage) === 'undefined') {
+        throw new Error(Errors.WebStorageUndefined);
+      }
+    }).Execute();
   }
 
   /**

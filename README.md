@@ -21,3 +21,9 @@ The public facing readme is located in the `src` directory.  This readme is inte
 
 ### Building
 - run cmd `npm run build`
+
+### Publishing
+- Update package version based on changes made (minor, major, patch)
+- run cmd `npm login`
+- run cmd `npm run package`
+- run cmd `npm run publish`

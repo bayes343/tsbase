@@ -3,6 +3,7 @@
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 import { Queryable } from './Queryable';
+import { Command } from '../Patterns/module';
 
 export class List<T> extends Queryable<T> {
   /**
@@ -221,11 +222,13 @@ export class List<T> extends Queryable<T> {
    * @param item
    */
   public Insert(index: number, item: T): void {
-    if (index >= 0 && this.item.length >= index) {
-      this.item.splice(index, 0, item);
-    } else {
-      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
-    }
+    new Command(() => {
+      if (index >= 0 && this.item.length >= index) {
+        this.item.splice(index, 0, item);
+      } else {
+        throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
+      }
+    }).Execute();
   }
 
   /**
@@ -234,14 +237,16 @@ export class List<T> extends Queryable<T> {
    * @param collection
    */
   public InsertRange(index: number, collection: List<T>): void {
-    if (index >= 0 && this.item.length >= index) {
-      for (let i = 0; i < collection.Count; i++) {
-        const element = collection.Item[i];
-        this.item.splice(index + i, 0, element);
+    new Command(() => {
+      if (index >= 0 && this.item.length >= index) {
+        for (let i = 0; i < collection.Count; i++) {
+          const element = collection.Item[i];
+          this.item.splice(index + i, 0, element);
+        }
+      } else {
+        throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
       }
-    } else {
-      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
-    }
+    }).Execute();
   }
 
   /**
@@ -275,11 +280,13 @@ export class List<T> extends Queryable<T> {
    * @param index
    */
   public RemoveAt(index: number): void {
-    if (index >= 0 && this.item.length >= index) {
-      this.item.splice(index, 1);
-    } else {
-      throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
-    }
+    new Command(() => {
+      if (index >= 0 && this.item.length >= index) {
+        this.item.splice(index, 1);
+      } else {
+        throw new Error(`${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index}`);
+      }
+    }).Execute();
   }
 
   /**
@@ -288,12 +295,14 @@ export class List<T> extends Queryable<T> {
    * @param count
    */
   public RemoveRange(index: number, count: number): void {
-    if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
-      this.item.splice(index, count);
-    } else {
-      throw new Error(
-        `${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
-    }
+    new Command(() => {
+      if (index >= 0 && this.item.length >= index && this.item.length >= index + count) {
+        this.item.splice(index, count);
+      } else {
+        throw new Error(
+          `${Errors.IndexOutOfRange} - Range: 0-${this.item.length} | Passed index: ${index} | Passed count: ${count}`);
+      }
+    }).Execute();
   }
 
   /**
