@@ -1,4 +1,4 @@
-import { Observable } from '../Observable/Observable';
+import { Observable } from '../../Patterns/Observable/Observable';
 import { LogEntry } from './LogEntry';
 
 export class Logger {
