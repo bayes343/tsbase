@@ -6,7 +6,8 @@ import { Strings } from '../../Functions/Strings';
 import { Query } from '../CommandQuery/Query';
 import { Observable } from '../Observable/Observable';
 import { GenericResult } from '../Result/GenericResult';
-import { IEventStore, Transaction } from './IEventStore';
+import { Transaction } from './Transaction';
+import { IEventStore } from './IEventStore';
 
 export class EventStore<T> implements IEventStore<T> {
   private state = {};

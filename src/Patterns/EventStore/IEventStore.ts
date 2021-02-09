@@ -1,13 +1,6 @@
 import { Observable } from '../Observable/module';
 import { GenericResult } from '../Result/GenericResult';
-
-export type Transaction<T> = {
-  timestamp: number,
-  path: string,
-  toState: T,
-  fromState?: T,
-  voided: boolean
-};
+import { Transaction } from './Transaction';
 
 /**
  * A light state management pattern allowing storage, retrieval, and
