@@ -17,7 +17,7 @@ export interface IEventStore<T> {
   /**
    * Returns a copy of the current state
    */
-  GetState(): object & T;
+  GetState(): T;
 
   /**
    * Returns a portion of the state based on the given path
@@ -46,6 +46,16 @@ export interface IEventStore<T> {
    */
   GetLedger(): Array<Transaction<any>>;
 
+  /**
+   * Voids the most recent (non-voided) transaction, returning the
+   * stores value to the previous 'from' state
+   */
   Undo(): GenericResult<T | undefined>;
+
+  /**
+   * Reverses the void on the oldest voided transaction excluding any
+   * voided transaction that follows a non-voided one
+   * (Once state is set, prior voided transactions cannot be reversed)
+   */
   Redo(): GenericResult<T | undefined>;
 }

@@ -13,8 +13,8 @@ export class EventStore<T> implements IEventStore<T> {
   private stateObservers = new Map<string, Observable<any>>();
   private ledger = new Array<Transaction<any>>();
 
-  public GetState(): object & T {
-    return this.cloneOf(this.state) as object & T;
+  public GetState(): T {
+    return this.cloneOf(this.state) as T;
   }
 
   public GetStateAt<T>(path: string): T | undefined {
