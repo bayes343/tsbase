@@ -1,10 +1,6 @@
 import { Result } from '../Result/Result';
 import { IValidation } from './IValidation';
 
-/**
- * Abstracts the responsibilities of ascertaining whether
- * an object passes a given set of validations
- */
 export class Validator<T> {
   /**
    * The set of validations the Validator calls when constructing its
@@ -18,10 +14,6 @@ export class Validator<T> {
     this.Validations = validations;
   }
 
-  /**
-   * Returns the aggregate result of all given validations
-   * @param object
-   */
   public Validate(object: T): Result {
     const result = new Result();
 

@@ -1,3 +1,6 @@
+/**
+ * Explicit errors thrown in tsbase
+ */
 export enum Errors {
   IndexOutOfRange = 'IndexOutOfRange',
   InvalidOperation = 'InvalidOperation',
