@@ -2,6 +2,7 @@
 import { List } from '../List';
 import { Errors } from '../../Errors';
 import { Strings } from '../../Constants/Strings';
+import { Logger, LogLevel } from '../../Utility/module';
 
 describe('List', () => {
   let classUnderTest: List<any>;
@@ -189,10 +190,11 @@ describe('List', () => {
     classUnderTest.Insert(1, '2');
     expect(classUnderTest.Item[1]).toEqual('2');
 
-    // error
-    expect(() => {
-      classUnderTest.Insert(5, '6');
-    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 5`);
+    classUnderTest.Insert(5, '6');
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 5`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
+    expect(logEntry?.Error).toBeDefined();
   });
 
   it('should insert a range into the List at a specified index', () => {
@@ -201,10 +203,11 @@ describe('List', () => {
     expect(classUnderTest.Item[1]).toEqual('2');
     expect(classUnderTest.Item[3]).toEqual('4');
 
-    // error
-    expect(() => {
-      classUnderTest.InsertRange(6, new List<string>(['2', '3', '4']));
-    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-5 | Passed index: 6`);
+    classUnderTest.InsertRange(6, new List<string>(['2', '3', '4']));
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-5 | Passed index: 6`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
+    expect(logEntry?.Error).toBeDefined();
   });
 
   it('should remove an element passed', () => {
@@ -227,10 +230,11 @@ describe('List', () => {
     expect(classUnderTest.Count).toEqual(2);
     expect(classUnderTest.Item[1]).toEqual('3');
 
-    // error
-    expect(() => {
-      classUnderTest.RemoveAt(3);
-    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-2 | Passed index: 3`);
+    classUnderTest.RemoveAt(3);
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-2 | Passed index: 3`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
+    expect(logEntry?.Error).toBeDefined();
   });
 
   it('should remove a range from the list based on the passed paramaters', () => {
@@ -238,10 +242,11 @@ describe('List', () => {
     classUnderTest.RemoveRange(0, 2);
     expect(classUnderTest.Item[0]).toEqual('3');
 
-    // error
-    expect(() => {
-      classUnderTest.RemoveRange(0, 5);
-    }).toThrowError(`${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 0 | Passed count: 5`);
+    classUnderTest.RemoveRange(0, 5);
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 0 | Passed count: 5`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
+    expect(logEntry?.Error).toBeDefined();
   });
 
   it('should remove a range of elements from the list', () => {
@@ -282,5 +287,4 @@ describe('List', () => {
     classUnderTest.Item.push(4);
     expect(classUnderTest.Count).toEqual(4);
   });
-
 });

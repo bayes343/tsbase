@@ -1,5 +1,7 @@
 import { SortedList } from '../SortedList';
 import { Errors } from '../../Errors';
+import { Logger } from '../../Utility/Logger/Logger';
+import { LogLevel } from '../../Utility/Logger/module';
 
 describe('SortedList', () => {
   let classUnderTest: SortedList<any>;
@@ -33,21 +35,26 @@ describe('SortedList', () => {
   });
 
   it('should throw error when reverse is attempted', () => {
-    expect(() => {
-      classUnderTest.Reverse();
-    }).toThrowError(`${Errors.InvalidOperation} - You cannot reverse a SortedList`);
+    classUnderTest.Reverse();
+
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.InvalidOperation} - You cannot reverse a SortedList`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
   });
 
   it('should throw error when reverse range is attempted', () => {
-    expect(() => {
-      classUnderTest.ReverseRange();
-    }).toThrowError(`${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
+    classUnderTest.ReverseRange();
+
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.InvalidOperation} - You cannot reverse a range in a SortedList`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
   });
 
   it('should throw error when shuffle is attempted', () => {
-    expect(() => {
-      classUnderTest.Shuffle();
-    }).toThrowError(`${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
-  });
+    classUnderTest.Shuffle();
 
+    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.InvalidOperation} - You cannot shuffle a SortedList`);
+    expect(logEntry).toBeTruthy();
+    expect(logEntry?.Level).toEqual(LogLevel.Error);
+  });
 });
