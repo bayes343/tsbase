@@ -12,6 +12,8 @@ export class Logger {
    */
   public static EntryLogged = new Observable<LogEntry>();
 
+  private constructor() { }
+
   /**
    * Log a new entry
    * @param entry
