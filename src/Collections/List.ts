@@ -3,7 +3,7 @@
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 import { Queryable } from './Queryable';
-import { Command } from '../Patterns/module';
+import { Command } from '../Patterns/CommandQuery/Command';
 
 export class List<T> extends Queryable<T> {
   /**

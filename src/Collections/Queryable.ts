@@ -3,7 +3,7 @@ import { Errors } from '../Errors';
 import { Strings } from '../Constants/Strings';
 import { Regex } from '../Constants/Regex';
 import { ArrayFunctions } from '../Functions/ArrayFunctions';
-import { LogEntry, Logger, LogLevel } from '../Utility/module';
+import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 export abstract class Queryable<T> {
   /**

@@ -2,7 +2,7 @@
 import { List } from '../List';
 import { Errors } from '../../Errors';
 import { Strings } from '../../Constants/Strings';
-import { Logger, LogLevel } from '../../Utility/module';
+import { Logger, LogLevel } from '../../Utility/Logger/module';
 
 describe('List', () => {
   let classUnderTest: List<any>;

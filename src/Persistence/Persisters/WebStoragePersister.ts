@@ -1,6 +1,6 @@
 import { IPersister } from './IPersister';
 import { Errors } from '../../Errors';
-import { Command } from '../../Patterns/module';
+import { Command } from '../../Patterns/CommandQuery/Command';
 
 type StorageType = 'local' | 'session';
 

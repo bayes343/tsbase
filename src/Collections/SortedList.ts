@@ -1,6 +1,6 @@
 import { List } from './List';
 import { Errors } from '../Errors';
-import { Command } from '../Patterns/module';
+import { Command } from '../Patterns/CommandQuery/Command';
 
 export class SortedList<T> extends List<T> {
   /**
