@@ -59,7 +59,7 @@ export abstract class XhrRequestHandler implements IXhrRequestHandler {
   private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Array<KeyValue>): void {
     if (!this.HttpClient) {
       const error = new Error(Errors.NullHttpClient);
-      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
       throw error;
     }
     this.HttpClient.DefaultRequestHeaders.forEach(element => {

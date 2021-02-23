@@ -139,7 +139,7 @@ export class Repository<T> extends List<T> {
       } else {
         const error = new Error(
           `${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
-        Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+        Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
         throw error;
       }
     });

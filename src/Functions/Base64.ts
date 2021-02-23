@@ -17,7 +17,7 @@ export class Base64 {
       };
       reader.onerror = () => {
         const error = new Error(Errors.Base64EncodingFailed);
-        Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+        Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
         throw error;
       };
     });
@@ -43,7 +43,7 @@ export class Base64 {
 
       return new File([u8arr], filename, { type: mime });
     } catch (error) {
-      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
       throw error;
     }
   }

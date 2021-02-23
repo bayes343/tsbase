@@ -4,30 +4,30 @@ import { Logger } from '../Logger';
 describe('Logger', () => {
 
   beforeEach(() => {
-    Logger.LogEntries = [];
+    Logger.Instance.LogEntries = [];
   });
 
   it('should expose a static array of entries', () => {
-    expect(Logger.LogEntries).toBeDefined();
-    expect(Logger.LogEntries.length).toEqual(0);
+    expect(Logger.Instance.LogEntries).toBeDefined();
+    expect(Logger.Instance.LogEntries.length).toEqual(0);
   });
 
   it('should expose a static observable of log entry', () => {
-    expect(Logger.EntryLogged).toBeDefined();
+    expect(Logger.Instance.EntryLogged).toBeDefined();
   });
 
   it('should log a new entry', () => {
     const entry = new LogEntry('test');
-    Logger.Log(entry);
-    expect(Logger.LogEntries[0]).toEqual(entry);
+    Logger.Instance.Log(entry);
+    expect(Logger.Instance.LogEntries[0]).toEqual(entry);
   });
 
   it('should publish entry logged events with the new log entry', () => {
     let loggedEntry: LogEntry | undefined;
     const entry = new LogEntry('test');
-    Logger.EntryLogged.Subscribe(entry => loggedEntry = entry);
+    Logger.Instance.EntryLogged.Subscribe(entry => loggedEntry = entry);
 
-    Logger.Log(entry);
+    Logger.Instance.Log(entry);
 
     expect(loggedEntry).toEqual(entry);
   });

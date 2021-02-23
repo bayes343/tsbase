@@ -191,7 +191,7 @@ describe('List', () => {
     expect(classUnderTest.Item[1]).toEqual('2');
 
     classUnderTest.Insert(5, '6');
-    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 5`);
+    const logEntry = Logger.Instance.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 5`);
     expect(logEntry).toBeTruthy();
     expect(logEntry?.Level).toEqual(LogLevel.Error);
     expect(logEntry?.Error).toBeDefined();
@@ -204,7 +204,7 @@ describe('List', () => {
     expect(classUnderTest.Item[3]).toEqual('4');
 
     classUnderTest.InsertRange(6, new List<string>(['2', '3', '4']));
-    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-5 | Passed index: 6`);
+    const logEntry = Logger.Instance.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-5 | Passed index: 6`);
     expect(logEntry).toBeTruthy();
     expect(logEntry?.Level).toEqual(LogLevel.Error);
     expect(logEntry?.Error).toBeDefined();
@@ -231,7 +231,7 @@ describe('List', () => {
     expect(classUnderTest.Item[1]).toEqual('3');
 
     classUnderTest.RemoveAt(3);
-    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-2 | Passed index: 3`);
+    const logEntry = Logger.Instance.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-2 | Passed index: 3`);
     expect(logEntry).toBeTruthy();
     expect(logEntry?.Level).toEqual(LogLevel.Error);
     expect(logEntry?.Error).toBeDefined();
@@ -243,7 +243,7 @@ describe('List', () => {
     expect(classUnderTest.Item[0]).toEqual('3');
 
     classUnderTest.RemoveRange(0, 5);
-    const logEntry = Logger.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 0 | Passed count: 5`);
+    const logEntry = Logger.Instance.LogEntries.find(l => l.Message === `${Errors.IndexOutOfRange} - Range: 0-3 | Passed index: 0 | Passed count: 5`);
     expect(logEntry).toBeTruthy();
     expect(logEntry?.Level).toEqual(LogLevel.Error);
     expect(logEntry?.Error).toBeDefined();

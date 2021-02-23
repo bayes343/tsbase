@@ -112,7 +112,7 @@ export abstract class Queryable<T> {
       return average;
     } else {
       const error = new Error(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
-      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
       throw error;
     }
   }
@@ -204,7 +204,7 @@ export abstract class Queryable<T> {
         const tNumber = parseFloat((element as {}).toString());
         if (isNaN(tNumber)) {
           const error = new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
-          Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+          Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
           throw error;
         }
         sum += tNumber;
@@ -366,7 +366,7 @@ export abstract class Queryable<T> {
   public Min(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
       const error = Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
-      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
       throw error;
     }
 
@@ -384,7 +384,7 @@ export abstract class Queryable<T> {
   public Max(func: (item: T) => any = item => item): T {
     if (this.item.length < 1) {
       const error = new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
-      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
       throw error;
     }
 

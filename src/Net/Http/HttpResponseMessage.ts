@@ -37,7 +37,7 @@ export class HttpResponseMessage {
     if (!this.IsSuccessStatusCode) {
       const error = new Error(
         `${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
-      Logger.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
       throw error;
     }
   }

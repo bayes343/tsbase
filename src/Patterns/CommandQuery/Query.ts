@@ -12,7 +12,7 @@ export class Query<T> implements IQuery<T> {
       result.Value = this.Query();
     } catch (error) {
       result.ErrorMessages.push(error.message);
-      Logger.Log(new LogEntry(error.message, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
     }
 
     return result;
