@@ -87,4 +87,23 @@ describe('Observable', () => {
 
     expect(subscriberValue).toEqual('john');
   });
+
+  it('should immediately call new subscribers when content from last publish is available', () => {
+    classUnderTest = new Observable<string>();
+    classUnderTest.Publish('test');
+    let immediateValue = '';
+
+    classUnderTest.Subscribe((content: string) => immediateValue = content);
+
+    expect(immediateValue).toEqual('test');
+  });
+
+  it('should not immediately call new subscribers when content from last publish is not available', () => {
+    classUnderTest = new Observable<string>();
+    let immediateValue = '';
+
+    classUnderTest.Subscribe((content: string) => immediateValue = content);
+
+    expect(immediateValue).toEqual('');
+  });
 });

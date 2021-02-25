@@ -5,15 +5,23 @@ import { IObservable } from './IObservable';
 export class Observable<T> implements IObservable<T> {
   private subscribers = new Map<string, (content?: T) => void>();
   private active = true;
+  private currentIssue?: T;
 
   public Subscribe(func: (content?: T) => void): string {
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
+
+    if (this.currentIssue) {
+      func(this.currentIssue);
+    }
+
     return subscriptionId;
   }
 
   public Publish(content?: T): void {
     if (this.active) {
+      this.currentIssue = content;
+
       for (const element of this.subscribers) {
         const key = element[0];
         const func = element[1];
