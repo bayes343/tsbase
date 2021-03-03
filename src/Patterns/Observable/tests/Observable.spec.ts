@@ -106,4 +106,26 @@ describe('Observable', () => {
 
     expect(immediateValue).toEqual('');
   });
+
+  it('should call an order subscriber once but not more than once', () => {
+    classUnderTest = new Observable<string>();
+    let immediateValue = '';
+
+    classUnderTest.Order((content: string) => immediateValue = content);
+    classUnderTest.Publish('test');
+    classUnderTest.Publish('another-test');
+
+    expect(immediateValue).toEqual('test');
+  });
+
+  it('should call an order subscriber immediately if previously published content is available', () => {
+    classUnderTest = new Observable<string>();
+    let immediateValue = '';
+    classUnderTest.Publish('test');
+
+    classUnderTest.Order((content: string) => immediateValue = content);
+    classUnderTest.Publish('another-test');
+
+    expect(immediateValue).toEqual('test');
+  });
 });

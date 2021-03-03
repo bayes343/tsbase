@@ -10,6 +10,12 @@ export interface IObservable<T> {
   Subscribe(func: (content?: T) => void): string;
 
   /**
+   * A single issue subscription. Once the function for an
+   * order fires, it is automatically canceled
+   */
+  Order(func: (content?: T) => void): void;
+
+  /**
    * Signal a publish event to subscribers with the given content
    * @param content
    */

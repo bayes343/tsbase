@@ -18,6 +18,21 @@ export class Observable<T> implements IObservable<T> {
     return subscriptionId;
   }
 
+  public Order(func: (content?: T) => void): void {
+    const subscriptionId = Guid.NewGuid();
+
+    const orderFunction = (content?: T) => {
+      func(content);
+      this.Cancel(subscriptionId);
+    };
+
+    this.subscribers.set(subscriptionId, orderFunction);
+
+    if (this.currentIssue) {
+      orderFunction(this.currentIssue);
+    }
+  }
+
   public Publish(content?: T): void {
     if (this.active) {
       this.currentIssue = content;
