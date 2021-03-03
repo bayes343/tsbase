@@ -128,4 +128,14 @@ describe('Observable', () => {
 
     expect(immediateValue).toEqual('test');
   });
+
+  it('should not call an order subscriber immediately if given false for useCurrentIssue', () => {
+    classUnderTest = new Observable<string>();
+    let immediateValue = '';
+    classUnderTest.Publish('test');
+
+    classUnderTest.Order((content: string) => immediateValue = content, false);
+
+    expect(immediateValue).toEqual('');
+  });
 });

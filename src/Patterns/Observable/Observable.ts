@@ -18,7 +18,7 @@ export class Observable<T> implements IObservable<T> {
     return subscriptionId;
   }
 
-  public Order(func: (content?: T) => void): void {
+  public Order(func: (content?: T) => void, useCurrentIssue = true): void {
     const subscriptionId = Guid.NewGuid();
 
     const orderFunction = (content?: T) => {
@@ -28,7 +28,7 @@ export class Observable<T> implements IObservable<T> {
 
     this.subscribers.set(subscriptionId, orderFunction);
 
-    if (this.currentIssue) {
+    if (useCurrentIssue && this.currentIssue) {
       orderFunction(this.currentIssue);
     }
   }

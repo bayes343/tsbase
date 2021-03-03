@@ -12,8 +12,9 @@ export interface IObservable<T> {
   /**
    * A single issue subscription. Once the function for an
    * order fires, it is automatically canceled
+   * @param useCurrentIssue Determines if the order can be filled by the current issue
    */
-  Order(func: (content?: T) => void): void;
+  Order(func: (content?: T) => void, useCurrentIssue: boolean): void;
 
   /**
    * Signal a publish event to subscribers with the given content

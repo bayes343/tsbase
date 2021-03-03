@@ -13,7 +13,7 @@
     "base class libraries"
   ],
   "license": "MIT",
-  "version": "3.3.15",
+  "version": "3.3.16",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",
