@@ -4,9 +4,7 @@ describe('AsyncCommand', () => {
   let classUnderTest: AsyncCommand;
 
   beforeEach(() => {
-    classUnderTest = new AsyncCommand(() => new Promise((resolve) => {
-      resolve();
-    }));
+    classUnderTest = new AsyncCommand(async () => { });
   });
 
   it('should construct', () => {

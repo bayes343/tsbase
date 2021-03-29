@@ -4,9 +4,7 @@ describe('AsyncQuery', () => {
   let classUnderTest: AsyncQuery<string>;
 
   beforeEach(() => {
-    classUnderTest = new AsyncQuery(() => new Promise((resolve) => {
-      resolve('test');
-    }));
+    classUnderTest = new AsyncQuery(async () => 'test');
   });
 
   it('should construct', () => {
