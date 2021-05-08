@@ -1,36 +1,36 @@
 import { Guid } from '../../Functions/Guid';
-import { Command } from '../CommandQuery/Command';
+import { AsyncCommand } from '../CommandQuery/AsyncCommand';
 import { BaseObservable } from './BaseObservable';
-import { ISyncObservable } from './ISyncObservable';
+import { IAsyncObservable } from './IAsyncObservable';
 
-export class Observable<T> extends BaseObservable<T> implements ISyncObservable<T> {
-  public Subscribe(func: (content?: T) => void): string {
+export class AsyncObservable<T> extends BaseObservable<T> implements IAsyncObservable<T> {
+  public async Subscribe(func: (content?: T) => Promise<void>): Promise<string> {
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
 
     if (this.currentIssue) {
-      func(this.currentIssue);
+      await func(this.currentIssue);
     }
 
     return subscriptionId;
   }
 
-  public Order(func: (content?: T) => void, useCurrentIssue = true): void {
+  public async Order(func: (content?: T) => Promise<void>, useCurrentIssue = true): Promise<void> {
     const subscriptionId = Guid.NewGuid();
 
-    const orderFunction = (content?: T) => {
-      func(content);
+    const orderFunction = async (content?: T) => {
+      await func(content);
       this.Cancel(subscriptionId);
     };
 
     this.subscribers.set(subscriptionId, orderFunction);
 
     if (useCurrentIssue && this.currentIssue) {
-      orderFunction(this.currentIssue);
+      await orderFunction(this.currentIssue);
     }
   }
 
-  public Publish(content?: T): void {
+  public async Publish(content?: T): Promise<void> {
     if (this.active) {
       this.currentIssue = content;
 
@@ -38,7 +38,7 @@ export class Observable<T> extends BaseObservable<T> implements ISyncObservable<
         const key = element[0];
         const func = element[1];
 
-        const result = new Command(() => func(content)).Execute();
+        const result = await new AsyncCommand(async () => func(content)).Execute();
 
         if (!result.IsSuccess) {
           this.subscribers.delete(key);
