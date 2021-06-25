@@ -41,7 +41,7 @@ export class AsyncObservable<T> extends BaseObservable<T> implements IAsyncObser
         const result = await new AsyncCommand(async () => func(content)).Execute();
 
         if (!result.IsSuccess) {
-          this.subscribers.delete(key);
+          this.Cancel(key);
         }
       }
     }

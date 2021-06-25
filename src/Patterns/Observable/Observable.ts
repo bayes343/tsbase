@@ -41,7 +41,7 @@ export class Observable<T> extends BaseObservable<T> implements ISyncObservable<
         const result = new Command(() => func(content)).Execute();
 
         if (!result.IsSuccess) {
-          this.subscribers.delete(key);
+          this.Cancel(key);
         }
       }
     }
