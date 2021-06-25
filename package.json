@@ -36,9 +36,9 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-typescript": "^5.1.0",
     "puppeteer": "^1.20.0",
-    "tslib": "^1.13.0",
-    "tsmockit": "^1.0.5",
-    "typescript": "^4.0.0"
+    "tslib": "^2.2.0",
+    "tsmockit": "^1.1.0",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "dlv": "^1.1.3",

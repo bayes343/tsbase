@@ -28,7 +28,7 @@ export class ConditionalTimer implements IConditionalTimer {
   public async DoWhen(action: Action, condition: Condition): Promise<void> {
     this.resetTimer();
 
-    return await new Promise<any>(async (resolve) => {
+    return await new Promise<void>(async (resolve) => {
       this.timer.Elapsed.push(() => {
         if (condition()) {
           action();
@@ -70,7 +70,7 @@ export class ConditionalTimer implements IConditionalTimer {
   private async getRepeatingConditionalTimer(action: Action, condition: Condition): Promise<void> {
     this.resetTimer();
 
-    return await new Promise<any>(async (resolve) => {
+    return await new Promise<void>(async (resolve) => {
       this.timer.Elapsed.push(() => {
         action();
         if (condition()) {

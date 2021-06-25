@@ -4,16 +4,17 @@
     "name": "Joseph Bayes"
   },
   "keywords": [
-    "dotnet",
     "typescript",
     "generic",
     "collections",
-    "query",
+    "querying",
     "http client",
-    "base class libraries"
+    "base class libraries",
+    "utilities",
+    "patterns"
   ],
   "license": "MIT",
-  "version": "3.5.1",
+  "version": "3.6.0",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",
