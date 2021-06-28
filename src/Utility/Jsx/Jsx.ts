@@ -13,8 +13,8 @@ const asap = (func: () => void) => {
 };
 
 export type Jsx = {
-  attributes: Record<string, string>,
-  children: Jsx[] | string[],
+  attributes?: Record<string, string>,
+  children?: Jsx[] | string[],
   nodeName: string
 };
 
@@ -34,7 +34,7 @@ export class JsxRenderer {
 
   private static addElementEventListener(attribute: string, jsx: Jsx, element: HTMLElement, mainDocument: Document | ShadowRoot) {
     const event = attribute.split('on')[1] as EventTypes;
-    const func = jsx.attributes[attribute] as unknown as (event: Event | null) => any;
+    const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
     const id = (element.attributes['id' as any] ? element.attributes['id' as any].nodeValue : Guid.NewGuid()) as string;
     element.setAttribute('id', id);
 
@@ -55,7 +55,7 @@ export class JsxRenderer {
       }
     }
 
-    for (const child of jsx.children) {
+    for (const child of jsx.children || []) {
       if (typeof child === 'string' || JsxRenderer.nodeIsNumberOrBoolean(child)) {
         dom.appendChild(document.createTextNode(child.toString()));
       } else if (child) {
