@@ -56,7 +56,7 @@ export class JsxRenderer {
     }
 
     for (const child of jsx.children || []) {
-      if (typeof child === 'string' || JsxRenderer.nodeIsNumberOrBoolean(child)) {
+      if (typeof child === 'string' || typeof child === 'number') {
         dom.appendChild(document.createTextNode(child.toString()));
       } else if (child) {
         dom.appendChild(JsxRenderer.transformJsxToHtml(child, mainDocument));
@@ -64,10 +64,5 @@ export class JsxRenderer {
     }
 
     return dom;
-  }
-
-  private static nodeIsNumberOrBoolean(node: any): boolean {
-    return typeof node === 'number' ||
-      typeof node === 'boolean';
   }
 }

@@ -138,4 +138,24 @@ describe('JsxRenderer', () => {
     const expectedOuterHtml = '<p>test</p><p><span>test</span></p>';
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
+
+  it('should parse jsx and render the text false', () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'fragment',
+      attributes: {},
+      children: ['false']
+    };
+    const expectedOuterHtml = 'false';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should parse jsx and NOT render the boolean value false', () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'fragment',
+      attributes: {},
+      children: [false as unknown as string]
+    };
+    const expectedOuterHtml = '';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
 });

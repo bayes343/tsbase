@@ -14,7 +14,7 @@
     "patterns"
   ],
   "license": "MIT",
-  "version": "3.6.2",
+  "version": "3.6.3",
   "description": "TypeScript base class libraries",
   "private": false,
   "main": "./public_api.js",
