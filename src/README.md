@@ -5,7 +5,6 @@ Base class libraries for TypeScript
 [![Code coverage](https://img.shields.io/azure-devops/coverage/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg)](https://img.shields.io/azure-devops/coverage/joseph-w-bayes/50cd9014-db2f-482c-ac28-d707aa30bf98/7.svg)
 
 Helpful links:
-- [Home page](https://tsbase.josephbayes.net/)
 - [Project home](https://dev.azure.com/joseph-w-bayes/tsbase)
 - [Wiki](https://dev.azure.com/joseph-w-bayes/tsbase/_wiki/wikis)
 
