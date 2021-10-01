@@ -36,6 +36,7 @@ export class ArrayFunctions {
   }
 
   /**
+   * TODO - make functional - copy given array and return copy
    * Returns the given array shuffled based on the knuth shuffle algorithm
    * @param array
    */

@@ -1,7 +1,7 @@
 /* eslint-disable complexity*/
 import { ISerializer } from './ISerializer';
 import { List } from '../../Collections/List';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
 
 /**
  * Keys to check for simple values when data is structured as shown here:

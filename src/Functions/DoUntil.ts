@@ -1,14 +1,12 @@
-const tenSeconds = 10000;
-
-export function Until(
+export function DoUntil(
   condition: () => boolean,
-  interval = 0,
-  limit = tenSeconds
+  interval: number,
+  limit?: number
 ): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
     let conditionMet = false;
     let elapsedTime = 0;
-    const enabled = () => !conditionMet && elapsedTime < limit;
+    const enabled = () => !conditionMet && (!limit || elapsedTime < limit);
 
     const executer = setInterval(async () => {
       elapsedTime += (interval || 1);
