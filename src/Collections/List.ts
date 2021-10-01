@@ -212,7 +212,7 @@ export class List<T> extends Queryable<T> {
    */
   public Sort(comparison?: (item: T) => number): void {
     this.item = comparison ?
-      this.item = this.OrderBy([comparison]).ToArray() :
+      this.item = ArrayFunctions.OrderBy(this.item, [comparison]) :
       this.item.sort();
   }
 

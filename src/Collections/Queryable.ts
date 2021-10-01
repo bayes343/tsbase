@@ -224,48 +224,6 @@ export abstract class Queryable<T> {
   }
 
   /**
-   * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
-   * @param funcs
-   */
-  public OrderBy(funcs?: Array<(item: T) => number>): Queryable<T> {
-    const collection = this.Clone(this.item);
-    if (!funcs) {
-      collection.Item.sort();
-    } else {
-      collection.Item.sort((a: T, b: T) => {
-        let result = 0;
-        for (let index = 0; index < funcs.length; index++) {
-          const func = funcs[index];
-          if (func(a) < func(b)) {
-            result = -1;
-            break;
-          } else if (func(a) > func(b)) {
-            result = 1;
-            break;
-          }
-        }
-        return result;
-      });
-    }
-    return collection;
-  }
-
-  /**
-   * Sorts the elements of a sequence in descending order.
-   * @param func
-   */
-  public OrderByDescending(funcs?: Array<(item: T) => number>): Queryable<T> {
-    let collection: Queryable<T>;
-    if (funcs) {
-      collection = this.OrderBy(funcs);
-    } else {
-      collection = this.OrderBy();
-    }
-    collection.Item.reverse();
-    return collection;
-  }
-
-  /**
    * Creates an array from a IQueryable<T>.
    */
   public ToArray(): Array<T> {
