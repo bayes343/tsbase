@@ -20,6 +20,7 @@ export class Strings {
 
   /**
    * Returns the camel cased version of the given string
+   * NOTE: For multi word strings that are not separated by spaces, this function will merely lowercase the first character
    * @param string
    */
   public static CamelCase(string: string): string {
@@ -30,17 +31,14 @@ export class Strings {
 
   /**
    * Returns the pascal cased version of the given string
+   * NOTE: For multi word strings that are not separated by spaces, this function will merely uppercase the first character
    * @param string
    */
   public static PascalCase(string: string): string {
-    return string.replace(new RegExp(/[-_]+/, 'g'), ' ')
-      .replace(new RegExp(/[^\w\s]/, 'g'), '')
-      .replace(
-        new RegExp(/\s+(.)(\w+)/, 'g'),
-        ($2, $3) => `${$2.toUpperCase() + $3.toLowerCase()}`
-      )
-      .replace(new RegExp(/\s/, 'g'), '')
-      .replace(new RegExp(/\w/), s => s.toUpperCase());
+    return string
+      .split(Strings.Space)
+      .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
+      .join('');
   }
 
   /**

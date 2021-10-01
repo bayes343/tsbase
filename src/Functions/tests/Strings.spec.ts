@@ -10,10 +10,12 @@ describe('Strings', () => {
   });
 
   it('should camel case a given string', () => {
+    expect(Strings.CamelCase('Some string')).toEqual('someString');
     expect(Strings.CamelCase('SomeString')).toEqual('someString');
   });
 
   it('should pascal case a given string', () => {
+    expect(Strings.PascalCase('some string')).toEqual('SomeString');
     expect(Strings.PascalCase('someString')).toEqual('SomeString');
   });
 
