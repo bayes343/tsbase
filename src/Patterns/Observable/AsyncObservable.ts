@@ -8,8 +8,8 @@ export class AsyncObservable<T> extends BaseObservable<T> implements IAsyncObser
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
 
-    if (this.currentIssue) {
-      await func(this.currentIssue);
+    if (this.CurrentIssue) {
+      await func(this.CurrentIssue);
     }
 
     return subscriptionId;
@@ -25,14 +25,14 @@ export class AsyncObservable<T> extends BaseObservable<T> implements IAsyncObser
 
     this.subscribers.set(subscriptionId, orderFunction);
 
-    if (useCurrentIssue && this.currentIssue) {
-      await orderFunction(this.currentIssue);
+    if (useCurrentIssue && this.CurrentIssue) {
+      await orderFunction(this.CurrentIssue);
     }
   }
 
   public async Publish(content?: T): Promise<void> {
     if (this.active) {
-      this.currentIssue = content;
+      this.CurrentIssue = content;
 
       for (const element of this.subscribers) {
         const key = element[0];

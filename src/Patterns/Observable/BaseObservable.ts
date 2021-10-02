@@ -1,9 +1,9 @@
 import { IObservable } from './IObservable';
 
 export abstract class BaseObservable<T> implements IObservable<T> {
+  public CurrentIssue?: T;
   protected subscribers = new Map<string, (content?: T) => void>();
   protected active = true;
-  protected currentIssue?: T;
 
   public abstract Publish(content?: T): void;
 

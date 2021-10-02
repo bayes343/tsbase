@@ -8,8 +8,8 @@ export class Observable<T> extends BaseObservable<T> implements ISyncObservable<
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
 
-    if (this.currentIssue) {
-      func(this.currentIssue);
+    if (this.CurrentIssue) {
+      func(this.CurrentIssue);
     }
 
     return subscriptionId;
@@ -25,14 +25,14 @@ export class Observable<T> extends BaseObservable<T> implements ISyncObservable<
 
     this.subscribers.set(subscriptionId, orderFunction);
 
-    if (useCurrentIssue && this.currentIssue) {
-      orderFunction(this.currentIssue);
+    if (useCurrentIssue && this.CurrentIssue) {
+      orderFunction(this.CurrentIssue);
     }
   }
 
   public Publish(content?: T): void {
     if (this.active) {
-      this.currentIssue = content;
+      this.CurrentIssue = content;
 
       for (const element of this.subscribers) {
         const key = element[0];
