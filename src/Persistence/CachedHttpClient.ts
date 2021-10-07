@@ -30,7 +30,7 @@ export class CachedHttpClient {
    * @param fresh
    */
   public async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
-    const cachedResponse = this.repository.Find(item => item.requestUri === uri);
+    const cachedResponse = this.repository.item.find(item => item.requestUri === uri);
     if (cachedResponse && !fresh) {
       return cachedResponse.httpResponse;
     } else {

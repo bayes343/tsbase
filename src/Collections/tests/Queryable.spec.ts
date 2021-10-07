@@ -196,22 +196,6 @@ describe('Queryable', () => {
     expect(appended.Item[4]).toEqual(5);
   });
 
-  it('should return the first element in the sequence', () => {
-    const nullEl = classUnderTest.First();
-    expect(nullEl).toBeNull();
-    (classUnderTest as List<any>).AddRange([1, 2, 3]);
-    const first = classUnderTest.First();
-    expect(first).toEqual(1);
-  });
-
-  it('should return the last element in the sequence', () => {
-    const nullEl = classUnderTest.Last();
-    expect(nullEl).toBeNull();
-    (classUnderTest as List<any>).AddRange([1, 2, 3]);
-    const last = classUnderTest.Last();
-    expect(last).toEqual(3);
-  });
-
   it('should evaluate if an item is contained within a collection', () => {
     (classUnderTest as List<any>).AddRange(['1', '2', '3']);
     const truthy = classUnderTest.Contains('1');
@@ -276,14 +260,6 @@ describe('Queryable', () => {
     { name: 'Jenny Girl', age: 19, gender: 'female' }
   ];
 
-  it('should search a collection of objects by search term', () => {
-    const johnDoeSearch = Queryable.From(dataToSearch).Search('John Doe');
-    const john = johnDoeSearch.First();
-
-    expect(john !== null && john.name === 'John Doe').toBeTruthy();
-    expect(johnDoeSearch.Item.length).toEqual(4);
-  });
-
   it('should search and return an empty collection when no results are found', () => {
     const badSearch = Queryable.From(dataToSearch).Search('Super Fake');
     expect(badSearch.Item.length).toEqual(0);
@@ -304,26 +280,5 @@ describe('Queryable', () => {
 
     expect(allMalesSearch.Item.length).toEqual(2);
     expect(johnBoyMaleSearch.Item.length).toEqual(1);
-  });
-
-  it('should search a collection using ignorable suffix characters', () => {
-    const words = ['toy'];
-    const ignorableChars = ['s'];
-
-    const toysSearch = Queryable.From(words).Search('toys', 3, [], ignorableChars);
-
-    expect(toysSearch.First()).toEqual('toy');
-  });
-
-  it('should retrieve the first element satisfying a given predicate', () => {
-    const words = ['one', 'two', 'three', 'four'];
-    const firstGreaterThanThreeLengthWord = Queryable.From(words).First(w => w.length > 3);
-    expect(firstGreaterThanThreeLengthWord).toEqual('three');
-  });
-
-  it('should retrieve the last element satisfying a given predicate', () => {
-    const words = ['one', 'two', 'three', 'four'];
-    const firstGreaterThanThreeLengthWord = Queryable.From(words).Last(w => w.length > 3);
-    expect(firstGreaterThanThreeLengthWord).toEqual('four');
   });
 });

@@ -8,7 +8,7 @@ export abstract class Queryable<T> {
   /**
    * Gets or sets the element at the specified index.
    */
-  protected item = new Array<T>();
+  public item = new Array<T>();
   public get Item(): Array<T> {
     return this.item;
   }
@@ -88,6 +88,28 @@ export abstract class Queryable<T> {
   }
 
   /**
+   * deprecated
+   */
+  public Last(func?: (item: T) => boolean): T | null {
+    if (func) {
+      let lastSatisfyingElement: T | null = null;
+
+      for (let index = this.item.length - 1; index >= 0; index--) {
+        const element = this.item[index];
+        if (func(element)) {
+          lastSatisfyingElement = element;
+          break;
+        }
+      }
+
+      return lastSatisfyingElement;
+    } else {
+      const lastElement = this.item.length >= 1 ? this.item[this.item.length - 1] : null;
+      return lastElement;
+    }
+  }
+
+  /**
    * Returns a collection with the given value Prepended to the beginning of the sequence.
    * @param item
    */
@@ -139,51 +161,6 @@ export abstract class Queryable<T> {
     const stringifiedItemsToExclude = JSON.stringify(items);
     collectionCopy = collectionCopy.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
     return this.Clone(collectionCopy);
-  }
-  /**
-   * Returns the first element of a sequence or null if the sequence is empty.
-   * @param func optionally retrieve the first element which satisfies the given predicate
-   */
-  public First(func?: (item: T) => boolean): T | null {
-    if (func) {
-      let firstSatisfyingElement: T | null = null;
-
-      for (let index = 0; index < this.item.length; index++) {
-        const element = this.item[index];
-        if (func(element)) {
-          firstSatisfyingElement = element;
-          break;
-        }
-      }
-
-      return firstSatisfyingElement;
-    } else {
-      const firstElement = this.item.length >= 1 ? this.item[0] : null;
-      return firstElement;
-    }
-  }
-
-  /**
-   * Returns the last element of a sequence or null if the sequence is empty.
-   * @param func optionally retrieve the last element which satisfies the given predicate
-   */
-  public Last(func?: (item: T) => boolean): T | null {
-    if (func) {
-      let lastSatisfyingElement: T | null = null;
-
-      for (let index = this.item.length - 1; index >= 0; index--) {
-        const element = this.item[index];
-        if (func(element)) {
-          lastSatisfyingElement = element;
-          break;
-        }
-      }
-
-      return lastSatisfyingElement;
-    } else {
-      const lastElement = this.item.length >= 1 ? this.item[this.item.length - 1] : null;
-      return lastElement;
-    }
   }
 
   /**

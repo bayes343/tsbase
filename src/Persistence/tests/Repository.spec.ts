@@ -155,7 +155,7 @@ describe('Repository', () => {
 
       if (this.references.indexOf(object.name) >= 0) {
         const repository = getClassUnderTest();
-        if (!repository.Find(p => p.name === object.name)) {
+        if (!repository.item.find(p => p.name === object.name)) {
           result.ErrorMessages.push('Item removed still has references');
         }
       }

@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 /* eslint-disable complexity */
-import { ArrayFunctions } from '../Functions/ArrayFunctions';
 import { Errors } from '../Errors';
 import { Queryable } from './Queryable';
 import { Command } from '../Patterns/CommandQuery/Command';
@@ -81,15 +80,6 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Searches for an element that matches the conditions defined by the specified predicate, and returns the first
-   * occurrence within the entire List<T>.
-   * @param match
-   */
-  public Find(match: (item: T) => boolean): T | null {
-    return this.Where(match).First();
-  }
-
-  /**
    * Retrieves all the elements that match the conditions defined by the specified predicate.
    * @param match
    */
@@ -117,15 +107,6 @@ export class List<T> extends Queryable<T> {
       }
     }
     return index;
-  }
-
-  /**
-   * Searches for an element that matches the conditions defined by the specified predicate, and
-   * returns the last occurrence within the entire List<T>.
-   * @param match
-   */
-  public FindLast(match: (item: T) => boolean): T | null {
-    return this.Where(match).Last();
   }
 
   /**
@@ -203,17 +184,6 @@ export class List<T> extends Queryable<T> {
       }
     }
     return index;
-  }
-
-  /**
-   * Sorts the elements or a portion of the elements in the List<T> using either the specified or
-   * default IComparer<T> implementation or a provided Comparison<T> delegate to compare list elements.
-   * @param comparison
-   */
-  public Sort(comparison?: (item: T) => number): void {
-    this.item = comparison ?
-      this.item = ArrayFunctions.OrderBy(this.item, [comparison]) :
-      this.item.sort();
   }
 
   /**

@@ -67,15 +67,6 @@ describe('List', () => {
     expect(falsy).toBeFalsy();
   });
 
-  it('should find an element that matches a predicate', () => {
-    classUnderTest.AddRange(['1', '2', '3']);
-    const match = classUnderTest.Find(item => item === '3');
-    expect(match).toBeTruthy();
-
-    const noMatch = classUnderTest.Find(item => item === '5');
-    expect(noMatch).toBeFalsy();
-  });
-
   it('should find all / return all elements that match a predicate', () => {
     classUnderTest.AddRange(['1', '2', '3', '21']);
     const threeElements = classUnderTest.FindAll(item => item.length === 1);
@@ -97,15 +88,6 @@ describe('List', () => {
 
     const notFound = classUnderTest.FindIndex(item => item === '0');
     expect(notFound).toEqual(-1);
-  });
-
-  it('should find the last element that matches a predicate', () => {
-    classUnderTest.AddRange(['1', '2', '3']);
-    const match = classUnderTest.FindLast(item => item.length === 1);
-    expect(match).toEqual('3');
-
-    const noMatch = classUnderTest.FindLast(item => item === '5');
-    expect(noMatch).toBeFalsy();
   });
 
   it('should find the last index of the first element that matches a predicate', () => {
@@ -152,19 +134,6 @@ describe('List', () => {
     classUnderTest.AddRange(['1', '2', '3', '21']);
     const arrayOfList = classUnderTest.ToArray();
     expect(arrayOfList.length).toEqual(4);
-  });
-
-  it('should sort a list based on a comparison function', () => {
-    classUnderTest.AddRange(['2', '1', '3', '21', '0', '0']);
-    classUnderTest.Sort(item => parseInt(item));
-    expect(classUnderTest.Item[0]).toEqual('0');
-    expect(classUnderTest.Item[5]).toEqual('21');
-
-    classUnderTest.Clear();
-    classUnderTest.AddRange([1, 3, 8, 2, 1]);
-    classUnderTest.Sort();
-    expect(classUnderTest.Item[1]).toEqual(1);
-    expect(classUnderTest.Item[4]).toEqual(8);
   });
 
   it('should get the index of an item, considering any range passed', () => {
