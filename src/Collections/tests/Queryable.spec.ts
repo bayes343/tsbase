@@ -17,71 +17,6 @@ describe('Queryable', () => {
     expect(classUnderTest.Item.length).toEqual(5);
   });
 
-  it('should orderby a predicate or the default comparer', () => {
-    (classUnderTest as List<any>).AddRange([4, 5, 1, 3, 1]);
-    const results = classUnderTest.OrderBy();
-    expect(results.Item[0]).toEqual(1);
-    expect(results.Item[4]).toEqual(5);
-
-    (classUnderTest as List<any>).Clear();
-    (classUnderTest as List<any>).AddRange(['4', '5', '1', '3', '1']);
-    const resultsPredicate = classUnderTest.OrderBy([item => parseInt(item)]);
-    expect(resultsPredicate.Item[0]).toEqual('1');
-    expect(resultsPredicate.Item[4]).toEqual('5');
-  });
-
-  it('should orderby descending by a predicate or the default comparer', () => {
-    const numbers = [1, 3, 2, 5, 4];
-    const orderedByDefaultComparer = Queryable.From(numbers).OrderByDescending();
-    expect(orderedByDefaultComparer.Item[0]).toEqual(5);
-    expect(orderedByDefaultComparer.Item[4]).toEqual(1);
-
-    const orderedByDistaceFromTwo = Queryable.From(numbers).OrderByDescending([
-      n => Math.abs(n - 2)
-    ]);
-    expect(orderedByDistaceFromTwo.Item[0]).toEqual(5);
-    expect(orderedByDistaceFromTwo.Item[4]).toEqual(2);
-  });
-
-  it('should orderby many funcs by descending precedence', () => {
-    // ascending
-    (classUnderTest as List<any>).AddRange([
-      { lastName: 'A', firstName: 'Z', age: 18 },
-      { lastName: 'A', firstName: 'Y', age: 24 },
-      { lastName: 'C', firstName: 'X', age: 19 },
-      { lastName: 'C', firstName: 'W', age: 26 },
-      { lastName: 'E', firstName: 'V', age: 32 }
-    ]);
-    const lastFirstAge = classUnderTest.OrderBy([
-      item => item.lastName,
-      item => item.firstName,
-      item => item.age
-    ]);
-    expect(lastFirstAge.Item[0].age).toEqual(24);
-
-    // descending
-    const ageFirstLast = classUnderTest.OrderByDescending([
-      item => item.age,
-      item => item.firstName,
-      item => item.lastName
-    ]);
-    expect(ageFirstLast.Item[0].age).toEqual(32);
-  });
-
-  it('should find results where a condition is met and return them based on a user defined sort', () => {
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const query = classUnderTest
-      .Where(item => item.name.length >= 3)
-      .OrderBy([item => item.name]);
-    expect(query.Item[0].name).toEqual('Adam');
-    expect(query.Item[3].name).toEqual('David');
-  });
-
   it('should know if all items satisfy a condition', () => {
     (classUnderTest as List<any>).AddRange([
       { name: 'Billy' },
@@ -249,23 +184,16 @@ describe('Queryable', () => {
     }).toThrowError(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
   });
 
-  it('should get a random item from the collection', () => {
-    (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
-    const randomItem = classUnderTest.GetRandom();
-    expect(randomItem).toBeDefined();
-  });
+  // it('should get a random item from the collection', () => {
+  //   (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
+  //   const randomItem = classUnderTest.GetRandom();
+  //   expect(randomItem).toBeDefined();
+  // });
 
   it('should return a new collection with an item appended', () => {
     (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
     const appended = classUnderTest.Append(5);
     expect(appended.Item[4]).toEqual(5);
-  });
-
-  it('should return a new collection Except for the items passed', () => {
-    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
-    const diff = classUnderTest.Except([2, 3]);
-    expect(diff.Item.length).toEqual(2);
-    expect(diff.Item[0]).toEqual(1);
   });
 
   it('should return the first element in the sequence', () => {
@@ -308,29 +236,13 @@ describe('Queryable', () => {
     expect(prependedCollection.Item[0]).toEqual(0);
   });
 
-  it('should get a random element excluding a given set', () => {
-    (classUnderTest as List<any>).AddRange([2, 4, 8, 15, 23, 42]);
-    const random = classUnderTest.GetRandom([2, 4, 8, 15, 23]);
-    expect(random).toEqual(42);
-    const randomNull = classUnderTest.GetRandom([2, 4, 8, 15, 23, 42]);
-    expect(randomNull).toBeNull();
-  });
-
-  it('should provide a lighter-weight means of consuming Queryable methods without using the list class', () => {
-    const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const query = Queryable.From(array)
-      .Where(item => item < 5)
-      .ToArray();
-    expect(query.length).toEqual(4);
-
-    const query2 = Queryable.From(array)
-      .OrderByDescending()
-      .Last();
-    expect(query2).toEqual(1);
-
-    const query3 = Queryable.From(array).All(item => item > 0);
-    expect(query3).toBeTruthy();
-  });
+  // it('should get a random element excluding a given set', () => {
+  //   (classUnderTest as List<any>).AddRange([2, 4, 8, 15, 23, 42]);
+  //   const random = classUnderTest.GetRandom([2, 4, 8, 15, 23]);
+  //   expect(random).toEqual(42);
+  //   const randomNull = classUnderTest.GetRandom([2, 4, 8, 15, 23, 42]);
+  //   expect(randomNull).toBeNull();
+  // });
 
   it('should find the item with the minimum result from the defined function or default comparer', () => {
     const array = [3, 6, 1, 8, 3, 9, 3, 10];

@@ -1,6 +1,6 @@
 export function DoUntil(
   condition: () => boolean,
-  interval: number,
+  interval = 0,
   limit?: number
 ): Promise<boolean> {
   return new Promise<boolean>((resolve) => {

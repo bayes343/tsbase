@@ -1,5 +1,5 @@
 import { FormUrl } from '../FormUrl';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
 
 describe('FormUrl', () => {
   const decodedJson = {

@@ -6,7 +6,7 @@ import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Result } from '../../Patterns/Result/Result';
 import { List } from '../../Collections/List';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
 
 class Person {
   constructor(

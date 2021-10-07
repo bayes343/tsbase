@@ -1,7 +1,7 @@
 import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
 import { List } from '../../../Collections/List';
-import { Strings } from '../../../Constants/Strings';
+import { Strings } from '../../../Functions/Strings';
 import { ISerializer } from '../ISerializer';
 
 //#region Fake classes for testing

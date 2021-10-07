@@ -322,11 +322,4 @@ export class List<T> extends Queryable<T> {
     arraySegment.reverse();
     this.InsertRange(index, new List<T>(arraySegment));
   }
-
-  /**
-   * Shuffles the collection of items stored in the list
-   */
-  public Shuffle(): void {
-    ArrayFunctions.Shuffle(this.item);
-  }
 }

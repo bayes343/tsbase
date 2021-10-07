@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { List } from '../List';
 import { Errors } from '../../Errors';
-import { Strings } from '../../Constants/Strings';
+import { Strings } from '../../Functions/Strings';
 import { Logger, LogLevel } from '../../Utility/Logger/module';
 
 describe('List', () => {
@@ -268,18 +268,6 @@ describe('List', () => {
     expect(classUnderTest.Item[0]).toEqual('1');
     expect(classUnderTest.Item[1]).toEqual('4');
     expect(classUnderTest.Item[3]).toEqual('2');
-  });
-
-  it('should shuffle items', () => {
-    classUnderTest.AddRange(['1', '2', '3', '4', '5', '6']);
-    classUnderTest.Shuffle();
-    const itemsShuffled = classUnderTest.Item[0] !== '1' ||
-      classUnderTest.Item[1] !== '2' ||
-      classUnderTest.Item[2] !== '3' ||
-      classUnderTest.Item[3] !== '4' ||
-      classUnderTest.Item[4] !== '5' ||
-      classUnderTest.Item[5] !== '6';
-    expect(itemsShuffled).toBeTruthy();
   });
 
   it('should properly identify the count of items in the underlying data structure', () => {

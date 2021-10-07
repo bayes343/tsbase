@@ -1,8 +1,7 @@
 /* eslint-disable max-lines */
 import { Errors } from '../Errors';
-import { Strings } from '../Constants/Strings';
 import { Regex } from '../Constants/Regex';
-import { ArrayFunctions } from '../Functions/ArrayFunctions';
+import { Strings } from '../Functions/Strings';
 import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 export abstract class Queryable<T> {
@@ -133,8 +132,7 @@ export abstract class Queryable<T> {
   }
 
   /**
-   * Produces the set difference of two sequences.
-   * @param items
+   * deprecated
    */
   public Except(items: Array<T>): Queryable<T> {
     let collectionCopy = this.item.slice();
@@ -142,7 +140,6 @@ export abstract class Queryable<T> {
     collectionCopy = collectionCopy.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
     return this.Clone(collectionCopy);
   }
-
   /**
    * Returns the first element of a sequence or null if the sequence is empty.
    * @param func optionally retrieve the first element which satisfies the given predicate
@@ -305,16 +302,6 @@ export abstract class Queryable<T> {
     }
     const itemsToReturn = this.item.slice(startIndex, this.item.length);
     return this.Clone(itemsToReturn);
-  }
-
-  /**
-   * Returns a random item from the collection based on Knuth shuffle
-   * @param excluding - optionally exclude an array of items when selecting a random element
-   */
-  public GetRandom(excluding?: Array<T>): T | null {
-    const candidateElements = excluding ? this.Except(excluding).ToArray() : this.ToArray();
-    const shuffledItems = ArrayFunctions.Shuffle(candidateElements);
-    return shuffledItems.length >= 1 ? shuffledItems[0] : null;
   }
 
   /**

@@ -2,7 +2,7 @@
 import { Mock, Times } from 'tsmockit';
 import { IFileSystemAdapter } from '../IFileSystemAdapter';
 import { FSPersister } from '../FSPersister';
-import { Strings } from '../../../Constants/Strings';
+import { Strings } from '../../../Functions/Strings';
 import { IPathResolver } from '../IPathResolver';
 
 const testFileDir = 'dir/';
