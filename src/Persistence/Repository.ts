@@ -25,7 +25,6 @@ export class Repository<T> extends Queryable<T> {
     };
   }
 
-  public Item!: Queryable<T>;
   private savedData = { raw: '', referential: [] as Array<T> };
   private persister!: IPersister;
   private validator: Validator<T> = new Validator<T>([]);
@@ -47,8 +46,8 @@ export class Repository<T> extends Queryable<T> {
     let initialData = Queryable.From(repository.persister.Retrieve());
     initialData = initialData && initialData.length >= 1 ? initialData : Queryable.From([]);
 
-    repository.Item = repository.serializer && repository.serializeAs ?
-      repository.getSerializedInstancesFromInitialData(initialData) : initialData;
+    repository.push(...(repository.serializer && repository.serializeAs ?
+      repository.getSerializedInstancesFromInitialData(initialData) : initialData));
     repository.setSavedData();
 
     return repository;
@@ -69,7 +68,7 @@ export class Repository<T> extends Queryable<T> {
     });
 
     if (result.IsSuccess) {
-      this.persister.Persist(this.Item);
+      this.persister.Persist(this);
       this.setSavedData();
     }
 
@@ -99,21 +98,21 @@ export class Repository<T> extends Queryable<T> {
    */
   public PurgeData(): void {
     this.persister.Purge();
-    this.Item = Queryable.From([]);
+    this.splice(0, this.length);
   }
 
   /**
    * Returns a collection of elements that have not been saved
    */
   public GetUnsavedElements(): Queryable<T> {
-    return Queryable.From(this.Item.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
+    return Queryable.From(this.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
   }
 
   /**
    * Returns a collection of elements that have not been removed from persistence
    */
   public GetUnpurgedElements(): Queryable<T> {
-    return Queryable.From(this.savedData.referential).Except(this.Item);
+    return Queryable.From(this.savedData.referential).Except(this);
   }
 
   private getSerializedInstancesFromInitialData(initialData: Array<any>): Queryable<T> {
@@ -139,8 +138,8 @@ export class Repository<T> extends Queryable<T> {
 
   private setSavedData(): void {
     this.savedData = {
-      raw: JSON.stringify(this.Item),
-      referential: this.Item.slice()
+      raw: JSON.stringify(this),
+      referential: this.slice()
     };
   }
 }

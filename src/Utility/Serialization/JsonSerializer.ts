@@ -1,6 +1,5 @@
 /* eslint-disable complexity*/
 import { ISerializer } from './ISerializer';
-import { List } from '../../Collections/List';
 import { Strings } from '../../Functions/Strings';
 
 /**
@@ -39,15 +38,6 @@ export class JsonSerializer implements ISerializer {
 
         if (this.propertyIsSimple(property)) {
           this.serializeSimpleField(jsonElement, object, instanceKey);
-
-        } else if (this.propertyIsGenericList(property)) {
-          if (jsonElement.length && typeof jsonElement[0] !== 'object') {
-            this.serializeSimpleField(jsonElement, object, instanceKey);
-            object[instanceKey] = new List<any>(object[instanceKey]);
-          } else {
-            const values = this.getArrayValuesFromSerializer(property.Item[0], jsonElement);
-            object[instanceKey] = new List<any>(values);
-          }
 
         } else if (this.propertyIsArrayOfObjects(property)) {
 
@@ -90,10 +80,6 @@ export class JsonSerializer implements ISerializer {
 
   private propertyIsArrayOfObjects(property: any): boolean {
     return Array.isArray(property) && typeof property[0] === 'object';
-  }
-
-  private propertyIsGenericList(property: any): boolean {
-    return property && property.constructor && property.constructor.name === 'List';
   }
 
   private getValueFromSerializer(property: any, json: any): any {

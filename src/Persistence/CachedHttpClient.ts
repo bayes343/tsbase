@@ -18,7 +18,7 @@ class HttpUriResponse {
 export class CachedHttpClient {
   constructor(
     private httpClient: HttpClient = new HttpClient(),
-    private repository: Repository<HttpUriResponse> = new Repository<HttpUriResponse>(
+    private repository: Repository<HttpUriResponse> = Repository.New<HttpUriResponse>(
       new WebStoragePersister('CachedHttpClient', 'session')
     )
   ) { }
@@ -30,13 +30,13 @@ export class CachedHttpClient {
    * @param fresh
    */
   public async GetAsync(uri: string, fresh = false): Promise<HttpResponseMessage> {
-    const cachedResponse = this.repository.item.find(item => item.requestUri === uri);
+    const cachedResponse = this.repository.find(item => item.requestUri === uri);
     if (cachedResponse && !fresh) {
       return cachedResponse.httpResponse;
     } else {
       const uriResponse = new HttpUriResponse(uri);
       uriResponse.httpResponse = await this.httpClient.GetAsync(uri);
-      this.repository.Add(uriResponse);
+      this.repository.push(uriResponse);
       this.repository.SaveChanges();
       return uriResponse.httpResponse;
     }

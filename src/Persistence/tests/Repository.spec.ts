@@ -6,7 +6,6 @@ import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Result } from '../../Patterns/Result/Result';
 import { Strings } from '../../Functions/Strings';
-import { Queryable } from '../../public_api';
 
 class Person {
   constructor(
@@ -19,20 +18,7 @@ class Person {
 }
 
 const john = new Person();
-const bill = new Person();
-const bob = new Person();
 john.name = 'John Doe';
-const people = [john, bill, bob];
-
-class AgeValidation implements IValidation<Person> {
-  Validate(object: Person): Result {
-    const result = new Result();
-    if (!object.age || object.age < 0) {
-      result.ErrorMessages.push(`Invalid age: ${object.age ? object.age : 'null'}`);
-    }
-    return result;
-  }
-}
 
 class StringValidator implements IValidation<string> {
   public Validate(object: string): Result {
@@ -48,7 +34,7 @@ describe('Repository', () => {
   let classUnderTest: Repository<any>;
 
   beforeEach(() => {
-    classUnderTest = new Repository<string>(
+    classUnderTest = Repository.New<string>(
       new WebStoragePersister('test', 'local'),
       new Validator([new StringValidator()])
     );
@@ -59,175 +45,97 @@ describe('Repository', () => {
   });
 
   it('should get a collection of unsaved elements', () => {
-    classUnderTest.Item = Queryable.From(['fake', 'mock']);
+    classUnderTest.splice(0, classUnderTest.length);
+    classUnderTest.push(['fake', 'mock']);
     classUnderTest.SaveChanges();
-    classUnderTest.Item.push('stub');
-    expect(classUnderTest.GetUnsavedElements().item.every(item => item === 'stub')).toBeTruthy();
+    classUnderTest.push('stub');
+    expect(classUnderTest.GetUnsavedElements().every(item => item === 'stub')).toBeTruthy();
   });
 
   it('should get a collection of unpurged elements', () => {
-    classUnderTest.AddRange(['fake', 'fake2']);
+    classUnderTest.push('fake', 'fake2');
     classUnderTest.SaveChanges();
-    classUnderTest.Remove('fake');
-    expect(classUnderTest.GetUnpurgedElements().item.every(item => item === 'fake')).toBeTruthy();
+    classUnderTest.splice(classUnderTest.indexOf('fake'), 1);
+    expect(classUnderTest.GetUnpurgedElements().every(item => item === 'fake')).toBeTruthy();
   });
 
   it('should get pending changes', () => {
-    classUnderTest.Add(['fake1', 'fake2', 'fake3']);
+    classUnderTest.push('fake1', 'fake2', 'fake3');
     classUnderTest.SaveChanges();
-    classUnderTest.Add('fake4');
-    classUnderTest.Remove('fake1');
+    classUnderTest.push('fake4');
+    classUnderTest.splice(classUnderTest.indexOf('fake1'), 1);
 
     const pendingChanges = classUnderTest.PendingChanges;
 
-    expect(pendingChanges.PendingDeletion.item.every(item => item === 'fake1'));
-    expect(pendingChanges.PendingSave.item.every(item => item === 'fake4'));
+    expect(pendingChanges.PendingDeletion.every(item => item === 'fake1'));
+    expect(pendingChanges.PendingSave.every(item => item === 'fake4'));
   });
 
-  it('should return a failed result on Add if item is not valid', () => {
-    const result = classUnderTest.Add(Strings.Empty);
-    expect(result.IsSuccess).toBeFalsy();
+  it('should return 0 on push if item is not valid', () => {
+    const result = classUnderTest.push(Strings.Empty);
+    expect(result).toEqual(0);
   });
 
-  it('should return a failed result on AddRange if an item is not valid', () => {
-    const result = classUnderTest.AddRange([Strings.Empty, 'fake']);
-    expect(result.IsSuccess).toBeFalsy();
-  });
-
-  it('should return a failed result on Insert if item is not valid', () => {
-    const result = classUnderTest.Insert(0, Strings.Empty);
-    expect(result.IsSuccess).toBeFalsy();
-  });
-
-  it('should return a failed result on InsertRange if an item is not valid', () => {
-    const result = classUnderTest.InsertRange(0, new List([Strings.Empty, 'fake']));
-    expect(result.IsSuccess).toBeFalsy();
-  });
-
-  it('should successfully Insert an item if it is valid', () => {
-    const result = classUnderTest.Insert(0, 'fake');
-    expect(result.IsSuccess).toBeTruthy();
-  });
-
-  it('should successfully InsertRange if all items are valid', () => {
-    const result = classUnderTest.InsertRange(0, new List(['fakest', 'fake']));
-    expect(result.IsSuccess).toBeTruthy();
-  });
 
   it('should validate unsaved items before saving changes', () => {
-    classUnderTest = new Repository<string>(
+    classUnderTest = Repository.New<string>(
       new WebStoragePersister('test', 'local'),
       new Validator([new StringValidator()])
     );
-    classUnderTest.AddRange(['fake', 'test']);
-    classUnderTest.Item[0] = Strings.Empty;
+    classUnderTest.push('fake', 'test');
+    classUnderTest[0] = Strings.Empty;
 
     const result = classUnderTest.SaveChanges();
 
-    expect(result.IsSuccess).toBeFalsy();
-  });
-
-  it('should validate unsaved reference type items before saving', () => {
-    classUnderTest = new Repository<Person>(
-      new WebStoragePersister('test', 'local'),
-      new Validator([new AgeValidation()])
-    );
-    classUnderTest.AddRange(people);
-    classUnderTest.SaveChanges();
-    bill.age = -1;
-    bob.age = null as any;
-
-    const result = classUnderTest.SaveChanges();
-
-    expect(result.ErrorMessages.length).toEqual(2);
-  });
-
-  // tslint:disable-next-line: only-arrow-functions
-  function getClassUnderTest(): Repository<Person> {
-    return classUnderTest;
-  }
-
-  class NoOrphansValidation implements IValidation<Person> {
-    private references = ['John Doe'];
-
-    public Validate(object: Person): Result {
-      const result = new Result();
-
-      if (this.references.indexOf(object.name) >= 0) {
-        const repository = getClassUnderTest();
-        if (!repository.item.find(p => p.name === object.name)) {
-          result.ErrorMessages.push('Item removed still has references');
-        }
-      }
-
-      return result;
-    }
-  }
-
-  it('should validate un-purged reference type items before saving', () => {
-    classUnderTest = new Repository<Person>(
-      new WebStoragePersister('test-person', 'local'),
-      new Validator([new AgeValidation(), new NoOrphansValidation()])
-    );
-    john.age = 30;
-    bill.age = 1;
-    bob.age = 2;
-    classUnderTest.Item = people;
-    classUnderTest.SaveChanges();
-
-    classUnderTest.Remove(john);
-    const result = classUnderTest.SaveChanges();
-
-    expect(result.ErrorMessages.length).toEqual(1);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   //#region Integration tests using DomStorageAPI
   it('should delete items from persisted storage', () => {
-    classUnderTest.Add('delete this');
+    classUnderTest.push('delete this');
     classUnderTest.SaveChanges();
     classUnderTest.PurgeData();
-    expect(classUnderTest.Count).toEqual(0);
+    expect(classUnderTest.length).toEqual(0);
   });
 
   it('should persist data through a persister - local', () => {
     // add data
     const db = classUnderTest;
-    db.Add('Test 1');
-    db.Add('Test 2');
-    db.Add('Test 3');
-    db.Add('Test 4');
+    db.push('Test 1');
+    db.push('Test 2');
+    db.push('Test 3');
+    db.push('Test 4');
     db.SaveChanges();
     // verify new instance with same config has data
-    const dupRepo = new Repository<string>(
+    const dupRepo = Repository.New<string>(
       new WebStoragePersister('test', 'local')
     );
-    expect(dupRepo.Count).toEqual(4);
+    expect(dupRepo.length).toEqual(4);
     dupRepo.PurgeData();
   });
 
   it('should persist data through a persister - session', () => {
     // add data
-    classUnderTest = new Repository<string>(
+    classUnderTest = Repository.New<string>(
       new WebStoragePersister('test', 'session')
     );
     const db = classUnderTest;
-    db.Add('Test 1');
-    db.Add('Test 2');
-    db.Add('Test 3');
-    db.Add('Test 4');
+    db.push('Test 1');
+    db.push('Test 2');
+    db.push('Test 3');
+    db.push('Test 4');
     db.SaveChanges();
     // verify new instance with same config has data
-    const dupRepo = new Repository<string>(
+    const dupRepo = Repository.New<string>(
       new WebStoragePersister('test', 'session')
     );
-    expect(dupRepo.Count).toEqual(4);
+    expect(dupRepo.length).toEqual(4);
     db.PurgeData();
     dupRepo.PurgeData();
   });
 
   it('should initialize with serialized classes if serializer and template constructor given', () => {
-    classUnderTest = new Repository<Person>(
+    classUnderTest = Repository.New<Person>(
       new WebStoragePersister('test', 'session'),
       new Validator([]),
       new JsonSerializer(),
@@ -235,19 +143,19 @@ describe('Repository', () => {
     );
 
     const db = classUnderTest;
-    db.Add(new Person('Bob', 20));
-    db.Add(new Person('Jane', 30));
-    db.Add(new Person('Bill', 40));
+    db.push(new Person('Bob', 20));
+    db.push(new Person('Jane', 30));
+    db.push(new Person('Bill', 40));
     db.SaveChanges();
 
-    const dupRepo = new Repository(
+    const dupRepo = Repository.New(
       new WebStoragePersister('test', 'session'),
       new Validator([]),
       new JsonSerializer(),
       Person
     );
 
-    dupRepo.ForEach(item => expect((item as Person).complain()).toEqual('woe is me'));
+    dupRepo.forEach(item => expect((item as Person).complain()).toEqual('woe is me'));
     db.PurgeData();
     dupRepo.PurgeData();
   });

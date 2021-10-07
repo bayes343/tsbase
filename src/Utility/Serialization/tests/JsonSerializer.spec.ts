@@ -1,6 +1,5 @@
 import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
-import { List } from '../../../Collections/List';
 import { Strings } from '../../../Functions/Strings';
 import { ISerializer } from '../ISerializer';
 
@@ -57,8 +56,6 @@ class Person {
   public FirstName = Strings.Empty;
   public LastName = Strings.Empty;
   public Age = 0;
-  public Titles = new List<string>();
-  public Pets = new List<Pet>([new Pet()]);
   public ArrayPets = [new Pet()];
   public FakeField = new FakeField();
 }
@@ -149,9 +146,6 @@ describe('JsonSerializer', () => {
       Pets: [pet],
       ArrayPets: [pet, pet]
     });
-    expect(personInstance.Titles.Count).toEqual(5);
-    expect(personInstance.Titles.item.includes('Daddy')).toBeTruthy();
-    expect(personInstance.Pets.FindAll(item => item.name === 'Freya').Count).toEqual(1);
     expect(personInstance.ArrayPets.length).toEqual(2);
     expect(personInstance.ArrayPets[0].name).toEqual('Freya');
   });
