@@ -1,4 +1,3 @@
-import { List } from '../Collections/List';
 import { IPersister } from './Persisters/IPersister';
 import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
@@ -12,7 +11,9 @@ import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
  * provided by a class implementing IPersistable.  Previously persisted data is
  * loaded on instantiation using the default persister's "Retrieve" method.
  */
-export class Repository<T> extends List<T> {
+export class Repository<T> extends Queryable<T> {
+  protected constructor() { super(); }
+
   /**
    * A set of rules the repository will check against when new elements are added
    * Rules that have a severity of "Error" will not be added
@@ -24,19 +25,33 @@ export class Repository<T> extends List<T> {
     };
   }
 
+  public Item!: Queryable<T>;
   private savedData = { raw: '', referential: [] as Array<T> };
+  private persister!: IPersister;
+  private validator: Validator<T> = new Validator<T>([]);
+  private serializer?: ISerializer;
+  private serializeAs?: { new(): T; };
 
-  constructor(
-    private persister: IPersister,
-    private validator: Validator<T> = new Validator<T>([]),
-    private serializer?: ISerializer,
-    private serializeAs?: { new(): T; }
-  ) {
-    super();
-    let initialData = persister.Retrieve();
-    initialData = initialData && initialData.length >= 1 ? initialData : new Array<T>();
-    this.Item = serializer && serializeAs ? this.getSerializedInstancesFromInitialData(initialData) : initialData;
-    this.setSavedData();
+  public static New<T>(
+    persister: IPersister,
+    validator: Validator<T> = new Validator<T>([]),
+    serializer?: ISerializer,
+    serializeAs?: { new(): T; }
+  ): Repository<T> {
+    const repository = Object.create(Repository.prototype) as Repository<T>;
+    repository.persister = persister;
+    repository.validator = validator;
+    repository.serializer = serializer;
+    repository.serializeAs = serializeAs;
+
+    let initialData = Queryable.From(repository.persister.Retrieve());
+    initialData = initialData && initialData.length >= 1 ? initialData : Queryable.From([]);
+
+    repository.Item = repository.serializer && repository.serializeAs ?
+      repository.getSerializedInstancesFromInitialData(initialData) : initialData;
+    repository.setSavedData();
+
+    return repository;
   }
 
   /**
@@ -45,11 +60,11 @@ export class Repository<T> extends List<T> {
   public SaveChanges(): Result {
     let result = new Result();
 
-    this.GetUnsavedElements().item.slice().forEach(element => {
+    this.GetUnsavedElements().slice().forEach(element => {
       result = result.CombineWith(this.itemIsValid(element));
     });
 
-    this.GetUnpurgedElements().item.slice().forEach(element => {
+    this.GetUnpurgedElements().slice().forEach(element => {
       result = result.CombineWith(this.itemIsValid(element));
     });
 
@@ -62,77 +77,48 @@ export class Repository<T> extends List<T> {
   }
 
   /**
-   * Calls the underlying persister's "Purge" method deleting any data previously persisted and clearing the list
+   * Override for default push that enforces validation
+   */
+  public push(...items: T[]): number {
+    let result = new Result();
+
+    items.forEach(element => {
+      result = result.CombineWith(this.itemIsValid(element));
+    });
+
+    if (result.IsSuccess) {
+      super.push(...items);
+      return items.length;
+    } else {
+      return 0;
+    }
+  }
+
+  /**
+   * Calls the underlying persister's "Purge" method deleting any data previously persisted
    */
   public PurgeData(): void {
     this.persister.Purge();
-    this.Clear();
+    this.Item = Queryable.From([]);
   }
 
   /**
    * Returns a collection of elements that have not been saved
    */
   public GetUnsavedElements(): Queryable<T> {
-    return Queryable.From(this.item.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
+    return Queryable.From(this.Item.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
   }
 
   /**
    * Returns a collection of elements that have not been removed from persistence
    */
   public GetUnpurgedElements(): Queryable<T> {
-    return Queryable.From(this.savedData.referential).Except(this.item);
+    return Queryable.From(this.savedData.referential).Except(this.Item);
   }
 
-  //#region Overrides
-  public Add(object: T): Result {
-    const result = this.itemIsValid(object);
-
-    if (result.IsSuccess) {
-      super.Add(object);
-    }
-
-    return result;
-  }
-
-  public AddRange(elements: Array<T>): Result {
-    let result = new Result();
-
-    elements.forEach(element => {
-      result = result.CombineWith(this.itemIsValid(element));
-    });
-
-    if (result.IsSuccess) {
-      super.AddRange(elements);
-    }
-
-    return result;
-  }
-
-  public Insert(index: number, item: T): Result {
-    const result = this.itemIsValid(item);
-
-    if (result.IsSuccess) {
-      super.Insert(index, item);
-    }
-
-    return result;
-  }
-
-  public InsertRange(index: number, collection: List<T>): Result {
-    let result = new Result();
-
-    collection.ForEach(i => result = result.CombineWith(this.itemIsValid(i)));
-
-    if (result.IsSuccess) {
-      super.InsertRange(index, collection);
-    }
-
-    return result;
-  }
-  //#endregion
-
-  private getSerializedInstancesFromInitialData(initialData: Array<any>): Array<T> {
+  private getSerializedInstancesFromInitialData(initialData: Array<any>): Queryable<T> {
     const classInstances = new Array<T>();
+
     initialData.forEach(element => {
       if (this.serializer && this.serializeAs) {
         classInstances.push(this.serializer.Serialize(this.serializeAs, element));
@@ -143,7 +129,8 @@ export class Repository<T> extends List<T> {
         throw error;
       }
     });
-    return classInstances;
+
+    return Queryable.From(classInstances);
   }
 
   private itemIsValid(item: T): Result {

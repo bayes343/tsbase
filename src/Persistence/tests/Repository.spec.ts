@@ -5,8 +5,8 @@ import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Result } from '../../Patterns/Result/Result';
-import { List } from '../../Collections/List';
 import { Strings } from '../../Functions/Strings';
+import { Queryable } from '../../public_api';
 
 class Person {
   constructor(
@@ -59,9 +59,9 @@ describe('Repository', () => {
   });
 
   it('should get a collection of unsaved elements', () => {
-    classUnderTest.AddRange(['fake', 'mock']);
+    classUnderTest.Item = Queryable.From(['fake', 'mock']);
     classUnderTest.SaveChanges();
-    classUnderTest.Add('stub');
+    classUnderTest.Item.push('stub');
     expect(classUnderTest.GetUnsavedElements().item.every(item => item === 'stub')).toBeTruthy();
   });
 
