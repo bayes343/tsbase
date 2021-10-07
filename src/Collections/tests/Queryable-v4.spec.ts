@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+import { Errors } from '../../Errors';
 import { Queryable } from '../Queryable-v4';
 
 describe('Queryable', () => {
@@ -91,5 +93,114 @@ describe('Queryable', () => {
       i => i
     ]);
     expect(ordered[0]).toEqual(2);
+  });
+
+
+  it('should find the item with the minimum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Min()).toEqual(1);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Min(o => o.id).id).toEqual(1);
+
+    expect(() => {
+      Queryable.From([]).Min();
+    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
+  });
+
+  it('should find the item with the maximum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Max()).toEqual(10);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Max(o => o.id).id).toEqual(3);
+
+    expect(() => {
+      Queryable.From([]).Max();
+    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
+  });
+
+  it('should sum the value of elements as numbers or based on a given function', () => {
+    let q = Queryable.From([1, 1, 2, 2, 2, 3]);
+    const eleven = q.Sum();
+    expect(eleven).toEqual(11);
+
+    const twentyTwo = q.Sum(item => item * 2);
+    expect(twentyTwo).toEqual(22);
+
+    // error
+    q = Queryable.From(q.concat(['notanumber' as unknown as number]));
+    expect(() => {
+      q.Sum();
+    }).toThrowError(`${Errors.InvalidOperation} - Could not parse \'notanumber\' as a number`);
+  });
+
+  it('should average the value of elements as numbers or based on a given function', () => {
+    let q: Queryable<any> = Queryable.From([2, 2, 2, 2, 2, 2]);
+    const two = q.Average();
+    expect(two).toEqual(2);
+
+    // Custom use case
+    q = Queryable.From([
+      { name: 'Billy' },
+      { name: 'Adam' },
+      { name: 'David' },
+      { name: 'Charley' }
+    ]);
+    const averageLength = q.Average(item => item.name.length);
+    expect(averageLength).toEqual(5.25);
+
+    // error
+    q = Queryable.From([]);
+    expect(() => {
+      q.Average();
+    }).toThrowError(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
+  });
+
+
+  it('should return distinct elements from the Queryable collection', () => {
+    const q = Queryable.From([
+      { key: '1', value: 1 },
+      { key: '1', value: 1 },
+      { key: '1', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 3 }
+    ]);
+
+    const distinctElements = q.Distinct();
+
+    expect(distinctElements.length).toEqual(4);
+  });
+
+
+  const dataToSearch: Array<{ name: string, age: number, gender: 'male' | 'female' }> = [
+    { name: 'John Doe', age: 18, gender: 'male' },
+    { name: 'Johnny Boy', age: 20, gender: 'male' },
+    { name: 'Johnson Connor', age: 22, gender: 'male' },
+    { name: 'Jane Doe', age: 18, gender: 'female' },
+    { name: 'Jenny Girl', age: 19, gender: 'female' }
+  ];
+
+  it('should search and return an empty collection when no results are found', () => {
+    const badSearch = Queryable.From(dataToSearch).Search('Super Fake');
+    expect(badSearch.length).toEqual(0);
+  });
+
+  it('should search a collection with custom keyword length', () => {
+    const ageSearch = Queryable.From(dataToSearch).Search('18', 2);
+    const failedDoeSearch = Queryable.From(dataToSearch).Search('So Doe', 4);
+
+    expect(ageSearch.length).toEqual(2);
+    expect(failedDoeSearch.length).toEqual(0);
+  });
+
+  it('should search a collection with stop words', () => {
+    const stopWords = ['female'];
+    const allMalesSearch = Queryable.From(dataToSearch).Search('female');
+    const johnBoyMaleSearch = Queryable.From(dataToSearch).Search('girl female', 3, stopWords);
+
+    expect(allMalesSearch.length).toEqual(2);
+    expect(johnBoyMaleSearch.length).toEqual(1);
   });
 });

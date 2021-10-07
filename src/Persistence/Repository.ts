@@ -45,11 +45,11 @@ export class Repository<T> extends List<T> {
   public SaveChanges(): Result {
     let result = new Result();
 
-    this.GetUnsavedElements().ToArray().forEach(element => {
+    this.GetUnsavedElements().item.slice().forEach(element => {
       result = result.CombineWith(this.itemIsValid(element));
     });
 
-    this.GetUnpurgedElements().ToArray().forEach(element => {
+    this.GetUnpurgedElements().item.slice().forEach(element => {
       result = result.CombineWith(this.itemIsValid(element));
     });
 
@@ -73,7 +73,7 @@ export class Repository<T> extends List<T> {
    * Returns a collection of elements that have not been saved
    */
   public GetUnsavedElements(): Queryable<T> {
-    return this.Where(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0);
+    return Queryable.From(this.item.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
   }
 
   /**

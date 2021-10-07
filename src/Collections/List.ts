@@ -72,14 +72,6 @@ export class List<T> extends Queryable<T> {
   }
 
   /**
-   * Determines whether the List<T> contains elements that match the conditions defined by the specified predicate.
-   * @param match
-   */
-  public Exists(match: (item: T) => boolean): boolean {
-    return this.Any(match);
-  }
-
-  /**
    * Retrieves all the elements that match the conditions defined by the specified predicate.
    * @param match
    */
@@ -238,11 +230,11 @@ export class List<T> extends Queryable<T> {
    * @param match
    */
   public RemoveAll(match: (item: T) => boolean): number {
-    const elementsToRemove = this.Where(match);
-    elementsToRemove.Item.forEach(element => {
+    const elementsToRemove = this.item.filter(match);
+    elementsToRemove.forEach(element => {
       this.Remove(element);
     });
-    return elementsToRemove.Item.length;
+    return elementsToRemove.length;
   }
 
   /**

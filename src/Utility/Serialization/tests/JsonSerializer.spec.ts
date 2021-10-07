@@ -150,7 +150,7 @@ describe('JsonSerializer', () => {
       ArrayPets: [pet, pet]
     });
     expect(personInstance.Titles.Count).toEqual(5);
-    expect(personInstance.Titles.Contains('Daddy')).toBeTruthy();
+    expect(personInstance.Titles.item.includes('Daddy')).toBeTruthy();
     expect(personInstance.Pets.FindAll(item => item.name === 'Freya').Count).toEqual(1);
     expect(personInstance.ArrayPets.length).toEqual(2);
     expect(personInstance.ArrayPets[0].name).toEqual('Freya');

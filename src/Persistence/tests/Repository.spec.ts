@@ -62,14 +62,14 @@ describe('Repository', () => {
     classUnderTest.AddRange(['fake', 'mock']);
     classUnderTest.SaveChanges();
     classUnderTest.Add('stub');
-    expect(classUnderTest.GetUnsavedElements().All(item => item === 'stub')).toBeTruthy();
+    expect(classUnderTest.GetUnsavedElements().item.every(item => item === 'stub')).toBeTruthy();
   });
 
   it('should get a collection of unpurged elements', () => {
     classUnderTest.AddRange(['fake', 'fake2']);
     classUnderTest.SaveChanges();
     classUnderTest.Remove('fake');
-    expect(classUnderTest.GetUnpurgedElements().All(item => item === 'fake')).toBeTruthy();
+    expect(classUnderTest.GetUnpurgedElements().item.every(item => item === 'fake')).toBeTruthy();
   });
 
   it('should get pending changes', () => {
@@ -80,8 +80,8 @@ describe('Repository', () => {
 
     const pendingChanges = classUnderTest.PendingChanges;
 
-    expect(pendingChanges.PendingDeletion.All(item => item === 'fake1'));
-    expect(pendingChanges.PendingSave.All(item => item === 'fake4'));
+    expect(pendingChanges.PendingDeletion.item.every(item => item === 'fake1'));
+    expect(pendingChanges.PendingSave.item.every(item => item === 'fake4'));
   });
 
   it('should return a failed result on Add if item is not valid', () => {

@@ -59,14 +59,6 @@ describe('List', () => {
     expect(lastTwoElements.length).toEqual(2);
   });
 
-  it('should evaluate if an element exists based on the predicate passed', () => {
-    classUnderTest.AddRange(['1', '2', '3']);
-    const truthy = classUnderTest.Exists(item => item === '3');
-    expect(truthy).toBeTruthy();
-    const falsy = classUnderTest.Exists(item => item === '5');
-    expect(falsy).toBeFalsy();
-  });
-
   it('should find all / return all elements that match a predicate', () => {
     classUnderTest.AddRange(['1', '2', '3', '21']);
     const threeElements = classUnderTest.FindAll(item => item.length === 1);
@@ -132,7 +124,7 @@ describe('List', () => {
 
   it('should return a new array if requested', () => {
     classUnderTest.AddRange(['1', '2', '3', '21']);
-    const arrayOfList = classUnderTest.ToArray();
+    const arrayOfList = classUnderTest.item.slice();
     expect(arrayOfList.length).toEqual(4);
   });
 
