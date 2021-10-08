@@ -1,72 +1,55 @@
-import { Strings } from '../../System/Strings';
-import { HttpResponseMessage } from './HttpResponseMessage';
-import { HttpMethod } from '../HttpMethod';
-import { IXhrRequestHandler } from './XhrRequestHandler/IXhrRequestHandler';
-import { HttpRequestMessage } from './HttpRequestMessage';
-import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
 import { IHttpClient } from './IHttpClient';
+import { HttpMethod } from './HttpMethod';
+
+type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export class HttpClient implements IHttpClient {
-  public BaseAddress = Strings.Empty;
+  private static instance: IHttpClient | null = null;
+  public static Instance(fetchRef: Fetch = globalThis.fetch.bind(globalThis)): IHttpClient {
+    return this.instance || (this.instance = new HttpClient(fetchRef));
+  }
+  public static Destroy = () => this.instance = null;
+
   public DefaultRequestHeaders: Record<string, string> = {};
-  public Timeout = 10;
 
-  private xhrRequestHandler: IXhrRequestHandler;
+  private constructor(private fetchRef: Fetch) { }
 
-  /**
-   * @param xhrRequestHandler optional parameter used for dependency injection
-   */
-  constructor(xhrRequestHandler?: IXhrRequestHandler) {
-    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new BrowserXhrRequestHandler(this);
+  public async GetAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<Response> {
+    return await this.getRequestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
   }
 
-  public CancelPendingRequests(): void {
-    this.xhrRequestHandler.AbortPendingRequests();
+  public async PatchAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response> {
+    return await this.getRequestResponse(uri, HttpMethod.Patch, body, additionalHeaders);
   }
 
-  public async DeleteAsync(uri: string): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.DELETE);
+  public async PostAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response> {
+    return await this.getRequestResponse(uri, HttpMethod.Post, body, additionalHeaders);
+  }
+
+  public async PutAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response> {
+    return await this.getRequestResponse(uri, HttpMethod.Put, body, additionalHeaders);
+  }
+
+  public async DeleteAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<Response> {
+    const response = await this.getRequestResponse(uri, HttpMethod.Delete, undefined, additionalHeaders);
     return response;
   }
 
-  public async GetAsync(uri: string): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
-    return response;
+  public async GetStringAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<string> {
+    const response = await this.getRequestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
+    return await response.json();
   }
 
-  public async GetStringAsync(uri: string): Promise<string> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
-    return response.Content;
-  }
-
-  public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PATCH, payload);
-    return response;
-  }
-
-  public async PostAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.POST, payload);
-    return response;
-  }
-
-  public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PUT, payload);
-    return response;
-  }
-
-  public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage> {
-    httpRequestMessage.RequestUri = this.getFullUri(httpRequestMessage.RequestUri);
-    const response = await this.xhrRequestHandler.SendXhrRequestMessage(httpRequestMessage);
-    return response;
-  }
-
-  private getFullUri(uri: string): string {
-    return this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
+  private async getRequestResponse(
+    uri: string,
+    method: HttpMethod,
+    body?: string,
+    additionalHeaders?: Record<string, string>
+  ): Promise<Response> {
+    return await this.fetchRef(uri, {
+      method: method,
+      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders },
+      body: body
+    });
   }
 }

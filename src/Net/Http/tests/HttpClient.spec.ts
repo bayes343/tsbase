@@ -86,7 +86,7 @@ describe('HttpClient', () => {
     request2.RequestUri = 'ok';
     request2.Headers['fake'] = 'header';
     const response2 = await classUnderTest.SendAsync(request2);
-    expect(response2.Content).toEqual('OK');
+    expect(response2.Body).toEqual('OK');
   });
 
 });
