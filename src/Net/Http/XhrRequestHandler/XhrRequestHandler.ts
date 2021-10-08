@@ -3,7 +3,7 @@ import { HttpClient } from '../HttpClient';
 import { HttpResponseMessage } from '../HttpResponseMessage';
 import { HttpMethod } from '../../HttpMethod';
 import { HttpRequestMessage } from '../HttpRequestMessage';
-import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { IXhrRequestHandler } from './IXhrRequestHandler';
 import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
 export const BadStatusCode = 'BadStatusCode';

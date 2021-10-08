@@ -1,5 +1,5 @@
 import { NullHttpClient, XhrRequestHandler } from './XhrRequestHandler';
-import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { IXhrRequestHandler } from './IXhrRequestHandler';
 import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
 /**

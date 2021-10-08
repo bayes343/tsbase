@@ -3,7 +3,7 @@ import { HttpClient } from '../../Net/Http/HttpClient';
 import { HttpResponseMessage } from '../../Net/Http/HttpResponseMessage';
 import { HttpMethod } from '../../Net/HttpMethod';
 import { Mock } from 'tsmockit';
-import { IXhrRequestHandler } from '../../Net/Http/IXhrRequestHandler';
+import { IXhrRequestHandler } from '../../Net/Http/XhrRequestHandler/IXhrRequestHandler';
 import { Strings } from '../../System/Strings';
 
 describe('CachedHttpClient', () => {

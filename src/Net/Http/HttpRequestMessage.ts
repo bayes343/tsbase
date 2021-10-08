@@ -13,7 +13,6 @@ export class HttpRequestMessage {
    * Additional headers to apply to this request when sent
    */
   public Headers: Record<string, string> = {};
-  public Properties: Record<string, string> = {};
 
   constructor(
     /**

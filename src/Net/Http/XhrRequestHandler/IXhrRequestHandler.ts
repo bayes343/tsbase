@@ -1,6 +1,6 @@
-import { HttpResponseMessage } from './HttpResponseMessage';
-import { HttpMethod } from '../HttpMethod';
-import { HttpRequestMessage } from './HttpRequestMessage';
+import { HttpResponseMessage } from '../HttpResponseMessage';
+import { HttpMethod } from '../../HttpMethod';
+import { HttpRequestMessage } from '../HttpRequestMessage';
 
 /**
  * Consumed by HttpClient - handles direct interaction with XHR api

@@ -2,7 +2,7 @@ import { HttpClient } from '../HttpClient';
 import { HttpRequestMessage } from '../HttpRequestMessage';
 import { HttpMethod } from '../../HttpMethod';
 import { Mock } from 'tsmockit';
-import { IXhrRequestHandler } from '../IXhrRequestHandler';
+import { IXhrRequestHandler } from '../XhrRequestHandler/IXhrRequestHandler';
 import { HttpResponseMessage } from '../HttpResponseMessage';
 import { Strings } from '../../../System/Strings';
 
