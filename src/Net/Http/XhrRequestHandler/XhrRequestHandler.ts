@@ -3,7 +3,6 @@ import { HttpClient } from '../HttpClient';
 import { HttpResponseMessage } from '../HttpResponseMessage';
 import { HttpMethod } from '../../HttpMethod';
 import { HttpRequestMessage } from '../HttpRequestMessage';
-import { KeyValue } from '../../../TypeLiterals';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
 import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
@@ -59,19 +58,23 @@ export abstract class XhrRequestHandler implements IXhrRequestHandler {
     });
   }
 
-  private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Array<KeyValue>): void {
+  private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Record<string, string>): void {
     if (!this.HttpClient) {
       const error = new Error(NullHttpClient);
       Logger.Instance.Log(new LogEntry(NullHttpClient, LogLevel.Error, error));
       throw error;
     }
-    this.HttpClient.DefaultRequestHeaders.forEach(element => {
-      xhr.setRequestHeader(element.key, element.value);
-    });
+
+    for (const key in this.HttpClient.DefaultRequestHeaders) {
+      const value = this.HttpClient.DefaultRequestHeaders[key];
+      xhr.setRequestHeader(key, value);
+    }
+
     if (additionalHeaders) {
-      additionalHeaders.forEach(element => {
-        xhr.setRequestHeader(element.key, element.value);
-      });
+      for (const key in additionalHeaders) {
+        const value = additionalHeaders[key];
+        xhr.setRequestHeader(key, value);
+      }
     }
   }
 }

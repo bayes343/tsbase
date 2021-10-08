@@ -1,4 +1,3 @@
-import { KeyValue } from '../../TypeLiterals';
 import { HttpStatusCode } from '../HttpStatusCode';
 import { LogEntry, Logger, LogLevel } from '../../Utility/Logger/module';
 import { BadStatusCode } from './XhrRequestHandler/XhrRequestHandler';
@@ -15,7 +14,7 @@ export class HttpResponseMessage {
   /**
    * Headers returned by the server responding to the request
    */
-  public Headers = new Array<KeyValue>();
+  public Headers: Record<string, string> = {};
 
   constructor(
     /**

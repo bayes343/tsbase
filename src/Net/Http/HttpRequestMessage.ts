@@ -1,4 +1,3 @@
-import { KeyValue } from '../../TypeLiterals';
 import { Strings } from '../../System/Strings';
 import { HttpMethod } from '../HttpMethod';
 
@@ -13,8 +12,8 @@ export class HttpRequestMessage {
   /**
    * Additional headers to apply to this request when sent
    */
-  public Headers = new Array<KeyValue>();
-  public Properties = new Array<KeyValue>();
+  public Headers: Record<string, string> = {};
+  public Properties: Record<string, string> = {};
 
   constructor(
     /**

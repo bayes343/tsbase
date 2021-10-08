@@ -27,7 +27,7 @@ describe('HttpClient', () => {
     setupMockXhrRequestHander(mockXhrRequestHandler, OkRequest, BadRequest);
 
     classUnderTest = new HttpClient(mockXhrRequestHandler.Object);
-    classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
+    classUnderTest.DefaultRequestHeaders['Content-Type'] = 'application/json';
     classUnderTest.BaseAddress = 'https://fake.com';
   });
 
@@ -84,7 +84,7 @@ describe('HttpClient', () => {
 
     const request2 = new HttpRequestMessage();
     request2.RequestUri = 'ok';
-    request2.Headers.push({ key: 'fake', value: 'header' });
+    request2.Headers['fake'] = 'header';
     const response2 = await classUnderTest.SendAsync(request2);
     expect(response2.Content).toEqual('OK');
   });

@@ -1,7 +1,6 @@
 import { HttpResponseMessage } from './HttpResponseMessage';
 import { HttpMethod } from '../HttpMethod';
 import { IXhrRequestHandler } from './IXhrRequestHandler';
-import { KeyValue } from '../../TypeLiterals';
 import { HttpRequestMessage } from './HttpRequestMessage';
 import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
 import { Strings } from '../../System/Strings';
@@ -15,7 +14,7 @@ export class HttpClient {
   /**
    * Gets the headers which should be sent with each request.
    */
-  public DefaultRequestHeaders = new Array<KeyValue>();
+  public DefaultRequestHeaders: Record<string, string> = {};
   /**
    * Gets or sets the time in seconds to wait before the request times out.
    */
