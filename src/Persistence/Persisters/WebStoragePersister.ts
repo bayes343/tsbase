@@ -14,7 +14,7 @@ export class WebStoragePersister implements IPersister {
   ) {
     new Command(() => {
       if (typeof (Storage) === 'undefined') {
-        throw new Error(Errors.WebStorageUndefined);
+        throw new Error(Errors.DomStorageUndefined);
       }
     }).Execute();
   }
