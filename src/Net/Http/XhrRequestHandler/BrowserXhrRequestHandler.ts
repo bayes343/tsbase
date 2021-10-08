@@ -10,7 +10,7 @@ export class BrowserXhrRequestHandler extends XhrRequestHandler implements IXhrR
   GetXhrRequest(): XMLHttpRequest {
     if (!this.HttpClient) {
       const error = new Error(Errors.NullHttpClient);
-      Logger.Instance.Log(new LogEntry(Errors.Base64DecodingFailed, LogLevel.Error, error));
+      Logger.Instance.Log(new LogEntry(Errors.NullHttpClient, LogLevel.Error, error));
       throw error;
     }
     const xhr = new XMLHttpRequest();
