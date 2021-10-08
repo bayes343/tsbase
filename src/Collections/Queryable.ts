@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
-import { Regex } from '../Constants/Regex';
+import { Regex } from '../System/Regex';
+import { Strings } from '../System/Strings';
 import { Errors } from '../Errors';
-import { Strings } from '../Functions/Strings';
 import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 export class Queryable<T> extends Array<T> {

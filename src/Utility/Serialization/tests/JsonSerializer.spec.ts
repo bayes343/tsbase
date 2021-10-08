@@ -1,6 +1,6 @@
 import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
-import { Strings } from '../../../Functions/Strings';
+import { Strings } from '../../../System/Strings';
 import { ISerializer } from '../ISerializer';
 
 //#region Fake classes for testing

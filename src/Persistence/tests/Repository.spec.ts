@@ -5,7 +5,7 @@ import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Result } from '../../Patterns/Result/Result';
-import { Strings } from '../../Functions/Strings';
+import { Strings } from '../../System/Strings';
 
 class Person {
   constructor(

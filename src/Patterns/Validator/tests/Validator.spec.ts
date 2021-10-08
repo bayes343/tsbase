@@ -1,7 +1,7 @@
 import { IValidation } from '../IValidation';
 import { Validator } from '../Validator';
 import { Result } from '../../Result/Result';
-import { Strings } from '../../../Functions/Strings';
+import { Strings } from '../../../System/Strings';
 
 class Person {
   constructor(

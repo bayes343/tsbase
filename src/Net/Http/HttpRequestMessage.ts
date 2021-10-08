@@ -1,5 +1,5 @@
 import { KeyValue } from '../../TypeLiterals';
-import { Strings } from '../../Functions/Strings';
+import { Strings } from '../../System/Strings';
 import { HttpMethod } from '../HttpMethod';
 
 /**

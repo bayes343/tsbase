@@ -1,4 +1,4 @@
-import { Strings } from '../../../Functions/Strings';
+import { Strings } from '../../../System/Strings';
 import { Observable } from '../Observable';
 
 class TestClass {

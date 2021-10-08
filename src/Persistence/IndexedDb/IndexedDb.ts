@@ -1,4 +1,4 @@
-import { DoUntil } from '../../Functions/DoUntil';
+import { Until } from '../../Utility/Timers/Until';
 import { AsyncCommand, AsyncQuery } from '../../Patterns/CommandQuery/module';
 import { GenericResult, Result } from '../../Patterns/Result/module';
 import { IIndexedDb } from './IIndexedDb';
@@ -29,7 +29,7 @@ export class IndexedDb implements IIndexedDb {
         const openRequest = indexedDB.open(this.Name, this.Version);
         this.setOpenRequestHandlers(openRequest, this.migrations);
 
-        await DoUntil(() => this.Connected);
+        await Until(() => this.Connected);
         return this.database;
       }
     }).Execute();
@@ -80,7 +80,7 @@ export class IndexedDb implements IIndexedDb {
         };
       }
 
-      await DoUntil(() => complete);
+      await Until(() => complete);
       return result;
     }).Execute();
   }
@@ -100,7 +100,7 @@ export class IndexedDb implements IIndexedDb {
         complete = true;
       };
 
-      await DoUntil(() => complete);
+      await Until(() => complete);
       return result;
     }).Execute();
   }
@@ -165,7 +165,7 @@ export class IndexedDb implements IIndexedDb {
       command(transaction);
       transaction.oncomplete = () => complete = true;
 
-      await DoUntil(() => complete);
+      await Until(() => complete);
     }).Execute();
   }
 }

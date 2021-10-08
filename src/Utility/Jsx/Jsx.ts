@@ -1,4 +1,4 @@
-import { Guid } from '../../Functions/Guid';
+import { Guid } from '../../System/Guid';
 import { DomEvents, EventTypes } from './EventTypes';
 
 const asap = (func: () => void) => {

@@ -1,5 +1,5 @@
 import { TestHelpers } from 'tsmockit';
-import { Strings } from '../../../Functions/Strings';
+import { Strings } from '../../../System/Strings';
 import { Jsx, JsxRenderer } from '../Jsx';
 
 describe('JsxRenderer', () => {

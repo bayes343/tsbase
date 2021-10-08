@@ -1,22 +1,8 @@
-/**
- * String helper class
- */
 export class Strings {
   private constructor() { }
 
-  /**
-   * Returns an empty string: ''
-   */
-  public static get Empty(): string {
-    return '';
-  }
-
-  /**
-   * Returns a single space: ' '
-   */
-  public static get Space(): string {
-    return ' ';
-  }
+  public static readonly Empty = '';
+  public static readonly Space = ' ';
 
   /**
    * Returns the camel cased version of the given string

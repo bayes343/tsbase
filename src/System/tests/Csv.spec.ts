@@ -1,4 +1,4 @@
-import { Csv } from '../Csv';
+import { Csv } from '../../System/Csv';
 
 describe('Csv', () => {
   // eslint-disable-next-line max-len

@@ -4,7 +4,7 @@ import { HttpMethod } from '../../HttpMethod';
 import { Mock } from 'tsmockit';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
 import { HttpResponseMessage } from '../HttpResponseMessage';
-import { Strings } from '../../../Functions/Strings';
+import { Strings } from '../../../System/Strings';
 
 describe('HttpClient', () => {
   const mockXhrRequestHandler = new Mock<IXhrRequestHandler>();

@@ -1,4 +1,4 @@
-import { Guid } from '../../Functions/Guid';
+import { Guid } from '../../System/Guid';
 import { AsyncCommand } from '../CommandQuery/AsyncCommand';
 import { BaseObservable } from './BaseObservable';
 import { IAsyncObservable } from './IAsyncObservable';

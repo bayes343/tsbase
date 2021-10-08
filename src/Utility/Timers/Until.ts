@@ -1,23 +1,25 @@
+const tenSeconds = 10000;
+
 /**
- * Executes the given function until it returns true
- * @param func
+ * Wait until the condition is met or the given limit is reached (whichever is first).
+ * @param condition
  * @param interval
- * @param limit - an optional maximum elapsed time/cycles constraint
+ * @param limit
  */
-export function DoUntil(
-  func: () => boolean,
+export function Until(
+  condition: () => boolean,
   interval = 0,
-  limit?: number
+  limit = tenSeconds
 ): Promise<boolean> {
   return new Promise<boolean>((resolve) => {
     let conditionMet = false;
     let elapsedTime = 0;
-    const enabled = () => !conditionMet && (!limit || elapsedTime < limit);
+    const enabled = () => !conditionMet && elapsedTime < limit;
 
     const executer = setInterval(async () => {
       elapsedTime += (interval || 1);
       if (enabled()) {
-        conditionMet = func();
+        conditionMet = condition();
       } else {
         clearInterval(executer);
         resolve(conditionMet);

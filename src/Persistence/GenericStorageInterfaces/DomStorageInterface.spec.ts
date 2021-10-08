@@ -1,5 +1,5 @@
 import { DomStorageMode, DomStorageInterface } from './DomStorageInterface';
-import { Strings } from '../../Functions/Strings';
+import { Strings } from '../../System/Strings';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorageInterface } from './IGenericStorageInterface';
 

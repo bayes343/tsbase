@@ -2,7 +2,7 @@ import { HttpClient } from '../Net/Http/HttpClient';
 import { Repository } from './Repository';
 import { HttpResponseMessage } from '../Net/Http/HttpResponseMessage';
 import { WebStoragePersister } from './Persisters/WebStoragePersister';
-import { Strings } from '../Functions/Strings';
+import { Strings } from '../System/Strings';
 
 class HttpUriResponse {
   constructor(

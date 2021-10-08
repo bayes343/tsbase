@@ -4,7 +4,7 @@ import { HttpResponseMessage } from '../../Net/Http/HttpResponseMessage';
 import { HttpMethod } from '../../Net/HttpMethod';
 import { Mock } from 'tsmockit';
 import { IXhrRequestHandler } from '../../Net/Http/IXhrRequestHandler';
-import { Strings } from '../../Functions/Strings';
+import { Strings } from '../../System/Strings';
 
 describe('CachedHttpClient', () => {
   const OkRequest = new HttpResponseMessage('OK', { Code: 200, Text: 'OK' });
