@@ -1,5 +1,11 @@
+/**
+ * Executes the given function until it returns true
+ * @param func
+ * @param interval
+ * @param limit - an optional maximum elapsed time/cycles constraint
+ */
 export function DoUntil(
-  condition: () => boolean,
+  func: () => boolean,
   interval = 0,
   limit?: number
 ): Promise<boolean> {
@@ -11,7 +17,7 @@ export function DoUntil(
     const executer = setInterval(async () => {
       elapsedTime += (interval || 1);
       if (enabled()) {
-        conditionMet = condition();
+        conditionMet = func();
       } else {
         clearInterval(executer);
         resolve(conditionMet);
