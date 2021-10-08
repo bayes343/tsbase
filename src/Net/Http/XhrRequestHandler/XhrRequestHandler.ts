@@ -5,8 +5,11 @@ import { HttpMethod } from '../../HttpMethod';
 import { HttpRequestMessage } from '../HttpRequestMessage';
 import { KeyValue } from '../../../TypeLiterals';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
-import { Errors } from '../../../Errors';
 import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
+
+export const BadStatusCode = 'BadStatusCode';
+export const NullHttpClient = 'NullHttpClient - If overriding the default XhrRequestHandler, ensure that you set the \
+HttpClient property to the HttpClient instance the handler belongs to.';
 
 const BadRequest = new HttpResponseMessage(
   'BadRequest is sent when no other error is applicable, or if the exact error is unknown or does not have \
@@ -58,8 +61,8 @@ export abstract class XhrRequestHandler implements IXhrRequestHandler {
 
   private setRequestHeaders(xhr: XMLHttpRequest, additionalHeaders?: Array<KeyValue>): void {
     if (!this.HttpClient) {
-      const error = new Error(Errors.NullHttpClient);
-      Logger.Instance.Log(new LogEntry(Errors.NullHttpClient, LogLevel.Error, error));
+      const error = new Error(NullHttpClient);
+      Logger.Instance.Log(new LogEntry(NullHttpClient, LogLevel.Error, error));
       throw error;
     }
     this.HttpClient.DefaultRequestHeaders.forEach(element => {

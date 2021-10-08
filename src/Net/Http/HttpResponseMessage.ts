@@ -1,7 +1,7 @@
 import { KeyValue } from '../../TypeLiterals';
-import { Errors } from '../../Errors';
 import { HttpStatusCode } from '../HttpStatusCode';
 import { LogEntry, Logger, LogLevel } from '../../Utility/Logger/module';
+import { BadStatusCode } from './XhrRequestHandler/XhrRequestHandler';
 
 /**
  * Abstracts the response from an http request
@@ -36,8 +36,8 @@ export class HttpResponseMessage {
   public EnsureSuccessStatusCode(): void {
     if (!this.IsSuccessStatusCode) {
       const error = new Error(
-        `${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
-      Logger.Instance.Log(new LogEntry(Errors.BadStatusCode, LogLevel.Error, error));
+        `${BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
+      Logger.Instance.Log(new LogEntry(BadStatusCode, LogLevel.Error, error));
       throw error;
     }
   }

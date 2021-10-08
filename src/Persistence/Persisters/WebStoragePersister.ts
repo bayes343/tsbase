@@ -1,8 +1,8 @@
 import { IPersister } from './IPersister';
-import { Errors } from '../../Errors';
 import { Command } from '../../Patterns/CommandQuery/Command';
 
 type StorageType = 'local' | 'session';
+const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersister since, \"Storage\" is not defined';
 
 /**
  * Persists data using the html WebStorage apis (local and session)
@@ -14,7 +14,7 @@ export class WebStoragePersister implements IPersister {
   ) {
     new Command(() => {
       if (typeof (Storage) === 'undefined') {
-        throw new Error(Errors.DomStorageUndefined);
+        throw new Error(DomStorageUndefined);
       }
     }).Execute();
   }

@@ -1,10 +1,8 @@
 import { IPersister } from './Persisters/IPersister';
 import { Queryable } from '../Collections/Queryable';
 import { ISerializer } from '../Utility/Serialization/ISerializer';
-import { Errors } from '../Errors';
 import { Validator } from '../Patterns/Validator/Validator';
 import { Result } from '../Patterns/Result/Result';
-import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 import { Strings } from '../System/Strings';
 
 /**
@@ -120,14 +118,8 @@ export class Repository<T> extends Queryable<T> {
     const classInstances = new Array<T>();
 
     initialData.forEach(element => {
-      if (this.serializer && this.serializeAs) {
-        classInstances.push(this.serializer.Serialize(this.serializeAs, element));
-      } else {
-        const error = new Error(
-          `${Errors.InvalidOperation} - cannot attempt serialization without a serializer and a class constructor`);
-        Logger.Instance.Log(new LogEntry(Errors.InvalidOperation, LogLevel.Error, error));
-        throw error;
-      }
+      classInstances.push((this.serializer as ISerializer)
+        .Serialize((this.serializeAs as { new(): T; }), element));
     });
 
     return Queryable.From(classInstances);

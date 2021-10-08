@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import { Regex } from '../System/Regex';
 import { Strings } from '../System/Strings';
-import { Errors } from '../Errors';
 import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
 
 export class Queryable<T> extends Array<T> {
@@ -143,11 +142,9 @@ export class Queryable<T> extends Array<T> {
    * Returns the element with the minimum value in a sequence of values.
    * @param func
    */
-  public Min(func: (item: T) => any = item => item): T {
+  public Min(func: (item: T) => any = item => item): T | null {
     if (this.length < 1) {
-      const error = Error(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
-      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
-      throw error;
+      return null;
     }
 
     return this.reduce<T>(
@@ -160,11 +157,9 @@ export class Queryable<T> extends Array<T> {
    * Returns the element with the maximum value in a sequence of values.
    * @param func
    */
-  public Max(func: (item: T) => any = item => item): T {
+  public Max(func: (item: T) => any = item => item): T | null {
     if (this.length < 1) {
-      const error = new Error(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
-      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
-      throw error;
+      return null;
     }
 
     return this.reduce<T>(
@@ -177,20 +172,24 @@ export class Queryable<T> extends Array<T> {
  * Computes the average of a sequence of numeric values, or the average result of the given function
  * @param func
  */
-  public Average(func?: (item: T) => number): number {
-    if (this.length >= 1) {
-      let average = 0;
-      if (func) {
-        average = this.Sum(func) / this.length;
-      } else {
-        average = this.Sum() / this.length;
+  public Average(func?: (item: T) => number): number | null {
+    try {
+      if (this.length >= 1) {
+        let average = 0;
+
+        if (func) {
+          average = (this.Sum(func) ?? 0) / this.length;
+        } else {
+          average = (this.Sum() ?? 0) / this.length;
+        }
+
+        return average;
       }
-      return average;
-    } else {
-      const error = new Error(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
-      Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
-      throw error;
+    } catch (error) {
+      Logger.Instance.Log(new LogEntry('Failed to calculate average', LogLevel.Error, error as Error));
     }
+
+    return null;
   }
 
 
@@ -198,24 +197,29 @@ export class Queryable<T> extends Array<T> {
    * Computes the sum of a sequence of numeric values, or the sum result of the given function
    * @param func
    */
-  public Sum(func?: (item: T) => number): number {
-    let sum = 0;
-    if (func) {
-      this.forEach(element => {
-        sum += func(element);
-      });
-    } else {
-      this.forEach(element => {
-        const tNumber = parseFloat((element as {}).toString());
-        if (isNaN(tNumber)) {
-          const error = new Error(`${Errors.InvalidOperation} - Could not parse \'${element}\' as a number`);
-          Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
-          throw error;
-        }
-        sum += tNumber;
-      });
+  public Sum(func?: (item: T) => number): number | null {
+    try {
+      let sum = 0;
+
+      if (func) {
+        this.forEach(element => {
+          sum += func(element);
+        });
+      } else {
+        this.forEach(element => {
+          const tNumber = parseFloat((element as {}).toString());
+          if (isNaN(tNumber)) {
+            throw new Error(`Sum failed - \"${tNumber}\" is not a number.`);
+          }
+          sum += tNumber;
+        });
+      }
+
+      return sum;
+    } catch (error) {
+      Logger.Instance.Log(new LogEntry((error as Error).message, LogLevel.Error, error as Error));
+      return null;
     }
-    return sum;
   }
 
 

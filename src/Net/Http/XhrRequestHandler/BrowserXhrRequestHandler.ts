@@ -1,6 +1,5 @@
-import { XhrRequestHandler } from './XhrRequestHandler';
+import { NullHttpClient, XhrRequestHandler } from './XhrRequestHandler';
 import { IXhrRequestHandler } from '../IXhrRequestHandler';
-import { Errors } from '../../../Errors';
 import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 
 /**
@@ -9,8 +8,8 @@ import { LogEntry, Logger, LogLevel } from '../../../Utility/Logger/module';
 export class BrowserXhrRequestHandler extends XhrRequestHandler implements IXhrRequestHandler {
   GetXhrRequest(): XMLHttpRequest {
     if (!this.HttpClient) {
-      const error = new Error(Errors.NullHttpClient);
-      Logger.Instance.Log(new LogEntry(Errors.NullHttpClient, LogLevel.Error, error));
+      const error = new Error(NullHttpClient);
+      Logger.Instance.Log(new LogEntry(NullHttpClient, LogLevel.Error, error));
       throw error;
     }
     const xhr = new XMLHttpRequest();

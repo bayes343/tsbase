@@ -11,4 +11,3 @@ export * from './Utility/module';
 
 // Other
 export * from './TypeLiterals';
-export * from './Errors';

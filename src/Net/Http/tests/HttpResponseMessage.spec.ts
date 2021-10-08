@@ -1,5 +1,5 @@
 import { HttpResponseMessage } from '../HttpResponseMessage';
-import { Errors } from '../../../Errors';
+import { BadStatusCode } from '../XhrRequestHandler/XhrRequestHandler';
 
 describe('HttpResponseMessage', () => {
   let classUnderTest: HttpResponseMessage;
@@ -24,7 +24,7 @@ describe('HttpResponseMessage', () => {
     expect(() => {
       classUnderTest.EnsureSuccessStatusCode();
     }).toThrowError(
-      `${Errors.BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
+      `${BadStatusCode} - Status code does not indicate success, and \"EnsureSuccessStatusCode\" was called.`);
   });
 
 });

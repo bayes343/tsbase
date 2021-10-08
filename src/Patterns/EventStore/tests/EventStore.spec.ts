@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
-import { Errors } from '../../../Errors';
-import { Strings } from '../../../public_api';
-import { EventStore, IEventStore } from '../module';
+import { Strings } from '../../../System/Strings';
+import { EventStore, IEventStore, NoTransactionToRedo, NoTransactionToUndo, StateChangeUnnecessary } from '../module';
 
 enum StatePaths { One = 'one' }
 
@@ -76,13 +75,13 @@ describe('EventStore', () => {
 
     expect(changeResult.IsSuccess).toBeTruthy();
     expect(noChangeResult.IsSuccess).toBeFalsy();
-    expect(noChangeResult.ErrorMessages).toContain(Errors.StateChangeUnnecessary);
+    expect(noChangeResult.ErrorMessages).toContain(StateChangeUnnecessary);
   });
 
   it('should return a failed result for an undo when there is no state to undo', () => {
     const result = classUnderTest.Undo();
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages).toContain(Errors.NoTransactionToUndo);
+    expect(result.ErrorMessages).toContain(NoTransactionToUndo);
   });
 
   it('should undo state change(s)', () => {
@@ -105,7 +104,7 @@ describe('EventStore', () => {
   it('should return a failed result for an redo when there is no state to redo', () => {
     const result = classUnderTest.Redo();
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages).toContain(Errors.NoTransactionToRedo);
+    expect(result.ErrorMessages).toContain(NoTransactionToRedo);
   });
 
   it('should redo a state change that was voided (via undo)', () => {
@@ -138,7 +137,7 @@ describe('EventStore', () => {
 
     expect(classUnderTest.GetStateAt<string>(StatePaths.One)).toEqual('three');
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages).toContain(Errors.NoTransactionToRedo);
+    expect(result.ErrorMessages).toContain(NoTransactionToRedo);
   });
 
   it('should return the entire state when the root is requested via GetStateAt', () => {
