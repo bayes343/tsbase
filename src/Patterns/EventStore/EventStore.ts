@@ -24,17 +24,17 @@ export class EventStore<T> implements IEventStore<T> {
       this.cloneOf(dlv(this.state as object, path));
   }
 
-  public SetStateAt<T>(value: T, path: string): GenericResult<T> {
+  public SetStateAt<T>(path: string, state: T): GenericResult<T> {
     return new Query<T>(() => {
       const previousState = dlv(this.state, path);
 
-      if (JSON.stringify(previousState) !== JSON.stringify(value)) {
-        this.updateState<T>(path, previousState, value);
+      if (JSON.stringify(previousState) !== JSON.stringify(state)) {
+        this.updateState<T>(path, previousState, state);
       } else {
         throw new Error(Errors.StateChangeUnnecessary);
       }
 
-      return this.cloneOf(value);
+      return this.cloneOf(state);
     }).Execute();
   }
 
