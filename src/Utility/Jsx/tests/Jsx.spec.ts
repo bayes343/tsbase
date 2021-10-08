@@ -155,7 +155,7 @@ describe('JsxRenderer', () => {
       attributes: {},
       children: [false as unknown as string]
     };
-    const expectedOuterHtml = '';
+    const expectedOuterHtml = Strings.Empty;
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 });

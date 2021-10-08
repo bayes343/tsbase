@@ -91,7 +91,7 @@ describe('Observable', () => {
   it('should immediately call new subscribers when content from last publish is available', () => {
     classUnderTest = new Observable<string>();
     classUnderTest.Publish('test');
-    let immediateValue = '';
+    let immediateValue = Strings.Empty;
 
     classUnderTest.Subscribe((content: string) => immediateValue = content);
 
@@ -100,16 +100,16 @@ describe('Observable', () => {
 
   it('should not immediately call new subscribers when content from last publish is not available', () => {
     classUnderTest = new Observable<string>();
-    let immediateValue = '';
+    let immediateValue = Strings.Empty;
 
     classUnderTest.Subscribe((content: string) => immediateValue = content);
 
-    expect(immediateValue).toEqual('');
+    expect(immediateValue).toEqual(Strings.Empty);
   });
 
   it('should call an order subscriber once but not more than once', () => {
     classUnderTest = new Observable<string>();
-    let immediateValue = '';
+    let immediateValue = Strings.Empty;
 
     classUnderTest.Order((content: string) => immediateValue = content);
     classUnderTest.Publish('test');
@@ -120,7 +120,7 @@ describe('Observable', () => {
 
   it('should call an order subscriber immediately if previously published content is available', () => {
     classUnderTest = new Observable<string>();
-    let immediateValue = '';
+    let immediateValue = Strings.Empty;
     classUnderTest.Publish('test');
 
     classUnderTest.Order((content: string) => immediateValue = content);
@@ -131,11 +131,11 @@ describe('Observable', () => {
 
   it('should not call an order subscriber immediately if given false for useCurrentIssue', () => {
     classUnderTest = new Observable<string>();
-    let immediateValue = '';
+    let immediateValue = Strings.Empty;
     classUnderTest.Publish('test');
 
     classUnderTest.Order((content: string) => immediateValue = content, false);
 
-    expect(immediateValue).toEqual('');
+    expect(immediateValue).toEqual(Strings.Empty);
   });
 });

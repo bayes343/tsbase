@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { Errors } from '../../../Errors';
+import { Strings } from '../../../public_api';
 import { EventStore, IEventStore } from '../module';
 
 enum StatePaths { One = 'one' }
@@ -36,14 +37,14 @@ describe('EventStore', () => {
   });
 
   it('should get state at a path with a current value', () => {
-    classUnderTest.SetStateAt('test', StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, 'test');
     const stateAtPath = classUnderTest.GetStateAt(StatePaths.One);
     expect(stateAtPath).toBeDefined();
   });
 
   it('should set state at a given path', () => {
     const newState = 'newState';
-    const setState = classUnderTest.SetStateAt(newState, StatePaths.One);
+    const setState = classUnderTest.SetStateAt(StatePaths.One, newState);
     expect(setState.Value).toEqual(newState);
   });
 
@@ -88,8 +89,8 @@ describe('EventStore', () => {
     let rootUpdate: any = undefined;
     classUnderTest.ObservableAt('').Subscribe(u => rootUpdate = u);
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
-    classUnderTest.SetStateAt('one', StatePaths.One);
-    classUnderTest.SetStateAt('two', StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, 'one');
+    classUnderTest.SetStateAt(StatePaths.One, 'two');
     expect(stateAtOne()).toEqual('two');
 
     classUnderTest.Undo();
@@ -109,8 +110,8 @@ describe('EventStore', () => {
 
   it('should redo a state change that was voided (via undo)', () => {
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
-    classUnderTest.SetStateAt('one', StatePaths.One);
-    classUnderTest.SetStateAt('two', StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, 'one');
+    classUnderTest.SetStateAt(StatePaths.One, 'two');
     expect(stateAtOne()).toEqual('two');
     expect(classUnderTest.GetLedger().length).toEqual(2);
     classUnderTest.Undo();
@@ -125,13 +126,13 @@ describe('EventStore', () => {
 
   it('should only allow redos up to the last non-voided transaction', () => {
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
-    classUnderTest.SetStateAt('one', StatePaths.One);
-    classUnderTest.SetStateAt('two', StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, 'one');
+    classUnderTest.SetStateAt(StatePaths.One, 'two');
     expect(stateAtOne()).toEqual('two');
     expect(classUnderTest.GetLedger().length).toEqual(2);
     classUnderTest.Undo();
     classUnderTest.Undo();
-    classUnderTest.SetStateAt('three', StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, 'three');
 
     const result = classUnderTest.Redo();
 
@@ -142,10 +143,10 @@ describe('EventStore', () => {
 
   it('should return the entire state when the root is requested via GetStateAt', () => {
     const oneState = { one: 'one' };
-    classUnderTest.SetStateAt(oneState, StatePaths.One);
+    classUnderTest.SetStateAt(StatePaths.One, oneState);
     const expected = JSON.stringify({ one: oneState });
 
-    const actual = JSON.stringify(classUnderTest.GetStateAt(''));
+    const actual = JSON.stringify(classUnderTest.GetStateAt(Strings.Empty));
 
     expect(actual).toEqual(expected);
   });
@@ -177,19 +178,19 @@ describe('EventStore', () => {
   const updatedPets = [{ name: 'Fido', species: 'Dog' }, { name: 'Whiskers', species: 'Cat' }];
 
   it('should maintain a transaction ledger of state changing events', () => {
-    classUnderTest.SetStateAt(house(), Paths.Root);
-    classUnderTest.SetStateAt(updatedFather, Paths.Father);
-    classUnderTest.SetStateAt(updatedPets, Paths.Pets);
+    classUnderTest.SetStateAt(Paths.Root, house());
+    classUnderTest.SetStateAt(Paths.Father, updatedFather);
+    classUnderTest.SetStateAt(Paths.Pets, updatedPets);
 
     expect(classUnderTest.GetLedger().length).toEqual(3);
   });
 
   it('should set and get state with nested objects', () => {
-    classUnderTest.SetStateAt(house(), Paths.Root);
+    classUnderTest.SetStateAt(Paths.Root, house());
     expect(JSON.stringify(classUnderTest.GetState())).toEqual(JSON.stringify((house())));
 
-    classUnderTest.SetStateAt(updatedFather, Paths.Father);
-    classUnderTest.SetStateAt(updatedPets, Paths.Pets);
+    classUnderTest.SetStateAt(Paths.Father, updatedFather);
+    classUnderTest.SetStateAt(Paths.Pets, updatedPets);
 
     expect(classUnderTest.GetLedger().length).toEqual(3);
     expect(JSON.stringify(classUnderTest.GetStateAt(Paths.Father))).toEqual(JSON.stringify(updatedFather));
@@ -197,7 +198,7 @@ describe('EventStore', () => {
   });
 
   it('should return a cloned object which does not affect the event store if mutated', () => {
-    const clonedState = classUnderTest.SetStateAt<House>(house(), Paths.Root).Value as House;
+    const clonedState = classUnderTest.SetStateAt<House>(Paths.Root, house()).Value as House;
     clonedState.address = 'test';
     expect((classUnderTest.GetState() as House).address).toEqual('123 some road');
   });
@@ -208,7 +209,7 @@ describe('EventStore', () => {
     classUnderTest.ObservableAt(Paths.Root).Subscribe(() => rootUpdates++);
     classUnderTest.ObservableAt(Paths.Family).Subscribe(() => familyUpdates++);
 
-    classUnderTest.SetStateAt(updatedFather, Paths.Father);
+    classUnderTest.SetStateAt(Paths.Father, updatedFather);
 
     expect(rootUpdates).toEqual(1);
     expect(familyUpdates).toEqual(1);
@@ -218,7 +219,7 @@ describe('EventStore', () => {
     let petsUpdates = 0;
     classUnderTest.ObservableAt(Paths.Pets).Subscribe(() => petsUpdates++);
 
-    classUnderTest.SetStateAt(updatedFather, Paths.Father);
+    classUnderTest.SetStateAt(Paths.Father, updatedFather);
 
     expect(petsUpdates).toEqual(0);
   });
@@ -229,7 +230,7 @@ describe('EventStore', () => {
     classUnderTest.ObservableAt(Paths.Father).Subscribe(() => fatherUpdates++);
     classUnderTest.ObservableAt(Paths.Pets).Subscribe(() => petsUpdates++);
 
-    classUnderTest.SetStateAt(house().family, Paths.Family);
+    classUnderTest.SetStateAt(Paths.Family, house().family);
 
     expect(fatherUpdates).toEqual(1);
     expect(petsUpdates).toEqual(1);
@@ -241,9 +242,9 @@ describe('EventStore', () => {
     classUnderTest.ObservableAt(Paths.Father).Subscribe(state => fatherUpdateState = state);
     classUnderTest.ObservableAt(Paths.Pets).Subscribe(state => petsUpdateState = state);
 
-    classUnderTest.SetStateAt(house(), Paths.Root);
-    classUnderTest.SetStateAt(updatedFather, Paths.Father);
-    classUnderTest.SetStateAt(updatedPets, Paths.Pets);
+    classUnderTest.SetStateAt(Paths.Root, house());
+    classUnderTest.SetStateAt(Paths.Father, updatedFather);
+    classUnderTest.SetStateAt(Paths.Pets, updatedPets);
 
     expect(JSON.stringify(fatherUpdateState)).toEqual(JSON.stringify(updatedFather));
     expect(JSON.stringify(petsUpdateState)).toEqual(JSON.stringify(updatedPets));

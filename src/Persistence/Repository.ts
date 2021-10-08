@@ -5,6 +5,7 @@ import { Errors } from '../Errors';
 import { Validator } from '../Patterns/Validator/Validator';
 import { Result } from '../Patterns/Result/Result';
 import { LogEntry, Logger, LogLevel } from '../Utility/Logger/module';
+import { Strings } from '../System/Strings';
 
 /**
  * An extension of the List<T> class that incorporates persistence functionality
@@ -25,7 +26,7 @@ export class Repository<T> extends Queryable<T> {
     };
   }
 
-  private savedData = { raw: '', referential: [] as Array<T> };
+  private savedData = { raw: Strings.Empty, referential: [] as Array<T> };
   private persister!: IPersister;
   private validator: Validator<T> = new Validator<T>([]);
   private serializer?: ISerializer;

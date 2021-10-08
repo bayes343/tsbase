@@ -2,6 +2,8 @@ import { Query } from '../Patterns/CommandQuery/Query';
 import { Strings } from './Strings';
 
 export class Csv {
+  private constructor() { }
+
   /**
    * Accepts a json object and returns the CSV string equivalent.
    * @param json

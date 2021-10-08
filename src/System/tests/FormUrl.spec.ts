@@ -38,7 +38,7 @@ describe('FormUrl', () => {
   });
 
   it('should return an empty object when decoding an empty string', () => {
-    const decodedEmptyString = FormUrl.DecodeToJson('');
+    const decodedEmptyString = FormUrl.DecodeToJson(Strings.Empty);
     expect(decodedEmptyString).toEqual({});
   });
 });

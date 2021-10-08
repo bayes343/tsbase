@@ -12,7 +12,7 @@ export class Strings {
   public static CamelCase(string: string): string {
     return string.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => {
       return index === 0 ? word.toLowerCase() : word.toUpperCase();
-    }).replace(/\s+/g, '');
+    }).replace(/\s+/g, Strings.Empty);
   }
 
   /**
@@ -24,7 +24,7 @@ export class Strings {
     return string
       .split(Strings.Space)
       .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
-      .join('');
+      .join(Strings.Empty);
   }
 
   /**

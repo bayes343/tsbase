@@ -177,7 +177,7 @@ describe('JsonSerializer', () => {
   });
 
   it('should parse a json key without acknowledging hyphens, capitalization, or spaces', () => {
-    class VerifyResponse { public Success = false; public ErrorCodes = ['']; }
+    class VerifyResponse { public Success = false; public ErrorCodes = [Strings.Empty]; }
     // eslint-disable-next-line max-len
     const jsonString = '{\n  "su-cc-ess": false,\n  "e rror-co des": [\n    "missing-input-response",\n    "missing-input-secret"\n  ]\n}';
     const json = JSON.parse(jsonString);

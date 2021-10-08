@@ -1,4 +1,5 @@
 import { Guid } from '../../System/Guid';
+import { Strings } from '../../System/Strings';
 import { DomEvents, EventTypes } from './EventTypes';
 
 const asap = (func: () => void) => {
@@ -28,7 +29,7 @@ export class JsxRenderer {
   public static RenderJsx(jsx: Jsx, mainDocument: Document | ShadowRoot = document): string {
     return JsxRenderer.transformJsxToHtml(jsx, mainDocument)
       .outerHTML
-      .replace(/<(f|.f)ragment>/g, '');
+      .replace(/<(f|.f)ragment>/g, Strings.Empty);
   }
 
   private static addElementEventListener(attribute: string, jsx: Jsx, element: HTMLElement, mainDocument: Document | ShadowRoot) {
