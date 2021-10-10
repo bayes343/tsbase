@@ -6,9 +6,9 @@ type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 export class HttpClient implements IHttpClient {
   private static instance: IHttpClient | null = null;
   public static Instance(fetchRef: Fetch = globalThis.fetch.bind(globalThis)): IHttpClient {
-    return this.instance || (this.instance = new HttpClient(fetchRef));
+    return HttpClient.instance || (HttpClient.instance = new HttpClient(fetchRef));
   }
-  public static Destroy = () => this.instance = null;
+  public static Destroy = () => HttpClient.instance = null;
 
   public DefaultRequestHeaders: Record<string, string> = {};
 

@@ -7,4 +7,8 @@ describe('HttpClient', () => {
   beforeEach(() => {
     classUnderTest = HttpClient.Instance();
   });
+
+  it('should construct', () => {
+    expect(classUnderTest).toBeDefined();
+  });
 });
