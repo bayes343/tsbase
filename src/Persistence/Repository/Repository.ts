@@ -1,9 +1,9 @@
 import { IPersister } from './Persisters/IPersister';
-import { Queryable } from '../Collections/Queryable';
-import { ISerializer } from '../Utility/Serialization/ISerializer';
-import { Validator } from '../Patterns/Validator/Validator';
-import { Result } from '../Patterns/Result/Result';
-import { Strings } from '../System/Strings';
+import { Queryable } from '../../Collections/Queryable';
+import { ISerializer } from '../../Utility/Serialization/ISerializer';
+import { Validator } from '../../Patterns/Validator/Validator';
+import { Result } from '../../Patterns/Result/Result';
+import { Strings } from '../../System/Strings';
 
 /**
  * An extension of the List<T> class that incorporates persistence functionality

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
-import { Repository } from '../Repository';
-import { WebStoragePersister } from '../Persisters/WebStoragePersister';
+import { Repository } from './Repository';
+import { WebStoragePersister } from './Persisters/WebStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';

@@ -1,5 +1,5 @@
 import { IPersister } from './IPersister';
-import { Command } from '../../Patterns/CommandQuery/Command';
+import { Command } from '../../../Patterns/CommandQuery/Command';
 
 type StorageType = 'local' | 'session';
 const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersister since, \"Storage\" is not defined';
