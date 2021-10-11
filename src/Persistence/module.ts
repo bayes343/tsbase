@@ -1,3 +1,5 @@
-export * from './GenericStorageInterfaces/module';
+export * from './GenericStorage/module';
 export * from './IndexedDb/module';
 export * from './Repository/module';
+export * from './Cache/module';
+export * from './CachedHttpClient/module';

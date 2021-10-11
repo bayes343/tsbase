@@ -28,7 +28,7 @@ function getMockFileSystemAdapter(): Mock<IFileSystemAdapter> {
 describe('FSPersister', () => {
   let mockPathResolver: Mock<IPathResolver>;
   let mockFileSystemAdapter: Mock<IFileSystemAdapter>;
-  let classUnderTest: FSPersister;
+  let classUnderTest: FSPersister<any>;
 
   beforeEach(() => {
     mockPathResolver = new Mock<IPathResolver>();

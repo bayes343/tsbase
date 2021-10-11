@@ -5,7 +5,7 @@ import { IPersister } from './IPersister';
 /**
  * Persists data using the node fs / path api
  */
-export class FSPersister implements IPersister {
+export class FSPersister<T> implements IPersister<T> {
   private get dir(): string {
     return this.pathResolver.resolve(this.localFilesDirectory);
   }

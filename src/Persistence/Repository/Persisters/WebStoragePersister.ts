@@ -1,5 +1,5 @@
-import { IPersister } from './IPersister';
 import { Command } from '../../../Patterns/CommandQuery/Command';
+import { IPersister } from './IPersister';
 
 type StorageType = 'local' | 'session';
 const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersister since, \"Storage\" is not defined';
@@ -7,7 +7,7 @@ const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersi
 /**
  * Persists data using the html WebStorage apis (local and session)
  */
-export class WebStoragePersister implements IPersister {
+export class WebStoragePersister<T> implements IPersister<T> {
   constructor(
     private key: string,
     private storageType: StorageType

@@ -5,7 +5,7 @@ describe('HttpClient', () => {
   let classUnderTest: IHttpClient;
 
   beforeEach(() => {
-    classUnderTest = HttpClient.Instance();
+    classUnderTest = new HttpClient();
   });
 
   it('should construct', () => {

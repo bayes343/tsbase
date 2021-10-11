@@ -4,15 +4,9 @@ import { HttpMethod } from './HttpMethod';
 type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export class HttpClient implements IHttpClient {
-  private static instance: IHttpClient | null = null;
-  public static Instance(fetchRef: Fetch = globalThis.fetch.bind(globalThis)): IHttpClient {
-    return HttpClient.instance || (HttpClient.instance = new HttpClient(fetchRef));
-  }
-  public static Destroy = () => HttpClient.instance = null;
-
   public DefaultRequestHeaders: Record<string, string> = {};
 
-  private constructor(private fetchRef: Fetch) { }
+  constructor(private fetchRef: Fetch = globalThis.fetch.bind(globalThis)) { }
 
   public async GetAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<Response> {
     return await this.getRequestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
@@ -40,7 +34,7 @@ export class HttpClient implements IHttpClient {
     return await response.json();
   }
 
-  private async getRequestResponse(
+  protected async getRequestResponse(
     uri: string,
     method: HttpMethod,
     body?: string,

@@ -1,7 +1,7 @@
-import { DomStorageMode, DomStorageInterface } from './DomStorageInterface';
-import { Strings } from '../../System/Strings';
-import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
-import { IGenericStorageInterface } from './IGenericStorageInterface';
+import { DomStorageMode, DomStorage } from '../DomStorage';
+import { Strings } from '../../../System/Strings';
+import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
+import { IGenericStorage } from '../IGenericStorage';
 
 class Car {
   constructor(
@@ -14,13 +14,13 @@ class Car {
   }
 }
 
-describe('DomStorageInterface', () => {
-  let classUnderTest: IGenericStorageInterface;
+describe('DomStorage', () => {
+  let classUnderTest: IGenericStorage;
   const key = 'test';
   const myCar = new Car('Mitsubishi', 'Lancer');
 
   beforeEach(() => {
-    classUnderTest = new DomStorageInterface(DomStorageMode.Session, new JsonSerializer());
+    classUnderTest = new DomStorage(DomStorageMode.Session, new JsonSerializer());
   });
 
   it('should construct', () => {
@@ -28,19 +28,19 @@ describe('DomStorageInterface', () => {
   });
 
   it('should set generic key value pairs in session storage', () => {
-    classUnderTest = new DomStorageInterface(DomStorageMode.Session);
+    classUnderTest = new DomStorage(DomStorageMode.Session);
     const result = classUnderTest.Set<Car>(key, myCar);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should set generic key value pairs in local storage', () => {
-    classUnderTest = new DomStorageInterface(DomStorageMode.Local);
+    classUnderTest = new DomStorage(DomStorageMode.Local);
     const result = classUnderTest.Set<Car>(key, myCar);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should get generic key value pairs in session storage', () => {
-    classUnderTest = new DomStorageInterface(DomStorageMode.Local);
+    classUnderTest = new DomStorage(DomStorageMode.Local);
     classUnderTest.Set<Car>(key, myCar);
 
     const result = classUnderTest.Get(Car, key);

@@ -25,13 +25,13 @@ export class Repository<T> extends Queryable<T> {
   }
 
   private savedData = { raw: Strings.Empty, referential: [] as Array<T> };
-  private persister!: IPersister;
+  private persister!: IPersister<T>;
   private validator: Validator<T> = new Validator<T>([]);
   private serializer?: ISerializer;
   private serializeAs?: { new(): T; };
 
   public static New<T>(
-    persister: IPersister,
+    persister: IPersister<T>,
     validator: Validator<T> = new Validator<T>([]),
     serializer?: ISerializer,
     serializeAs?: { new(): T; }
