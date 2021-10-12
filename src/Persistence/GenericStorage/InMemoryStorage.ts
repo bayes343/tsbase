@@ -1,21 +1,19 @@
 import { GenericResult, Result } from '../../Patterns/Result/module';
 import { Command } from '../../Patterns/CommandQuery/Command';
 import { Query } from '../../Patterns/CommandQuery/Query';
-import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from './IGenericStorage';
 
+/**
+ * Provides a generic interface for storing values in an in-memory Map object
+ */
 export class InMemoryStorage implements IGenericStorage {
   private storageMap = new Map<string, any>();
 
-  constructor(
-    private serializer = new JsonSerializer()
-  ) { }
-
-  public Get<T>(type: new () => T, key: string): GenericResult<T> {
+  public Get<T>(_type: new () => T, key: string): GenericResult<T> {
     return new Query((): T => {
       const value = this.storageMap.get(key);
       if (value) {
-        return this.serializer.Serialize(type, JSON.parse(value)) as T;
+        return value;
       } else {
         throw new Error(`Unable to retrieve \"${key}\"`);
       }

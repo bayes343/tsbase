@@ -5,6 +5,12 @@ import { CacheEntry } from './CacheEntry';
 import { ICache } from './ICache';
 
 export class Cache<T> implements ICache<T> {
+  /**
+   * @param storage the storage interface used to support caching
+   * @param cacheLife the amount of milliseconds after the cache is created till it is invalidated |
+   * leaving the default value (0) will result prevent any auto clearing of cache entries
+   * @param serializer
+   */
   constructor(
     private storage: IGenericStorage,
     private cacheLife = 0,

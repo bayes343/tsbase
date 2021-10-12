@@ -1,6 +1,9 @@
 import { HttpClient, HttpMethod } from '../../Net/Http/module';
 import { IGenericStorage } from '../module';
 
+/**
+ * An extension of HttpClient that uses a given storage interface to cache GET requests
+ */
 export class CachedHttpClient extends HttpClient {
   constructor(
     private storage: IGenericStorage
