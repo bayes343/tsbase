@@ -143,14 +143,12 @@ export class Queryable<T> extends Array<T> {
    * @param func
    */
   public Min(func: (item: T) => any = item => item): T | null {
-    if (this.length < 1) {
-      return null;
-    }
-
-    return this.reduce<T>(
-      (current: T, next: T) => func(current) < func(next) ? current : next,
-      this[0]
-    );
+    return this.length < 1 ?
+      null :
+      this.reduce<T>(
+        (current: T, next: T) => func(current) < func(next) ? current : next,
+        this[0]
+      );
   }
 
   /**
@@ -158,14 +156,12 @@ export class Queryable<T> extends Array<T> {
    * @param func
    */
   public Max(func: (item: T) => any = item => item): T | null {
-    if (this.length < 1) {
-      return null;
-    }
-
-    return this.reduce<T>(
-      (current: T, next: T) => func(current) > func(next) ? current : next,
-      this[0]
-    );
+    return this.length < 1 ?
+      null :
+      this.reduce<T>(
+        (current: T, next: T) => func(current) > func(next) ? current : next,
+        this[0]
+      );
   }
 
   /**

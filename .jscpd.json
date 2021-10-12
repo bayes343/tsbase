@@ -1,0 +1,12 @@
+{
+  "threshold": 1,
+  "reporters": [
+    "html",
+    "console",
+    "badge"
+  ],
+  "ignore": [
+    "**/*.spec.*"
+  ],
+  "absolute": true
+}
