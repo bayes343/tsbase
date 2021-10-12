@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { Repository } from './Repository';
-import { WebStoragePersister } from './Persisters/WebStoragePersister';
+import { DomStoragePersister } from './Persisters/DomStoragePersister';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { IValidation } from '../../Patterns/Validator/IValidation';
@@ -35,7 +35,7 @@ describe('Repository', () => {
 
   beforeEach(() => {
     classUnderTest = Repository.New<string>(
-      new WebStoragePersister('test', 'local'),
+      new DomStoragePersister('test', 'local'),
       new Validator([new StringValidator()])
     );
   });
@@ -79,7 +79,7 @@ describe('Repository', () => {
 
   it('should validate unsaved items before saving changes', () => {
     classUnderTest = Repository.New<string>(
-      new WebStoragePersister('test', 'local'),
+      new DomStoragePersister('test', 'local'),
       new Validator([new StringValidator()])
     );
     classUnderTest.push('fake', 'test');
@@ -108,7 +108,7 @@ describe('Repository', () => {
     db.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = Repository.New<string>(
-      new WebStoragePersister('test', 'local')
+      new DomStoragePersister('test', 'local')
     );
     expect(dupRepo.length).toEqual(4);
     dupRepo.PurgeData();
@@ -117,7 +117,7 @@ describe('Repository', () => {
   it('should persist data through a persister - session', () => {
     // add data
     classUnderTest = Repository.New<string>(
-      new WebStoragePersister('test', 'session')
+      new DomStoragePersister('test', 'session')
     );
     const db = classUnderTest;
     db.push('Test 1');
@@ -127,7 +127,7 @@ describe('Repository', () => {
     db.SaveChanges();
     // verify new instance with same config has data
     const dupRepo = Repository.New<string>(
-      new WebStoragePersister('test', 'session')
+      new DomStoragePersister('test', 'session')
     );
     expect(dupRepo.length).toEqual(4);
     db.PurgeData();
@@ -136,7 +136,7 @@ describe('Repository', () => {
 
   it('should initialize with serialized classes if serializer and template constructor given', () => {
     classUnderTest = Repository.New<Person>(
-      new WebStoragePersister('test', 'session'),
+      new DomStoragePersister('test', 'session'),
       new Validator([]),
       new JsonSerializer(),
       Person
@@ -149,7 +149,7 @@ describe('Repository', () => {
     db.SaveChanges();
 
     const dupRepo = Repository.New(
-      new WebStoragePersister('test', 'session'),
+      new DomStoragePersister('test', 'session'),
       new Validator([]),
       new JsonSerializer(),
       Person

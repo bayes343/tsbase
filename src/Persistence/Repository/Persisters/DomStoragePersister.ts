@@ -7,7 +7,7 @@ const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersi
 /**
  * Persists data using the html WebStorage apis (local and session)
  */
-export class WebStoragePersister<T> implements IPersister<T> {
+export class DomStoragePersister<T> implements IPersister<T> {
   constructor(
     private key: string,
     private storageType: StorageType

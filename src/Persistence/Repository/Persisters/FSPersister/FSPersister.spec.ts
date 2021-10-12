@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 import { Mock, Times } from 'tsmockit';
-import { IFileSystemAdapter } from '../IFileSystemAdapter';
-import { FSPersister } from '../FSPersister';
+import { IFileSystemAdapter } from './IFileSystemAdapter';
+import { FSPersister } from './FSPersister';
 import { Strings } from '../../../../System/Strings';
-import { IPathResolver } from '../IPathResolver';
+import { IPathResolver } from './IPathResolver';
 
 const testFileDir = 'dir/';
 const testFilePath = 'testPath';
