@@ -10,7 +10,7 @@ export class AsyncQuery<T> implements IAsyncQuery<T> {
 
     try {
       result.Value = await this.AsyncQuery();
-    } catch (error) {
+    } catch (error: any) {
       result.ErrorMessages.push(error.message);
       Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
     }
