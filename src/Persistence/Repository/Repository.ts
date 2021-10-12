@@ -1,13 +1,13 @@
-import { IPersister } from './Persisters/IPersister';
 import { Queryable } from '../../Collections/Queryable';
-import { ISerializer } from '../../Utility/Serialization/ISerializer';
-import { Validator } from '../../Patterns/Validator/Validator';
 import { Result } from '../../Patterns/Result/Result';
+import { Validator } from '../../Patterns/Validator/Validator';
 import { Strings } from '../../System/Strings';
+import { ISerializer } from '../../Utility/Serialization/ISerializer';
+import { IPersister } from './Persisters/IPersister';
 
 /**
- * An extension of the List<T> class that incorporates persistence functionality
- * provided by a class implementing IPersistable.  Previously persisted data is
+ * An extension of Queryable<T> that incorporates persistence functionality
+ * provided by a class implementing IPersister.  Previously persisted data is
  * loaded on instantiation using the default persister's "Retrieve" method.
  */
 export class Repository<T> extends Queryable<T> {

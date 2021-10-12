@@ -1,6 +1,6 @@
+import { IPersister } from '../IPersister';
 import { IPathResolver } from './IPathResolver';
 import { IFileSystemAdapter } from './IFileSystemAdapter';
-import { IPersister } from './IPersister';
 
 /**
  * Persists data using the node fs / path api

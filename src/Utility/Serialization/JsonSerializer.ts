@@ -139,5 +139,4 @@ export class JsonSerializer implements ISerializer {
 
     return values;
   }
-
 }

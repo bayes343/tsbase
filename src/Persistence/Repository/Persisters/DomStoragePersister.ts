@@ -5,7 +5,7 @@ type StorageType = 'local' | 'session';
 const DomStorageUndefined = 'DomStorageUndefined - Unable to use DomStoragePersister since, \"Storage\" is not defined';
 
 /**
- * Persists data using the html WebStorage apis (local and session)
+ * Persists data using the html DomStorage apis (local and session)
  */
 export class DomStoragePersister<T> implements IPersister<T> {
   constructor(
@@ -19,10 +19,7 @@ export class DomStoragePersister<T> implements IPersister<T> {
     }).Execute();
   }
 
-  /**
-   * Delete all data previously stored in WebStorage
-   */
-  Purge(): void {
+  public Purge(): void {
     if (this.storageType === 'session') {
       window.sessionStorage.removeItem(this.key);
     } else {
@@ -30,20 +27,13 @@ export class DomStoragePersister<T> implements IPersister<T> {
     }
   }
 
-  /**
-   * Retrieve the collection of data previously stored in WebStorage
-   */
-  Retrieve(): Array<any> {
+  public Retrieve(): Array<any> {
     let storedData = this.getItemFromDomStorage(this.key);
     storedData = JSON.parse(storedData);
     return storedData ? storedData : [];
   }
 
-  /**
-   * Persist the given collection in WebStorage
-   * @param items
-   */
-  Persist(items: Array<any>): void {
+  public Persist(items: Array<any>): void {
     const stringifiedItems = JSON.stringify(items);
     this.Purge();
     this.saveItemToDomStorage(this.key, stringifiedItems);
@@ -66,5 +56,4 @@ export class DomStoragePersister<T> implements IPersister<T> {
     }
     return item;
   }
-
 }

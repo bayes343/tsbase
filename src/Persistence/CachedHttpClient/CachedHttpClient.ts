@@ -1,12 +1,12 @@
 import { HttpClient, HttpMethod } from '../../Net/Http/module';
-import { IGenericStorage } from '../module';
+import { ICache } from '../Cache/module';
 
 /**
- * An extension of HttpClient that uses a given storage interface to cache GET requests
+ * An extension of HttpClient that uses a given cache and storage interface
  */
 export class CachedHttpClient extends HttpClient {
   constructor(
-    private storage: IGenericStorage
+    private cache: ICache<any>
   ) {
     super();
   }
@@ -20,13 +20,13 @@ export class CachedHttpClient extends HttpClient {
     const getFreshResponse = () => super.getRequestResponse(uri, method, body, additionalHeaders);
 
     if (method === HttpMethod.Get) {
-      const cachedResponse = this.storage.Get(Response, uri);
+      const cachedResponse = this.cache.Get(Response, uri);
 
       if (cachedResponse && cachedResponse.Value) {
         return cachedResponse.Value;
       } else {
         const freshResponse = getFreshResponse();
-        this.storage.Set(uri, freshResponse);
+        this.cache.Add(uri, freshResponse);
 
         return freshResponse;
       }
