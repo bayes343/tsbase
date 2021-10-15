@@ -1,3 +1,13 @@
+import { HttpMethod } from './HttpMethod';
+
+export type RestResponse = {
+  ok: boolean,
+  status: number,
+  statusText: string,
+  body: string | object,
+  headers: Headers
+};
+
 export interface IHttpClient {
   /**
    * Gets the headers which should be sent with each request.
@@ -5,42 +15,44 @@ export interface IHttpClient {
   DefaultRequestHeaders: Record<string, string>;
 
   /**
+   *
+   * @param uri
+   * @param method
+   * @param body
+   * @param additionalHeaders
+   */
+  Request(uri: string, method: HttpMethod, body?: string, additionalHeaders?: Record<string, string>): Promise<Response>;
+
+  /**
    * Send a GET request to the specified Uri as an asynchronous operation.
    * @param uri
    */
-  GetAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<Response>;
+  Get(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
 
   /**
    * Send a PATCH request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  PatchAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response>;
+  Patch(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
 
   /**
    * Send a POST request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  PostAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response>;
+  Post(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
 
   /**
    * Send a PUT request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  PutAsync(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<Response>;
+  Put(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
 
   /**
    * Send a DELETE request to the specified Uri as an asynchronous operation.
    * @param uri
    */
-  DeleteAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<Response>;
-
-  /**
-   * Send a GET request to the specified Uri as an asynchronous operation
-   * and have the response body returned as a string.
-   * @param uri
-   */
-  GetStringAsync(uri: string, additionalHeaders?: Record<string, string>): Promise<string>;
+  Delete(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
 }

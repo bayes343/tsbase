@@ -2,6 +2,15 @@
 import { Queryable } from '../Queryable';
 
 describe('Queryable', () => {
+  it('should construct with protected constructor', () => {
+    class TestQueryable<T> extends Queryable<T> {
+      constructor() {
+        super();
+      }
+    }
+    expect(new TestQueryable<any>()).toBeDefined();
+  });
+
   it('should construct with factory method', () => {
     const q = Queryable.From([1, 2, 3]);
 
@@ -143,7 +152,7 @@ describe('Queryable', () => {
     const averageLength = q.Average(item => item.name.length);
     expect(averageLength).toEqual(5.25);
 
-    // error
+    // null response
     q = Queryable.From([]);
     expect(q.Average()).toBeNull();
   });

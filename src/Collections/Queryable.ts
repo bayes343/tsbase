@@ -165,31 +165,6 @@ export class Queryable<T> extends Array<T> {
   }
 
   /**
- * Computes the average of a sequence of numeric values, or the average result of the given function
- * @param func
- */
-  public Average(func?: (item: T) => number): number | null {
-    try {
-      if (this.length >= 1) {
-        let average = 0;
-
-        if (func) {
-          average = (this.Sum(func) ?? 0) / this.length;
-        } else {
-          average = (this.Sum() ?? 0) / this.length;
-        }
-
-        return average;
-      }
-    } catch (error) {
-      Logger.Instance.Log(new LogEntry('Failed to calculate average', LogLevel.Error, error as Error));
-    }
-
-    return null;
-  }
-
-
-  /**
    * Computes the sum of a sequence of numeric values, or the sum result of the given function
    * @param func
    */
@@ -216,6 +191,18 @@ export class Queryable<T> extends Array<T> {
       Logger.Instance.Log(new LogEntry((error as Error).message, LogLevel.Error, error as Error));
       return null;
     }
+  }
+
+  /**
+   * Computes the average of a sequence of numeric values, or the average result of the given function
+   * @param func
+   */
+  public Average(func?: (item: T) => number): number | null {
+    const sum = func ? this.Sum(func) : this.Sum();
+
+    return this.length > 0 && sum ?
+      sum / this.length :
+      null;
   }
 
 

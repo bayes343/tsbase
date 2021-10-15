@@ -11,13 +11,13 @@ export class CachedHttpClient extends HttpClient {
     super();
   }
 
-  protected async getRequestResponse(
+  public async Request(
     uri: string,
     method: HttpMethod,
     body?: string,
     additionalHeaders?: Record<string, string>
   ): Promise<Response> {
-    const getFreshResponse = () => super.getRequestResponse(uri, method, body, additionalHeaders);
+    const getFreshResponse = () => super.Request(uri, method, body, additionalHeaders);
 
     if (method === HttpMethod.Get) {
       const cachedResponse = this.cache.Get(Response, uri);
