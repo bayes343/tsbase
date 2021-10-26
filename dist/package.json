@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "version": "4.0.0",
-  "description": "TypeScript base class libraries",
+  "description": "Base class libraries for TypeScript",
   "private": false,
   "main": "./public_api.js",
   "types": "./public_api.d.ts",

@@ -10,8 +10,7 @@
     "start": "karma start",
     "test-once": "karma start --singleRun",
     "build": "tsc && npm build",
-    "lint": "eslint src/**/*.ts && jscpd src",
-    "publish": "cd dist && npm publish"
+    "lint": "eslint src/**/*.ts && jscpd src"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.5",
