@@ -46,6 +46,10 @@ describe('Validator', (() => {
     ]);
   });
 
+  it('should construct empty validator', () => {
+    expect(new Validator()).toBeDefined();
+  });
+
   it('should return successful response when no errors are detected', () => {
     const person = new Person('Joey Bayes', 28);
 
