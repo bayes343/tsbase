@@ -1,41 +1,95 @@
 import { IHttpClient } from '../IHttpClient';
 import { HttpClient } from '../HttpClient';
+import { Strings } from '../../../System/Strings';
+import { HttpMethod } from '../HttpMethod';
 
 describe('HttpClient', () => {
-  // const testUri = 'https://www.fake.com';
-  // const testInit = {
-  //   body: 'test',
-  //   headers: {
-  //     'test': 'test'
-  //   }
-  // };
-  // const expectedHeaders = {
-  //   'Content-Type': 'application/json',
-  //   'Accept': 'application/json',
-  //   'test': 'test'
-  // };
+  const testUri = 'https://www.fake.com';
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
 
+  const responseHeaders = new Map();
   let classUnderTest: IHttpClient;
-  // let fetchCalledWithUri: RequestInfo | null = null;
-  // let fetchCalledWithRequestInit: RequestInit | undefined;
-  // const mockFetch = (uri: RequestInfo, init?: RequestInit) => {
-  //   fetchCalledWithUri = uri;
-  //   fetchCalledWithRequestInit = init;
-  //   return new Promise<any>((resolve) => resolve({ json: () => { } }));
-  // };
+  let fetchCalledWithUri: RequestInfo | null = null;
+  let fetchCalledWithRequestInit: RequestInit | undefined;
+  const mockFetch = (uri: RequestInfo, init?: RequestInit) => {
+    fetchCalledWithUri = uri;
+    fetchCalledWithRequestInit = init;
+    return new Promise<any>((resolve) => resolve({
+      headers: responseHeaders,
+      json: () => { },
+      text: () => Strings.Empty
+    }));
+  };
 
   beforeEach(() => {
-    //   fetchCalledWithUri = null;
-    //   fetchCalledWithRequestInit = undefined;
-    classUnderTest = new HttpClient();
+    responseHeaders.delete('content-type');
+    fetchCalledWithUri = null;
+    fetchCalledWithRequestInit = undefined;
+    classUnderTest = new HttpClient(defaultHeaders, mockFetch);
   });
 
   it('should construct', () => {
+    expect(new HttpClient()).toBeDefined();
     expect(classUnderTest).toBeDefined();
   });
 
-  // it('should get the response for a uri', async () => {
-  //   await classUnderTest.Get(testUri);
-  //   expect(fetchCalledWithUri).toEqual(testUri);
-  // });
+  it('should get the response for a uri and return body as text when content-type is not json', async () => {
+    const text = await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect(text.body).toEqual(Strings.Empty);
+  });
+
+  it('should get the response for a uri and return body as json when content-type is json', async () => {
+    responseHeaders.set('content-type', 'application/json');
+
+    const json = await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect(typeof json).toEqual('object');
+  });
+
+  it('should send a patch request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Patch(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Patch);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
+  });
+
+  it('should send a post request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Post(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Post);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
+  });
+
+  it('should send a put request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Put(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Put);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
+  });
+
+  it('should send a delete request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Delete(testUri, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Delete);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(text.body).toEqual(Strings.Empty);
+  });
 });
