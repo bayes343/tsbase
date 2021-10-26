@@ -20,13 +20,18 @@ export class CachedHttpClient extends HttpClient {
     const getFreshResponse = () => super.Request(uri, method, body, additionalHeaders);
 
     if (method === HttpMethod.Get) {
-      const cachedResponse = this.cache.Get(uri, Response);
+      let cachedResponse = this.cache.Get(uri);
 
       if (cachedResponse) {
+        if (typeof cachedResponse === 'string') {
+          const jsonResponse = JSON.parse(cachedResponse);
+          cachedResponse = new Response(jsonResponse['body']);
+        }
+
         return cachedResponse;
       } else {
         const freshResponse = await getFreshResponse();
-        this.cache.Add(uri, freshResponse);
+        this.cache.Add(uri, freshResponse.clone());
 
         return freshResponse;
       }
