@@ -1,3 +1,3 @@
-export * from './IPersister';
-export * from './DomStoragePersister';
 export * from './FSPersister/module';
+export * from './DomStoragePersister';
+export * from './IPersister';

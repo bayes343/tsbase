@@ -5,13 +5,14 @@
   },
   "keywords": [
     "typescript",
-    "generic",
+    "generics",
     "collections",
     "querying",
-    "http client",
-    "base class libraries",
+    "persistence",
     "utilities",
-    "patterns"
+    "http client",
+    "patterns",
+    "productivity"
   ],
   "license": "MIT",
   "version": "4.0.0",

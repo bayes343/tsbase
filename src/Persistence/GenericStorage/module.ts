@@ -1,3 +1,3 @@
-export * from './IGenericStorage';
 export * from './DomStorage';
+export * from './IGenericStorage';
 export * from './InMemoryStorage';

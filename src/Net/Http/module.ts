@@ -1,4 +1,4 @@
-export * from './IHttpClient';
-export * from './HttpStatusCode';
-export * from './HttpMethod';
 export * from './HttpClient';
+export * from './HttpMethod';
+export * from './HttpStatusCode';
+export * from './IHttpClient';
