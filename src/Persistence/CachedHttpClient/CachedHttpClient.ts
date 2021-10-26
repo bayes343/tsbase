@@ -20,7 +20,7 @@ export class CachedHttpClient extends HttpClient {
     const getFreshResponse = () => super.Request(uri, method, body, additionalHeaders);
 
     if (method === HttpMethod.Get) {
-      const cachedResponse = this.cache.Get(Response, uri);
+      const cachedResponse = this.cache.Get(uri, Response);
 
       if (cachedResponse) {
         return cachedResponse;

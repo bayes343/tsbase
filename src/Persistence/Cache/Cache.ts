@@ -3,7 +3,7 @@ import { Query } from '../../Patterns/CommandQuery/Query';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { CacheEntry } from './CacheEntry';
 import { ICache } from './ICache';
-import { GenericResult } from '../../public_api';
+import { GenericResult, Result } from '../../public_api';
 
 export class Cache<T> implements ICache<T> {
   /**
@@ -19,23 +19,26 @@ export class Cache<T> implements ICache<T> {
     private serializer = new JsonSerializer()
   ) { }
 
-  public Add(key: string, value: T): void {
+  public Add(key: string, value: T): Result {
     const cacheEntry: CacheEntry<T> = {
       value: value,
-      expiration: typeof this.cacheLife === 'number' ? Date.now() + this.cacheLife : 0
+      expiration: typeof this.cacheLife === 'number' && this.cacheLife > 0 ?
+        Date.now() + this.cacheLife : 0
     };
 
     this.Delete(key);
-    this.storage.Set(key, cacheEntry);
+    return this.storage.Set(key, cacheEntry);
   }
 
-  public Get(type: { new(): T; }, key: string): T | null {
+  public Get(key: string, type?: { new(): T; }): T | null {
     return new Query<T | null>(() => {
       const result = this.storage.GetValue(key);
 
       const cacheValue = () => {
         if (this.cacheIsValid(result)) {
-          return this.serializer.Serialize(type, result.Value?.value);
+          return type && typeof result.Value.value === 'object' ?
+            this.serializer.Serialize(type, result.Value.value) :
+            result.Value.value;
         } else {
           this.Delete(key);
           return null;
@@ -46,15 +49,15 @@ export class Cache<T> implements ICache<T> {
     }).Execute().Value as T | null;
   }
 
-  public Delete(key: string): void {
-    this.storage.Remove(key);
+  public Delete(key: string): Result {
+    return this.storage.Remove(key);
   }
 
   private cacheIsValid(result: GenericResult<CacheEntry<T>>) {
     if (result.IsSuccess && result.Value) {
       return typeof this.cacheLife === 'function' ?
-        this.cacheLife(result.Value?.value) :
-        (!result.Value?.expiration || result.Value?.expiration > Date.now());
+        this.cacheLife(result.Value.value) :
+        (result.Value.expiration === 0 || result.Value.expiration > Date.now());
     }
 
     return false;
