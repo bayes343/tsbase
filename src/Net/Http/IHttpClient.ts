@@ -9,6 +9,8 @@ export type RestResponse = {
 };
 
 export interface IHttpClient {
+  OnResponseResolved?: (response: Response) => void;
+
   /**
    * Gets the headers which should be sent with each request.
    */

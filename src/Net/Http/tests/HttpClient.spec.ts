@@ -11,6 +11,7 @@ describe('HttpClient', () => {
   };
 
   const responseHeaders = new Map();
+  let onResponseResolvedFired = false;
   let classUnderTest: IHttpClient;
   let fetchCalledWithUri: RequestInfo | null = null;
   let fetchCalledWithRequestInit: RequestInit | undefined;
@@ -25,6 +26,7 @@ describe('HttpClient', () => {
   };
 
   beforeEach(() => {
+    onResponseResolvedFired = false;
     responseHeaders.delete('content-type');
     fetchCalledWithUri = null;
     fetchCalledWithRequestInit = undefined;
@@ -91,5 +93,14 @@ describe('HttpClient', () => {
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Delete);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
     expect(text.body).toEqual(Strings.Empty);
+  });
+
+  it('should fire on response resolved function', async () => {
+    expect(onResponseResolvedFired).toBeFalsy();
+    classUnderTest.OnResponseResolved = () => onResponseResolvedFired = true;
+
+    await classUnderTest.Get(testUri);
+
+    expect(onResponseResolvedFired).toBeTruthy();
   });
 });

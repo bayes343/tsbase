@@ -4,6 +4,8 @@ import { HttpMethod } from './HttpMethod';
 type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export class HttpClient implements IHttpClient {
+  public OnResponseResolved?: (response: Response) => void;
+
   constructor(
     public DefaultRequestHeaders: Record<string, string> = {},
     private fetchRef: Fetch = globalThis.fetch.bind(globalThis)
@@ -50,6 +52,8 @@ export class HttpClient implements IHttpClient {
   ): Promise<RestResponse> {
     const response = await this.Request(uri, method, body, additionalHeaders);
     const isJson = response.headers.get('content-type')?.includes('application/json');
+
+    this.OnResponseResolved?.(response);
 
     return {
       ok: response.ok,
