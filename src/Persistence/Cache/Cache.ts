@@ -3,24 +3,26 @@ import { Query } from '../../Patterns/CommandQuery/Query';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { CacheEntry } from './CacheEntry';
 import { ICache } from './ICache';
+import { GenericResult } from '../../public_api';
 
 export class Cache<T> implements ICache<T> {
   /**
    * @param storage the storage interface used to support caching
-   * @param cacheLife the amount of milliseconds after the cache is created till it is invalidated |
+   * @param cacheLife EITHER 1.) the amount of milliseconds after the cache is created till it is invalidated |
    * leaving the default value (0) will result prevent any auto clearing of cache entries
+   * OR 2.) a function defining when the cache is no longer valid; a "false" return will invalidate the cache
    * @param serializer
    */
   constructor(
     private storage: IGenericStorage,
-    private cacheLife = 0,
+    private cacheLife: number | ((entry: T) => boolean) = 0,
     private serializer = new JsonSerializer()
   ) { }
 
   public Add(key: string, value: T): void {
     const cacheEntry: CacheEntry<T> = {
       value: value,
-      expiration: this.cacheLife ? Date.now() + this.cacheLife : 0
+      expiration: typeof this.cacheLife === 'number' ? Date.now() + this.cacheLife : 0
     };
 
     this.Delete(key);
@@ -32,10 +34,7 @@ export class Cache<T> implements ICache<T> {
       const result = this.storage.GetValue(key);
 
       const cacheValue = () => {
-        if (
-          result.IsSuccess &&
-          (!result.Value?.expiration || result.Value?.expiration > Date.now())
-        ) {
+        if (this.cacheIsValid(result)) {
           return this.serializer.Serialize(type, result.Value?.value);
         } else {
           this.Delete(key);
@@ -49,5 +48,15 @@ export class Cache<T> implements ICache<T> {
 
   public Delete(key: string): void {
     this.storage.Remove(key);
+  }
+
+  private cacheIsValid(result: GenericResult<CacheEntry<T>>) {
+    if (result.IsSuccess && result.Value) {
+      return typeof this.cacheLife === 'function' ?
+        this.cacheLife(result.Value?.value) :
+        (!result.Value?.expiration || result.Value?.expiration > Date.now());
+    }
+
+    return false;
   }
 }
