@@ -1,14 +1,14 @@
 import { IHttpClient, RestResponse } from './IHttpClient';
 import { HttpMethod } from './HttpMethod';
 
-type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+export type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export class HttpClient implements IHttpClient {
   public OnResponseResolved?: (response: Response) => void;
 
   constructor(
     public DefaultRequestHeaders: Record<string, string> = {},
-    private fetchRef: Fetch = globalThis.fetch.bind(globalThis)
+    protected fetchRef: Fetch = globalThis.fetch.bind(globalThis)
   ) { }
 
   public async Request(
@@ -17,11 +17,15 @@ export class HttpClient implements IHttpClient {
     body?: string,
     additionalHeaders?: Record<string, string>
   ): Promise<Response> {
-    return await this.fetchRef(uri, {
+    const response = await this.fetchRef(uri, {
       method: method,
       headers: { ...this.DefaultRequestHeaders, ...additionalHeaders },
       body: body
     });
+
+    this.OnResponseResolved?.(response);
+
+    return response;
   }
 
   public async Get(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
@@ -52,8 +56,6 @@ export class HttpClient implements IHttpClient {
   ): Promise<RestResponse> {
     const response = await this.Request(uri, method, body, additionalHeaders);
     const isJson = response.headers.get('content-type')?.includes('application/json');
-
-    this.OnResponseResolved?.(response);
 
     return {
       ok: response.ok,

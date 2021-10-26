@@ -86,7 +86,7 @@ describe('EventStore', () => {
 
   it('should undo state change(s)', () => {
     let rootUpdate: any = undefined;
-    classUnderTest.ObservableAt('').Subscribe(u => rootUpdate = u);
+    classUnderTest.ObservableAt(Strings.Empty).Subscribe(u => rootUpdate = u);
     const stateAtOne = () => classUnderTest.GetStateAt<string>(StatePaths.One);
     classUnderTest.SetStateAt(StatePaths.One, 'one');
     classUnderTest.SetStateAt(StatePaths.One, 'two');

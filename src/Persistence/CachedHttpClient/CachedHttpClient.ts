@@ -1,14 +1,19 @@
-import { HttpClient, HttpMethod } from '../../Net/Http/module';
+import { Fetch, HttpClient, HttpMethod } from '../../Net/Http/module';
 import { ICache } from '../Cache/module';
 
 /**
  * An extension of HttpClient that uses a given cache and storage interface
  */
 export class CachedHttpClient extends HttpClient {
+  /**
+   * @param cache Currently only compatible with in memory storage driven caches
+   */
   constructor(
-    private cache: ICache<Response>
+    private cache: ICache<Response>,
+    public DefaultRequestHeaders: Record<string, string> = {},
+    protected fetchRef: Fetch = globalThis.fetch.bind(globalThis)
   ) {
-    super();
+    super(DefaultRequestHeaders, fetchRef);
   }
 
   public async Request(
@@ -20,21 +25,14 @@ export class CachedHttpClient extends HttpClient {
     const getFreshResponse = () => super.Request(uri, method, body, additionalHeaders);
 
     if (method === HttpMethod.Get) {
-      let cachedResponse = this.cache.Get(uri);
+      let response = this.cache.Get(uri);
 
-      if (cachedResponse) {
-        if (typeof cachedResponse === 'string') {
-          const jsonResponse = JSON.parse(cachedResponse);
-          cachedResponse = new Response(jsonResponse['body']);
-        }
-
-        return cachedResponse;
-      } else {
-        const freshResponse = await getFreshResponse();
-        this.cache.Add(uri, freshResponse.clone());
-
-        return freshResponse;
+      if (!response) {
+        response = await getFreshResponse();
+        this.cache.Add(uri, response.clone());
       }
+
+      return response;
     } else {
       return getFreshResponse();
     }

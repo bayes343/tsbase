@@ -2,8 +2,9 @@ import { ICache } from '../ICache';
 import { Cache } from '../Cache';
 import { InMemoryStorage } from '../../GenericStorage/InMemoryStorage';
 import { IGenericStorage } from '../../module';
-import { JsonSerializer } from '../../../public_api';
+import { Strings } from '../../../System/Strings';
 import { TestHelpers } from 'tsmockit';
+import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
 
 const testValue = 'test';
 
@@ -80,7 +81,7 @@ describe('Cache', () => {
 
   it('should serialize an object before returning it when appropriate', () => {
     class TestClass {
-      test = '';
+      test = Strings.Empty;
     }
     classUnderTest = new Cache<TestClass>(genericStorage, cacheLife, serializer);
     classUnderTest.Add(testValue, { test: 'test' });
