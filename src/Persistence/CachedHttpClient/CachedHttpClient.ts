@@ -6,7 +6,7 @@ import { ICache } from '../Cache/module';
  */
 export class CachedHttpClient extends HttpClient {
   constructor(
-    private cache: ICache<any>
+    private cache: ICache<Response>
   ) {
     super();
   }
@@ -22,10 +22,10 @@ export class CachedHttpClient extends HttpClient {
     if (method === HttpMethod.Get) {
       const cachedResponse = this.cache.Get(Response, uri);
 
-      if (cachedResponse && cachedResponse.Value) {
-        return cachedResponse.Value;
+      if (cachedResponse) {
+        return cachedResponse;
       } else {
-        const freshResponse = getFreshResponse();
+        const freshResponse = await getFreshResponse();
         this.cache.Add(uri, freshResponse);
 
         return freshResponse;
