@@ -1,12 +1,7 @@
-# tsbase Quickstart
-
-The consumer facing readme is located in the `dist` directory.  This readme is intended for maintainers / contributors to tsbase.
+# tsbase
+Base class libraries for TypeScript
 
 ## Local Development
-
-### Pre-requisites
-- node/npm
-
 ### Installation
 - run cmd: `npm install`
 
@@ -15,6 +10,9 @@ The consumer facing readme is located in the `dist` directory.  This readme is i
 
 ### Linting
 - run cmd: `npm run lint`
+
+### Docs
+- run cmd: `npm run docs`
 
 ### Building
 - run cmd `npm run build`
