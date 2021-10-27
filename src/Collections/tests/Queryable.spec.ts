@@ -1,406 +1,76 @@
 /* eslint-disable max-lines */
-import { List } from '../List';
 import { Queryable } from '../Queryable';
-import { Errors } from '../../Errors';
 
 describe('Queryable', () => {
-  let classUnderTest: Queryable<any>;
-
-  beforeEach(() => {
-    classUnderTest = new List<any>();
+  it('should construct with protected constructor', () => {
+    class TestQueryable<T> extends Queryable<T> {
+      constructor() {
+        super();
+      }
+    }
+    expect(new TestQueryable<any>()).toBeDefined();
   });
 
-  it('should query for results WHERE a condition is met', () => {
-    (classUnderTest as List<any>).AddRange([1, 2, 3, 4, 5]);
-    const results = classUnderTest.Where(item => item > 2);
-    expect(results.Item.length).toEqual(3);
-    expect(classUnderTest.Item.length).toEqual(5);
+  it('should construct with factory method', () => {
+    const q = Queryable.From([1, 2, 3]);
+
+    expect(q).toBeDefined();
+    expect(q.length).toEqual(3);
   });
 
-  it('should orderby a predicate or the default comparer', () => {
-    (classUnderTest as List<any>).AddRange([4, 5, 1, 3, 1]);
-    const results = classUnderTest.OrderBy();
-    expect(results.Item[0]).toEqual(1);
-    expect(results.Item[4]).toEqual(5);
+  it('should return elements of the set except members of the given set', () => {
+    const oddNumbers = Queryable.From([1, 2, 3, 4, 5]).Except([2, 4]);
 
-    (classUnderTest as List<any>).Clear();
-    (classUnderTest as List<any>).AddRange(['4', '5', '1', '3', '1']);
-    const resultsPredicate = classUnderTest.OrderBy([item => parseInt(item)]);
-    expect(resultsPredicate.Item[0]).toEqual('1');
-    expect(resultsPredicate.Item[4]).toEqual('5');
+    expect([2, 4].some(i => oddNumbers.includes(i))).toBeFalsy();
+    expect([1, 3, 5].every(i => oddNumbers.includes(i))).toBeTruthy();
   });
 
-  it('should orderby descending by a predicate or the default comparer', () => {
-    const numbers = [1, 3, 2, 5, 4];
-    const orderedByDefaultComparer = Queryable.From(numbers).OrderByDescending();
-    expect(orderedByDefaultComparer.Item[0]).toEqual(5);
-    expect(orderedByDefaultComparer.Item[4]).toEqual(1);
+  it('should shuffle items', () => {
+    const q = Queryable.From([1, 2, 3, 4, 5, 6]);
 
-    const orderedByDistaceFromTwo = Queryable.From(numbers).OrderByDescending([
-      n => Math.abs(n - 2)
-    ]);
-    expect(orderedByDistaceFromTwo.Item[0]).toEqual(5);
-    expect(orderedByDistaceFromTwo.Item[4]).toEqual(2);
-  });
+    const shuffled = q.Shuffle();
 
-  it('should orderby many funcs by descending precedence', () => {
-    // ascending
-    (classUnderTest as List<any>).AddRange([
-      { lastName: 'A', firstName: 'Z', age: 18 },
-      { lastName: 'A', firstName: 'Y', age: 24 },
-      { lastName: 'C', firstName: 'X', age: 19 },
-      { lastName: 'C', firstName: 'W', age: 26 },
-      { lastName: 'E', firstName: 'V', age: 32 }
-    ]);
-    const lastFirstAge = classUnderTest.OrderBy([
-      item => item.lastName,
-      item => item.firstName,
-      item => item.age
-    ]);
-    expect(lastFirstAge.Item[0].age).toEqual(24);
-
-    // descending
-    const ageFirstLast = classUnderTest.OrderByDescending([
-      item => item.age,
-      item => item.firstName,
-      item => item.lastName
-    ]);
-    expect(ageFirstLast.Item[0].age).toEqual(32);
-  });
-
-  it('should find results where a condition is met and return them based on a user defined sort', () => {
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const query = classUnderTest
-      .Where(item => item.name.length >= 3)
-      .OrderBy([item => item.name]);
-    expect(query.Item[0].name).toEqual('Adam');
-    expect(query.Item[3].name).toEqual('David');
-  });
-
-  it('should know if all items satisfy a condition', () => {
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const truthy = classUnderTest.All(item => item.name.length > 1);
-    const falsy = classUnderTest.All(item => item.name === 'Billy');
-    expect(truthy).toBeTruthy();
-    expect(falsy).toBeFalsy();
-  });
-
-  it('should know if any items satisfy a condition', () => {
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const truthy = classUnderTest.Any(item => item.name === 'Billy');
-    const falsy = classUnderTest.Any(item => item.name.length > 15);
-    expect(truthy).toBeTruthy();
-    expect(falsy).toBeFalsy();
-  });
-
-  it('should return the Queryable as a list', () => {
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const newList = classUnderTest.Where(item => item.name === 'David');
-    expect(newList.Any(item => item.name === 'David'));
-  });
-
-  it('should take a sequence of items', () => {
-    (classUnderTest as List<any>).AddRange([
-      { key: '1', value: 1 },
-      { key: '2', value: 2 },
-      { key: '3', value: 3 },
-      { key: '4', value: 4 },
-      { key: '5', value: 5 },
-      { key: '6', value: 6 },
-      { key: '7', value: 7 }
-    ]);
-    const first3 = classUnderTest.Take(3);
-    expect((first3 as List<{ key: string, value: number }>).Count).toEqual(3);
-  });
-
-  it('should take items while a condition is met', () => {
-    (classUnderTest as List<any>).Clear();
-    const emptyList = classUnderTest.TakeWhile(item => item.key.length >= 1);
-    expect((emptyList as List<{ key: '', value: number }>).Count).toEqual(0);
-
-    (classUnderTest as List<any>).AddRange([
-      { key: '1', value: 1 },
-      { key: '2', value: 2 },
-      { key: '3', value: 3 },
-      { key: '4', value: 4 },
-      { key: '5', value: 5 },
-      { key: '6', value: 6 },
-      { key: '7', value: 7 }
-    ]);
-
-    const noMatches = classUnderTest.TakeWhile(item => item.value < 1);
-    expect((noMatches as List<{ key: string, value: number }>).Count).toEqual(0);
-
-    const first4 = classUnderTest.TakeWhile(item => item.value < 5);
-    expect((first4 as List<{ key: string, value: number }>).Count).toEqual(4);
-  });
-
-  it('should return distinct elements from the Queryable collection', () => {
-    (classUnderTest as List<any>).AddRange([
-      { key: '1', value: 1 },
-      { key: '1', value: 1 },
-      { key: '1', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 3 }
-    ]);
-    const distinctElements = classUnderTest.Distinct();
-    expect((distinctElements as List<{ key: '2', value: 3 }>).Count).toEqual(4);
-  });
-
-  it('should skip a sequence of items and return the rest', () => {
-    (classUnderTest as List<any>).AddRange([
-      { key: '1', value: 1 },
-      { key: '1', value: 1 },
-      { key: '1', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 3 }
-    ]);
-    const last3 = classUnderTest.Skip(3);
-    expect((last3 as List<{ key: string, value: number }>).Count).toEqual(3);
-  });
-
-  it('should skip items while a condition is true then return the rest', () => {
-    (classUnderTest as List<any>).AddRange([
-      { key: '1', value: 1 },
-      { key: '1', value: 1 },
-      { key: '1', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 2 },
-      { key: '2', value: 3 }
-    ]);
-    const oneItem = classUnderTest.SkipWhile(item => item.value < 3);
-    expect((oneItem as List<{ key: string, value: number }>).Count).toEqual(1);
-  });
-
-  it('should aggregate the elements based on input parameter accumulator and result functions', () => {
-    // custom aggregation
-    (classUnderTest as List<any>).AddRange([1, 1, 2, 2, 2, 3]);
-    const three = classUnderTest.Aggregate(
-      1,
-      (largest, next) => largest > next ? largest : next,
-      item => item.toString()
-    );
-    expect(three).toEqual('3');
-
-    // simple aggregation
-    const eleven = classUnderTest.Aggregate(
-      0,
-      (current, next) => current + next,
-      item => item.toString()
-    );
-    expect(eleven).toEqual('11');
-  });
-
-  it('should sum the value of elements as numbers or based on a given function', () => {
-    (classUnderTest as List<any>).AddRange([1, 1, 2, 2, 2, 3]);
-    const eleven = classUnderTest.Sum();
-    expect(eleven).toEqual(11);
-    const twentyTwo = classUnderTest.Sum(item => item * 2);
-    expect(twentyTwo).toEqual(22);
-
-    // error
-    (classUnderTest as List<any>).Add('notanumber');
-    expect(() => {
-      classUnderTest.Sum();
-    }).toThrowError(`${Errors.InvalidOperation} - Could not parse \'notanumber\' as a number`);
-  });
-
-  it('should average the value of elements as numbers or based on a given function', () => {
-    (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
-    const two = classUnderTest.Average();
-    expect(two).toEqual(2);
-    // Custom use case
-    (classUnderTest as List<any>).Clear();
-    (classUnderTest as List<any>).AddRange([
-      { name: 'Billy' },
-      { name: 'Adam' },
-      { name: 'David' },
-      { name: 'Charley' }
-    ]);
-    const averageLength = classUnderTest.Average(item => item.name.length);
-    expect(averageLength).toEqual(5.25);
-
-    // error
-    (classUnderTest as List<any>).Clear();
-    expect(() => {
-      classUnderTest.Average();
-    }).toThrowError(`${Errors.InvalidOperation} - Cannot calculate an average from a collection with no elements`);
+    const itemsShuffled = (q: Queryable<number>) =>
+      q[0] !== 1 ||
+      q[1] !== 2 ||
+      q[2] !== 3 ||
+      q[3] !== 4 ||
+      q[4] !== 5 ||
+      q[5] !== 6;
+    expect(itemsShuffled(q)).toBeFalsy();
+    expect(itemsShuffled(shuffled)).toBeTruthy();
   });
 
   it('should get a random item from the collection', () => {
-    (classUnderTest as List<any>).AddRange([2, 2, 2, 2, 2, 2]);
-    const randomItem = classUnderTest.GetRandom();
-    expect(randomItem).toBeDefined();
+    const q = Queryable.From([2, 2, 2, 2, 2, 2]); // randomization tested with shuffle method
+    expect(q.GetRandom()).toBeDefined();
   });
 
-  it('should return a new collection with an item appended', () => {
-    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
-    const appended = classUnderTest.Append(5);
-    expect(appended.Item[4]).toEqual(5);
-  });
+  it('should get a random element excluding a given set', () => {
+    const q = Queryable.From([2, 4, 8, 15, 23, 42]);
+    const random = q.GetRandom([2, 4, 8, 15, 23]);
+    expect(random).toEqual(42);
 
-  it('should return a new collection Except for the items passed', () => {
-    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
-    const diff = classUnderTest.Except([2, 3]);
-    expect(diff.Item.length).toEqual(2);
-    expect(diff.Item[0]).toEqual(1);
+    const randomNull = q.GetRandom([2, 4, 8, 15, 23, 42]);
+    expect(randomNull).toBeNull();
   });
 
   it('should return the first element in the sequence', () => {
-    const nullEl = classUnderTest.First();
+    const nullEl = Queryable.From([]).First();
     expect(nullEl).toBeNull();
-    (classUnderTest as List<any>).AddRange([1, 2, 3]);
-    const first = classUnderTest.First();
+
+    const q = Queryable.From([1, 2, 3]);
+    const first = q.First();
     expect(first).toEqual(1);
   });
 
   it('should return the last element in the sequence', () => {
-    const nullEl = classUnderTest.Last();
+    const nullEl = Queryable.From([]).Last();
     expect(nullEl).toBeNull();
-    (classUnderTest as List<any>).AddRange([1, 2, 3]);
-    const last = classUnderTest.Last();
+
+    const q = Queryable.From([1, 2, 3]);
+    const last = q.Last();
     expect(last).toEqual(3);
-  });
-
-  it('should evaluate if an item is contained within a collection', () => {
-    (classUnderTest as List<any>).AddRange(['1', '2', '3']);
-    const truthy = classUnderTest.Contains('1');
-    const falsy = classUnderTest.Contains('4');
-    expect(truthy).toBeTruthy();
-    expect(falsy).toBeFalsy();
-
-    // complex object
-    classUnderTest = new List<{ name: string, description: string }>();
-    const testObject = { name: 'Joey', description: 'Developer of this library' };
-    (classUnderTest as List<any>).Add(testObject);
-    const truthy2 = classUnderTest.Contains(testObject);
-    const falsy2 = classUnderTest.Contains({ name: 'Fake', description: 'does not exist' });
-    expect(truthy2).toBeTruthy();
-    expect(falsy2).toBeFalsy();
-  });
-
-  it('should return a new collection with an item prepended to the beginning of the sequence', () => {
-    (classUnderTest as List<any>).AddRange([1, 2, 3, 4]);
-    const prependedCollection = classUnderTest.Prepend(0);
-    expect(prependedCollection.Item.length).toEqual(5);
-    expect(prependedCollection.Item[0]).toEqual(0);
-  });
-
-  it('should get a random element excluding a given set', () => {
-    (classUnderTest as List<any>).AddRange([2, 4, 8, 15, 23, 42]);
-    const random = classUnderTest.GetRandom([2, 4, 8, 15, 23]);
-    expect(random).toEqual(42);
-    const randomNull = classUnderTest.GetRandom([2, 4, 8, 15, 23, 42]);
-    expect(randomNull).toBeNull();
-  });
-
-  it('should provide a lighter-weight means of consuming Queryable methods without using the list class', () => {
-    const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const query = Queryable.From(array)
-      .Where(item => item < 5)
-      .ToArray();
-    expect(query.length).toEqual(4);
-
-    const query2 = Queryable.From(array)
-      .OrderByDescending()
-      .Last();
-    expect(query2).toEqual(1);
-
-    const query3 = Queryable.From(array).All(item => item > 0);
-    expect(query3).toBeTruthy();
-  });
-
-  it('should find the item with the minimum result from the defined function or default comparer', () => {
-    const array = [3, 6, 1, 8, 3, 9, 3, 10];
-    expect(Queryable.From(array).Min()).toEqual(1);
-
-    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    expect(Queryable.From(arrayOfObjects).Min(o => o.id).id).toEqual(1);
-
-    expect(() => {
-      Queryable.From([]).Min();
-    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Min() function on an empty collection.`);
-  });
-
-  it('should find the item with the maximum result from the defined function or default comparer', () => {
-    const array = [3, 6, 1, 8, 3, 9, 3, 10];
-    expect(Queryable.From(array).Max()).toEqual(10);
-
-    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
-    expect(Queryable.From(arrayOfObjects).Max(o => o.id).id).toEqual(3);
-
-    expect(() => {
-      Queryable.From([]).Max();
-    }).toThrowError(`${Errors.InvalidOperation} - you cannot use the Max() function on an empty collection.`);
-  });
-
-  const dataToSearch: Array<{ name: string, age: number, gender: 'male' | 'female' }> = [
-    { name: 'John Doe', age: 18, gender: 'male' },
-    { name: 'Johnny Boy', age: 20, gender: 'male' },
-    { name: 'Johnson Connor', age: 22, gender: 'male' },
-    { name: 'Jane Doe', age: 18, gender: 'female' },
-    { name: 'Jenny Girl', age: 19, gender: 'female' }
-  ];
-
-  it('should search a collection of objects by search term', () => {
-    const johnDoeSearch = Queryable.From(dataToSearch).Search('John Doe');
-    const john = johnDoeSearch.First();
-
-    expect(john !== null && john.name === 'John Doe').toBeTruthy();
-    expect(johnDoeSearch.Item.length).toEqual(4);
-  });
-
-  it('should search and return an empty collection when no results are found', () => {
-    const badSearch = Queryable.From(dataToSearch).Search('Super Fake');
-    expect(badSearch.Item.length).toEqual(0);
-  });
-
-  it('should search a collection with custom keyword length', () => {
-    const ageSearch = Queryable.From(dataToSearch).Search('18', 2);
-    const failedDoeSearch = Queryable.From(dataToSearch).Search('So Doe', 4);
-
-    expect(ageSearch.Item.length).toEqual(2);
-    expect(failedDoeSearch.Item.length).toEqual(0);
-  });
-
-  it('should search a collection with stop words', () => {
-    const stopWords = ['female'];
-    const allMalesSearch = Queryable.From(dataToSearch).Search('female');
-    const johnBoyMaleSearch = Queryable.From(dataToSearch).Search('girl female', 3, stopWords);
-
-    expect(allMalesSearch.Item.length).toEqual(2);
-    expect(johnBoyMaleSearch.Item.length).toEqual(1);
-  });
-
-  it('should search a collection using ignorable suffix characters', () => {
-    const words = ['toy'];
-    const ignorableChars = ['s'];
-
-    const toysSearch = Queryable.From(words).Search('toys', 3, [], ignorableChars);
-
-    expect(toysSearch.First()).toEqual('toy');
   });
 
   it('should retrieve the first element satisfying a given predicate', () => {
@@ -413,5 +83,124 @@ describe('Queryable', () => {
     const words = ['one', 'two', 'three', 'four'];
     const firstGreaterThanThreeLengthWord = Queryable.From(words).Last(w => w.length > 3);
     expect(firstGreaterThanThreeLengthWord).toEqual('four');
+  });
+
+  it('should order by default sort', () => {
+    const ordered = Queryable.From([5, 4, 3, 2, 1]).OrderBy();
+    expect(ordered[0]).toEqual(1);
+  });
+
+  it('should order by descending default sort', () => {
+    const ordered = Queryable.From([1, 2, 3, 4, 5]).OrderByDescending();
+    expect(ordered[0]).toEqual(5);
+  });
+
+  it('should order by even elements then value', () => {
+    const ordered = Queryable.From([5, 4, 3, 2, 1]).OrderBy([
+      i => i % 2 === 0 ? 0 : 1,
+      i => i
+    ]);
+    expect(ordered[0]).toEqual(2);
+  });
+
+
+  it('should find the item with the minimum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Min()).toEqual(1);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Min(o => o.id)?.id).toEqual(1);
+
+    expect(Queryable.From([]).Min()).toBeNull();
+  });
+
+  it('should find the item with the maximum result from the defined function or default comparer', () => {
+    const array = [3, 6, 1, 8, 3, 9, 3, 10];
+    expect(Queryable.From(array).Max()).toEqual(10);
+
+    const arrayOfObjects = [{ id: 1 }, { id: 2 }, { id: 3 }];
+    expect(Queryable.From(arrayOfObjects).Max(o => o.id)?.id).toEqual(3);
+
+    expect(Queryable.From([]).Max()).toBeNull();
+  });
+
+  it('should sum the value of elements as numbers or based on a given function', () => {
+    let q = Queryable.From([1, 1, 2, 2, 2, 3]);
+    const eleven = q.Sum();
+    expect(eleven).toEqual(11);
+
+    const twentyTwo = q.Sum(item => item * 2);
+    expect(twentyTwo).toEqual(22);
+
+    // error
+    q = Queryable.From(q.concat(['notanumber' as unknown as number]));
+    expect(q.Sum()).toBeNull();
+  });
+
+  it('should average the value of elements as numbers or based on a given function', () => {
+    let q: Queryable<any> = Queryable.From([2, 2, 2, 2, 2, 2]);
+    const two = q.Average();
+    expect(two).toEqual(2);
+
+    // Custom use case
+    q = Queryable.From([
+      { name: 'Billy' },
+      { name: 'Adam' },
+      { name: 'David' },
+      { name: 'Charley' }
+    ]);
+    const averageLength = q.Average(item => item.name.length);
+    expect(averageLength).toEqual(5.25);
+
+    // null response
+    q = Queryable.From([]);
+    expect(q.Average()).toBeNull();
+  });
+
+
+  it('should return distinct elements from the Queryable collection', () => {
+    const q = Queryable.From([
+      { key: '1', value: 1 },
+      { key: '1', value: 1 },
+      { key: '1', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 2 },
+      { key: '2', value: 3 }
+    ]);
+
+    const distinctElements = q.Distinct();
+
+    expect(distinctElements.length).toEqual(4);
+  });
+
+
+  const dataToSearch: Array<{ name: string, age: number, gender: 'male' | 'female' }> = [
+    { name: 'John Doe', age: 18, gender: 'male' },
+    { name: 'Johnny Boy', age: 20, gender: 'male' },
+    { name: 'Johnson Connor', age: 22, gender: 'male' },
+    { name: 'Jane Doe', age: 18, gender: 'female' },
+    { name: 'Jenny Girl', age: 19, gender: 'female' }
+  ];
+
+  it('should search and return an empty collection when no results are found', () => {
+    const badSearch = Queryable.From(dataToSearch).Search('Super Fake');
+    expect(badSearch.length).toEqual(0);
+  });
+
+  it('should search a collection with custom keyword length', () => {
+    const ageSearch = Queryable.From(dataToSearch).Search('18', 2);
+    const failedDoeSearch = Queryable.From(dataToSearch).Search('So Doe', 4);
+
+    expect(ageSearch.length).toEqual(2);
+    expect(failedDoeSearch.length).toEqual(0);
+  });
+
+  it('should search a collection with stop words', () => {
+    const stopWords = ['female'];
+    const allMalesSearch = Queryable.From(dataToSearch).Search('female');
+    const johnBoyMaleSearch = Queryable.From(dataToSearch).Search('girl female', 3, stopWords);
+
+    expect(allMalesSearch.length).toEqual(2);
+    expect(johnBoyMaleSearch.length).toEqual(1);
   });
 });

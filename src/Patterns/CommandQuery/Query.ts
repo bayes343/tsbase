@@ -10,7 +10,7 @@ export class Query<T> implements IQuery<T> {
 
     try {
       result.Value = this.Query();
-    } catch (error) {
+    } catch (error: any) {
       result.ErrorMessages.push(error.message);
       Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
     }

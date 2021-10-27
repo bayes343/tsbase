@@ -1,13 +1,16 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
 import { Queryable } from '../../Collections/Queryable';
-import { Errors } from '../../Errors';
-import { Strings } from '../../Functions/Strings';
+import { Strings } from '../../System/Strings';
 import { Query } from '../CommandQuery/Query';
 import { Observable } from '../Observable/Observable';
 import { GenericResult } from '../Result/GenericResult';
 import { Transaction } from './Transaction';
 import { IEventStore } from './IEventStore';
+
+export const StateChangeUnnecessary = 'State change unnecessary - nothing changed';
+export const NoTransactionToUndo = 'No transaction to undo';
+export const NoTransactionToRedo = 'No transaction to redo';
 
 export class EventStore<T> implements IEventStore<T> {
   private state = {};
@@ -24,17 +27,17 @@ export class EventStore<T> implements IEventStore<T> {
       this.cloneOf(dlv(this.state as object, path));
   }
 
-  public SetStateAt<T>(value: T, path: string): GenericResult<T> {
+  public SetStateAt<T>(path: string, state: T): GenericResult<T> {
     return new Query<T>(() => {
       const previousState = dlv(this.state, path);
 
-      if (JSON.stringify(previousState) !== JSON.stringify(value)) {
-        this.updateState<T>(path, previousState, value);
+      if (JSON.stringify(previousState) !== JSON.stringify(state)) {
+        this.updateState<T>(path, previousState, state);
       } else {
-        throw new Error(Errors.StateChangeUnnecessary);
+        throw new Error(StateChangeUnnecessary);
       }
 
-      return this.cloneOf(value);
+      return this.cloneOf(state);
     }).Execute();
   }
 
@@ -58,7 +61,7 @@ export class EventStore<T> implements IEventStore<T> {
         lastVoidableTransaction.voided = true;
         this.updateState(lastVoidableTransaction.path, lastVoidableTransaction.toState, lastVoidableTransaction.fromState, false);
       } else {
-        throw new Error(Errors.NoTransactionToUndo);
+        throw new Error(NoTransactionToUndo);
       }
 
       return this.GetStateAt<T>(lastVoidableTransaction.path);
@@ -82,7 +85,7 @@ export class EventStore<T> implements IEventStore<T> {
         lastRedoableTransaction.voided = false;
         this.updateState(lastRedoableTransaction.path, lastRedoableTransaction.fromState, lastRedoableTransaction.toState, false);
       } else {
-        throw new Error(Errors.NoTransactionToRedo);
+        throw new Error(NoTransactionToRedo);
       }
 
       return this.GetStateAt<T>(lastRedoableTransaction.path);

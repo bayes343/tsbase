@@ -89,5 +89,4 @@ export class ConditionalTimer implements IConditionalTimer {
       this.timer.Elapsed = [];
     }
   }
-
 }

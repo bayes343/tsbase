@@ -1,7 +1,7 @@
 import { IValidation } from '../IValidation';
 import { Validator } from '../Validator';
 import { Result } from '../../Result/Result';
-import { Strings } from '../../../Constants/Strings';
+import { Strings } from '../../../System/Strings';
 
 class Person {
   constructor(
@@ -44,6 +44,10 @@ describe('Validator', (() => {
       new NameValidation(),
       new AgeValidation()
     ]);
+  });
+
+  it('should construct empty validator', () => {
+    expect(new Validator()).toBeDefined();
   });
 
   it('should return successful response when no errors are detected', () => {

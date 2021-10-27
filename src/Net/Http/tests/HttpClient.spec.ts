@@ -1,92 +1,106 @@
+import { IHttpClient } from '../IHttpClient';
 import { HttpClient } from '../HttpClient';
-import { HttpRequestMessage } from '../HttpRequestMessage';
-import { HttpMethod } from '../../HttpMethod';
-import { Mock } from 'tsmockit';
-import { IXhrRequestHandler } from '../IXhrRequestHandler';
-import { HttpResponseMessage } from '../HttpResponseMessage';
-import { Strings } from '../../../Constants/Strings';
+import { Strings } from '../../../System/Strings';
+import { HttpMethod } from '../HttpMethod';
 
 describe('HttpClient', () => {
-  const mockXhrRequestHandler = new Mock<IXhrRequestHandler>();
-  const BadRequest = new HttpResponseMessage('BadRequest', { Code: 400, Text: 'BadRequest' });
-  const OkRequest = new HttpResponseMessage('OK', { Code: 200, Text: 'OK' });
-  let classUnderTest: HttpClient;
+  const testUri = 'https://www.fake.com';
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  };
 
-  /* eslint-disable max-len */
-  function setupMockXhrRequestHander(mockXhrRequestHandler: Mock<IXhrRequestHandler>, OkRequest: HttpResponseMessage, BadRequest: HttpResponseMessage) {
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/ok', HttpMethod.GET, Strings.Empty), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/bad', HttpMethod.GET, Strings.Empty), new Promise<HttpResponseMessage>((resolve) => { resolve(BadRequest); }));
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequest('https://fake.com/delete', HttpMethod.DELETE, Strings.Empty), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/ok')), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/bad')), new Promise<HttpResponseMessage>((resolve) => { resolve(BadRequest); }));
-    mockXhrRequestHandler.Setup(x => x.SendXhrRequestMessage(new HttpRequestMessage(HttpMethod.GET, 'https://fake.com/delete')), new Promise<HttpResponseMessage>((resolve) => { resolve(OkRequest); }));
-    mockXhrRequestHandler.Setup(x => x.AbortPendingRequests(), null);
-  }
+  const responseHeaders = new Map();
+  let onResponseResolvedFired = false;
+  let classUnderTest: IHttpClient;
+  let fetchCalledWithUri: RequestInfo | null = null;
+  let fetchCalledWithRequestInit: RequestInit | undefined;
+  const mockFetch = (uri: RequestInfo, init?: RequestInit) => {
+    fetchCalledWithUri = uri;
+    fetchCalledWithRequestInit = init;
+    return new Promise<any>((resolve) => resolve({
+      headers: responseHeaders,
+      json: () => { },
+      text: () => Strings.Empty
+    }));
+  };
 
   beforeEach(() => {
-    setupMockXhrRequestHander(mockXhrRequestHandler, OkRequest, BadRequest);
-
-    classUnderTest = new HttpClient(mockXhrRequestHandler.Object);
-    classUnderTest.DefaultRequestHeaders.push({ key: 'Content-Type', value: 'application/json' });
-    classUnderTest.BaseAddress = 'https://fake.com';
+    onResponseResolvedFired = false;
+    responseHeaders.delete('content-type');
+    fetchCalledWithUri = null;
+    fetchCalledWithRequestInit = undefined;
+    classUnderTest = new HttpClient(defaultHeaders, mockFetch);
   });
 
-  //#region Integration tests
-  it('should cancel requests | integration test', () => {
-    classUnderTest = new HttpClient();
-    const uri = 'https://foaas.com/cup/Joey';
-    classUnderTest.GetAsync(uri);
-    classUnderTest.CancelPendingRequests();
-  });
-  //#endregion
-
-  it('should allow base address setting', async () => {
-    classUnderTest.BaseAddress = 'https://fake.com';
-    const uri = 'ok';
-    const response = await classUnderTest.GetAsync(uri);
-    expect(response.StatusCode.Code).toEqual(200);
+  it('should construct', () => {
+    expect(new HttpClient()).toBeDefined();
+    expect(classUnderTest).toBeDefined();
   });
 
-  it('should get string from response GetStringAsync', async () => {
-    const response = await classUnderTest.GetStringAsync('ok');
-    expect(response).toEqual('OK');
+  it('should get the response for a uri and return body as text when content-type is not json', async () => {
+    const text = await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect(text.body).toEqual(Strings.Empty);
   });
 
-  it('should cancel requests', () => {
-    classUnderTest.GetStringAsync('ok');
-    classUnderTest.CancelPendingRequests();
+  it('should get the response for a uri and return body as json when content-type is json', async () => {
+    responseHeaders.set('content-type', 'application/json');
+
+    const json = await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect(typeof json).toEqual('object');
   });
 
-  it('should delete async', async () => {
-    const response = await classUnderTest.DeleteAsync('delete');
-    expect(response.StatusCode.Code).toEqual(200);
+  it('should send a patch request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Patch(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Patch);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
   });
 
-  it('should patch async', async () => {
-    const response = await classUnderTest.PatchAsync('ok', { fake: 'fake' });
-    expect(response.StatusCode.Code).toEqual(200);
+  it('should send a post request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Post(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Post);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
   });
 
-  it('should post async', async () => {
-    const response = await classUnderTest.PostAsync('ok', { fake: 'fake' });
-    expect(response.StatusCode.Code).toEqual(200);
+  it('should send a put request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Put(testUri, {}, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Put);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(text.body).toEqual(Strings.Empty);
   });
 
-  it('should put async', async () => {
-    const response = await classUnderTest.PutAsync('ok', { fake: 'fake' });
-    expect(response.StatusCode.Code).toEqual(200);
+  it('should send a delete request to the given uri with the given body and any additional headers', async () => {
+    const text = await classUnderTest.Delete(testUri, { test: 'test' });
+
+    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Delete);
+    expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
+    expect(text.body).toEqual(Strings.Empty);
   });
 
-  it('should send request async', async () => {
-    const request1 = new HttpRequestMessage(HttpMethod.GET, 'ok');
-    const response1 = await classUnderTest.SendAsync(request1);
-    expect(response1.StatusCode.Code).toEqual(200);
+  it('should fire on response resolved function', async () => {
+    expect(onResponseResolvedFired).toBeFalsy();
+    classUnderTest.OnResponseResolved = () => onResponseResolvedFired = true;
 
-    const request2 = new HttpRequestMessage();
-    request2.RequestUri = 'ok';
-    request2.Headers.push({ key: 'fake', value: 'header' });
-    const response2 = await classUnderTest.SendAsync(request2);
-    expect(response2.Content).toEqual('OK');
+    await classUnderTest.Get(testUri);
+
+    expect(onResponseResolvedFired).toBeTruthy();
   });
-
 });

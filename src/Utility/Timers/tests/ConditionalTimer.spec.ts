@@ -45,5 +45,4 @@ describe('ConditionalTimer', () => {
 
     expect(iterator).toEqual(0);
   });
-
 });

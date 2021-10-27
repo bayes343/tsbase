@@ -10,7 +10,7 @@ export class AsyncCommand implements IAsyncCommand {
 
     try {
       await this.AsyncCommand();
-    } catch (error) {
+    } catch (error: any) {
       result.ErrorMessages.push(error.message);
       Logger.Instance.Log(new LogEntry(error.message, LogLevel.Error, error));
     }

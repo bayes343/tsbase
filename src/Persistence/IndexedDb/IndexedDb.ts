@@ -1,4 +1,4 @@
-import { Until } from '../../Functions/Until';
+import { Until } from '../../Utility/Timers/Until';
 import { AsyncCommand, AsyncQuery } from '../../Patterns/CommandQuery/module';
 import { GenericResult, Result } from '../../Patterns/Result/module';
 import { IIndexedDb } from './IIndexedDb';

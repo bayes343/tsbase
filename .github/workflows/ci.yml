@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: 'master'
+  pull_request:
+    branches: '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - run: npm i
+      - run: npm run lint
+      - run: npm run test-once
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: ./dist
+      - name: Comment Code Coverage to PRs
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+      - name: Publish to npm
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          package: './dist/package.json'

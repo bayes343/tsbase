@@ -31,5 +31,4 @@ export class Timer implements ITimer {
   public Stop(): void {
     this.Enabled = false;
   }
-
 }

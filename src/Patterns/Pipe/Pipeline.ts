@@ -7,7 +7,7 @@ export class Pipeline<T> implements IPipe<T> {
    * Transforms a given object based on the pipes used to construct the pipeline
    * @param object
    */
-  Transform(object: T): T {
+  public Transform(object: T): T {
     this.pipes.forEach(pipe => {
       object = pipe.Transform(object);
     });

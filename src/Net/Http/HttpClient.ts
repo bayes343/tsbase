@@ -1,119 +1,68 @@
-import { HttpResponseMessage } from './HttpResponseMessage';
-import { HttpMethod } from '../HttpMethod';
-import { IXhrRequestHandler } from './IXhrRequestHandler';
-import { KeyValue } from '../../TypeLiterals';
-import { HttpRequestMessage } from './HttpRequestMessage';
-import { BrowserXhrRequestHandler } from './XhrRequestHandler/BrowserXhrRequestHandler';
-import { Strings } from '../../Functions/Strings';
+import { IHttpClient, RestResponse } from './IHttpClient';
+import { HttpMethod } from './HttpMethod';
 
-export class HttpClient {
-  /**
-   * Gets or sets the base address of Uniform Resource Identifier (URI)
-   * of the Internet resource used when sending requests.
-   */
-  public BaseAddress = Strings.Empty;
-  /**
-   * Gets the headers which should be sent with each request.
-   */
-  public DefaultRequestHeaders = new Array<KeyValue>();
-  /**
-   * Gets or sets the time in seconds to wait before the request times out.
-   */
-  public Timeout = 10;
+export type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
-  private xhrRequestHandler: IXhrRequestHandler;
+export class HttpClient implements IHttpClient {
+  public OnResponseResolved?: (response: Response) => void;
 
-  /**
-   * @param xhrRequestHandler optional parameter used for dependency injection
-   */
-  constructor(xhrRequestHandler?: IXhrRequestHandler) {
-    this.xhrRequestHandler = xhrRequestHandler ? xhrRequestHandler : new BrowserXhrRequestHandler(this);
-  }
+  constructor(
+    public DefaultRequestHeaders: Record<string, string> = {},
+    protected fetchRef: Fetch = globalThis.fetch.bind(globalThis)
+  ) { }
 
-  /**
-   * Cancel all pending requests on this instance.
-   */
-  public CancelPendingRequests(): void {
-    this.xhrRequestHandler.AbortPendingRequests();
-  }
+  public async Request(
+    uri: string,
+    method: HttpMethod,
+    body?: string,
+    additionalHeaders?: Record<string, string>
+  ): Promise<Response> {
+    const response = await this.fetchRef(uri, {
+      method: method,
+      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders },
+      body: body
+    });
 
-  /**
-   * Send a DELETE request to the specified Uri as an asynchronous operation.
-   * @param uri
-   */
-  public async DeleteAsync(uri: string): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.DELETE);
+    this.OnResponseResolved?.(response);
+
     return response;
   }
 
-  /**
-   * Send a GET request to the specified Uri as an asynchronous operation.
-   * @param uri
-   */
-  public async GetAsync(uri: string): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
-    return response;
+  public async Get(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+    return await this.getRestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
   }
 
-  /**
-   * Send a GET request to the specified Uri as an asynchronous operation
-   * and have the response body returned as a string.
-   * @param uri
-   */
-  public async GetStringAsync(uri: string): Promise<string> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.GET);
-    return response.Content;
+  public async Patch(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+    return await this.getRestResponse(uri, HttpMethod.Patch, body, additionalHeaders);
   }
 
-  /**
-   * Send a PATCH request to the specified Uri as an asynchronous operation.
-   * @param uri
-   * @param payload
-   */
-  public async PatchAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PATCH, payload);
-    return response;
+  public async Post(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+    return await this.getRestResponse(uri, HttpMethod.Post, body, additionalHeaders);
   }
 
-  /**
-   * Send a POST request to the specified Uri as an asynchronous operation.
-   * @param uri
-   * @param payload
-   */
-  public async PostAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.POST, payload);
-    return response;
+  public async Put(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+    return await this.getRestResponse(uri, HttpMethod.Put, body, additionalHeaders);
   }
 
-  /**
-   * Send a PUT request to the specified Uri as an asynchronous operation.
-   * @param uri
-   * @param payload
-   */
-  public async PutAsync(uri: string, payload: any): Promise<HttpResponseMessage> {
-    uri = this.getFullUri(uri);
-    const response = await this.xhrRequestHandler.SendXhrRequest(uri, HttpMethod.PUT, payload);
-    return response;
+  public async Delete(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+    return await this.getRestResponse(uri, HttpMethod.Delete, undefined, additionalHeaders);
   }
 
-  /**
-   * Send an HTTP request as an asynchronous operation.
-   * @param httpRequestMessage
-   */
-  public async SendAsync(httpRequestMessage: HttpRequestMessage): Promise<HttpResponseMessage> {
-    httpRequestMessage.RequestUri = this.getFullUri(httpRequestMessage.RequestUri);
-    const response = await this.xhrRequestHandler.SendXhrRequestMessage(httpRequestMessage);
-    return response;
-  }
+  private async getRestResponse(
+    uri: string,
+    method: HttpMethod,
+    body?: string,
+    additionalHeaders?: Record<string, string>
+  ): Promise<RestResponse> {
+    const response = await this.Request(uri, method, body, additionalHeaders);
+    const isJson = response.headers.get('content-type')?.includes('application/json');
 
-  //#region Helpers
-  private getFullUri(uri: string): string {
-    return this.BaseAddress ? `${this.BaseAddress}/${uri}` : uri;
+    return {
+      ok: response.ok,
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+      body: isJson ? await response.json() : await response.text()
+    };
   }
-  //#endregion
 }

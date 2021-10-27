@@ -1,19 +1,17 @@
 {
-  "name": "tsbase-dev",
+  "name": "tsbase",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "private": true,
   "author": "Joseph Bayes",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "karma start",
     "test-once": "karma start --singleRun",
-    "copy-docs": "cp ./src/README.md dist && cp ./src/License.md dist && cp ./src/package.json dist && cp ./src/.npmignore dist && npm build dist",
-    "build": "tsc && npm run copy-docs && npm build dist",
-    "package": "rm -rf dist && npm run build",
-    "lint": "eslint src/**/*.ts",
-    "publish": "cd dist && npm publish"
+    "build": "tsc && npm build",
+    "lint": "eslint src/**/*.ts && jscpd src",
+    "docs": "typedoc src/public_api.ts"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.5",
@@ -21,10 +19,10 @@
     "@types/es6-promise": "^3.3.0",
     "@types/jasmine": "^2.8.18",
     "@types/node": "^10.17.60",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "core-js": "^2.6.12",
-    "eslint": "^6.8.0",
+    "eslint": "^8.0.0",
     "jasmine-core": "^2.5.2",
     "karma": "^6.3.4",
     "karma-chrome-launcher": "^2.0.0",
@@ -32,11 +30,13 @@
     "karma-jasmine": "^1.1.0",
     "karma-junit-reporter": "^1.2.0",
     "karma-phantomjs-launcher": "^1.0.4",
-    "karma-typescript": "^5.5.1",
+    "karma-typescript": "^5.5.2",
     "puppeteer": "^1.20.0",
-    "tslib": "^2.2.0",
+    "tslib": "^2.3.1",
     "tsmockit": "^1.1.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3",
+    "jscpd": "^3.3.26",
+    "typedoc": "^0.22.7"
   },
   "dependencies": {
     "dlv": "^1.1.3",

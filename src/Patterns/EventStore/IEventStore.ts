@@ -24,7 +24,7 @@ export interface IEventStore<T> {
    * @param state state to set
    * @param path object path to be set
    */
-  SetStateAt<T>(state: T, path: string): GenericResult<T>;
+  SetStateAt<T>(path: string, state: T): GenericResult<T>;
 
   /**
    * Returns an observable which can be subscribed to in order

@@ -1,7 +1,6 @@
 import { JsonSerializer } from '../JsonSerializer';
 import { stubLoanResponse } from './stubLoanResponse';
-import { List } from '../../../Collections/List';
-import { Strings } from '../../../Constants/Strings';
+import { Strings } from '../../../System/Strings';
 import { ISerializer } from '../ISerializer';
 
 //#region Fake classes for testing
@@ -57,8 +56,6 @@ class Person {
   public FirstName = Strings.Empty;
   public LastName = Strings.Empty;
   public Age = 0;
-  public Titles = new List<string>();
-  public Pets = new List<Pet>([new Pet()]);
   public ArrayPets = [new Pet()];
   public FakeField = new FakeField();
 }
@@ -149,9 +146,6 @@ describe('JsonSerializer', () => {
       Pets: [pet],
       ArrayPets: [pet, pet]
     });
-    expect(personInstance.Titles.Count).toEqual(5);
-    expect(personInstance.Titles.Contains('Daddy')).toBeTruthy();
-    expect(personInstance.Pets.FindAll(item => item.name === 'Freya').Count).toEqual(1);
     expect(personInstance.ArrayPets.length).toEqual(2);
     expect(personInstance.ArrayPets[0].name).toEqual('Freya');
   });
@@ -183,7 +177,7 @@ describe('JsonSerializer', () => {
   });
 
   it('should parse a json key without acknowledging hyphens, capitalization, or spaces', () => {
-    class VerifyResponse { public Success = false; public ErrorCodes = ['']; }
+    class VerifyResponse { public Success = false; public ErrorCodes = [Strings.Empty]; }
     // eslint-disable-next-line max-len
     const jsonString = '{\n  "su-cc-ess": false,\n  "e rror-co des": [\n    "missing-input-response",\n    "missing-input-secret"\n  ]\n}';
     const json = JSON.parse(jsonString);

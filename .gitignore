@@ -1,6 +1,8 @@
 # Dependencies
 # Artifacts
-dist
+dist/**/*.js
+dist/**/*.ts
+dist/**/*.map
 coverage
 node_modules
 TESTS*.xml
@@ -8,3 +10,4 @@ examples
 *debug.log
 vscode
 .DS_Store
+report

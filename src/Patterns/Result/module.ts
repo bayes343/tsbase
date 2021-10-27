@@ -1,2 +1,2 @@
-export * from './Result';
 export * from './GenericResult';
+export * from './Result';
