@@ -9,7 +9,7 @@
   "scripts": {
     "start": "karma start",
     "test-once": "karma start --singleRun",
-    "build": "tsc && npm build",
+    "build": "tsc",
     "lint": "eslint src/**/*.ts && jscpd src",
     "docs": "typedoc src/public_api.ts"
   },
