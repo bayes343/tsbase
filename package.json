@@ -1,16 +1,17 @@
 {
-  "name": "tsbase-dev",
+  "name": "tsbase",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "private": true,
   "author": "Joseph Bayes",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "start": "karma start",
     "test-once": "karma start --singleRun",
     "build": "tsc && npm build",
-    "lint": "eslint src/**/*.ts && jscpd src"
+    "lint": "eslint src/**/*.ts && jscpd src",
+    "docs": "typedoc src/public_api.ts"
   },
   "devDependencies": {
     "@types/core-js": "^2.5.5",
@@ -34,7 +35,8 @@
     "tslib": "^2.3.1",
     "tsmockit": "^1.1.0",
     "typescript": "^4.4.3",
-    "jscpd": "^3.3.26"
+    "jscpd": "^3.3.26",
+    "typedoc": "^0.22.7"
   },
   "dependencies": {
     "dlv": "^1.1.3",
