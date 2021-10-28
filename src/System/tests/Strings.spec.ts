@@ -30,14 +30,22 @@ describe('Strings', () => {
   });
 
   it('should detect an empty string', () => {
-    expect(Strings.IsEmptyOrWhiteSpace('')).toBeTruthy();
+    expect(Strings.IsEmptyOrWhiteSpace(Strings.Empty)).toBeTruthy();
   });
 
   it('should detect a whitespace string', () => {
-    expect(Strings.IsEmptyOrWhiteSpace(' ')).toBeTruthy();
+    expect(Strings.IsEmptyOrWhiteSpace(Strings.Space)).toBeTruthy();
   });
 
   it('should detect a non-whitespace string with length', () => {
     expect(Strings.IsEmptyOrWhiteSpace('test')).toBeFalsy();
+  });
+
+  it('should return an empty string when pascal casing an empty string', () => {
+    expect(Strings.PascalCase(Strings.Empty)).toEqual(Strings.Empty);
+  });
+
+  it('should return an empty string when camel casing an empty string', () => {
+    expect(Strings.CamelCase(Strings.Empty)).toEqual(Strings.Empty);
   });
 });

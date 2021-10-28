@@ -23,7 +23,7 @@ export class Strings {
   public static PascalCase(string: string): string {
     return string
       .split(Strings.Space)
-      .map(s => `${s[0].toUpperCase()}${s.slice(1)}`)
+      .map(s => `${s[0]?.toUpperCase() || ''}${s.slice(1)}`)
       .join(Strings.Empty);
   }
 

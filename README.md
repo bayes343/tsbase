@@ -11,7 +11,7 @@ Helpful links:
 - run cmd: `npm install`
 
 ### Testing
-- run cmd: `npm run test` / `npm run test-once`
+- run cmd: `npm start` / `npm run test-once`
 
 ### Linting
 - run cmd: `npm run lint`

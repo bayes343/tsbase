@@ -26,6 +26,8 @@ export function ParseJsx(nodeName: string, attributes: Record<string, string>, .
 }
 
 export class JsxRenderer {
+  private constructor() { }
+
   public static RenderJsx(jsx: Jsx, mainDocument: Document | ShadowRoot = document): string {
     return JsxRenderer.transformJsxToHtml(jsx, mainDocument)
       .outerHTML

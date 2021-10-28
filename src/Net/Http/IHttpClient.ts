@@ -9,6 +9,10 @@ export type RestResponse = {
 };
 
 export interface IHttpClient {
+  /**
+   * An operation to be performed just after a response is resolved from a request,
+   * but prior to the response being returned.
+   */
   OnResponseResolved?: (response: Response) => void;
 
   /**

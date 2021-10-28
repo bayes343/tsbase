@@ -6,7 +6,7 @@ import { Observable } from '../../Patterns/Observable/Observable';
  */
 export interface IGameLoop {
   /**
-   * Observable which pushes the achieved from rate to subscribers
+   * Observable which pushes the achieved framerate to subscribers
    */
   Framerate: Observable<number>;
 
