@@ -67,7 +67,7 @@ export class Repository<T> extends Queryable<T> {
     });
 
     if (result.IsSuccess) {
-      this.persister.Persist(this);
+      this.persister.Persist(this.slice());
       this.setSavedData();
     }
 
@@ -104,14 +104,14 @@ export class Repository<T> extends Queryable<T> {
    * Returns a collection of elements that have not been saved
    */
   public GetUnsavedElements(): Queryable<T> {
-    return Queryable.From(this.filter(i => this.savedData.raw.indexOf(JSON.stringify(i)) < 0));
+    return Queryable.From(this.filter(i => !this.savedData.raw.includes(JSON.stringify(i))));
   }
 
   /**
    * Returns a collection of elements that have not been removed from persistence
    */
   public GetUnpurgedElements(): Queryable<T> {
-    return Queryable.From(this.savedData.referential).Except(this);
+    return Queryable.From(this.savedData.referential).Except(this.slice());
   }
 
   private getSerializedInstancesFromInitialData(initialData: Array<any>): Queryable<T> {
@@ -131,7 +131,7 @@ export class Repository<T> extends Queryable<T> {
 
   private setSavedData(): void {
     this.savedData = {
-      raw: JSON.stringify(this),
+      raw: JSON.stringify(this.slice()),
       referential: this.slice()
     };
   }
