@@ -1,11 +1,10 @@
 import { Model } from '../Model';
-import { MetadataLabels } from './MetadataLabels';
-
+import { MetadataKeys } from './MetadataLabels';
 
 export function Label(label: string) {
   return function (target: Model, key: string) {
-    const metaData = Model.Metadata[MetadataLabels.MetadataLabelKey] ||
-      (Model.Metadata[MetadataLabels.MetadataLabelKey] = {});
+    const metaData = Model.Metadata[MetadataKeys.Label] ||
+      (Model.Metadata[MetadataKeys.Label] = {});
 
     metaData[`${target.constructor.name}-${key}`] = label;
   };
