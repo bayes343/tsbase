@@ -11,10 +11,10 @@ describe('Label', () => {
   const labelTestInstance = new LabelTest();
 
   it('should get label when one is declared', () => {
-    expect(labelTestInstance.GetLabel('Name')).toEqual('full name');
+    expect(labelTestInstance.Label<LabelTest>(l => l.Name)).toEqual('full name');
   });
 
   it('should return key for get label when no label is declared', () => {
-    expect(labelTestInstance.GetLabel('Age')).toEqual('Age');
+    expect(labelTestInstance.Label<LabelTest>(l => l.Age)).toEqual('Age');
   });
 });
