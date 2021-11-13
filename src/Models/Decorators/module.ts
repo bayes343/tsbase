@@ -1,2 +1,2 @@
 export * from './Label';
-export * from './MetadataLabels';
+export * from './MetadataKeys';

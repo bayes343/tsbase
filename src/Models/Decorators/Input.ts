@@ -1,6 +1,6 @@
 import { InputTypes } from '../InputTypes';
 import { Model } from '../Model';
-import { MetadataKeys } from './MetadataLabels';
+import { MetadataKeys } from './MetadataKeys';
 
 export function Input(input: InputTypes) {
   return function (target: Model, key: string) {

@@ -1,5 +1,5 @@
 import { Model } from '../Model';
-import { MetadataKeys } from './MetadataLabels';
+import { MetadataKeys } from './MetadataKeys';
 
 export function Label(label: string) {
   return function (target: Model, key: string) {

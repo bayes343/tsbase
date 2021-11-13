@@ -1,21 +1,27 @@
 import { Regex } from '../System/Regex';
 import { Strings } from '../System/Strings';
-import { MetadataKeys } from './Decorators/MetadataLabels';
+import { MetadataKeys } from './Decorators/MetadataKeys';
 import { InputTypes } from './InputTypes';
 
 export abstract class Model {
-  public static Metadata: Record<string, Record<string, string>> = {};
+  public static Metadata: Record<string, Record<string, any>> = {};
 
-  public Label<T>(member: (func: T) => any): string {
-    const key = Model.getKeyFromMemberFunc(member);
-    const labelKey = `${this.constructor.name}-${key}`;
-    return Model.Metadata[MetadataKeys.Label]?.[labelKey] || key;
+  public LabelFor<T>(member: (func: T) => any): string {
+    return this.getMetadata<string>(MetadataKeys.Label, member, Model.getKeyFromMemberFunc(member));
   }
 
-  public Input<T>(member: (func: T) => any): string {
+  public InputFor<T>(member: (func: T) => any): InputTypes {
+    return this.getMetadata<InputTypes>(MetadataKeys.Input, member, InputTypes.Text);
+  }
+
+  public OptionsFor<T>(member: (func: T) => any): Record<string, string> {
+    return this.getMetadata<Record<string, string>>(MetadataKeys.Options, member, {});
+  }
+
+  private getMetadata<T>(metadataKey: MetadataKeys, member: (func: any) => any, defaultValue: any): T {
     const key = Model.getKeyFromMemberFunc(member);
-    const inputKey = `${this.constructor.name}-${key}`;
-    return Model.Metadata[MetadataKeys.Input]?.[inputKey] || InputTypes.Text;
+    const subKey = `${this.constructor.name}-${key}`;
+    return Model.Metadata[metadataKey]?.[subKey] || defaultValue;
   }
 
   private static getKeyFromMemberFunc(member: (func: any) => any): string {
