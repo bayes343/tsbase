@@ -1,8 +1,8 @@
 import { Model } from '../Model';
-import { Label } from '../Decorators/Label';
 import { InputTypes } from '../InputTypes';
-import { Input } from '../Decorators/Input';
-import { Options } from '../Decorators/Options';
+import { Label, Input, Options, Validation } from '../Metadata';
+import { Required } from '../Validations/Required';
+import { Strings } from '../../System/Strings';
 
 enum Genders {
   Male = 'male',
@@ -11,6 +11,7 @@ enum Genders {
 
 class ModelTest extends Model {
   @Label('full name')
+  @Validation([new Required<ModelTest>(m => m.Name)])
   public Name = '';
 
   @Input(InputTypes.Number)
@@ -21,6 +22,8 @@ class ModelTest extends Model {
     female: 'Female'
   })
   public Gender: Genders = Genders.Male;
+
+  public Notes = Strings.Empty;
 }
 
 describe('Model', () => {
@@ -51,5 +54,72 @@ describe('Model', () => {
 
   it('should return an empty object for options when none are declared', () => {
     expect(classUnderTest.OptionsFor<ModelTest>(l => l.Name)).toEqual({});
+  });
+
+  it('should validate a single field on the model', () => {
+    const falsyValidation = classUnderTest.Validate<ModelTest>(m => m.Name);
+    expect(falsyValidation.IsSuccess).toBeFalsy();
+
+    classUnderTest.Name = 'Some name';
+    const truthyValidation = classUnderTest.Validate<ModelTest>(m => m.Name);
+    expect(truthyValidation.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate the model based on all declared validations', () => {
+    classUnderTest.Name = 'valid name';
+    const result = classUnderTest.Validate();
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  class InnerDataModel extends Model {
+    @Validation([new Required<InnerDataModel>(m => m.InnerName)])
+    public InnerName = Strings.Empty;
+  }
+
+  class OuterDataModel extends Model {
+    @Input(InputTypes.Object)
+    public InnerDataModel = new InnerDataModel();
+
+    public InnerDataModelArray = [new InnerDataModel(true)];
+  }
+
+  it('should validate for nested objects and return errors for those nested objects', () => {
+    const outerClass = new OuterDataModel();
+    const result = outerClass.Validate();
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate for nested objects and return success for those nested objects', () => {
+    const outerClass = new OuterDataModel();
+    outerClass.InnerDataModel.InnerName = 'test';
+
+    const result = outerClass.Validate();
+
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate for nested object arrays and return errors for those nested objects', () => {
+    const outerClass = new OuterDataModel();
+    outerClass.InnerDataModel.InnerName = 'test';
+    outerClass.InnerDataModelArray.push(new InnerDataModel());
+
+    const result = outerClass.Validate();
+
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate for nested object arrays and return errors for those nested objects', () => {
+    const outerClass = new OuterDataModel();
+    outerClass.InnerDataModel.InnerName = 'test';
+    outerClass.InnerDataModelArray.push(outerClass.InnerDataModel);
+
+    const result = outerClass.Validate();
+
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should return success when validating a field with no validations', () => {
+    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    expect(result.IsSuccess).toBeTruthy();
   });
 });
