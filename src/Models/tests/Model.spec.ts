@@ -1,6 +1,6 @@
 import { Model } from '../Model';
 import { InputTypes } from '../InputTypes';
-import { Label, Input, Options, Required, Range, RegExp } from '../Metadata';
+import { Label, Input, Options, Required, Range, RegExp, StringLength } from '../Metadata';
 import { Strings } from '../../System/Strings';
 import { Regex } from '../../System/Regex';
 
@@ -27,7 +27,8 @@ class ModelTest extends Model {
   @RegExp(Regex.Email, 'Must be a valid email address')
   public Email: string = '';
 
-  public Notes = Strings.Empty;
+  @StringLength(1, 100)
+  public Notes = Strings.Space;
 }
 
 describe('Model', () => {
@@ -153,6 +154,25 @@ describe('Model', () => {
   it('should validate a regexp when the value does not conform', () => {
     classUnderTest.Email = 'test email dot com';
     const result = classUnderTest.Validate<ModelTest>(m => m.Email);
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate a string length when the length of the value is within the min/max', () => {
+    classUnderTest.Notes = 'notes';
+    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate a string length when the length of the value is below the min', () => {
+    classUnderTest.Notes = Strings.Empty;
+    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate a string length when the length of the value is above the max', () => {
+    // eslint-disable-next-line max-len
+    classUnderTest.Notes = '1234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891';
+    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
     expect(result.IsSuccess).toBeFalsy();
   });
 });

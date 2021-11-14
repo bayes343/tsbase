@@ -13,6 +13,12 @@ export class Regex {
    */
   public static readonly Email = /^.+@[^\.].*\.[a-z]{2,}$/;
 
+  /**
+   * Matches: http://regxlib.com/Default.aspx | http://electronics.cnet.com/electronics/0-6342366-8-8994967-1.html
+   * Non-Matches: www.yahoo.com
+   */
+  public static readonly Uri = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+
 
   /**
    * Matches: 1234-1234-1234-1234 | 1234 1234 1234 1234 | 1234123412341234

@@ -5,6 +5,7 @@ import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation } from './Validations/module';
 import { RangeValidation } from './Validations/RangeValidation';
 import { RegExpValidation } from './Validations/RegExpValidation';
+import { StringLengthValidation } from './Validations/StringLengthValidation';
 
 function metadata(metadataKey: MetadataKeys, value: any) {
   return function (target: Model, key: string) {
@@ -27,6 +28,7 @@ export function Options(options: Record<string, string>) {
   return metadata(MetadataKeys.Options, options);
 }
 
+//#region Validations
 function validation(validations: Array<IValidation<Model>>) {
   return function (target: Model, key: string) {
     const metaData = Model.Metadata[MetadataKeys.Validations] ||
@@ -49,8 +51,15 @@ export function Range(minimum: number, maximum: number, customErrorMessage?: str
   };
 }
 
+export function StringLength(minimum: number, maximum: number, customErrorMessage?: string) {
+  return function (target: Model, key: string) {
+    validation([new StringLengthValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+  };
+}
+
 export function RegExp(regex: RegExp, customErrorMessage?: string) {
   return function (target: Model, key: string) {
     validation([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
   };
 }
+//#endregion
