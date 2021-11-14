@@ -1,7 +1,8 @@
 import { Model } from '../Model';
 import { InputTypes } from '../InputTypes';
-import { Label, Input, Options, Required, Range } from '../Metadata';
+import { Label, Input, Options, Required, Range, RegExp } from '../Metadata';
 import { Strings } from '../../System/Strings';
+import { Regex } from '../../System/Regex';
 
 enum Genders {
   Male = 'male',
@@ -22,6 +23,9 @@ class ModelTest extends Model {
     female: 'Female'
   })
   public Gender: Genders = Genders.Male;
+
+  @RegExp(Regex.Email, 'Must be a valid email address')
+  public Email: string = '';
 
   public Notes = Strings.Empty;
 }
@@ -137,6 +141,18 @@ describe('Model', () => {
   it('should validate a range when the range restricted value is too large', () => {
     classUnderTest.Age = 121;
     const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate a regexp when the value conforms', () => {
+    classUnderTest.Email = 'test@email.com';
+    const result = classUnderTest.Validate<ModelTest>(m => m.Email);
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate a regexp when the value does not conform', () => {
+    classUnderTest.Email = 'test email dot com';
+    const result = classUnderTest.Validate<ModelTest>(m => m.Email);
     expect(result.IsSuccess).toBeFalsy();
   });
 });

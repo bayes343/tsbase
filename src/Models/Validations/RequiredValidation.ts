@@ -4,7 +4,8 @@ import { Model } from '../Model';
 
 export class RequiredValidation implements IValidation<Model> {
   constructor(
-    private member: string
+    private member: string,
+    private customErrorMessage?: string
   ) { }
 
   public Validate(object: Model): Result {
@@ -15,7 +16,7 @@ export class RequiredValidation implements IValidation<Model> {
       .toString().trim().length >= 1;
 
     if (!valueExists) {
-      result.ErrorMessages.push(`\"${label ? label : this.member}\" is a required field.`);
+      result.ErrorMessages.push(this.customErrorMessage || `\"${label ? label : this.member}\" is a required field.`);
     }
 
     return result;

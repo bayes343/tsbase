@@ -4,6 +4,7 @@ import { Model } from './Model';
 import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation } from './Validations/module';
 import { RangeValidation } from './Validations/RangeValidation';
+import { RegExpValidation } from './Validations/RegExpValidation';
 
 function metadata(metadataKey: MetadataKeys, value: any) {
   return function (target: Model, key: string) {
@@ -36,14 +37,20 @@ function validation(validations: Array<IValidation<Model>>) {
   };
 }
 
-export function Required() {
+export function Required(customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new RequiredValidation(key)])(target, key);
+    validation([new RequiredValidation(key, customErrorMessage)])(target, key);
   };
 }
 
-export function Range(minimum: number, maximum: number) {
+export function Range(minimum: number, maximum: number, customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new RangeValidation(key, minimum, maximum)])(target, key);
+    validation([new RangeValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+  };
+}
+
+export function RegExp(regex: RegExp, customErrorMessage?: string) {
+  return function (target: Model, key: string) {
+    validation([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
   };
 }
