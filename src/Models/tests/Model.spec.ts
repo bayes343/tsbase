@@ -1,7 +1,6 @@
 import { Model } from '../Model';
 import { InputTypes } from '../InputTypes';
-import { Label, Input, Options, Validation } from '../Metadata';
-import { Required } from '../Validations/Required';
+import { Label, Input, Options, Required, Range } from '../Metadata';
 import { Strings } from '../../System/Strings';
 
 enum Genders {
@@ -11,10 +10,11 @@ enum Genders {
 
 class ModelTest extends Model {
   @Label('full name')
-  @Validation([Required])
+  @Required()
   public Name = '';
 
   @Input(InputTypes.Number)
+  @Range(0, 120)
   public Age = 0;
 
   @Options({
@@ -72,7 +72,7 @@ describe('Model', () => {
   });
 
   class InnerDataModel extends Model {
-    @Validation([Required])
+    @Required()
     public InnerName = Strings.Empty;
   }
 
@@ -108,7 +108,7 @@ describe('Model', () => {
     expect(result.IsSuccess).toBeFalsy();
   });
 
-  it('should validate for nested object arrays and return errors for those nested objects', () => {
+  it('should validate for nested object arrays and return success when valid', () => {
     const outerClass = new OuterDataModel();
     outerClass.InnerDataModel.InnerName = 'test';
     outerClass.InnerDataModelArray.push(outerClass.InnerDataModel);
@@ -121,5 +121,22 @@ describe('Model', () => {
   it('should return success when validating a field with no validations', () => {
     const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
     expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate a range when the range is valid', () => {
+    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should validate a range when the range restricted value is too small', () => {
+    classUnderTest.Age = -1;
+    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate a range when the range restricted value is too large', () => {
+    classUnderTest.Age = 121;
+    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    expect(result.IsSuccess).toBeFalsy();
   });
 });

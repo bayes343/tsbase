@@ -2,7 +2,7 @@ import { Result } from '../../Patterns/Result/Result';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Model } from '../Model';
 
-export class Required implements IValidation<Model> {
+export class RequiredValidation implements IValidation<Model> {
   constructor(
     private member: string
   ) { }
