@@ -24,6 +24,12 @@ export function Options(options: Record<string, string>) {
   return metadata(MetadataKeys.Options, options);
 }
 
-export function Validation(validations: Array<IValidation<Model>>) {
-  return metadata(MetadataKeys.Validations, validations);
+export function Validation(validations: Array<{ new(member: string): IValidation<Model> }>) {
+  return function (target: Model, key: string) {
+    const validationInstances = validations.map(v => new v(key));
+    const metaData = Model.Metadata[MetadataKeys.Validations] ||
+      (Model.Metadata[MetadataKeys.Validations] = {});
+
+    metaData[`${target.constructor.name}-${key}`] = validationInstances;
+  };
 }

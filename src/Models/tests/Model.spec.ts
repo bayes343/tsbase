@@ -11,7 +11,7 @@ enum Genders {
 
 class ModelTest extends Model {
   @Label('full name')
-  @Validation([new Required<ModelTest>(m => m.Name)])
+  @Validation([Required])
   public Name = '';
 
   @Input(InputTypes.Number)
@@ -72,7 +72,7 @@ describe('Model', () => {
   });
 
   class InnerDataModel extends Model {
-    @Validation([new Required<InnerDataModel>(m => m.InnerName)])
+    @Validation([Required])
     public InnerName = Strings.Empty;
   }
 

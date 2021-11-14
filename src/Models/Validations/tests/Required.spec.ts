@@ -4,17 +4,17 @@ import { Model } from '../../Model';
 import { Required } from '../Required';
 
 class TestDataModel extends Model {
-  @Validation([new Required<TestDataModel>(m => m.Name)])
+  @Validation([Required])
   @Label('test label')
   public Name = Strings.Empty;
 }
 
 describe('Required', () => {
-  let classUnderTest: Required<TestDataModel>;
+  let classUnderTest: Required;
   const dataModelToValidate = new TestDataModel();
 
   beforeEach(() => {
-    classUnderTest = new Required<TestDataModel>(m => m.Name);
+    classUnderTest = new Required('Name');
   });
 
   it('should construct', () => {

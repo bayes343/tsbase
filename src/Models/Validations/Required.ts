@@ -2,21 +2,20 @@ import { Result } from '../../Patterns/Result/Result';
 import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Model } from '../Model';
 
-export class Required<T> implements IValidation<Model> {
+export class Required implements IValidation<Model> {
   constructor(
-    private member: (func: T) => any
+    private member: string
   ) { }
 
   public Validate(object: Model): Result {
-    const key = Model.GetKeyFromMemberFunc(this.member);
     const label = object.LabelFor(this.member);
 
     const result = new Result();
-    const valueExists = (object as any)[key] && (object as any)[key]
+    const valueExists = (object as any)[this.member] && (object as any)[this.member]
       .toString().trim().length >= 1;
 
     if (!valueExists) {
-      result.ErrorMessages.push(`\"${label ? label : key}\" is a required field.`);
+      result.ErrorMessages.push(`\"${label ? label : this.member}\" is a required field.`);
     }
 
     return result;
