@@ -1,5 +1,4 @@
 import { IValidation } from '../Patterns/Validator/IValidation';
-import { InputTypes } from './InputTypes';
 import { Model } from './Model';
 import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation, RangeValidation, RegExpValidation, StringLengthValidation, OptionValidation } from './Validations/module';
@@ -17,11 +16,6 @@ export function Label(label: string) {
   return metadata(MetadataKeys.Label, label);
 }
 
-export function Input(input: InputTypes) {
-  return metadata(MetadataKeys.Input, input);
-}
-
-//#region Validations
 export function Validations(validations: Array<IValidation<Model>>) {
   return function (target: Model, key: string) {
     const metaData = Model.Metadata[MetadataKeys.Validations] ||
@@ -62,4 +56,3 @@ export function RegExp(regex: RegExp, customErrorMessage?: string) {
     Validations([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
   };
 }
-//#endregion

@@ -3,7 +3,6 @@ import { Strings } from '../System/Strings';
 import { Result } from '../Patterns/Result/Result';
 import { IValidation, Validator } from '../Patterns/Validator/module';
 import { MetadataKeys } from './MetadataKeys';
-import { InputTypes } from './InputTypes';
 
 const hiddenFields = [
   'IsTemplate'
@@ -25,16 +24,12 @@ export abstract class Model {
   constructor(public IsTemplate = false) { }
 
   public get ModelKeys(): Array<string> {
-    return Object.keys(this).filter(k => hiddenFields.indexOf(k) === -1);
+    return Object.keys(this).filter(k => !hiddenFields.includes(k));
   }
 
   public LabelFor<T>(member: ((func: T) => any) | string): string {
     return this.getMetadata<string>(MetadataKeys.Label, member, typeof member === 'string' ?
       member : Model.GetKeyFromMemberFunc(member));
-  }
-
-  public InputFor<T>(member: ((func: T) => any) | string): InputTypes {
-    return this.getMetadata<InputTypes>(MetadataKeys.Input, member, InputTypes.Text);
   }
 
   public OptionsFor<T>(member: ((func: T) => any) | string): Record<string, string> {
@@ -50,7 +45,6 @@ export abstract class Model {
       this.validateField(member) :
       this.validateModel();
   }
-
 
   private validateModel(): Result {
     let result = new Result();

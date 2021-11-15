@@ -1,6 +1,5 @@
 import { Model } from '../Model';
-import { InputTypes } from '../InputTypes';
-import { Label, Input, Options, Required, Range, RegExp, StringLength } from '../Metadata';
+import { Label, Options, Required, Range, RegExp, StringLength } from '../Metadata';
 import { Strings } from '../../System/Strings';
 import { Regex } from '../../System/Regex';
 
@@ -14,7 +13,6 @@ class ModelTest extends Model {
   @Required()
   public Name = '';
 
-  @Input(InputTypes.Number)
   @Range(0, 120)
   public Age = 0;
 
@@ -40,14 +38,6 @@ describe('Model', () => {
 
   it('should return key for label when no label is declared', () => {
     expect(classUnderTest.LabelFor<ModelTest>(l => l.Age)).toEqual('Age');
-  });
-
-  it('should get input when one is declared', () => {
-    expect(classUnderTest.InputFor<ModelTest>(l => l.Age)).toEqual(InputTypes.Number);
-  });
-
-  it('should return text for input when no input is declared', () => {
-    expect(classUnderTest.InputFor<ModelTest>(l => l.Name)).toEqual(InputTypes.Text);
   });
 
   it('should get options when they are declared', () => {
@@ -82,7 +72,6 @@ describe('Model', () => {
   }
 
   class OuterDataModel extends Model {
-    @Input(InputTypes.Object)
     public InnerDataModel = new InnerDataModel();
 
     public InnerDataModelArray = [new InnerDataModel(true)];
