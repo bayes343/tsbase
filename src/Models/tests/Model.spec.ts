@@ -175,4 +175,10 @@ describe('Model', () => {
     const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
     expect(result.IsSuccess).toBeFalsy();
   });
+
+  it('should validate an invalid option', () => {
+    classUnderTest.Gender = 'fake' as Genders;
+    const result = classUnderTest.Validate<ModelTest>(m => m.Gender);
+    expect(result.IsSuccess).toBeFalsy();
+  });
 });

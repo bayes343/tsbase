@@ -2,10 +2,7 @@ import { IValidation } from '../Patterns/Validator/IValidation';
 import { InputTypes } from './InputTypes';
 import { Model } from './Model';
 import { MetadataKeys } from './MetadataKeys';
-import { RequiredValidation } from './Validations/module';
-import { RangeValidation } from './Validations/RangeValidation';
-import { RegExpValidation } from './Validations/RegExpValidation';
-import { StringLengthValidation } from './Validations/StringLengthValidation';
+import { RequiredValidation, RangeValidation, RegExpValidation, StringLengthValidation, OptionValidation } from './Validations/module';
 
 function metadata(metadataKey: MetadataKeys, value: any) {
   return function (target: Model, key: string) {
@@ -24,12 +21,8 @@ export function Input(input: InputTypes) {
   return metadata(MetadataKeys.Input, input);
 }
 
-export function Options(options: Record<string, string>) {
-  return metadata(MetadataKeys.Options, options);
-}
-
 //#region Validations
-function validation(validations: Array<IValidation<Model>>) {
+export function Validations(validations: Array<IValidation<Model>>) {
   return function (target: Model, key: string) {
     const metaData = Model.Metadata[MetadataKeys.Validations] ||
       (Model.Metadata[MetadataKeys.Validations] = {});
@@ -39,27 +32,34 @@ function validation(validations: Array<IValidation<Model>>) {
   };
 }
 
+export function Options(options: Record<string, string>, customErrorMessage?: string) {
+  return function (target: Model, key: string) {
+    Validations([new OptionValidation(key, customErrorMessage)])(target, key);
+    metadata(MetadataKeys.Options, options)(target, key);
+  };
+}
+
 export function Required(customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new RequiredValidation(key, customErrorMessage)])(target, key);
+    Validations([new RequiredValidation(key, customErrorMessage)])(target, key);
   };
 }
 
 export function Range(minimum: number, maximum: number, customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new RangeValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+    Validations([new RangeValidation(key, minimum, maximum, customErrorMessage)])(target, key);
   };
 }
 
 export function StringLength(minimum: number, maximum: number, customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new StringLengthValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+    Validations([new StringLengthValidation(key, minimum, maximum, customErrorMessage)])(target, key);
   };
 }
 
 export function RegExp(regex: RegExp, customErrorMessage?: string) {
   return function (target: Model, key: string) {
-    validation([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
+    Validations([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
   };
 }
 //#endregion
