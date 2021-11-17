@@ -242,9 +242,7 @@ export class Queryable<T> extends Array<T> {
   ): Queryable<T> {
     const keywords = this.getKeywordsForTerm(term, ignorableSuffixCharacters);
 
-    stopWords.forEach(element => {
-      element = element.toLowerCase();
-    });
+    stopWords = stopWords.map(s => s.toLowerCase());
 
     const exactMatches = this.filter(
       item => JSON.stringify(item).toLowerCase().indexOf(term.toLowerCase()) >= 0).slice();

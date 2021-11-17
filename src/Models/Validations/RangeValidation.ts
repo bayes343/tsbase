@@ -15,7 +15,7 @@ export class RangeValidation implements IValidation<Model> {
     return new Command(() => {
       const value = (object as any)[this.member];
 
-      const valueIsNumeric = parseFloat(value.toString()) !== NaN;
+      const valueIsNumeric = !parseFloat(value.toString());
       const valueWithinRange = valueIsNumeric &&
         value >= this.minimum && value <= this.maximum;
 

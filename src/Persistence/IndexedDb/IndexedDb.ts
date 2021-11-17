@@ -146,7 +146,7 @@ export class IndexedDb implements IIndexedDb {
 
       for (const migration of migrations) {
         if (
-          e.oldVersion < migration.version,
+          e.oldVersion < migration.version &&
           this.Version >= migration.version
         ) {
           migration.command(db);
