@@ -2,7 +2,6 @@ import { ICache } from '../ICache';
 import { Cache } from '../Cache';
 import { InMemoryStorage } from '../../GenericStorage/InMemoryStorage';
 import { IGenericStorage } from '../../module';
-import { Strings } from '../../../System/Strings';
 import { TestHelpers } from 'tsmockit';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
 
@@ -77,17 +76,5 @@ describe('Cache', () => {
     const result = classUnderTest.Get(testValue);
 
     expect(result).toBeNull();
-  });
-
-  it('should serialize an object before returning it when appropriate', () => {
-    class TestClass {
-      test = Strings.Empty;
-    }
-    classUnderTest = new Cache<TestClass>(genericStorage, cacheLife, serializer);
-    classUnderTest.Add(testValue, { test: 'test' });
-
-    const result = (classUnderTest as ICache<TestClass>).Get(testValue, TestClass);
-
-    expect(result?.test).toEqual('test');
   });
 });
