@@ -18,7 +18,7 @@ export class OptionValidation implements IValidation<Model> {
     const valueIsValidOption = !!options[value];
 
     if (!valueIsValidOption) {
-      result.ErrorMessages.push(this.customErrorMessage || `"${value}" is not a valid option for: \"${label ? label : this.member}\".`);
+      result.ErrorMessages.push(this.customErrorMessage || `"${value}" is not a valid option for: \"${label}\".`);
     }
 
     return result;

@@ -16,7 +16,7 @@ export class RequiredValidation implements IValidation<Model> {
       .toString().trim().length >= 1;
 
     if (!valueExists) {
-      result.ErrorMessages.push(this.customErrorMessage || `\"${label ? label : this.member}\" is a required field.`);
+      result.ErrorMessages.push(this.customErrorMessage || `\"${label}\" is a required field.`);
     }
 
     return result;

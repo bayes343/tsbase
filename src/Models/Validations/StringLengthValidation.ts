@@ -22,7 +22,7 @@ export class StringLengthValidation implements IValidation<Model> {
 
     if (!valueWithinRange) {
       result.ErrorMessages.push(this.customErrorMessage ||
-        `\"${label ? label : this.member}\" length must be within ${this.minimum} and ${this.maximum} characters.`);
+        `\"${label}\" length must be within ${this.minimum} and ${this.maximum} characters.`);
     }
 
     return result;

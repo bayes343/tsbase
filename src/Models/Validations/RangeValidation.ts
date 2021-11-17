@@ -22,7 +22,7 @@ export class RangeValidation implements IValidation<Model> {
 
     if (!valueWithinRange) {
       result.ErrorMessages.push(this.customErrorMessage ||
-        `\"${label ? label : this.member}\" must be within the range of ${this.minimum} and ${this.maximum}.`);
+        `\"${label}\" must be within the range of ${this.minimum} and ${this.maximum}.`);
     }
 
     return result;

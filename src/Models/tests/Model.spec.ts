@@ -22,8 +22,12 @@ class ModelTest extends Model {
   })
   public Gender: Genders = Genders.Male;
 
+  @Required()
   @RegExp(Regex.Email, 'Must be a valid email address')
-  public Email: string = '';
+  public Email: string = 'some@email.com';
+
+  @RegExp(Regex.Email)
+  public SecondaryEmail: string = '';
 
   @StringLength(1, 100)
   public Notes = Strings.Space;
@@ -140,9 +144,15 @@ describe('Model', () => {
     expect(result.IsSuccess).toBeTruthy();
   });
 
-  it('should validate a regexp when the value does not conform', () => {
+  it('should validate a regexp when the value does not conform and a custom error message is declared', () => {
     classUnderTest.Email = 'test email dot com';
     const result = classUnderTest.Validate<ModelTest>(m => m.Email);
+    expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should validate a regexp when the value does not conform and no custom error message is declared', () => {
+    classUnderTest.SecondaryEmail = 'test email dot com';
+    const result = classUnderTest.Validate<ModelTest>(m => m.SecondaryEmail);
     expect(result.IsSuccess).toBeFalsy();
   });
 
