@@ -1,5 +1,6 @@
 import { Result } from '../../Patterns/Result/Result';
 import { IValidation } from '../../Patterns/Validator/IValidation';
+import { Command } from '../../Patterns/CommandQuery/Command';
 import { Model } from '../Model';
 
 export class RequiredValidation implements IValidation<Model> {
@@ -9,16 +10,14 @@ export class RequiredValidation implements IValidation<Model> {
   ) { }
 
   public Validate(object: Model): Result {
-    const label = object.LabelFor(this.member);
+    return new Command(() => {
+      const valueExists = (object as any)[this.member] && (object as any)[this.member]
+        .toString().trim().length >= 1;
 
-    const result = new Result();
-    const valueExists = (object as any)[this.member] && (object as any)[this.member]
-      .toString().trim().length >= 1;
-
-    if (!valueExists) {
-      result.ErrorMessages.push(this.customErrorMessage || `\"${label}\" is a required field.`);
-    }
-
-    return result;
+      if (!valueExists) {
+        const label = object.LabelFor(this.member);
+        throw new Error(this.customErrorMessage || `\"${label}\" is a required field.`);
+      }
+    }).Execute();
   }
 }

@@ -1,5 +1,6 @@
 import { Result } from '../../Patterns/Result/Result';
 import { IValidation } from '../../Patterns/Validator/IValidation';
+import { Command } from '../../Patterns/CommandQuery/Command';
 import { Model } from '../Model';
 
 export class RegExpValidation implements IValidation<Model> {
@@ -10,20 +11,19 @@ export class RegExpValidation implements IValidation<Model> {
   ) { }
 
   public Validate(object: Model): Result {
-    const result = new Result();
+    return new Command(() => {
+      const value = (object as any)[this.member];
 
-    const label = object.LabelFor(this.member);
-    const value = (object as any)[this.member];
+      const regex = new RegExp(this.regex);
+      const regexTestPasses = regex.test(value);
 
-    const regex = new RegExp(this.regex);
-    const regexTestPasses = regex.test(value);
-
-    if (
-      !!value && // don't enforce if falsy - leave that to required validation
-      !regexTestPasses) {
-      result.ErrorMessages.push(this.customErrorMessage || `${label} value: ${value} does not conform to the expected regular expression: ${regex}`);
-    }
-
-    return result;
+      if (
+        !!value && // don't enforce if falsy - leave that to required validation
+        !regexTestPasses
+      ) {
+        const label = object.LabelFor(this.member);
+        throw new Error(this.customErrorMessage || `${label} value: ${value} does not conform to the expected regular expression: ${regex}`);
+      }
+    }).Execute();
   }
 }
