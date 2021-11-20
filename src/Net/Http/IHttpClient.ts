@@ -1,10 +1,10 @@
 import { HttpMethod } from './HttpMethod';
 
-export type RestResponse = {
+export type RestResponse<T> = {
   ok: boolean,
   status: number,
   statusText: string,
-  body: string | object,
+  body: string | T,
   headers: Headers
 };
 
@@ -33,32 +33,32 @@ export interface IHttpClient {
    * Send a GET request to the specified Uri as an asynchronous operation.
    * @param uri
    */
-  Get(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
+  Get<T>(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a PATCH request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  Patch(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
+  Patch<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a POST request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  Post(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
+  Post<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a PUT request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  Put(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
+  Put<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a DELETE request to the specified Uri as an asynchronous operation.
    * @param uri
    */
-  Delete(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse>;
+  Delete<T>(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 }

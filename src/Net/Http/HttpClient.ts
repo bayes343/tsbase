@@ -28,32 +28,32 @@ export class HttpClient implements IHttpClient {
     return response;
   }
 
-  public async Get(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+  public async Get<T>(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
   }
 
-  public async Patch(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+  public async Patch<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Patch, body, additionalHeaders);
   }
 
-  public async Post(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+  public async Post<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Post, body, additionalHeaders);
   }
 
-  public async Put(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+  public async Put<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Put, body, additionalHeaders);
   }
 
-  public async Delete(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse> {
+  public async Delete<T>(uri: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Delete, undefined, additionalHeaders);
   }
 
-  private async getRestResponse(
+  private async getRestResponse<T>(
     uri: string,
     method: HttpMethod,
     body?: string,
     additionalHeaders?: Record<string, string>
-  ): Promise<RestResponse> {
+  ): Promise<RestResponse<T>> {
     const response = await this.Request(uri, method, body, additionalHeaders);
     const isJson = response.headers.get('content-type')?.includes('application/json');
 
