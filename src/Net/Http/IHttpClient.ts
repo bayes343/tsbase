@@ -4,7 +4,7 @@ export type RestResponse<T> = {
   ok: boolean,
   status: number,
   statusText: string,
-  body: string | T,
+  body: T,
   headers: Headers
 };
 
