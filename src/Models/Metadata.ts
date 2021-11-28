@@ -16,6 +16,10 @@ export function Label(label: string) {
   return metadata(MetadataKeys.Label, label);
 }
 
+export function Description(description: string) {
+  return metadata(MetadataKeys.Description, description);
+}
+
 export function Validations(validations: Array<IValidation<Model>>) {
   return function (target: Model, key: string) {
     const metaData = Model.Metadata[MetadataKeys.Validations] ||

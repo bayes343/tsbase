@@ -1,5 +1,5 @@
 import { Model } from '../Model';
-import { Label, Options, Required, Range, RegExp, StringLength } from '../Metadata';
+import { Label, Options, Required, Range, RegExp, StringLength, Description } from '../Metadata';
 import { Strings } from '../../System/Strings';
 import { Regex } from '../../System/Regex';
 
@@ -14,6 +14,7 @@ class ModelTest extends Model {
   public Name = '';
 
   @Range(0, 120)
+  @Description('Age of subject between 0 and 120')
   public Age = 0;
 
   @Options({
@@ -179,5 +180,13 @@ describe('Model', () => {
     classUnderTest.Gender = 'fake' as Genders;
     const result = classUnderTest.Validate<ModelTest>(m => m.Gender);
     expect(result.IsSuccess).toBeFalsy();
+  });
+
+  it('should return description of field with description decorator given the field key', () => {
+    expect(classUnderTest.DescriptionFor('Age')).toEqual('Age of subject between 0 and 120');
+  });
+
+  it('should return description of field with description decorator given a func to the field key', () => {
+    expect(classUnderTest.DescriptionFor<ModelTest>(m => m.Age)).toEqual('Age of subject between 0 and 120');
   });
 });

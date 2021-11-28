@@ -32,6 +32,11 @@ export abstract class Model {
       member : Model.GetKeyFromMemberFunc(member));
   }
 
+  public DescriptionFor<T>(member: ((func: T) => any) | string): string {
+    return this.getMetadata<string>(MetadataKeys.Description, member, typeof member === 'string' ?
+      member : Model.GetKeyFromMemberFunc(member));
+  }
+
   public OptionsFor<T>(member: ((func: T) => any) | string): Record<string, string> {
     return this.getMetadata<Record<string, string>>(MetadataKeys.Options, member, {});
   }
