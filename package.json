@@ -10,7 +10,8 @@
     "start": "karma start",
     "test-once": "karma start --singleRun",
     "build": "tsc",
-    "lint": "eslint src/**/*.ts && jscpd src",
+    "lint": "eslint ./src --ext .ts,.tsx && jscpd src",
+		"lint-fix": "eslint ./src --ext .ts,.tsx --fix",
     "docs": "typedoc src/public_api.ts"
   },
   "devDependencies": {
