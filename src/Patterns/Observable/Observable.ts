@@ -4,11 +4,11 @@ import { BaseObservable } from './BaseObservable';
 import { ISyncObservable } from './ISyncObservable';
 
 export class Observable<T> extends BaseObservable<T> implements ISyncObservable<T> {
-  public Subscribe(func: (content?: T) => void): string {
+  public Subscribe(func: (content?: T) => void, useCurrentIssue = true): string {
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
 
-    if (this.CurrentIssue) {
+    if (useCurrentIssue && this.CurrentIssue) {
       func(this.CurrentIssue);
     }
 

@@ -74,6 +74,19 @@ describe('AsyncObservable', () => {
     expect(actualValue).toEqual(expectedValue);
   });
 
+  it('should subscribe to the next issue event if one is available when false is passed to current issue arg', async () => {
+    const expectedValue = 1;
+    let actualValue = 0;
+
+    await classUnderTest.Publish(2);
+    classUnderTest.Subscribe(async (v) => {
+      actualValue = v || 0;
+    }, false);
+    await classUnderTest.Publish(expectedValue);
+
+    expect(actualValue).toEqual(expectedValue);
+  });
+
   it('should discontinue future calls to subscribers on publish', async () => {
     let subscriber = 1;
     classUnderTest.Subscribe(async content => {

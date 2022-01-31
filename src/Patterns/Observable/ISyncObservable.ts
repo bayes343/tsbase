@@ -9,7 +9,7 @@ export interface ISyncObservable<T> extends IObservable<T> {
    * id returned allows caller to cancel subscription
    * @param func
    */
-  Subscribe(func: (content?: T) => void): string;
+  Subscribe(func: (content?: T) => void, useCurrentIssue?: boolean): string;
 
   /**
    * A single issue subscription. Once the function for an

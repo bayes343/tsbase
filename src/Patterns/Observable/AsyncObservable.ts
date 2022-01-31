@@ -4,11 +4,11 @@ import { BaseObservable } from './BaseObservable';
 import { IAsyncObservable } from './IAsyncObservable';
 
 export class AsyncObservable<T> extends BaseObservable<T> implements IAsyncObservable<T> {
-  public async Subscribe(func: (content?: T) => Promise<void>): Promise<string> {
+  public async Subscribe(func: (content?: T) => Promise<void>, useCurrentIssue = true): Promise<string> {
     const subscriptionId = Guid.NewGuid();
     this.subscribers.set(subscriptionId, func);
 
-    if (this.CurrentIssue) {
+    if (useCurrentIssue && this.CurrentIssue) {
       await func(this.CurrentIssue);
     }
 

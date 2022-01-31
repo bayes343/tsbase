@@ -138,4 +138,14 @@ describe('Observable', () => {
 
     expect(immediateValue).toEqual(Strings.Empty);
   });
+
+  it('should not call a subscriber immediately if given false for useCurrentIssue', () => {
+    classUnderTest = new Observable<string>();
+    let immediateValue = Strings.Empty;
+    classUnderTest.Publish('test');
+
+    classUnderTest.Subscribe((content: string) => immediateValue = content, false);
+
+    expect(immediateValue).toEqual(Strings.Empty);
+  });
 });

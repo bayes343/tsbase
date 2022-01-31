@@ -9,7 +9,7 @@ export interface IAsyncObservable<T> extends IObservable<T> {
    * id returned allows caller to cancel subscription
    * @param func
    */
-  Subscribe(func: (content?: T) => Promise<void>): Promise<string>;
+  Subscribe(func: (content?: T) => Promise<void>, useCurrentIssue?: boolean): Promise<string>;
 
   /**
    * A single issue subscription. Once the function for an
