@@ -35,7 +35,7 @@ export class DomStorage implements IGenericStorage {
       this.getStorageMedium().setItem(key, JSON.stringify(value))).Execute();
   }
 
-  public GetValue(key: string): GenericResult<any> {
+  public GetValue<T>(key: string): GenericResult<T> {
     return new Query((): any => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
