@@ -4,8 +4,8 @@ import { Strings } from '../../System/Strings';
 import { Regex } from '../../System/Regex';
 
 enum Genders {
-  Male = 'male',
-  Female = 'female'
+  Male = 'Male',
+  Female = 'Female'
 }
 
 class ModelTest extends Model {
@@ -17,10 +17,7 @@ class ModelTest extends Model {
   @Description('Age of subject between 0 and 120')
   public Age = 0;
 
-  @Options({
-    male: 'Male',
-    female: 'Female'
-  })
+  @Options(Genders)
   public Gender: Genders = Genders.Male;
 
   @Required()
@@ -46,10 +43,7 @@ describe('Model', () => {
   });
 
   it('should get options when they are declared', () => {
-    expect(classUnderTest.OptionsFor<ModelTest>(l => l.Gender)).toEqual({
-      male: 'Male',
-      female: 'Female'
-    });
+    expect(classUnderTest.OptionsFor<ModelTest>(l => l.Gender)).toEqual(Genders);
   });
 
   it('should return an empty object for options when none are declared', () => {
@@ -69,6 +63,7 @@ describe('Model', () => {
     classUnderTest.Name = 'valid name';
     const result = classUnderTest.Validate();
     expect(result.IsSuccess).toBeTruthy();
+    expect(result.ErrorMessages).toEqual([]);
   });
 
   class InnerDataModel extends Model {
