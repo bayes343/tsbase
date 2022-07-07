@@ -3,7 +3,7 @@ import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Command } from '../../Patterns/CommandQuery/Command';
 import { Model } from '../Model';
 
-export class StringLengthValidation implements IValidation<Model> {
+export class StringLengthValidation<T> implements IValidation<Model<T>> {
   constructor(
     private member: string,
     private minimum: number,
@@ -11,7 +11,7 @@ export class StringLengthValidation implements IValidation<Model> {
     private customErrorMessage?: string
   ) { }
 
-  public Validate(object: Model): Result {
+  public Validate(object: Model<T>): Result {
     return new Command(() => {
       const value = (object as any)[this.member];
 

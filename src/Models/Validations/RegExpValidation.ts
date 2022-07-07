@@ -3,14 +3,14 @@ import { IValidation } from '../../Patterns/Validator/IValidation';
 import { Command } from '../../Patterns/CommandQuery/Command';
 import { Model } from '../Model';
 
-export class RegExpValidation implements IValidation<Model> {
+export class RegExpValidation<T> implements IValidation<Model<T>> {
   constructor(
     private member: string,
     private regex: RegExp,
     private customErrorMessage?: string
   ) { }
 
-  public Validate(object: Model): Result {
+  public Validate(object: Model<T>): Result {
     return new Command(() => {
       const value = (object as any)[this.member];
 

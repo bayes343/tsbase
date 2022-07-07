@@ -3,8 +3,8 @@ import { Model } from './Model';
 import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation, RangeValidation, RegExpValidation, StringLengthValidation, OptionValidation } from './Validations/module';
 
-function metadata(metadataKey: MetadataKeys, value: any) {
-  return function (target: Model, key: string) {
+function metadata<T>(metadataKey: MetadataKeys, value: any) {
+  return function (target: Model<T>, key: string) {
     const metaData = Model.Metadata[metadataKey] ||
       (Model.Metadata[metadataKey] = {});
 
@@ -20,8 +20,8 @@ export function Description(description: string) {
   return metadata(MetadataKeys.Description, description);
 }
 
-export function Validations(validations: Array<IValidation<Model>>) {
-  return function (target: Model, key: string) {
+export function Validations<T>(validations: Array<IValidation<Model<T>>>) {
+  return function (target: Model<T>, key: string) {
     const metaData = Model.Metadata[MetadataKeys.Validations] ||
       (Model.Metadata[MetadataKeys.Validations] = {});
 
@@ -30,33 +30,33 @@ export function Validations(validations: Array<IValidation<Model>>) {
   };
 }
 
-export function Options(options: Record<string, string>, customErrorMessage?: string) {
-  return function (target: Model, key: string) {
+export function Options<T>(options: Record<string, string>, customErrorMessage?: string) {
+  return function (target: Model<T>, key: string) {
     Validations([new OptionValidation(key, customErrorMessage)])(target, key);
     metadata(MetadataKeys.Options, options)(target, key);
   };
 }
 
-export function Required(customErrorMessage?: string) {
-  return function (target: Model, key: string) {
+export function Required<T>(customErrorMessage?: string) {
+  return function (target: Model<T>, key: string) {
     Validations([new RequiredValidation(key, customErrorMessage)])(target, key);
   };
 }
 
-export function Range(minimum: number, maximum: number, customErrorMessage?: string) {
-  return function (target: Model, key: string) {
+export function Range<T>(minimum: number, maximum: number, customErrorMessage?: string) {
+  return function (target: Model<T>, key: string) {
     Validations([new RangeValidation(key, minimum, maximum, customErrorMessage)])(target, key);
   };
 }
 
-export function StringLength(minimum: number, maximum: number, customErrorMessage?: string) {
-  return function (target: Model, key: string) {
+export function StringLength<T>(minimum: number, maximum: number, customErrorMessage?: string) {
+  return function (target: Model<T>, key: string) {
     Validations([new StringLengthValidation(key, minimum, maximum, customErrorMessage)])(target, key);
   };
 }
 
-export function RegExp(regex: RegExp, customErrorMessage?: string) {
-  return function (target: Model, key: string) {
+export function RegExp<T>(regex: RegExp, customErrorMessage?: string) {
+  return function (target: Model<T>, key: string) {
     Validations([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
   };
 }

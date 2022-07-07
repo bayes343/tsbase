@@ -8,7 +8,7 @@ enum Genders {
   Female = 'Female'
 }
 
-class ModelTest extends Model {
+class ModelTest extends Model<ModelTest> {
   @Label('full name')
   @Required()
   public Name = '';
@@ -35,27 +35,27 @@ describe('Model', () => {
   const classUnderTest = new ModelTest();
 
   it('should get label when one is declared', () => {
-    expect(classUnderTest.LabelFor<ModelTest>(l => l.Name)).toEqual('full name');
+    expect(classUnderTest.LabelFor(l => l.Name)).toEqual('full name');
   });
 
   it('should return key for label when no label is declared', () => {
-    expect(classUnderTest.LabelFor<ModelTest>(l => l.Age)).toEqual('Age');
+    expect(classUnderTest.LabelFor(l => l.Age)).toEqual('Age');
   });
 
   it('should get options when they are declared', () => {
-    expect(classUnderTest.OptionsFor<ModelTest>(l => l.Gender)).toEqual(Genders);
+    expect(classUnderTest.OptionsFor(l => l.Gender)).toEqual(Genders);
   });
 
   it('should return an empty object for options when none are declared', () => {
-    expect(classUnderTest.OptionsFor<ModelTest>(l => l.Name)).toEqual({});
+    expect(classUnderTest.OptionsFor(l => l.Name)).toEqual({});
   });
 
   it('should validate a single field on the model', () => {
-    const falsyValidation = classUnderTest.Validate<ModelTest>(m => m.Name);
+    const falsyValidation = classUnderTest.Validate(m => m.Name);
     expect(falsyValidation.IsSuccess).toBeFalsy();
 
     classUnderTest.Name = 'Some name';
-    const truthyValidation = classUnderTest.Validate<ModelTest>(m => m.Name);
+    const truthyValidation = classUnderTest.Validate(m => m.Name);
     expect(truthyValidation.IsSuccess).toBeTruthy();
   });
 
@@ -66,12 +66,12 @@ describe('Model', () => {
     expect(result.ErrorMessages).toEqual([]);
   });
 
-  class InnerDataModel extends Model {
+  class InnerDataModel extends Model<InnerDataModel> {
     @Required()
     public InnerName = Strings.Empty;
   }
 
-  class OuterDataModel extends Model {
+  class OuterDataModel extends Model<OuterDataModel> {
     public InnerDataModel = new InnerDataModel();
 
     public InnerDataModelArray = [new InnerDataModel(true)];
@@ -113,67 +113,67 @@ describe('Model', () => {
   });
 
   it('should return success when validating a field with no validations', () => {
-    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    const result = classUnderTest.Validate(m => m.Notes);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should validate a range when the range is valid', () => {
-    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    const result = classUnderTest.Validate(m => m.Age);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should validate a range when the range restricted value is too small', () => {
     classUnderTest.Age = -1;
-    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    const result = classUnderTest.Validate(m => m.Age);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate a range when the range restricted value is too large', () => {
     classUnderTest.Age = 121;
-    const result = classUnderTest.Validate<ModelTest>(m => m.Age);
+    const result = classUnderTest.Validate(m => m.Age);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate a regexp when the value conforms', () => {
     classUnderTest.Email = 'test@email.com';
-    const result = classUnderTest.Validate<ModelTest>(m => m.Email);
+    const result = classUnderTest.Validate(m => m.Email);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should validate a regexp when the value does not conform and a custom error message is declared', () => {
     classUnderTest.Email = 'test email dot com';
-    const result = classUnderTest.Validate<ModelTest>(m => m.Email);
+    const result = classUnderTest.Validate(m => m.Email);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate a regexp when the value does not conform and no custom error message is declared', () => {
     classUnderTest.SecondaryEmail = 'test email dot com';
-    const result = classUnderTest.Validate<ModelTest>(m => m.SecondaryEmail);
+    const result = classUnderTest.Validate(m => m.SecondaryEmail);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate a string length when the length of the value is within the min/max', () => {
     classUnderTest.Notes = 'notes';
-    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    const result = classUnderTest.Validate(m => m.Notes);
     expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should validate a string length when the length of the value is below the min', () => {
     classUnderTest.Notes = Strings.Empty;
-    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    const result = classUnderTest.Validate(m => m.Notes);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate a string length when the length of the value is above the max', () => {
     // eslint-disable-next-line max-len
     classUnderTest.Notes = '1234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891';
-    const result = classUnderTest.Validate<ModelTest>(m => m.Notes);
+    const result = classUnderTest.Validate(m => m.Notes);
     expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should validate an invalid option', () => {
     classUnderTest.Gender = 'fake' as Genders;
-    const result = classUnderTest.Validate<ModelTest>(m => m.Gender);
+    const result = classUnderTest.Validate(m => m.Gender);
     expect(result.IsSuccess).toBeFalsy();
   });
 
@@ -182,6 +182,6 @@ describe('Model', () => {
   });
 
   it('should return description of field with description decorator given a func to the field key', () => {
-    expect(classUnderTest.DescriptionFor<ModelTest>(m => m.Age)).toEqual('Age of subject between 0 and 120');
+    expect(classUnderTest.DescriptionFor(m => m.Age)).toEqual('Age of subject between 0 and 120');
   });
 });
