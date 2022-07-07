@@ -8,7 +8,7 @@ const hiddenFields = [
   'IsTemplate'
 ];
 
-export abstract class Model {
+export abstract class Model<T> {
   public static Metadata: Record<string, Record<string, any>> = {};
 
   public static GetKeyFromMemberFunc(member: (func: any) => any): string {
@@ -27,25 +27,25 @@ export abstract class Model {
     return Object.keys(this).filter(k => !hiddenFields.includes(k));
   }
 
-  public LabelFor<T>(member: ((func: T) => any) | string): string {
+  public LabelFor(member: ((func: T) => any) | string): string {
     return this.getMetadata<string>(MetadataKeys.Label, member, typeof member === 'string' ?
       member : Model.GetKeyFromMemberFunc(member));
   }
 
-  public DescriptionFor<T>(member: ((func: T) => any) | string): string {
+  public DescriptionFor(member: ((func: T) => any) | string): string {
     return this.getMetadata<string>(MetadataKeys.Description, member, typeof member === 'string' ?
       member : Model.GetKeyFromMemberFunc(member));
   }
 
-  public OptionsFor<T>(member: ((func: T) => any) | string): Record<string, string> {
+  public OptionsFor(member: ((func: T) => any) | string): Record<string, string> {
     return this.getMetadata<Record<string, string>>(MetadataKeys.Options, member, {});
   }
 
-  public ValidationsFor<T>(member: ((func: T) => any) | string): Array<IValidation<Model>> {
-    return this.getMetadata<Array<IValidation<Model>>>(MetadataKeys.Validations, member, []);
+  public ValidationsFor(member: ((func: T) => any) | string): Array<IValidation<Model<T>>> {
+    return this.getMetadata<Array<IValidation<Model<T>>>>(MetadataKeys.Validations, member, []);
   }
 
-  public Validate<T>(member?: (func: T) => any): Result {
+  public Validate(member?: (func: T) => any): Result {
     return member ?
       this.validateField(member) :
       this.validateModel();
@@ -62,7 +62,7 @@ export abstract class Model {
       } else if (this.fieldIsArrayOfDataModel((this as any)[key])) {
         result = this.validateDataModelArray(key, result);
       } else {
-        const validations = this.ValidationsFor<Model>(key);
+        const validations = this.ValidationsFor(key);
         result = result.CombineWith(new Validator(validations).Validate(this));
       }
     });
@@ -71,7 +71,7 @@ export abstract class Model {
   }
 
   private validateDataModelArray(key: string, result: Result) {
-    const nestedDataModelArray = (this as any)[key] as Array<Model>;
+    const nestedDataModelArray = (this as any)[key] as Array<Model<T>>;
 
     nestedDataModelArray.forEach(model => {
       if (!model.IsTemplate) {
