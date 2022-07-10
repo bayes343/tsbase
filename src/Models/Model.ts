@@ -47,8 +47,14 @@ export abstract class Model<T> {
 
   public Validate(member?: (func: T) => any): Result {
     return member ?
-      this.validateField(member) :
+      this.ValidateField(member) :
       this.validateModel();
+  }
+
+  public ValidateField(member: (func: any) => any): Result {
+    const validations = this.ValidationsFor(member);
+    const validator = new Validator(validations);
+    return validator.Validate(this);
   }
 
   private validateModel(): Result {
@@ -80,12 +86,6 @@ export abstract class Model<T> {
     });
 
     return result;
-  }
-
-  private validateField(member: (func: any) => any): Result {
-    const validations = this.ValidationsFor(member);
-    const validator = new Validator(validations);
-    return validator.Validate(this);
   }
 
   private fieldIsArrayOfDataModel(field: any): boolean {
