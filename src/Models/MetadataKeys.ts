@@ -1,7 +1,7 @@
 export enum MetadataKeys {
   Label = 'label',
   Description = 'description',
-  Input = 'input',
+  InputType = 'inputType',
   Options = 'options',
   Validations = 'validations'
 }

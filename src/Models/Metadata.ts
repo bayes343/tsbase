@@ -2,6 +2,7 @@ import { IValidation } from '../Patterns/Validator/IValidation';
 import { Model } from './Model';
 import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation, RangeValidation, RegExpValidation, StringLengthValidation, OptionValidation } from './Validations/module';
+import { InputTypes } from './inputTypes';
 
 function metadata<T>(metadataKey: MetadataKeys, value: any) {
   return function (target: Model<T>, key: string) {
@@ -18,6 +19,10 @@ export function Label(label: string) {
 
 export function Description(description: string) {
   return metadata(MetadataKeys.Description, description);
+}
+
+export function InputType(inputType: InputTypes) {
+  return metadata(MetadataKeys.InputType, inputType);
 }
 
 export function Validations<T>(validations: Array<IValidation<Model<T>>>) {

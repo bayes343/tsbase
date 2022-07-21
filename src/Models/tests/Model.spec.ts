@@ -1,7 +1,8 @@
 import { Model } from '../Model';
-import { Label, Options, Required, Range, RegExp, StringLength, Description } from '../Metadata';
+import { Label, Options, Required, Range, RegExp, StringLength, Description, InputType } from '../Metadata';
 import { Strings } from '../../System/Strings';
 import { Regex } from '../../System/Regex';
+import { InputTypes } from '../inputTypes';
 
 enum Genders {
   Male = 'Male',
@@ -15,6 +16,7 @@ class ModelTest extends Model<ModelTest> {
 
   @Range(0, 120)
   @Description('Age of subject between 0 and 120')
+  @InputType(InputTypes.Number)
   public Age = 0;
 
   @Options(Genders)
@@ -40,6 +42,14 @@ describe('Model', () => {
 
   it('should return key for label when no label is declared', () => {
     expect(classUnderTest.LabelFor(l => l.Age)).toEqual('Age');
+  });
+
+  it('should get input type when one is declared', () => {
+    expect(classUnderTest.InputTypeFor(l => l.Age)).toEqual('number');
+  });
+
+  it('should return key for input type when no input type is declared', () => {
+    expect(classUnderTest.InputTypeFor(l => l.Name)).toEqual('Name');
   });
 
   it('should get options when they are declared', () => {
