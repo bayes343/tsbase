@@ -73,7 +73,7 @@ export class CookieStorage implements IGenericStorage {
       const optionsString = expiresOptionString + (options ? optionKeys.map(k => k !== CookieOptionKeys.Expires && options[k]
         ? `${k}=${options[k]}` : Strings.Empty).join(';') : Strings.Empty);
 
-      const newCookie = `${key}=${value};${optionsString};path=/`;
+      const newCookie = `${key}=${value};${optionsString};`;
       this.mainDocument.cookie = newCookie;
     }).Execute();
   }
