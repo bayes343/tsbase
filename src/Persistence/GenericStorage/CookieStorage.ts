@@ -21,7 +21,6 @@ enum CookieOptionKeys {
   Expires = 'expires',
   Secure = 'secure',
   SameSite = 'samesite',
-  SameParty = 'sameparty',
   Priority = 'priority'
 }
 
@@ -31,7 +30,6 @@ type CookieOptions = {
   [CookieOptionKeys.Expires]?: Date,
   [CookieOptionKeys.Secure]?: boolean,
   [CookieOptionKeys.SameSite]?: SameSiteOptions,
-  [CookieOptionKeys.SameParty]?: boolean,
   [CookieOptionKeys.Priority]?: Priorities
 }
 
@@ -82,13 +80,13 @@ export class CookieStorage implements IGenericStorage {
     samesite: SameSiteOptions.Strict
   }): Result {
     return new Command(() => {
-      const optionKeys = Object.keys(CookieOptionKeys) as CookieOptionKeys[];
+      const optionKeys = Object.values(CookieOptionKeys) as CookieOptionKeys[];
       const expiresOptionString = options?.expires ?
         `expires=${options?.expires.toUTCString()};` : Strings.Empty;
-      const optionsString = expiresOptionString + (options ? optionKeys.map(k => k !== CookieOptionKeys.Expires && options[k]
-        ? `${k}=${options[k]}` : Strings.Empty).join(';') : Strings.Empty);
-
+      const optionsString = expiresOptionString + optionKeys.map(k => k !== CookieOptionKeys.Expires && !!options[k]
+        ? `${k}=${options[k]};` : Strings.Empty).join('');
       const newCookie = `${key}=${value};${optionsString};`;
+
       this.mainDocument.cookie = newCookie;
     }).Execute();
   }
