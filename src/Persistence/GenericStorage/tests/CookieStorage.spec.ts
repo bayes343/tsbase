@@ -1,8 +1,8 @@
-import { CookieStorage } from '../CookieStorage';
+import { Mock } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from '../IGenericStorage';
-import { Mock } from 'tsmockit';
+import { CookieStorage } from '../CookieStorage';
 
 class Car {
   constructor(
@@ -69,7 +69,7 @@ describe('CookieStorage', () => {
 
   it('should successfully set and get a cookie with an expiration date', () => {
     const date = new Date();
-    (classUnderTest as CookieStorage).SetValue('key', 'value', date);
+    (classUnderTest as CookieStorage).SetValue('key', 'value', { expires: date });
 
     classUnderTest.GetValue('key');
 
