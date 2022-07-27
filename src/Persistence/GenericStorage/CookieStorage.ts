@@ -4,6 +4,26 @@ import { Command, Query } from '../../Patterns/CommandQuery/module';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from './IGenericStorage';
 
+enum CookieOptionKeys {
+  Domain = 'domain',
+  Path = 'path',
+  Expires = 'expires',
+  Secure = 'secure',
+  SameSite = 'samesite',
+  PartitionKey = 'partitionkey',
+  Priority = 'priority'
+}
+
+type CookieOptions = {
+  [CookieOptionKeys.Domain]?: string,
+  [CookieOptionKeys.Path]?: string,
+  [CookieOptionKeys.Expires]?: Date,
+  [CookieOptionKeys.Secure]?: boolean,
+  [CookieOptionKeys.SameSite]?: boolean,
+  [CookieOptionKeys.PartitionKey]?: string,
+  [CookieOptionKeys.Priority]?: number
+}
+
 /**
  * Provides a generic interface for interacting with Cookies
  */
@@ -24,9 +44,9 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public Set<T>(key: string, value: T, expirationDate?: Date): Result {
+  public Set<T>(key: string, value: T, options?: CookieOptions): Result {
     return new Command(() => {
-      this.SetValue(key, JSON.stringify(value), expirationDate);
+      this.SetValue(key, JSON.stringify(value), options);
     }).Execute();
   }
 
@@ -45,10 +65,15 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public SetValue(key: string, value: string, expirationDate?: Date): Result {
+  public SetValue(key: string, value: string, options?: CookieOptions): Result {
     return new Command(() => {
-      const newCookie = `${key}=${value};${expirationDate ?
-        `expires=${expirationDate.toUTCString()}` : Strings.Empty};path=/`;
+      const optionKeys = Object.keys(CookieOptionKeys) as CookieOptionKeys[];
+      const expiresOptionString = options?.expires ?
+        `expires=${options?.expires.toUTCString()};` : Strings.Empty;
+      const optionsString = expiresOptionString + (options ? optionKeys.map(k => k !== CookieOptionKeys.Expires && options[k]
+        ? `${k}=${options[k]}` : Strings.Empty).join(';') : Strings.Empty);
+
+      const newCookie = `${key}=${value};${optionsString};path=/`;
       this.mainDocument.cookie = newCookie;
     }).Execute();
   }
