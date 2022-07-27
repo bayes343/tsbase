@@ -4,13 +4,24 @@ import { Command, Query } from '../../Patterns/CommandQuery/module';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from './IGenericStorage';
 
+enum SameSiteOptions {
+  Lax = 'lax',
+  Strict = 'strict'
+}
+
+enum Priorities {
+  Low = 'low',
+  Medium = 'medium',
+  High = 'High'
+}
+
 enum CookieOptionKeys {
   Domain = 'domain',
   Path = 'path',
   Expires = 'expires',
   Secure = 'secure',
   SameSite = 'samesite',
-  PartitionKey = 'partitionkey',
+  SameParty = 'sameparty',
   Priority = 'priority'
 }
 
@@ -19,9 +30,9 @@ type CookieOptions = {
   [CookieOptionKeys.Path]?: string,
   [CookieOptionKeys.Expires]?: Date,
   [CookieOptionKeys.Secure]?: boolean,
-  [CookieOptionKeys.SameSite]?: boolean,
-  [CookieOptionKeys.PartitionKey]?: string,
-  [CookieOptionKeys.Priority]?: number
+  [CookieOptionKeys.SameSite]?: SameSiteOptions,
+  [CookieOptionKeys.SameParty]?: boolean,
+  [CookieOptionKeys.Priority]?: Priorities
 }
 
 /**
@@ -65,7 +76,11 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public SetValue(key: string, value: string, options?: CookieOptions): Result {
+  public SetValue(key: string, value: string, options: CookieOptions = {
+    path: '/',
+    secure: true,
+    samesite: SameSiteOptions.Strict
+  }): Result {
     return new Command(() => {
       const optionKeys = Object.keys(CookieOptionKeys) as CookieOptionKeys[];
       const expiresOptionString = options?.expires ?
