@@ -30,15 +30,14 @@ describe('CookieStorage', () => {
   });
 
   it('should set generic key value pairs as cookies', () => {
-    classUnderTest = new CookieStorage();
     const result = classUnderTest.Set<Car>(key, myCar);
+
     expect(result.IsSuccess).toBeTruthy();
+    expect(mockDocument.Object.cookie).toEqual('test={"Make":"Mitsubishi","Model":"Lancer"};path=/;secure=true;samesite=strict;');
   });
 
   it('should get generic key value pairs from cookies', () => {
-    classUnderTest = new CookieStorage();
-    classUnderTest.Set<Car>(key, myCar);
-
+    mockDocument.Object.cookie = 'test={"Make":"Mitsubishi","Model":"Lancer"};';
     const result = classUnderTest.Get(Car, key);
 
     expect(result.IsSuccess).toBeTruthy();
@@ -81,5 +80,21 @@ describe('CookieStorage', () => {
 
     expect(result.IsSuccess).toBeFalsy();
     expect(result.ErrorMessages[0]).toEqual('Unable to retrieve "fake"');
+  });
+
+  it('should correctly format a cookie with all custom options', () => {
+    const date = new Date();
+    const expectedCookie = `one=1;expires=${date.toUTCString()};domain=.domain.com;path=/example;secure=true;samesite=strict;priority=high;`;
+
+    (classUnderTest as CookieStorage).SetValue('one', '1', {
+      domain: '.domain.com',
+      expires: date,
+      path: '/example',
+      secure: true,
+      samesite: 'strict',
+      priority: 'high'
+    });
+
+    expect(mockDocument.Object.cookie).toEqual(expectedCookie);
   });
 });

@@ -4,17 +4,6 @@ import { Command, Query } from '../../Patterns/CommandQuery/module';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from './IGenericStorage';
 
-enum SameSiteOptions {
-  Lax = 'lax',
-  Strict = 'strict'
-}
-
-enum Priorities {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'High'
-}
-
 enum CookieOptionKeys {
   Domain = 'domain',
   Path = 'path',
@@ -29,8 +18,8 @@ type CookieOptions = {
   [CookieOptionKeys.Path]?: string,
   [CookieOptionKeys.Expires]?: Date,
   [CookieOptionKeys.Secure]?: boolean,
-  [CookieOptionKeys.SameSite]?: SameSiteOptions,
-  [CookieOptionKeys.Priority]?: Priorities
+  [CookieOptionKeys.SameSite]?: 'lax' | 'strict',
+  [CookieOptionKeys.Priority]?: 'low' | 'medium' | 'high'
 }
 
 /**
@@ -77,7 +66,7 @@ export class CookieStorage implements IGenericStorage {
   public SetValue(key: string, value: string, options: CookieOptions = {
     path: '/',
     secure: true,
-    samesite: SameSiteOptions.Strict
+    samesite: 'strict'
   }): Result {
     return new Command(() => {
       const optionKeys = Object.values(CookieOptionKeys) as CookieOptionKeys[];
@@ -85,15 +74,15 @@ export class CookieStorage implements IGenericStorage {
         `expires=${options?.expires.toUTCString()};` : Strings.Empty;
       const optionsString = expiresOptionString + optionKeys.map(k => k !== CookieOptionKeys.Expires && !!options[k]
         ? `${k}=${options[k]};` : Strings.Empty).join('');
-      const newCookie = `${key}=${value};${optionsString};`;
+      const newCookie = `${key}=${value};${optionsString}`;
 
       this.mainDocument.cookie = newCookie;
     }).Execute();
   }
 
-  public Remove(key: string): Result {
+  public Remove(key: string, path = '/'): Result {
     return new Command(() => {
-      this.mainDocument.cookie = `${key}=;expires=${new Date(0).toUTCString()};path=/`;
+      this.mainDocument.cookie = `${key}=;expires=${new Date(0).toUTCString()};path=${path}`;
     }).Execute();
   }
 }
