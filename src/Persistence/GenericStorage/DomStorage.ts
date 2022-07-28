@@ -25,7 +25,7 @@ export class DomStorage implements IGenericStorage {
       if (value) {
         return this.serializer.Serialize(type, JSON.parse(value)) as T;
       } else {
-        throw new Error(`Unable to retrieve \"${key}\"`);
+        throw new Error(`Unable to retrieve "${key}"`);
       }
     }).Execute();
   }
@@ -41,7 +41,7 @@ export class DomStorage implements IGenericStorage {
       if (value) {
         return value;
       } else {
-        throw new Error(`Unable to retrieve \"${key}\"`);
+        throw new Error(`Unable to retrieve "${key}"`);
       }
     }).Execute();
   }
