@@ -27,6 +27,7 @@ describe('CookieStorage', () => {
 
   it('should construct', () => {
     expect(classUnderTest).toBeDefined();
+    expect(new CookieStorage()).toBeDefined();
   });
 
   it('should set generic key value pairs as cookies', () => {
@@ -55,6 +56,14 @@ describe('CookieStorage', () => {
   it('should successfully remove a cookie', () => {
     classUnderTest.Set<Car>(key, myCar);
     const result = classUnderTest.Remove(key);
+    expect(result.IsSuccess).toBeTruthy();
+  });
+
+  it('should successfully remove a cookie from a custom path', () => {
+    (classUnderTest as CookieStorage).Set<Car>(key, myCar, {
+      path: '/test'
+    });
+    const result = (classUnderTest as CookieStorage).Remove(key, '/test');
     expect(result.IsSuccess).toBeTruthy();
   });
 
@@ -89,6 +98,20 @@ describe('CookieStorage', () => {
     (classUnderTest as CookieStorage).SetValue('one', '1', {
       domain: '.domain.com',
       expires: date,
+      path: '/example',
+      secure: true,
+      samesite: 'strict',
+      priority: 'high'
+    });
+
+    expect(mockDocument.Object.cookie).toEqual(expectedCookie);
+  });
+
+  it('should correctly format a cookie without date custom options', () => {
+    const expectedCookie = 'one=1;domain=.domain.com;path=/example;secure=true;samesite=strict;priority=high;';
+
+    (classUnderTest as CookieStorage).SetValue('one', '1', {
+      domain: '.domain.com',
       path: '/example',
       secure: true,
       samesite: 'strict',
