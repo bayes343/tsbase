@@ -27,6 +27,37 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
+  it('should return the outer html of a parsed jsx button node nested within another jsx button node', () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'button',
+      children: [
+        {
+          nodeName: 'div',
+          children: ['test']
+        },
+        {
+          nodeName: 'nav',
+          children: [
+            {
+              nodeName: 'span',
+              children: ['test']
+            },
+            {
+              nodeName: 'button',
+              children: ['test']
+            }
+          ],
+          attributes: {
+            class: 'testClass'
+          }
+        }
+      ],
+      attributes: {}
+    };
+    const expectedOuterHtml = '<button><div>test</div><nav class="testClass"><span>test</span><button>test</button></nav></button>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
   it('should return the neutralized outer html of a parsed jsx node with nested string mimicking a component', async () => {
     const jsxToParse: Jsx = {
       nodeName: 'div',
