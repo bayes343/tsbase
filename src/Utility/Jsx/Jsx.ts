@@ -13,8 +13,8 @@ const asap = (func: () => void) => {
 };
 
 export type Jsx = {
-  attributes?: Record<string, string>,
-  children?: Jsx[] | string[],
+  attributes?: Record<string, string> | null,
+  children?: (Jsx | string)[],
   nodeName: string
 };
 

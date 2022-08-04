@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { TestHelpers } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
 import { Jsx, JsxRenderer } from '../Jsx';
@@ -52,9 +53,46 @@ describe('JsxRenderer', () => {
           }
         }
       ],
-      attributes: {}
+      attributes: {
+        title: 'test',
+        class: 'test'
+      }
     };
-    const expectedOuterHtml = '<button><div>test</div><nav class="testClass"><span>test</span><button>test</button></nav></button>';
+    // eslint-disable-next-line max-len
+    const expectedOuterHtml = '<button title="test" class="test"><div>test</div><nav class="testClass"><span>test</span><button>test</button></nav></button>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should return the outer html of a parsed jsx button node nested within another jsx button node', () => {
+    const jsxToParse: Jsx = {
+      'nodeName': 'button',
+      'attributes': null,
+      'children': [
+        {
+          nodeName: 'div',
+          attributes: null,
+          children: [
+            'one'
+          ]
+        },
+        {
+          nodeName: 'div',
+          attributes: null,
+          children: [
+            'two ',
+            {
+              nodeName: 'button',
+              attributes: null,
+              children: [
+                'two'
+              ]
+            }
+          ]
+        }
+      ]
+    };
+    // eslint-disable-next-line max-len
+    const expectedOuterHtml = '<button><div>one</div><div>two <button>two</button></div></button>';
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
