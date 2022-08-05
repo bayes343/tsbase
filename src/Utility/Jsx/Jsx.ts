@@ -20,7 +20,14 @@ export type Jsx = {
 
 export const Fragment = 'fragment';
 
-export function ParseJsx(nodeName: string, attributes: Record<string, string>, ...children: any): Jsx {
+export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...children: any): Jsx {
+  if (typeof nodeName === 'function' && nodeName.constructor) {
+    return new nodeName(
+      attributes ? attributes : undefined,
+      children.length ? children : undefined
+    );
+  }
+
   children = [].concat(...children);
   return { nodeName, attributes, children };
 }

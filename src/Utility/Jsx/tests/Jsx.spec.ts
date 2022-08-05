@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { TestHelpers } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
-import { Jsx, JsxRenderer } from '../Jsx';
+import { Jsx, JsxRenderer, ParseJsx } from '../Jsx';
 
 describe('JsxRenderer', () => {
   it('should return the outer html of a parsed jsx node with only inner text', () => {
@@ -137,6 +137,82 @@ describe('JsxRenderer', () => {
       ]
     };
     const expectedOuterHtml = '<p>test</p><p><span>test</span></p>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should parse jsx containing fragments returned by a function', () => {
+    const jsxToParse: Jsx = ParseJsx(() => ({
+      nodeName: 'fragment',
+      attributes: {},
+      children: [
+        {
+          nodeName: 'p',
+          attributes: {},
+          children: ['test']
+        },
+        {
+          nodeName: 'p',
+          attributes: {},
+          children: [{
+            nodeName: 'span',
+            children: ['test'],
+            attributes: {}
+          }]
+        }
+      ]
+    }));
+    const expectedOuterHtml = '<p>test</p><p><span>test</span></p>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should parse jsx containing fragments returned by a function with "props"', () => {
+    const jsxToParse: Jsx = ParseJsx((props: any) => ({
+      nodeName: 'fragment',
+      attributes: {},
+      children: [
+        {
+          nodeName: 'p',
+          attributes: {},
+          children: [props.pText]
+        },
+        {
+          nodeName: 'p',
+          attributes: {},
+          children: [{
+            nodeName: 'span',
+            children: [props.sText],
+            attributes: {}
+          }]
+        }
+      ]
+    }), {
+      pText: 'p',
+      sText: 's'
+    });
+    const expectedOuterHtml = '<p>p</p><p><span>s</span></p>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should parse jsx containing fragments returned by a function with "children"', () => {
+    const jsxToParse: Jsx = ParseJsx(
+      (_props: any, children: any) => ({
+        nodeName: 'div',
+        attributes: {},
+        children: children
+      }),
+      undefined,
+      {
+        nodeName: 'p',
+        attributes: {},
+        children: ['test']
+      },
+      {
+        nodeName: 'h2',
+        attributes: {},
+        children: ['test']
+      }
+    );
+    const expectedOuterHtml = '<div><p>test</p><h2>test</h2></div>';
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
