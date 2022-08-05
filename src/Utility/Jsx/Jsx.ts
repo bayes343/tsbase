@@ -21,8 +21,8 @@ export type Jsx = {
 export const Fragment = 'fragment';
 
 export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...children: any): Jsx {
-  if (typeof nodeName === 'function' && nodeName.constructor) {
-    return new nodeName(
+  if (typeof nodeName === 'function') {
+    return nodeName(
       attributes ? attributes : undefined,
       children.length ? children : undefined
     );
