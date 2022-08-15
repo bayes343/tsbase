@@ -1,3 +1,5 @@
+// don't include in module
+
 export enum SpeechRecognitionEvents {
   Audioend = 'audioend',
   Audiostart = 'audiostart',
@@ -20,7 +22,9 @@ export interface ISpeechRecognition {
   addEventListener(
     eventName: SpeechRecognitionEvents,
     callback: (event: {
-      results?: Iterable<{ transcript: string }>
+      results: Iterable<{ transcript: string }>
     }) => void | null
   ): void;
+  start: () => void,
+  stop: () => void
 }

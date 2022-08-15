@@ -7,8 +7,25 @@ declare global {
   }
 }
 
+interface ISpeechCommand {
+  Condition: (transcript: string) => boolean,
+  Action: () => boolean
+}
+
+/**
+ * Provides an interface for listening to and interacting with user speech
+ */
 export interface ISpeechRecognizer {
+  /**
+   * Asynchronously listen for user speech
+   */
   Listen(): Promise<string>;
+  /**
+   * Continuously listen and react with the given commands to user speech until a given condition is met
+   * @param commands
+   * @param until
+   */
+  HandleSpeechCommands(commands: ISpeechCommand[], until: () => boolean): Promise<void>;
 }
 
 export class SpeechRecognizer implements ISpeechRecognizer {
@@ -31,14 +48,35 @@ export class SpeechRecognizer implements ISpeechRecognizer {
       let result = Strings.Empty;
 
       this.sr.addEventListener(SpeechRecognitionEvents.Result, (e) => {
-        if (e.results) {
-          result = Array.from(e.results)[0].transcript;
-        }
+        result = Array.from(e.results)[0].transcript;
       });
 
       this.sr.addEventListener(SpeechRecognitionEvents.End, () => {
         resolve(result);
       });
+
+      this.sr.start();
+    });
+  }
+
+  public async HandleSpeechCommands(commands: ISpeechCommand[], until: () => boolean): Promise<void> {
+    return new Promise((resolve) => {
+      this.sr.addEventListener(SpeechRecognitionEvents.Result, (e) => {
+        const transcript = Array.from(e.results)[0].transcript;
+        const command = commands.find(c => c.Condition(transcript));
+        command ? command.Action() : null;
+      });
+
+      this.sr.addEventListener(SpeechRecognitionEvents.End, () => {
+        if (until()) {
+          this.sr.stop();
+          resolve();
+        } else {
+          this.sr.start();
+        }
+      });
+
+      this.sr.start();
     });
   }
 }
