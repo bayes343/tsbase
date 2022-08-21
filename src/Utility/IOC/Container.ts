@@ -3,8 +3,6 @@ import { IContainer } from './IContainer';
 export class Container<T> implements IContainer<T> {
   private dependencies: T | null = null;
 
-  constructor() { }
-
   public Init(t: T) {
     this.dependencies = t;
   }
