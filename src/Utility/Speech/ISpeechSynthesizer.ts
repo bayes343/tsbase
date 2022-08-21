@@ -7,5 +7,9 @@ export interface ISpeechSynthesizer {
    * @param phrase
    * @param voice
    */
-  Speak(phrase: string | SpeechSynthesisUtterance, voice?: SpeechSynthesisVoice): Promise<void>;
+  Speak(
+    phrase: string | SpeechSynthesisUtterance,
+    voice?: SpeechSynthesisVoice,
+    utteranceFactory?: (phrase: string) => SpeechSynthesisUtterance
+  ): Promise<void>;
 }
