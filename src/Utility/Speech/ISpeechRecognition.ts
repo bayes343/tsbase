@@ -1,5 +1,8 @@
 // don't include in module
 
+/**
+ * Available speech recognition events in the webkit speech recognition api
+ */
 export enum SpeechRecognitionEvents {
   Audioend = 'audioend',
   Audiostart = 'audiostart',
@@ -14,6 +17,9 @@ export enum SpeechRecognitionEvents {
   Start = 'start'
 }
 
+/**
+ * Abstraction of relevant members in the webkit speech recognition api
+ */
 export interface ISpeechRecognition {
   continuous: boolean,
   interimResults: boolean,
