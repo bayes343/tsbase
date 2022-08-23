@@ -3,7 +3,8 @@ import { Query } from '../../Patterns/CommandQuery/Query';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { CacheEntry } from './CacheEntry';
 import { ICache } from './ICache';
-import { GenericResult, Result } from '../../public_api';
+import { Result } from '../../Patterns/Result/Result';
+import { GenericResult } from '../../Patterns/Result/GenericResult';
 
 export class Cache<T> implements ICache<T> {
   /**

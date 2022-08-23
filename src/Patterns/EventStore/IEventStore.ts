@@ -1,4 +1,4 @@
-import { Observable } from '../Observable/module';
+import { Observable } from '../Observable/Observable';
 import { GenericResult } from '../Result/GenericResult';
 import { Transaction } from './Transaction';
 
