@@ -1,8 +1,8 @@
+import { TestHelpers } from 'tsmockit';
 import { ICache } from '../ICache';
 import { Cache } from '../Cache';
 import { InMemoryStorage } from '../../GenericStorage/InMemoryStorage';
-import { IGenericStorage } from '../../module';
-import { TestHelpers } from 'tsmockit';
+import { IGenericStorage } from '../../GenericStorage/IGenericStorage';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
 
 const testValue = 'test';

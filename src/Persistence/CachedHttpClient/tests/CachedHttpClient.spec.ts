@@ -1,7 +1,7 @@
 import { Mock, Times } from 'tsmockit';
 import { IHttpClient } from '../../../Net/Http/IHttpClient';
 import { CachedHttpClient } from '../CachedHttpClient';
-import { ICache } from '../../Cache/module';
+import { ICache } from '../../Cache/ICache';
 import { Strings } from '../../../System/Strings';
 
 describe('CachedHttpClient', () => {

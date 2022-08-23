@@ -1,4 +1,4 @@
-import { GenericResult, Result } from '../../Patterns/module';
+import { GenericResult, Result } from '../../Patterns/Result/module';
 
 export interface IIndexedDb {
   /**

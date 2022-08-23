@@ -1,5 +1,5 @@
 import { Mock, Times } from 'tsmockit';
-import { Until } from '../../module';
+import { Until } from '../../Timers/Until';
 import { ISpeechSynthesizer } from '../ISpeechSynthesizer';
 import { SpeechSynthesizer } from '../SpeechSynthesizer';
 
