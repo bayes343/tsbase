@@ -23,6 +23,7 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": true
   }
 }
