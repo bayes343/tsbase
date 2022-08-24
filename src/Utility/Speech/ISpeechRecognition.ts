@@ -28,7 +28,7 @@ export interface ISpeechRecognition {
   addEventListener(
     eventName: SpeechRecognitionEvents,
     callback: (event: {
-      results: Iterable<{ transcript: string }>
+      results: Iterable<{ transcript: string }[]>
     }) => void | null
   ): void;
   start: () => void,

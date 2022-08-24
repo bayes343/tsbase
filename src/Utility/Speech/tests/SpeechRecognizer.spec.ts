@@ -41,7 +41,7 @@ describe('SpeechRecognizer', () => {
   it('should listen for a single transcript', async () => {
     const fakeTranscript = 'fake transcript';
     Until(() => (!!resultSub && !!endSub), 10, 1000).then(() => {
-      resultSub?.({ results: [{ transcript: fakeTranscript }] });
+      resultSub?.({ results: [[{ transcript: fakeTranscript }]] });
       endSub?.();
     });
 
@@ -56,11 +56,11 @@ describe('SpeechRecognizer', () => {
     let shouldContinue = true;
     let commandsFired = 0;
     Until(() => (!!resultSub && !!endSub), 10, 1000).then(() => {
-      resultSub?.({ results: [{ transcript: 'something other speech' }] });
+      resultSub?.({ results: [[{ transcript: 'something other speech' }]] });
       endSub?.();
-      resultSub?.({ results: [{ transcript: commandOneString }] });
+      resultSub?.({ results: [[{ transcript: commandOneString }]] });
       endSub?.();
-      resultSub?.({ results: [{ transcript: commandTwoString }] });
+      resultSub?.({ results: [[{ transcript: commandTwoString }]] });
       shouldContinue = false;
       endSub?.();
     });
