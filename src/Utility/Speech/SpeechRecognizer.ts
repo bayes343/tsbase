@@ -44,26 +44,10 @@ export class SpeechRecognizer implements ISpeechRecognizer {
   }
 
   public async HandleSpeechCommands(commands: ISpeechCommand[], until: () => boolean): Promise<void> {
-    return new Promise((resolve) => {
-      const resultEvent = (e: SpeechRecognitionEvent) => {
-        const transcript = Array.from(e.results)[0][0].transcript;
-        const command = commands.find(c => c.Condition(transcript));
-        command ? command.Action() : null;
-      };
-      const endEvent = () => {
-        if (until()) {
-          this.speechRecognition.stop();
-          this.speechRecognition.removeEventListener(SpeechRecognitionEvents.Result, resultEvent);
-          this.speechRecognition.removeEventListener(SpeechRecognitionEvents.End, endEvent);
-          resolve();
-        } else {
-          this.speechRecognition.start();
-        }
-      };
-
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.Result, resultEvent);
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.End, endEvent);
-      this.speechRecognition.start();
-    });
+    do {
+      const transcript = await this.Listen();
+      const command = commands.find(c => c.Condition(transcript));
+      await command?.Action();
+    } while (!until());
   }
 }

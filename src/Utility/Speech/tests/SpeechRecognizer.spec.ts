@@ -48,37 +48,24 @@ describe('SpeechRecognizer', () => {
 
     const transcript = await classUnderTest.Listen();
 
-    mockSpeechRecognition.Verify(sr => sr.removeEventListener(SpeechRecognitionEvents.Result, {} as any), 2);
     expect(transcript).toEqual(fakeTranscript);
   });
 
-  it('should listen for commands until condition to end is met', async () => {
-    const commandOneString = 'test one';
-    const commandTwoString = 'test two';
-    let shouldContinue = true;
-    let commandsFired = 0;
+  it('should handle speech commands until a condition is met', async () => {
+    const fakeTranscript = 'fake transcript';
     Until(() => (!!resultSub && !!endSub), 10, 1000).then(() => {
-      resultSub?.({ results: [[{ transcript: 'something other speech' }]] });
-      endSub?.();
-      resultSub?.({ results: [[{ transcript: commandOneString }]] });
-      endSub?.();
-      resultSub?.({ results: [[{ transcript: commandTwoString }]] });
-      shouldContinue = false;
+      resultSub?.({ results: [[{ transcript: fakeTranscript }]] });
       endSub?.();
     });
+    let stopHandling = false;
 
     await classUnderTest.HandleSpeechCommands([
       {
-        Condition: (t) => t.includes(commandOneString),
-        Action: () => commandsFired++
-      },
-      {
-        Condition: (t) => t.includes(commandTwoString),
-        Action: () => commandsFired++
+        Condition: (t) => t === fakeTranscript,
+        Action: async () => { stopHandling = true; }
       }
-    ], () => shouldContinue);
+    ], () => stopHandling);
 
-    mockSpeechRecognition.Verify(sr => sr.removeEventListener(SpeechRecognitionEvents.Result, {} as any), 4);
-    expect(commandsFired).toEqual(2);
+    expect(stopHandling).toBeTruthy();
   });
 });
