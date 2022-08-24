@@ -1,6 +1,6 @@
 import { Strings } from '../../System/Strings';
 import { ISpeechCommand } from './ISpeechCommand';
-import { ISpeechRecognition, SpeechRecognitionEvents } from './ISpeechRecognition';
+import { ISpeechRecognition, SpeechRecognitionEvent, SpeechRecognitionEvents } from './ISpeechRecognition';
 import { ISpeechRecognizer } from './ISpeechRecognizer';
 
 declare global {
@@ -30,35 +30,39 @@ export class SpeechRecognizer implements ISpeechRecognizer {
     return new Promise((resolve) => {
       let result = Strings.Empty;
 
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.Result, (e) => {
-        result = Array.from(e.results)[0][0].transcript;
-      });
-
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.End, () => {
+      const resultEvent = (e: SpeechRecognitionEvent) => { result = Array.from(e.results)[0][0].transcript; };
+      const endEvent = () => {
+        this.speechRecognition.removeEventListener(SpeechRecognitionEvents.Result, resultEvent);
+        this.speechRecognition.removeEventListener(SpeechRecognitionEvents.End, endEvent);
         resolve(result);
-      });
+      };
 
+      this.speechRecognition.addEventListener(SpeechRecognitionEvents.Result, resultEvent);
+      this.speechRecognition.addEventListener(SpeechRecognitionEvents.End, endEvent);
       this.speechRecognition.start();
     });
   }
 
   public async HandleSpeechCommands(commands: ISpeechCommand[], until: () => boolean): Promise<void> {
     return new Promise((resolve) => {
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.Result, (e) => {
+      const resultEvent = (e: SpeechRecognitionEvent) => {
         const transcript = Array.from(e.results)[0][0].transcript;
         const command = commands.find(c => c.Condition(transcript));
         command ? command.Action() : null;
-      });
-
-      this.speechRecognition.addEventListener(SpeechRecognitionEvents.End, () => {
+      };
+      const endEvent = () => {
         if (until()) {
           this.speechRecognition.stop();
+          this.speechRecognition.removeEventListener(SpeechRecognitionEvents.Result, resultEvent);
+          this.speechRecognition.removeEventListener(SpeechRecognitionEvents.End, endEvent);
           resolve();
         } else {
           this.speechRecognition.start();
         }
-      });
+      };
 
+      this.speechRecognition.addEventListener(SpeechRecognitionEvents.Result, resultEvent);
+      this.speechRecognition.addEventListener(SpeechRecognitionEvents.End, endEvent);
       this.speechRecognition.start();
     });
   }

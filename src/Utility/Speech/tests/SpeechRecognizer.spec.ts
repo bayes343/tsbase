@@ -23,6 +23,7 @@ describe('SpeechRecognizer', () => {
         endSub = event;
       }
     });
+    mockSpeechRecognition.Setup(sr => sr.removeEventListener(SpeechRecognitionEvents.Result, {} as any));
 
     classUnderTest = new SpeechRecognizer(mockSpeechRecognition.Object);
   });
@@ -47,6 +48,7 @@ describe('SpeechRecognizer', () => {
 
     const transcript = await classUnderTest.Listen();
 
+    mockSpeechRecognition.Verify(sr => sr.removeEventListener(SpeechRecognitionEvents.Result, {} as any), 2);
     expect(transcript).toEqual(fakeTranscript);
   });
 
@@ -76,6 +78,7 @@ describe('SpeechRecognizer', () => {
       }
     ], () => shouldContinue);
 
+    mockSpeechRecognition.Verify(sr => sr.removeEventListener(SpeechRecognitionEvents.Result, {} as any), 4);
     expect(commandsFired).toEqual(2);
   });
 });
