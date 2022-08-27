@@ -33,7 +33,7 @@
     "tsmockit": "^2.0.1",
     "typescript": "^4.7.0",
     "jscpd": "^3.3.26",
-    "typedoc": "^0.22.7"
+    "typedoc": "^0.23.11"
   },
   "dependencies": {
     "dlv": "^1.1.3",
