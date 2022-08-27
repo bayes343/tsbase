@@ -4,6 +4,7 @@ import { Cache } from '../Cache';
 import { InMemoryStorage } from '../../GenericStorage/InMemoryStorage';
 import { IGenericStorage } from '../../GenericStorage/IGenericStorage';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
+import { Until } from '../../../Utility/Timers/Until';
 
 const testValue = 'test';
 
@@ -49,9 +50,8 @@ describe('Cache', () => {
     classUnderTest = new Cache<any>(genericStorage, cacheLife, serializer);
     classUnderTest.Add(testValue, testValue);
 
-    await Expect(
-      () => classUnderTest.Get(testValue),
-      (m) => m.toBeTruthy());
+    await Until(() => classUnderTest.Get(testValue) === null);
+    expect(classUnderTest.Get(testValue)).toBeNull();
   });
 
   it('should return the cached value for a cached item that has NOT expired due to time', async () => {
