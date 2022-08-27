@@ -1,4 +1,4 @@
-import { TestHelpers } from 'tsmockit';
+import { Expect } from 'tsmockit';
 import { ICache } from '../ICache';
 import { Cache } from '../Cache';
 import { InMemoryStorage } from '../../GenericStorage/InMemoryStorage';
@@ -49,24 +49,18 @@ describe('Cache', () => {
     classUnderTest = new Cache<any>(genericStorage, cacheLife, serializer);
     classUnderTest.Add(testValue, testValue);
 
-    const resultIsNull = await TestHelpers.TimeLapsedCondition(() => {
-      const result = classUnderTest.Get(testValue);
-      return result === null;
-    });
-
-    expect(resultIsNull).toBeTruthy();
+    await Expect(
+      () => classUnderTest.Get(testValue),
+      (m) => m.toBeTruthy());
   });
 
   it('should return the cached value for a cached item that has NOT expired due to time', async () => {
     classUnderTest = new Cache<any>(genericStorage, 10000, serializer);
     classUnderTest.Add(testValue, testValue);
 
-    const resultIsNotNull = await TestHelpers.TimeLapsedCondition(() => {
-      const result = classUnderTest.Get(testValue);
-      return result === testValue;
-    });
-
-    expect(resultIsNotNull).toBeTruthy();
+    await Expect(
+      () => classUnderTest.Get(testValue),
+      (m) => m.toBeTruthy());
   });
 
   it('should return null for a cached item that has expired due to a custom predicate', () => {

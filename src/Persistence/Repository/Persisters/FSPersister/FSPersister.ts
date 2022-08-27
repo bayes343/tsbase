@@ -64,5 +64,4 @@ export class FSPersister<T> implements IPersister<T> {
 
     return JSON.parse(fileContents.toString());
   }
-
 }

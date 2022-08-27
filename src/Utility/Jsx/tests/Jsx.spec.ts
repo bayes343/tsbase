@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { TestHelpers } from 'tsmockit';
+import { Expect } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
 import { Jsx, JsxRenderer, ParseJsx } from '../Jsx';
 
@@ -76,13 +76,13 @@ describe('JsxRenderer', () => {
     const renderedHtml = JsxRenderer.RenderJsx(jsxToParse);
     document.body.innerHTML = renderedHtml;
 
-    const eventProperlyBound = await TestHelpers.TimeLapsedCondition(() => {
-      document.getElementById('test-id')?.click();
-      return testVariable === 1;
-    });
-
     expect(renderedHtml).toEqual('<button id="test-id"></button>');
-    expect(eventProperlyBound).toBeTruthy();
+    await Expect(
+      () => {
+        document.getElementById('test-id')?.click();
+        return testVariable === 1;
+      },
+      (m) => m.toBeTruthy());
   });
 
   it('should not attempt to add event listeners if bind element is deleted', async () => {
@@ -98,9 +98,9 @@ describe('JsxRenderer', () => {
 
     JsxRenderer.RenderJsx(jsxToParse);
 
-    await TestHelpers.TimeLapsedCondition(() => {
-      return expect(document.getElementById('test-id')).toBeNull();
-    });
+    await Expect(
+      () => document.getElementById('test-id'),
+      (m) => m.toBeNull());
   });
 
   it('should add guid ids for bound events if none are given', () => {
