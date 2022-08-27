@@ -7,7 +7,10 @@ export class Queryable<T> extends Array<T> {
   protected constructor() { super(); }
 
   public static From<T>(items: Array<T>): Queryable<T> {
-    return Object.create(Queryable.prototype, Object.getOwnPropertyDescriptors(items));
+    return Object.create(
+      Queryable.prototype,
+      Object.getOwnPropertyDescriptors(items) as unknown as PropertyDescriptorMap
+    );
   }
 
   /**
