@@ -16,7 +16,7 @@
     "framework"
   ],
   "license": "MIT",
-  "version": "4.9.8",
+  "version": "4.9.9",
   "description": "Base class libraries for TypeScript",
   "private": false,
   "main": "./public_api.js",
