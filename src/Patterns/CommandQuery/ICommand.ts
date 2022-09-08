@@ -9,5 +9,5 @@ export interface ICommand {
   /**
    * Executes a command returning a `Result`, capturing any errors as `ErrorMessages`
    */
-  Execute(): Result;
+  Execute(): Result<null>;
 }

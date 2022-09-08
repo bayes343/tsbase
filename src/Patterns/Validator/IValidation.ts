@@ -9,5 +9,5 @@ export interface IValidation<T> {
    * Returns the aggregate result of all given validations
    * @param object
    */
-  Validate(object: T): Result;
+  Validate(object: T): Result<null>;
 }

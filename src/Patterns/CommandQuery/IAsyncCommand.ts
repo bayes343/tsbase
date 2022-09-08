@@ -9,5 +9,5 @@ export interface IAsyncCommand {
   /**
    * Executes an async command returning a `Result`, capturing any errors as `ErrorMessages`
    */
-  Execute(): Promise<Result>;
+  Execute(): Promise<Result<null>>;
 }

@@ -1,7 +1,6 @@
 import { IGenericStorage } from './IGenericStorage';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { Command } from '../../Patterns/CommandQuery/Command';
-import { GenericResult } from '../../Patterns/Result/GenericResult';
 import { Result } from '../../Patterns/Result/Result';
 import { Query } from '../../Patterns/CommandQuery/Query';
 
@@ -19,7 +18,7 @@ export class DomStorage implements IGenericStorage {
     private serializer = new JsonSerializer()
   ) { }
 
-  public Get<T>(type: { new(): T; }, key: string): GenericResult<T> {
+  public Get<T>(type: { new(): T; }, key: string): Result<T> {
     return new Query((): T => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
@@ -30,12 +29,12 @@ export class DomStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public Set<T>(key: string, value: T): Result {
+  public Set<T>(key: string, value: T): Result<null> {
     return new Command(() =>
       this.getStorageMedium().setItem(key, JSON.stringify(value))).Execute();
   }
 
-  public GetValue<T>(key: string): GenericResult<T> {
+  public GetValue<T>(key: string): Result<T> {
     return new Query((): any => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
@@ -46,12 +45,12 @@ export class DomStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public SetValue(key: string, value: string): Result {
+  public SetValue(key: string, value: string): Result<null> {
     return new Command(() =>
       this.getStorageMedium().setItem(key, value)).Execute();
   }
 
-  public Remove(key: string): Result {
+  public Remove(key: string): Result<null> {
     return new Command(() =>
       this.getStorageMedium().removeItem(key)).Execute();
   }

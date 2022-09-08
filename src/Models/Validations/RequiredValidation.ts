@@ -9,7 +9,7 @@ export class RequiredValidation<T> implements IValidation<Model<T>> {
     private customErrorMessage?: string
   ) { }
 
-  public Validate(object: Model<T>): Result {
+  public Validate(object: Model<T>): Result<null> {
     return new Command(() => {
       const valueExists = (object as any)[this.member] && (object as any)[this.member]
         .toString().trim().length >= 1;

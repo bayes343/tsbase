@@ -1,4 +1,4 @@
-import { GenericResult, Result } from '../../Patterns/Result/module';
+import { Result } from '../../Patterns/Result/Result';
 import { Command } from '../../Patterns/CommandQuery/Command';
 import { Query } from '../../Patterns/CommandQuery/Query';
 import { IGenericStorage } from './IGenericStorage';
@@ -9,17 +9,17 @@ import { IGenericStorage } from './IGenericStorage';
 export class InMemoryStorage implements IGenericStorage {
   private storageMap = new Map<string, any>();
 
-  public Get<T>(_type: new () => T, key: string): GenericResult<T> {
+  public Get<T>(_type: new () => T, key: string): Result<T> {
     return this.GetValue(key);
   }
 
-  public Set<T>(key: string, value: T): Result {
+  public Set<T>(key: string, value: T): Result<null> {
     return new Command(() => {
       this.storageMap.set(key, value);
     }).Execute();
   }
 
-  public GetValue(key: string): GenericResult<any> {
+  public GetValue<T>(key: string): Result<T> {
     return new Query((): any => {
       const value = this.storageMap.get(key);
       if (value) {
@@ -30,11 +30,11 @@ export class InMemoryStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public SetValue(key: string, value: string): Result {
+  public SetValue(key: string, value: string): Result<null> {
     return this.Set(key, value);
   }
 
-  public Remove(key: string): Result {
+  public Remove(key: string): Result<null> {
     return new Command(() =>
       this.storageMap.delete(key)).Execute();
   }

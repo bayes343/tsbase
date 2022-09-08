@@ -4,7 +4,7 @@ import { Queryable } from '../../Collections/Queryable';
 import { Strings } from '../../System/Strings';
 import { Query } from '../CommandQuery/Query';
 import { Observable } from '../Observable/Observable';
-import { GenericResult } from '../Result/GenericResult';
+import { Result } from '../Result/Result';
 import { Transaction } from './Transaction';
 import { IEventStore } from './IEventStore';
 
@@ -27,7 +27,7 @@ export class EventStore<T> implements IEventStore<T> {
       this.cloneOf(dlv(this.state as object, path));
   }
 
-  public SetStateAt<T>(path: string, state: T): GenericResult<T> {
+  public SetStateAt<T>(path: string, state: T): Result<T> {
     return new Query<T>(() => {
       const previousState = dlv(this.state, path);
 
@@ -53,7 +53,7 @@ export class EventStore<T> implements IEventStore<T> {
     return this.ledger.slice();
   }
 
-  public Undo(): GenericResult<T | undefined> {
+  public Undo(): Result<T | undefined> {
     return new Query<T | undefined>(() => {
       const queryableLedger = Queryable.From(this.ledger);
       const lastVoidableTransaction = queryableLedger.Last(t => !t.voided);
@@ -68,7 +68,7 @@ export class EventStore<T> implements IEventStore<T> {
     }).Execute();
   }
 
-  public Redo(): GenericResult<T | undefined> {
+  public Redo(): Result<T | undefined> {
     return new Query<T | undefined>(() => {
       let lastRedoableTransaction: Transaction<T> | null = null;
 

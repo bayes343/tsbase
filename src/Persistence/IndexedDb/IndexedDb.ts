@@ -1,6 +1,6 @@
 import { Until } from '../../Utility/Timers/Until';
 import { AsyncCommand, AsyncQuery } from '../../Patterns/CommandQuery/module';
-import { GenericResult, Result } from '../../Patterns/Result/module';
+import { Result } from '../../Patterns/Result/module';
 import { IIndexedDb } from './IIndexedDb';
 import { Migration } from './Migration';
 import { TransactionMode } from './TransactionModes';
@@ -21,7 +21,7 @@ export class IndexedDb implements IIndexedDb {
     private migrations: Migration[]
   ) { }
 
-  public async Connect(): Promise<GenericResult<IDBDatabase | null>> {
+  public async Connect(): Promise<Result<IDBDatabase | null>> {
     return new AsyncQuery<IDBDatabase | null>(async () => {
       if (this.Connected) {
         return this.database;
@@ -35,7 +35,7 @@ export class IndexedDb implements IIndexedDb {
     }).Execute();
   }
 
-  public Insert(insertions: Record<string, object[]>): Promise<Result> {
+  public Insert(insertions: Record<string, object[]>): Promise<Result<null>> {
     const storeNames = Object.keys(insertions);
 
     return this.executeTransaction(storeNames, (transaction) => {
@@ -49,7 +49,7 @@ export class IndexedDb implements IIndexedDb {
     });
   }
 
-  public Get<T>(storeName: string, query: string | number | ((t: T) => boolean)): Promise<GenericResult<T | T[] | null>> {
+  public Get<T>(storeName: string, query: string | number | ((t: T) => boolean)): Promise<Result<T | T[] | null>> {
     return new AsyncQuery(async () => {
       await this.Connect();
       let complete = false;
@@ -85,7 +85,7 @@ export class IndexedDb implements IIndexedDb {
     }).Execute();
   }
 
-  public GetAll<T>(storeName: string): Promise<GenericResult<T[]>> {
+  public GetAll<T>(storeName: string): Promise<Result<T[]>> {
     return new AsyncQuery(async () => {
       await this.Connect();
       let complete = false;
@@ -105,7 +105,7 @@ export class IndexedDb implements IIndexedDb {
     }).Execute();
   }
 
-  public Delete(deletions: Record<string, string[]>): Promise<Result> {
+  public Delete(deletions: Record<string, string[]>): Promise<Result<null>> {
     const storeNames = Object.keys(deletions);
 
     return this.executeTransaction(storeNames, (transaction) => {
@@ -120,7 +120,7 @@ export class IndexedDb implements IIndexedDb {
     });
   }
 
-  public Update(updates: Record<string, object[]>): Promise<Result> {
+  public Update(updates: Record<string, object[]>): Promise<Result<null>> {
     const storeNames = Object.keys(updates);
 
     return this.executeTransaction(storeNames, (transaction) => {
@@ -156,7 +156,7 @@ export class IndexedDb implements IIndexedDb {
     openRequest.onsuccess = () => this.database = openRequest.result;
   }
 
-  private executeTransaction(storeNames: string[], command: (transaction: IDBTransaction) => void): Promise<Result> {
+  private executeTransaction(storeNames: string[], command: (transaction: IDBTransaction) => void): Promise<Result<null>> {
     return new AsyncCommand(async () => {
       await this.Connect();
       let complete = false;

@@ -5,8 +5,8 @@ import { LogEntry, Logger, LogLevel } from '../../Utility/Logger/module';
 export class Command implements ICommand {
   constructor(public Command: () => void) { }
 
-  public Execute(): Result {
-    const result = new Result();
+  public Execute(): Result<null> {
+    const result = new Result(null);
 
     try {
       this.Command();

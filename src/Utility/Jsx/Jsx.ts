@@ -23,7 +23,7 @@ export const Fragment = 'fragment';
 export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...children: any): Jsx {
   if (typeof nodeName === 'function') {
     return nodeName(
-      attributes ? attributes : undefined,
+      attributes ? attributes : {},
       children.length ? children : undefined
     );
   }

@@ -24,7 +24,7 @@ export class FormUrl {
    * Returns the json version of the form url encoded string given.
    * @param formData
    */
-  public static DecodeToJson(formData: string): any {
+  public static DecodeToJson<T>(formData: string): T {
     const json: any = {};
 
     if (formData.indexOf('=') >= 0) {

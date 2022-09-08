@@ -5,8 +5,8 @@ import { IAsyncCommand } from './IAsyncCommand';
 export class AsyncCommand implements IAsyncCommand {
   constructor(public AsyncCommand: () => Promise<void>) { }
 
-  public async Execute(): Promise<Result> {
-    const result = new Result();
+  public async Execute(): Promise<Result<null>> {
+    const result = new Result(null);
 
     try {
       await this.AsyncCommand();

@@ -1,5 +1,5 @@
 import { Strings } from '../../System/Strings';
-import { GenericResult, Result } from '../../Patterns/Result/module';
+import { Result } from '../../Patterns/Result/Result';
 import { Command, Query } from '../../Patterns/CommandQuery/module';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { IGenericStorage } from './IGenericStorage';
@@ -31,7 +31,7 @@ export class CookieStorage implements IGenericStorage {
     private mainDocument = document
   ) { }
 
-  public Get<T>(type: new () => T, key: string): GenericResult<T> {
+  public Get<T>(type: new () => T, key: string): Result<T> {
     return new Query(() => {
       const value = this.GetValue(key).Value;
       if (value) {
@@ -42,13 +42,13 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public Set<T>(key: string, value: T, options?: CookieOptions): Result {
+  public Set<T>(key: string, value: T, options?: CookieOptions): Result<null> {
     return new Command(() => {
       this.SetValue(key, JSON.stringify(value), options);
     }).Execute();
   }
 
-  public GetValue(key: string): GenericResult<string> {
+  public GetValue(key: string): Result<string> {
     return new Query(() => {
       const cookiePairs = this.mainDocument.cookie.split(';');
       const cookieKeys = cookiePairs.map(c => c.split('=')[0]);
@@ -67,7 +67,7 @@ export class CookieStorage implements IGenericStorage {
     path: '/',
     secure: true,
     samesite: 'strict'
-  }): Result {
+  }): Result<null> {
     return new Command(() => {
       const optionKeys = Object.values(CookieOptionKeys) as CookieOptionKeys[];
       const expiresOptionString = options.expires ?
@@ -80,7 +80,7 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public Remove(key: string, path = '/'): Result {
+  public Remove(key: string, path = '/'): Result<null> {
     return new Command(() => {
       this.mainDocument.cookie = `${key}=;expires=${new Date(0).toUTCString()};path=${path}`;
     }).Execute();
