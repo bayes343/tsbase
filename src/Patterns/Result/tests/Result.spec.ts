@@ -1,21 +1,20 @@
-import { GenericResult } from '../GenericResult';
 import { Result } from '../Result';
 
-describe('GenericResult', () => {
-  let genericResult = new GenericResult<string>('test');
+describe('Result', () => {
+  let result = new Result<string>('test');
 
   it('should be constructed without a value parameter', () => {
-    genericResult = new GenericResult<string>();
-    expect(genericResult).toBeDefined();
+    result = new Result<string>();
+    expect(result).toBeDefined();
   });
 
   it('should return true for IsSuccess if there are no errors', () => {
-    expect(genericResult.IsSuccess).toBeTruthy();
+    expect(result.IsSuccess).toBeTruthy();
   });
 
   it('should return false for IsSuccess if there are errors', () => {
-    genericResult.ErrorMessages.push('test');
-    expect(genericResult.IsSuccess).toBeFalsy();
+    result.ErrorMessages.push('test');
+    expect(result.IsSuccess).toBeFalsy();
   });
 
   it('should combine one result with another, returning a new combined result', () => {

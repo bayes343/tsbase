@@ -9,7 +9,7 @@ export interface ICache<T> {
    * @param key
    * @param value
    */
-  Add(key: string, value: T): Result;
+  Add(key: string, value: T): Result<null>;
   /**
    * Get the value cached at the given key | returns null when there is no value for the given key
    * @param type
@@ -20,5 +20,5 @@ export interface ICache<T> {
    * Delete the cached entry at the given key | is safe to call when no entry for the given key exists
    * @param key
    */
-  Delete(key: string): Result;
+  Delete(key: string): Result<null>;
 }

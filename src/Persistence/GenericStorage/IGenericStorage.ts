@@ -1,5 +1,4 @@
 import { Result } from '../../Patterns/Result/Result';
-import { GenericResult } from '../../Patterns/Result/GenericResult';
 
 export interface IGenericStorage {
   /**
@@ -7,27 +6,27 @@ export interface IGenericStorage {
    * @param type
    * @param key
    */
-  Get<T>(type: { new(): T; }, key: string): GenericResult<T>;
+  Get<T>(type: { new(): T; }, key: string): Result<T>;
   /**
    * Stores the stringified version of the given object at the specified key
    * @param key
    * @param value
    */
-  Set<T>(key: string, value: T): Result;
+  Set<T>(key: string, value: T): Result<null>;
   /**
    * Returns the raw data stored at the given key
    * @param key
    */
-  GetValue(key: string): GenericResult<any>;
+  GetValue(key: string): Result<any>;
   /**
    * Stores the raw data of the given value at the given key
    * @param key
    * @param value
    */
-  SetValue(key: string, value: string): Result;
+  SetValue(key: string, value: string): Result<null>;
   /**
    * Delete the item with the given key from storage
    * @param key
    */
-  Remove(key: string): Result;
+  Remove(key: string): Result<null>;
 }

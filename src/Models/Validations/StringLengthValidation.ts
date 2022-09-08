@@ -11,7 +11,7 @@ export class StringLengthValidation<T> implements IValidation<Model<T>> {
     private customErrorMessage?: string
   ) { }
 
-  public Validate(object: Model<T>): Result {
+  public Validate(object: Model<T>): Result<null> {
     return new Command(() => {
       const value = (object as any)[this.member];
 

@@ -55,8 +55,8 @@ export class Repository<T> extends Queryable<T> {
   /**
    * Calls the underlying persister's "Persist" method saving the data currently in the list
    */
-  public SaveChanges(): Result {
-    let result = new Result();
+  public SaveChanges(): Result<null> {
+    let result = new Result(null);
 
     this.GetUnsavedElements().slice().forEach(element => {
       result = result.CombineWith(this.itemIsValid(element));
@@ -125,7 +125,7 @@ export class Repository<T> extends Queryable<T> {
     return Queryable.From(classInstances);
   }
 
-  private itemIsValid(item: T): Result {
+  private itemIsValid(item: T): Result<null> {
     return this.validator.Validate(item);
   }
 

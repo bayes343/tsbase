@@ -14,8 +14,8 @@ export class Validator<T> {
     this.Validations = validations;
   }
 
-  public Validate(object: T): Result {
-    const result = new Result();
+  public Validate(object: T): Result<null> {
+    const result = new Result(null);
 
     this.Validations.forEach(validation => {
       result.ErrorMessages = result.ErrorMessages.concat(

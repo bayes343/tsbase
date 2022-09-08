@@ -1,12 +1,12 @@
-import { GenericResult } from '../Result/GenericResult';
+import { Result } from '../Result/Result';
 import { Logger, LogEntry, LogLevel } from '../../Utility/Logger/module';
 import { IAsyncQuery } from './IAsyncQuery';
 
 export class AsyncQuery<T> implements IAsyncQuery<T> {
   constructor(public AsyncQuery: () => Promise<T>) { }
 
-  public async Execute(): Promise<GenericResult<T>> {
-    const result = new GenericResult<T>();
+  public async Execute(): Promise<Result<T>> {
+    const result = new Result<T>();
 
     try {
       result.Value = await this.AsyncQuery();

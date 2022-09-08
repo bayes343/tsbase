@@ -50,20 +50,20 @@ export abstract class Model<T> {
     return this.getMetadata<Array<IValidation<Model<T>>>>(MetadataKeys.Validations, member, []);
   }
 
-  public Validate(member?: (func: T) => any): Result {
+  public Validate(member?: (func: T) => any): Result<null> {
     return member ?
       this.ValidateField(member) :
       this.validateModel();
   }
 
-  public ValidateField(member: (func: any) => any): Result {
+  public ValidateField(member: (func: any) => any): Result<null> {
     const validations = this.ValidationsFor(member);
     const validator = new Validator(validations);
     return validator.Validate(this);
   }
 
-  private validateModel(): Result {
-    let result = new Result();
+  private validateModel(): Result<null> {
+    let result = new Result(null);
 
     this.ModelKeys.forEach(key => {
       const isDataModel = !!(this as any)[key]['ModelKeys'];
@@ -81,7 +81,7 @@ export abstract class Model<T> {
     return result;
   }
 
-  private validateDataModelArray(key: string, result: Result) {
+  private validateDataModelArray(key: string, result: Result<null>) {
     const nestedDataModelArray = (this as any)[key] as Array<Model<T>>;
 
     nestedDataModelArray.forEach(model => {

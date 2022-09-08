@@ -1,5 +1,5 @@
 import { Observable } from '../Observable/Observable';
-import { GenericResult } from '../Result/GenericResult';
+import { Result } from '../Result/Result';
 import { Transaction } from './Transaction';
 
 /**
@@ -24,7 +24,7 @@ export interface IEventStore<T> {
    * @param state state to set
    * @param path object path to be set
    */
-  SetStateAt<T>(path: string, state: T): GenericResult<T>;
+  SetStateAt<T>(path: string, state: T): Result<T>;
 
   /**
    * Returns an observable which can be subscribed to in order
@@ -43,12 +43,12 @@ export interface IEventStore<T> {
    * Voids the most recent (non-voided) transaction, returning the
    * stores value to the previous 'from' state
    */
-  Undo(): GenericResult<T | undefined>;
+  Undo(): Result<T | undefined>;
 
   /**
    * Reverses the void on the oldest voided transaction excluding any
    * voided transaction that follows a non-voided one
    * (Once state is set, prior voided transactions cannot be reversed)
    */
-  Redo(): GenericResult<T | undefined>;
+  Redo(): Result<T | undefined>;
 }

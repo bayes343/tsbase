@@ -11,8 +11,8 @@ class Person {
 }
 
 class NameValidation implements IValidation<Person> {
-  Validate(object: Person): Result {
-    const result = new Result();
+  Validate(object: Person): Result<null> {
+    const result = new Result(null);
     const nameValid = object.Name && object.Name.length >= 1;
 
     if (!nameValid) {
@@ -24,8 +24,8 @@ class NameValidation implements IValidation<Person> {
 }
 
 class AgeValidation implements IValidation<Person> {
-  Validate(object: Person): Result {
-    const result = new Result();
+  Validate(object: Person): Result<null> {
+    const result = new Result(null);
     const ageValid = object.Age && object.Age >= 0;
 
     if (!ageValid) {

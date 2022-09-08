@@ -21,8 +21,8 @@ const john = new Person();
 john.name = 'John Doe';
 
 class StringValidator implements IValidation<string> {
-  public Validate(object: string): Result {
-    const result = new Result();
+  public Validate(object: string): Result<null> {
+    const result = new Result(null);
     if (!object || object.length < 1) {
       result.ErrorMessages.push('String is not valid');
     }

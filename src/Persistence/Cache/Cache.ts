@@ -4,7 +4,6 @@ import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
 import { CacheEntry } from './CacheEntry';
 import { ICache } from './ICache';
 import { Result } from '../../Patterns/Result/Result';
-import { GenericResult } from '../../Patterns/Result/GenericResult';
 
 export class Cache<T> implements ICache<T> {
   /**
@@ -20,7 +19,7 @@ export class Cache<T> implements ICache<T> {
     private serializer = new JsonSerializer()
   ) { }
 
-  public Add(key: string, value: T): Result {
+  public Add(key: string, value: T): Result<null> {
     const cacheEntry: CacheEntry<T> = {
       value: value,
       expiration: typeof this.cacheLife === 'number' && this.cacheLife > 0 ?
@@ -50,11 +49,11 @@ export class Cache<T> implements ICache<T> {
     }).Execute().Value as T | null;
   }
 
-  public Delete(key: string): Result {
+  public Delete(key: string): Result<null> {
     return this.storage.Remove(key);
   }
 
-  private cacheIsValid(result: GenericResult<CacheEntry<T>>) {
+  private cacheIsValid(result: Result<CacheEntry<T>>) {
     if (result.IsSuccess && result.Value) {
       return typeof this.cacheLife === 'function' ?
         this.cacheLife(result.Value.value) :
