@@ -1,3 +1,4 @@
+import { Strings } from '../Strings';
 import { Xml } from '../Xml';
 
 describe('Xml', () => {
@@ -18,23 +19,23 @@ describe('Xml', () => {
     lactoseIntolerant: false
   };
 
-  const getExpectedXml = (rootNodeName = 'root', schema?: string) => `<?xml version="1.0" encoding="UTF-8"?>
-<${rootNodeName}${schema ? ` xmlns="${schema}"` : ''}>
+  const getExpectedXml = (rootNodeName = 'root', schema?: string) => Strings.Minify(`<?xml version="1.0" encoding="UTF-8"?>
+<${rootNodeName}${schema ? ` xmlns="${schema}"` : ''} type="xs:object">
   <name type="xs:string">John Doe</name>
   <age type="xs:integer">30</age>
   <gender type="xs:string">male</gender>
-  <birthDate>
+  <birthDate type="xs:object">
     <day type="xs:integer">1</day>
     <month type="xs:integer">0</month>
     <year type="xs:integer">1990</year>
   </birthDate>
-  <nicknames>
+  <nicknames type="xs:array">
     <item type="xs:string">Johnny</item>
     <item type="xs:string">JD</item>
   </nicknames>
   <temp type="xs:decimal">98.1</temp>
-  <lactoseIntolerance type="xs:boolean">false</temp>
-</${rootNodeName}>`;
+  <lactoseIntolerant type="xs:boolean">false</lactoseIntolerant>
+</${rootNodeName}>`);
 
   it('should return an xml representation of a given json object', () => {
     let actual = Xml.FromJson(json);

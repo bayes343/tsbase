@@ -1,3 +1,5 @@
+import { Regex } from './Regex';
+
 export class Strings {
   private constructor() { }
 
@@ -33,5 +35,10 @@ export class Strings {
    */
   public static IsEmptyOrWhiteSpace(string: string | null | undefined): boolean {
     return !string || string.trim().length === 0;
+  }
+
+  public static Minify(string: string): string {
+    return string.replace(Regex.NewLines, Strings.Empty)
+      .replace(/\r?>(\s+)<|\r/g, '><');
   }
 }
