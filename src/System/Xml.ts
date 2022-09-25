@@ -20,7 +20,14 @@ export class Xml {
     return `<?xml version="1.0" encoding="UTF-8"?>${this.getXmlStringFromValue(json, rootNodeName, schema)}`;
   }
 
-  // eslint-disable-next-line complexity
+  /**
+   * Returns the parsed json representation of the given xml string
+   * @param xml
+   */
+  public static ToJson<T>(xml: string): T {
+    return JSON.parse(xml) as T;
+  }
+
   private static getXmlStringFromValue(
     value: object | number | boolean | string,
     nodeName: string,
@@ -30,35 +37,33 @@ export class Xml {
     const getXmlNodeWithType = (type: NodeTypes, innerValue = value) =>
       `<${nodeName}${schema ? ` xmlns="${schema}"` : Strings.Empty} type="xs:${type}">${innerValue}</${nodeName}>`;
 
-    const valueType = typeof value;
-
-    if (['number', 'bigint'].includes(valueType)) {
+    const getXmlFromNumber = () => {
       const isDecimal = value.toString().includes('.');
       return getXmlNodeWithType(isDecimal ? NodeTypes.Decimal : NodeTypes.Integer);
+    };
+
+    const valueType = typeof value;
+    const valueTypeFunctionMap = new Map<string, () => string>([
+      ['number', getXmlFromNumber],
+      ['bigint', getXmlFromNumber],
+      ['string', () => getXmlNodeWithType(valueType as NodeTypes)],
+      ['boolean', () => getXmlNodeWithType(valueType as NodeTypes)],
+      ['object', () => {
+        const isArray = Array.isArray(value);
+        let content = '';
+        for (const key in value as object) {
+          const keyValue = (value as any)[key];
+          content = content.concat(this.getXmlStringFromValue(keyValue, key));
+        }
+        return getXmlNodeWithType(isArray ? NodeTypes.Array : NodeTypes.Object, content);
+      }]
+    ]);
+    const valueTypeFunction = valueTypeFunctionMap.get(valueType);
+
+    if (valueTypeFunction) {
+      return valueTypeFunction();
+    } else {
+      throw new Error(`Unable to parse xml from type ${valueType}`);
     }
-
-    if (['string', 'boolean'].includes(valueType)) {
-      return getXmlNodeWithType(valueType as NodeTypes);
-    }
-
-    if (valueType === 'object') {
-      const isArray = Array.isArray(value);
-      let content = '';
-      for (const key in value as object) {
-        const keyValue = (value as any)[key];
-        content = content.concat(this.getXmlStringFromValue(keyValue, key));
-      }
-      return getXmlNodeWithType(isArray ? NodeTypes.Array : NodeTypes.Object, content);
-    }
-
-    throw new Error('Unable to parse xml from json');
-  }
-
-  /**
-   * Returns the parsed json representation of the given xml string
-   * @param xml
-   */
-  public static ToJson<T>(xml: string): T {
-    return JSON.parse(xml) as T;
   }
 }

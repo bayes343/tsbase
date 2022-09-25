@@ -19,7 +19,7 @@ describe('Xml', () => {
     lactoseIntolerant: false
   };
 
-  const getExpectedXml = (rootNodeName = 'root', schema?: string) => Strings.Minify(`<?xml version="1.0" encoding="UTF-8"?>
+  const getExpectedXml = (rootNodeName = 'root', schema?: string) => Strings.MinifyXml(`<?xml version="1.0" encoding="UTF-8"?>
 <${rootNodeName}${schema ? ` xmlns="${schema}"` : ''} type="xs:object">
   <name type="xs:string">John Doe</name>
   <age type="xs:integer">30</age>

@@ -1,5 +1,3 @@
-import { Regex } from './Regex';
-
 export class Strings {
   private constructor() { }
 
@@ -37,8 +35,15 @@ export class Strings {
     return !string || string.trim().length === 0;
   }
 
-  public static Minify(string: string): string {
-    return string.replace(Regex.NewLines, Strings.Empty)
-      .replace(/\r?>(\s+)<|\r/g, '><');
+  /**
+   * Returns a version of the given string minus new line characters and whitespace characters between tags
+   * @param string
+   */
+  public static MinifyXml(string: string): string {
+    const newLines = /\r?\n|\r/g;
+    const spacesBetweenXmlTags = /\r?>(\s+)<|\r/g;
+
+    return string.replace(newLines, Strings.Empty)
+      .replace(spacesBetweenXmlTags, '><');
   }
 }
