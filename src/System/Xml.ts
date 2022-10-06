@@ -25,6 +25,22 @@ export class Xml {
    * @param xml
    */
   public static ToJson<T>(xml: string): T {
+    const xmlTagsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>.*)(?<closeTag><\/\2>)/g;
+    const results = xmlTagsRegex.exec(xml) as {
+      groups?: {
+        openTag?: string,
+        tagName?: string,
+        typeAttribute?: string,
+        type?: string,
+        content?: string,
+        closeTag?: string,
+      }[]
+    };
+    // eslint-disable-next-line no-console
+    console.log(results);
+    // eslint-disable-next-line no-console
+    console.log(results.groups);
+
     return JSON.parse(xml) as T;
   }
 

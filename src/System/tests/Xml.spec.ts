@@ -2,7 +2,7 @@ import { Strings } from '../Strings';
 import { Xml } from '../Xml';
 
 describe('Xml', () => {
-  const json = {
+  const expectedJson = {
     name: 'John Doe',
     age: 30,
     gender: 'male',
@@ -38,19 +38,20 @@ describe('Xml', () => {
 </${rootNodeName}>`);
 
   it('should return an xml representation of a given json object', () => {
-    let actual = Xml.FromJson(json);
+    let actual = Xml.FromJson(expectedJson);
     expect(actual).toEqual(getExpectedXml());
 
     const rootNodeName = 'JohnDoe';
-    actual = Xml.FromJson(json, rootNodeName);
+    actual = Xml.FromJson(expectedJson, rootNodeName);
     expect(actual).toEqual(getExpectedXml(rootNodeName));
 
     const schema = 'https://johndoe.net/schema/john/0.1';
-    actual = Xml.FromJson(json, rootNodeName, schema);
+    actual = Xml.FromJson(expectedJson, rootNodeName, schema);
     expect(actual).toEqual(getExpectedXml(rootNodeName, schema));
   });
 
-  // it('should return an json object representation of a given xml string', () => {
-
-  // });
+  it('should return an json object representation of a given xml string', () => {
+    const actual = Xml.ToJson(getExpectedXml());
+    expect(actual).toEqual(expectedJson);
+  });
 });
