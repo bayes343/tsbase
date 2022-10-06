@@ -50,7 +50,7 @@ export class CookieStorage implements IGenericStorage {
 
   public GetValue(key: string): Result<string> {
     return new Query(() => {
-      const cookiePairs = this.mainDocument.cookie.split(';');
+      const cookiePairs = this.mainDocument.cookie.split(';').map(e => e.trim());
       const cookieKeys = cookiePairs.map(c => c.split('=')[0]);
       const cookieValues = cookiePairs.map(c => c.split('=')[1]);
       const keyIndex = cookieKeys.indexOf(key);
