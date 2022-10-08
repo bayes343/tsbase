@@ -24,11 +24,11 @@ export class Repository<T> extends Queryable<T> {
     };
   }
 
-  private savedData = { raw: Strings.Empty, referential: [] as Array<T> };
-  private persister!: IPersister<T>;
-  private validator: Validator<T> = new Validator<T>([]);
-  private serializer?: ISerializer;
-  private serializeAs?: { new(): T; };
+  protected savedData = { raw: Strings.Empty, referential: [] as Array<T> };
+  protected persister!: IPersister<T>;
+  protected validator: Validator<T> = new Validator<T>([]);
+  protected serializer?: ISerializer;
+  protected serializeAs?: { new(): T; };
 
   public static New<T>(
     persister: IPersister<T>,
@@ -114,7 +114,7 @@ export class Repository<T> extends Queryable<T> {
     return Queryable.From(this.savedData.referential).Except(this.slice());
   }
 
-  private getSerializedInstancesFromInitialData(initialData: Array<any>): Queryable<T> {
+  protected getSerializedInstancesFromInitialData(initialData: Array<any>): Queryable<T> {
     const classInstances = new Array<T>();
 
     initialData.forEach(element => {
@@ -125,11 +125,11 @@ export class Repository<T> extends Queryable<T> {
     return Queryable.From(classInstances);
   }
 
-  private itemIsValid(item: T): Result<null> {
+  protected itemIsValid(item: T): Result<null> {
     return this.validator.Validate(item);
   }
 
-  private setSavedData(): void {
+  protected setSavedData(): void {
     this.savedData = {
       raw: JSON.stringify(this.slice()),
       referential: this.slice()
