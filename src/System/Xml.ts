@@ -1,5 +1,14 @@
 import { Strings } from './Strings';
 
+type Tag = {
+  openTag?: string,
+  tagName?: string,
+  typeAttribute?: string,
+  type?: string,
+  content?: string,
+  closeTag?: string,
+};
+
 enum NodeTypes {
   String = 'string',
   Integer = 'integer',
@@ -26,22 +35,63 @@ export class Xml {
    */
   public static ToJson<T>(xml: string): T {
     const xmlTagsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>.*)(?<closeTag><\/\2>)/g;
-    const results = xmlTagsRegex.exec(xml) as {
-      groups?: {
-        openTag?: string,
-        tagName?: string,
-        typeAttribute?: string,
-        type?: string,
-        content?: string,
-        closeTag?: string,
-      }[]
-    };
-    // eslint-disable-next-line no-console
-    console.log(results);
-    // eslint-disable-next-line no-console
-    console.log(results.groups);
+    const results: Tag[] = [];
+    let match: RegExpExecArray | undefined | null;
+    while ((match = xmlTagsRegex.exec(xml)) !== null) {
+      if (match) {
+        results.push(match.groups as Tag);
+      }
+    }
+    let obj = {};
 
-    return JSON.parse(xml) as T;
+    // eslint-disable-next-line complexity
+    results.forEach(tag => {
+      if (tag.tagName === 'root') {
+        obj = this.ToJson(tag.content || '');
+      } else if (tag.type === 'object') {
+        const nestedObj = this.ToJson(tag.content || '');
+        obj = {
+          ...obj,
+          [tag.tagName as string]: nestedObj
+        };
+      } else if (tag.type === 'string') {
+        obj = {
+          ...obj,
+          [tag.tagName as string]: tag.content?.toString()
+        };
+      } else if (tag.type === 'integer') {
+        obj = {
+          ...obj,
+          [tag.tagName as string]: parseInt(tag.content || '0')
+        };
+      } else if (tag.type === 'decimal') {
+        obj = {
+          ...obj,
+          [tag.tagName as string]: parseFloat(tag.content || '0')
+        };
+      } else if (tag.type === 'boolean') {
+        obj = {
+          ...obj,
+          [tag.tagName as string]: tag.content === 'true'
+        };
+      } else if (tag.type === 'array') {
+        // eslint-disable-next-line max-len
+        const xmlArrayItemsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>[^<]*)(?<closeTag><\/\2>)/g;
+        const items: any[] = [];
+        let match: RegExpExecArray | undefined | null;
+        while ((match = xmlArrayItemsRegex.exec(tag.content || '')) !== null) {
+          if (match) {
+            items.push((match.groups as Tag).content);
+          }
+        }
+        obj = {
+          ...obj,
+          [tag.tagName as string]: items
+        };
+      }
+    });
+
+    return obj as T;
   }
 
   private static getXmlStringFromValue(
