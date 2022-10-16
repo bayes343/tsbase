@@ -57,7 +57,8 @@ export class Xml {
         let match: RegExpExecArray | undefined | null;
         while ((match = xmlArrayItemsRegex.exec(tag.content || '')) !== null) {
           if (match) {
-            items.push((match.groups as Tag).content);
+            const valueFunction = getValueForTypeFunctionMap.get((match.groups as Tag).type as NodeTypes);
+            items.push(valueFunction ? valueFunction(match.groups as Tag) : (match.groups as Tag).content);
           }
         }
         // eslint-disable-next-line no-console
