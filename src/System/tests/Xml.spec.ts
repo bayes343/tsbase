@@ -54,4 +54,10 @@ describe('Xml', () => {
     const actual = Xml.ToJson(getExpectedXml());
     expect(actual).toEqual(expectedJson);
   });
+
+  it('should parse my sitemap', () => {
+    // eslint-disable-next-line max-len
+    const actual = Xml.ToJson('<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://josephbayes.net/</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/resume</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/projects</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/contact</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/the-traveling-salesman-and-human-nature</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/cyclomatic-complexity</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/dependency-injection</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/command-pattern</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/dont-trust-screenshots</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/singleton-pattern</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/github-action-for-npm-packages</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url></urlset>');
+    expect(JSON.stringify(actual)).toEqual('');
+  });
 });

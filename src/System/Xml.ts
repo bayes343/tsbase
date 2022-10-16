@@ -60,16 +60,27 @@ export class Xml {
             items.push((match.groups as Tag).content);
           }
         }
+        // eslint-disable-next-line no-console
+        console.log(items);
         return items;
       }]
     ]);
 
     results.forEach(tag => {
-      if (tag.tagName && tag.type) {
+      const type = tag.type || (() => {
+        if (['array', 'set', 'list'].some(e => tag.tagName?.includes(e) || '')) {
+          return NodeTypes.Array;
+        } else if (tag.content?.includes('</')) {
+          return NodeTypes.Object;
+        } else {
+          return NodeTypes.String;
+        }
+      })();
+      if (tag.tagName) {
         if (tag.tagName === 'root') {
           obj = this.ToJson(tag.content || '');
         } else {
-          const valueFunction = getValueForTypeFunctionMap.get(tag.type as NodeTypes);
+          const valueFunction = getValueForTypeFunctionMap.get(type as NodeTypes);
           obj = {
             ...obj,
             [tag.tagName]: valueFunction ? valueFunction(tag) : tag.content
