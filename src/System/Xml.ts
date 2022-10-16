@@ -44,13 +44,13 @@ export class Xml {
     }
     let obj = {};
 
-    const getValueForTypeFunctionMap = new Map<string, (tag: Tag) => undefined | string | number | boolean | object | Array<any>>([
-      ['object', (tag) => this.ToJson(tag.content || '')],
-      ['string', (tag) => tag.content?.toString()],
-      ['integer', (tag) => parseInt(tag.content || '0')],
-      ['decimal', (tag) => parseFloat(tag.content || '0')],
-      ['boolean', (tag) => tag.content === 'true'],
-      ['array', (tag) => {
+    const getValueForTypeFunctionMap = new Map<NodeTypes, (tag: Tag) => undefined | string | number | boolean | object | Array<any>>([
+      [NodeTypes.Object, (tag) => this.ToJson(tag.content || '')],
+      [NodeTypes.String, (tag) => tag.content?.toString()],
+      [NodeTypes.Integer, (tag) => parseInt(tag.content || '0')],
+      [NodeTypes.Decimal, (tag) => parseFloat(tag.content || '0')],
+      [NodeTypes.Boolean, (tag) => tag.content === 'true'],
+      [NodeTypes.Array, (tag) => {
         // eslint-disable-next-line max-len
         const xmlArrayItemsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>[^<]*)(?<closeTag><\/\2>)/g;
         const items: any[] = [];
@@ -69,7 +69,7 @@ export class Xml {
         if (tag.tagName === 'root') {
           obj = this.ToJson(tag.content || '');
         } else {
-          const valueFunction = getValueForTypeFunctionMap.get(tag.type);
+          const valueFunction = getValueForTypeFunctionMap.get(tag.type as NodeTypes);
           obj = {
             ...obj,
             [tag.tagName]: valueFunction ? valueFunction(tag) : tag.content
