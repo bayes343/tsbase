@@ -44,37 +44,13 @@ export class Xml {
     }
     let obj = {};
 
-    // eslint-disable-next-line complexity
-    results.forEach(tag => {
-      if (tag.tagName === 'root') {
-        obj = this.ToJson(tag.content || '');
-      } else if (tag.type === 'object') {
-        const nestedObj = this.ToJson(tag.content || '');
-        obj = {
-          ...obj,
-          [tag.tagName as string]: nestedObj
-        };
-      } else if (tag.type === 'string') {
-        obj = {
-          ...obj,
-          [tag.tagName as string]: tag.content?.toString()
-        };
-      } else if (tag.type === 'integer') {
-        obj = {
-          ...obj,
-          [tag.tagName as string]: parseInt(tag.content || '0')
-        };
-      } else if (tag.type === 'decimal') {
-        obj = {
-          ...obj,
-          [tag.tagName as string]: parseFloat(tag.content || '0')
-        };
-      } else if (tag.type === 'boolean') {
-        obj = {
-          ...obj,
-          [tag.tagName as string]: tag.content === 'true'
-        };
-      } else if (tag.type === 'array') {
+    const getValueForTypeFunctionMap = new Map<string, (tag: Tag) => undefined | string | number | boolean | object | Array<any>>([
+      ['object', (tag) => this.ToJson(tag.content || '')],
+      ['string', (tag) => tag.content?.toString()],
+      ['integer', (tag) => parseInt(tag.content || '0')],
+      ['decimal', (tag) => parseFloat(tag.content || '0')],
+      ['boolean', (tag) => tag.content === 'true'],
+      ['array', (tag) => {
         // eslint-disable-next-line max-len
         const xmlArrayItemsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>[^<]*)(?<closeTag><\/\2>)/g;
         const items: any[] = [];
@@ -84,10 +60,21 @@ export class Xml {
             items.push((match.groups as Tag).content);
           }
         }
-        obj = {
-          ...obj,
-          [tag.tagName as string]: items
-        };
+        return items;
+      }]
+    ]);
+
+    results.forEach(tag => {
+      if (tag.tagName && tag.type) {
+        if (tag.tagName === 'root') {
+          obj = this.ToJson(tag.content || '');
+        } else {
+          const valueFunction = getValueForTypeFunctionMap.get(tag.type);
+          obj = {
+            ...obj,
+            [tag.tagName]: valueFunction ? valueFunction(tag) : tag.content
+          };
+        }
       }
     });
 
