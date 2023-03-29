@@ -18,13 +18,13 @@ export class DomStorage implements IGenericStorage {
     private serializer = new JsonSerializer()
   ) { }
 
-  public Get<T>(type: { new(): T; }, key: string): Result<T> {
-    return new Query((): T => {
+  public Get<T>(type: { new(): T; }, key: string): Result<T | null> {
+    return new Query((): T | null => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
         return this.serializer.Serialize(type, JSON.parse(value)) as T;
       } else {
-        throw new Error(`Unable to retrieve "${key}"`);
+        return null;
       }
     }).Execute();
   }
@@ -34,13 +34,13 @@ export class DomStorage implements IGenericStorage {
       this.getStorageMedium().setItem(key, JSON.stringify(value))).Execute();
   }
 
-  public GetValue<T>(key: string): Result<T> {
-    return new Query((): any => {
+  public GetValue(key: string): Result<string | null> {
+    return new Query((): string | null => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
         return value;
       } else {
-        throw new Error(`Unable to retrieve "${key}"`);
+        return null;
       }
     }).Execute();
   }

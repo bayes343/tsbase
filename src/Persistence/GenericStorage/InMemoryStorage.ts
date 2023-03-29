@@ -9,7 +9,7 @@ import { IGenericStorage } from './IGenericStorage';
 export class InMemoryStorage implements IGenericStorage {
   private storageMap = new Map<string, any>();
 
-  public Get<T>(_type: new () => T, key: string): Result<T> {
+  public Get<T>(_type: new () => T, key: string): Result<T | null> {
     return this.GetValue(key);
   }
 
@@ -19,13 +19,13 @@ export class InMemoryStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public GetValue<T>(key: string): Result<T> {
+  public GetValue<T>(key: string): Result<T | null> {
     return new Query((): any => {
       const value = this.storageMap.get(key);
       if (value) {
         return value;
       } else {
-        throw new Error(`Unable to retrieve \"${key}\"`);
+        return null;
       }
     }).Execute();
   }

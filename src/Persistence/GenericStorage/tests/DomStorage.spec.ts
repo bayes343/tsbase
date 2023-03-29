@@ -50,11 +50,10 @@ describe('DomStorage', () => {
       .toEqual(`${myCar.Make} ${myCar.Model}`);
   });
 
-  it('should return a failed result if an error occurs during a get query', () => {
+  it('should return null when an unset key is requested', () => {
     const result = classUnderTest.Get(Car, 'fake');
-
-    expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages[0]).toEqual('Unable to retrieve \"fake\"');
+    expect(result.IsSuccess).toBeTruthy();
+    expect(result.Value).toBeNull();
   });
 
   it('should successfully remove a key value pair', () => {
@@ -71,11 +70,10 @@ describe('DomStorage', () => {
     expect(result.Value).toEqual('value');
   });
 
-  it('should return a failed result if an error occurs during a getvalue query', () => {
+  it('should return null when an unset key is requested', () => {
     const result = classUnderTest.GetValue('fake');
-
-    expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages[0]).toEqual('Unable to retrieve \"fake\"');
+    expect(result.IsSuccess).toBeTruthy();
+    expect(result.Value).toBeNull();
   });
 
 });

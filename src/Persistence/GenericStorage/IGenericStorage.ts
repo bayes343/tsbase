@@ -6,7 +6,7 @@ export interface IGenericStorage {
    * @param type
    * @param key
    */
-  Get<T>(type: { new(): T; }, key: string): Result<T>;
+  Get<T>(type: { new(): T; }, key: string): Result<T | null>;
   /**
    * Stores the stringified version of the given object at the specified key
    * @param key
@@ -17,7 +17,7 @@ export interface IGenericStorage {
    * Returns the raw data stored at the given key
    * @param key
    */
-  GetValue(key: string): Result<any>;
+  GetValue(key: string): Result<any | null>;
   /**
    * Stores the raw data of the given value at the given key
    * @param key

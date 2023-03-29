@@ -29,10 +29,10 @@ describe('InMemoryStorage', () => {
     expect(result.Value).toEqual({ key: 'value' });
   });
 
-  it('should report an error on getting a value for a key that is not set', () => {
+  it('should return null when an unset key is requested', () => {
     const result = classUnderTest.GetValue('fake');
-    expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages.length).toEqual(1);
+    expect(result.IsSuccess).toBeTruthy();
+    expect(result.Value).toBeNull();
   });
 
   it('should remove a stored value', () => {
