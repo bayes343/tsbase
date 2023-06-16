@@ -48,4 +48,12 @@ describe('Strings', () => {
   it('should return an empty string when camel casing an empty string', () => {
     expect(Strings.CamelCase(Strings.Empty)).toEqual(Strings.Empty);
   });
+
+  it('should minify html', () => {
+    const expected = '<div><p>test</p></div>';
+    const actual = Strings.MinifyXml(`<div>
+  <p>test</p>
+</div>`);
+    expect(actual).toEqual(expected);
+  });
 });

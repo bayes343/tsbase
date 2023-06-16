@@ -34,4 +34,16 @@ export class Strings {
   public static IsEmptyOrWhiteSpace(string: string | null | undefined): boolean {
     return !string || string.trim().length === 0;
   }
+
+  /**
+   * Returns a version of the given string minus new line characters and whitespace characters between tags
+   * @param string
+   */
+  public static MinifyXml(string: string): string {
+    const newLines = /\r?\n|\r/g;
+    const spacesBetweenXmlTags = /\r?>(\s+)<|\r/g;
+
+    return string.replace(newLines, Strings.Empty)
+      .replace(spacesBetweenXmlTags, '><');
+  }
 }
