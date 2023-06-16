@@ -3,4 +3,3 @@ export * from './FormUrl';
 export * from './Guid';
 export * from './Regex';
 export * from './Strings';
-export * from './Xml';

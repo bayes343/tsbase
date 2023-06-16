@@ -18,6 +18,10 @@ enum NodeTypes {
   Array = 'array'
 }
 
+/**
+ * This feature is currently in development - it is not exported from System/module or the package root for this reason.
+ * It may meet your needs, however, it may change significantly without being reflected such in the package version
+ */
 export class Xml {
   private constructor() { }
 

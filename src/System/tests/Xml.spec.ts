@@ -57,9 +57,42 @@ describe('Xml', () => {
     expect(actual).toEqual(expectedJson);
   });
 
-  // it('should parse my sitemap', () => {
-  // eslint-disable-next-line max-len
-  //   const actual = Xml.ToJson('<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://josephbayes.net/</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/resume</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/projects</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/contact</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/the-traveling-salesman-and-human-nature</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/cyclomatic-complexity</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/dependency-injection</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/command-pattern</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/dont-trust-screenshots</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/singleton-pattern</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url><loc>https://josephbayes.net/blog/github-action-for-npm-packages</loc><lastmod>2022-10-02</lastmod><changefreq>weekly</changefreq><priority>1</priority></url></urlset>');
-  //   expect(JSON.stringify(actual)).toEqual('');
-  // });
+  it('should convert a usps address validation response to json', () => {
+    const actual = Xml.ToJson(`<?xml version="1.0" encoding="UTF-8"?>
+    <AddressValidateResponse>
+      <Address ID="0">
+        <Address2>685 FREEDOM VIA</Address2>
+        <City>CHRISTIANSBURG</City>
+        <CityAbbreviation>CHRISTIANSBRG</CityAbbreviation>
+        <State>VA</State>
+        <Zip5>24073</Zip5>
+        <Zip4>1435</Zip4>
+        <DeliveryPoint>85</DeliveryPoint>
+        <CarrierRoute>R008</CarrierRoute>
+        <DPVConfirmation>Y</DPVConfirmation>
+        <DPVCMRA>N</DPVCMRA>
+        <DPVFootnotes>AABB</DPVFootnotes>
+        <Business>N</Business>
+        <CentralDeliveryPoint>N</CentralDeliveryPoint>
+        <Vacant>N</Vacant>
+      </Address>
+    </AddressValidateResponse>`);
+
+    expect(actual).toEqual({
+      Address2: '685 FREEDOM VIA',
+      City: 'CHRISTIANSBURG',
+      CityAbbreviation: 'CHRISTIANSBRG',
+      State: 'VA',
+      Zip5: '24073',
+      Zip4: '1435',
+      DeliveryPoint: '85',
+      CarrierRoute: 'R008',
+      DPVConfirmation: 'Y',
+      DPVCMRA: 'N',
+      DPVFootnotes: 'AABB',
+      Business: 'N',
+      CentralDeliveryPoint: 'N',
+      Vacant: 'N'
+    });
+  });
 });
