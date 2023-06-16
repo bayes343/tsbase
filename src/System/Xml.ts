@@ -65,8 +65,7 @@ export class Xml {
             items.push(valueFunction ? valueFunction(match.groups as Tag) : (match.groups as Tag).content);
           }
         }
-        // eslint-disable-next-line no-console
-        console.log(items);
+
         return items;
       }]
     ]);
