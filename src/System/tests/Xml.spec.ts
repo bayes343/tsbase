@@ -132,4 +132,24 @@ describe('Xml', () => {
     });
   });
 
+  // it('should convert a json version of a usps address request to xml', () => {
+  //   const actual = Xml.FromJson({
+  //     Address2: '685 FREEDOM VIA',
+  //     City: 'CHRISTIANSBURG',
+  //     CityAbbreviation: 'CHRISTIANSBRG',
+  //     State: 'VA',
+  //     Zip5: '24073',
+  //     Zip4: '1435',
+  //     DeliveryPoint: '85',
+  //     CarrierRoute: 'R008',
+  //     DPVConfirmation: 'Y',
+  //     DPVCMRA: 'N',
+  //     DPVFootnotes: 'AABB',
+  //     Business: 'N',
+  //     CentralDeliveryPoint: 'N',
+  //     Vacant: 'N'
+  //   }, 'AddressValidateRequest');
+
+  //   expect(actual).toEqual('');
+  // });
 });
