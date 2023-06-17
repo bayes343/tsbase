@@ -61,7 +61,7 @@ export class Queryable<T> extends Array<T> {
    * Sorts the elements of a sequence in ascending order based on the default comparer or user defined function(s)
    * @param funcs
    */
-  public OrderBy(funcs?: Array<(item: T) => number>): Queryable<T> {
+  public OrderBy(funcs?: Array<(item: T) => number | string>): Queryable<T> {
     return this.mutableArrayQuery((array) => {
       if (!funcs) {
         array.sort();
@@ -90,7 +90,7 @@ export class Queryable<T> extends Array<T> {
    * Sorts the elements of a sequence in descending order.
    * @param func
    */
-  public OrderByDescending(funcs?: Array<(item: T) => number>): Queryable<T> {
+  public OrderByDescending(funcs?: Array<(item: T) => number | string>): Queryable<T> {
     return Queryable.From(this.OrderBy(funcs).reverse());
   }
 

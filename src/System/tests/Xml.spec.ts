@@ -95,4 +95,41 @@ describe('Xml', () => {
       Vacant: 'N'
     });
   });
+
+  it('should convert a usps address validation not found error response', () => {
+    const actual = Xml.ToJson(`<?xml version="1.0" encoding="UTF-8"?>
+    <AddressValidateResponse>
+      <Address ID="0">
+        <Error>
+          <Number>-2147219401</Number>
+          <Source>clsAMS</Source>
+          <Description>Address Not Found.  </Description>
+          <HelpFile/>
+          <HelpContext/>
+        </Error>
+      </Address>
+    </AddressValidateResponse>`);
+
+    expect(actual).toEqual({
+      Number: '-2147219401',
+      Source: 'clsAMS',
+      Description: 'Address Not Found.'
+    });
+  });
+
+  it('should convert a usps address validation invalid request error response', () => {
+    const actual = Xml.ToJson(`<?xml version="1.0" encoding="UTF-8"?>
+    <Error>
+      <Number>80040B19</Number>
+      <Description>XML Syntax Error: Please check the XML request to see if it can be parsed.(B)</Description>
+      <Source>USPSCOM::DoAuth</Source>
+    </Error>`);
+
+    expect(actual).toEqual({
+      Number: '80040B19',
+      Description: 'XML Syntax Error: Please check the XML request to see if it can be parsed.(B)',
+      Source: 'USPSCOM::DoAuth'
+    });
+  });
+
 });

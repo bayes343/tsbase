@@ -50,7 +50,7 @@ export class Xml {
 
     const getValueForTypeFunctionMap = new Map<NodeTypes, (tag: Tag) => undefined | string | number | boolean | object | Array<any>>([
       [NodeTypes.Object, (tag) => this.ToJson(tag.content || '')],
-      [NodeTypes.String, (tag) => tag.content?.toString()],
+      [NodeTypes.String, (tag) => tag.content?.toString().trim()],
       [NodeTypes.Integer, (tag) => parseInt(tag.content || '0')],
       [NodeTypes.Decimal, (tag) => parseFloat(tag.content || '0')],
       [NodeTypes.Boolean, (tag) => tag.content === 'true'],

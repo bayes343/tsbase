@@ -23,5 +23,4 @@ describe('Query', () => {
     expect(result.IsSuccess).toBeFalsy();
     expect(result.ErrorMessages.indexOf('test') >= 0).toBeTruthy();
   });
-
 });

@@ -103,6 +103,30 @@ describe('Queryable', () => {
     expect(ordered[0]).toEqual(2);
   });
 
+  it('should order by strings', () => {
+    const ordered = Queryable.From(['zebra', 'apple', 'c', 'b', 'f', 'e']).OrderBy([
+      i => i
+    ]);
+
+    expect(ordered[0]).toEqual('apple');
+    expect(ordered[5]).toEqual('zebra');
+  });
+
+  it('should order by strings on objects', () => {
+    const ordered = Queryable.From([
+      { value: 'zebra' },
+      { value: 'apple' },
+      { value: 'c' },
+      { value: 'b' },
+      { value: 'f' },
+      { value: 'e' }
+    ]).OrderBy([
+      i => i.value
+    ]);
+
+    expect(ordered[0]).toEqual({ value: 'apple' });
+    expect(ordered[5]).toEqual({ value: 'zebra' });
+  });
 
   it('should find the item with the minimum result from the defined function or default comparer', () => {
     const array = [3, 6, 1, 8, 3, 9, 3, 10];
