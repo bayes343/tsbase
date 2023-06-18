@@ -1,3 +1,5 @@
+import { Regex } from './Regex';
+
 export class Strings {
   private constructor() { }
 
@@ -23,7 +25,7 @@ export class Strings {
   public static PascalCase(string: string): string {
     return string
       .split(Strings.Space)
-      .map(s => `${s[0]?.toUpperCase() || ''}${s.slice(1)}`)
+      .map(s => `${s[0]?.toUpperCase() || this.Empty}${s.slice(1)}`)
       .join(Strings.Empty);
   }
 
@@ -45,5 +47,18 @@ export class Strings {
 
     return string.replace(newLines, Strings.Empty)
       .replace(spacesBetweenXmlTags, '><');
+  }
+
+  /**
+   * Returns a "slugified" version of the given string
+   * Replaces white space with dashes "-", removes non-alphanumeric characters, and lowercases
+   * @param string
+   * @returns
+   */
+  public static Slugify(string: string): string {
+    return string
+      .toLowerCase()
+      .replace(Regex.WhiteSpace, '-')
+      .replace(Regex.NonAlphaNumeric, '');
   }
 }

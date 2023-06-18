@@ -6,6 +6,7 @@ export class Regex {
 
   public static readonly NonAlphaNumeric = /[^a-zA-Z0-9 -]/g;
   public static readonly AnyString = /(.*)/;
+  public static readonly WhiteSpace = / /g;
 
   /**
    * Matches: whatever@somewhere.museum | foreignchars@myforeigncharsdomain.nu | me+mysomething@mydomain.com
