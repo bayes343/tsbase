@@ -235,4 +235,30 @@ describe('JsxRenderer', () => {
     const expectedOuterHtml = Strings.Empty;
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
+
+  it('should render an attribute with the string value "false"', async () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'input',
+      attributes: {
+        type: 'checkbox',
+        'data-attr': 'false'
+      },
+      children: [false as unknown as string]
+    };
+    const expectedOuterHtml = '<input type="checkbox" data-attr="false">';
+    expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should not render an attribute with the boolean value false', async () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'input',
+      attributes: {
+        type: 'checkbox',
+        checked: false
+      },
+      children: [false as unknown as string]
+    };
+    const expectedOuterHtml = '<input type="checkbox">';
+    expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
 });

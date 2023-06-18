@@ -13,7 +13,7 @@ const asap = (func: () => void) => {
 };
 
 export type Jsx = {
-  attributes?: Record<string, string> | null,
+  attributes?: Record<string, string | number | boolean> | null,
   children?: (Jsx | string)[],
   nodeName: string
 };
@@ -60,7 +60,11 @@ export class JsxRenderer {
       if (DomEvents.includes(key)) {
         this.addElementEventListener(key, jsx, dom, mainDocument);
       } else {
-        dom.setAttribute(key, jsx.attributes[key]);
+        const value = jsx.attributes[key];
+        const shouldAddAttribute = !(typeof value === 'boolean' && value === false);
+        if (shouldAddAttribute) {
+          dom.setAttribute(key, jsx.attributes[key].toString());
+        }
       }
     }
 
