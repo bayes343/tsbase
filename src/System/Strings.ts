@@ -57,6 +57,7 @@ export class Strings {
    */
   public static Slugify(string: string): string {
     return string
+      .trim()
       .toLowerCase()
       .replace(Regex.WhiteSpace, '-')
       .replace(Regex.NonAlphaNumeric, '');
