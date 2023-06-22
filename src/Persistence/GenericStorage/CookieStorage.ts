@@ -2,6 +2,7 @@ import { Strings } from '../../System/Strings';
 import { Result } from '../../Patterns/Result/Result';
 import { Command, Query } from '../../Patterns/CommandQuery/module';
 import { JsonSerializer } from '../../Utility/Serialization/JsonSerializer';
+import { Cookies } from '../../Utility/Web/Cookies';
 import { IGenericStorage } from './IGenericStorage';
 
 enum CookieOptionKeys {
@@ -50,13 +51,11 @@ export class CookieStorage implements IGenericStorage {
 
   public GetValue(key: string): Result<string> {
     return new Query(() => {
-      const cookiePairs = this.mainDocument.cookie.split(';').map(e => e.trim());
-      const cookieKeys = cookiePairs.map(c => c.split('=')[0]);
-      const cookieValues = cookiePairs.map(c => c.split('=')[1]);
-      const keyIndex = cookieKeys.indexOf(key);
+      const cookieMap = Cookies.GetCookieMap(this.mainDocument);
+      const value = cookieMap.get(key);
 
-      if (keyIndex >= 0) {
-        return cookieValues[keyIndex];
+      if (value) {
+        return value;
       } else {
         throw new Error(`Unable to retrieve "${key}"`);
       }
