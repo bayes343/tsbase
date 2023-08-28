@@ -17,20 +17,22 @@
   },
   "devDependencies": {
     "@types/dlv": "^1.1.2",
-    "@types/jasmine": "^2.8.18",
-    "@types/jest": "^26.0.24",
+    "@types/jasmine": "^4.3.5",
+    "@types/jest": "^29.5.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "core-js": "^3.25.0",
     "eslint": "^8.0.0",
-    "jasmine-core": "^2.5.2",
-    "jest": "^26.6.3",
-    "ts-jest": "^26.5.6",
+    "jasmine-core": "^5.1.1",
+    "jest": "^29.6.4",
+    "ts-jest": "^29.1.1",
     "tslib": "^2.4.0",
     "tsmockit": "^2.0.5",
     "typescript": "^4.7.0",
     "jscpd": "^3.3.26",
-    "typedoc": "^0.23.11"
+    "typedoc": "^0.23.11",
+    "jest-environment-jsdom": "^29.6.4",
+    "fake-indexeddb": "^4.0.2"
   },
   "dependencies": {
     "dlv": "^1.1.3",

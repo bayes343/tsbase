@@ -1,4 +1,4 @@
-import { Any, Mock } from 'tsmockit';
+import 'fake-indexeddb/auto';
 import { IIndexedDb } from '../IIndexedDb';
 import { IndexedDb } from '../IndexedDb';
 
@@ -11,42 +11,26 @@ describe('IndexedDb', () => {
     { ssn: '444-44-4444', name: 'Bill', age: 35, email: 'bill@company.com' },
     { ssn: '555-55-5555', name: 'Donna', age: 32, email: 'donna@home.org' }
   ];
-  const mockIndexedDbFactory = new Mock<typeof indexedDB>();
   let classUnderTest: IIndexedDb;
 
   const getBill = async () => await classUnderTest.Get<Customer>(storeName, customerData[0].ssn);
   const queryDonna = async () => await classUnderTest.Get<Customer>(storeName, (customer) => customer.name === 'Donna');
 
   beforeAll(() => {
-    const fakeDb = {};
-    class FakeOpenRequest {
-      result = fakeDb;
-      set onsuccess(func: () => void) {
-        func();
-      }
-    };
-    const fakeOpenRequest = new FakeOpenRequest();
-
-    mockIndexedDbFactory.Setup(f => f.open(Any<string>(), Any<number>()), fakeOpenRequest);
-
-    classUnderTest = IndexedDb.Instance(
-      name,
-      version,
-      [
-        {
-          version: version,
-          command: (db) => {
-            const store = db.createObjectStore(storeName, { keyPath: 'ssn' });
-            store.createIndex('name', 'name', { unique: false });
-            store.createIndex('email', 'email', { unique: true });
-          }
-        },
-        {
-          version: version + 1,
-          command: (_db) => { }
+    classUnderTest = IndexedDb.Instance(name, version, [
+      {
+        version: version,
+        command: (db) => {
+          const store = db.createObjectStore(storeName, { keyPath: 'ssn' });
+          store.createIndex('name', 'name', { unique: false });
+          store.createIndex('email', 'email', { unique: true });
         }
-      ],
-      mockIndexedDbFactory.Object);
+      },
+      {
+        version: version + 1,
+        command: (_db) => { }
+      }
+    ]);
   });
 
   afterAll(() => {
@@ -57,7 +41,7 @@ describe('IndexedDb', () => {
     expect(classUnderTest).toBeDefined();
   });
 
-  it.only('should connect', async () => {
+  it('should connect', async () => {
     const connectResult1 = await classUnderTest.Connect();
     const connectResult2 = await classUnderTest.Connect();
 
