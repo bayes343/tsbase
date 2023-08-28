@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Mock } from 'tsmockit';
 import { Until } from '../../Timers/Until';
 import { ISpeechRecognition, SpeechRecognitionEvents } from '../ISpeechRecognition';

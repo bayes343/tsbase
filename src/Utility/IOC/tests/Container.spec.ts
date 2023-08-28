@@ -19,7 +19,7 @@ describe('Container', () => {
   it('should init dependencies', () => {
     classUnderTest.Init({
       number: 0,
-      string: new String('test'),
+      string: 'test',
       array: new Array(1, 2)
     });
 

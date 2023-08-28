@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { DomStorageMode, DomStorage } from '../DomStorage';
 import { Strings } from '../../../System/Strings';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';
