@@ -1,3 +1,4 @@
+import { Expect } from 'tsmockit';
 import { Observable } from '../../../Patterns/Observable/Observable';
 import { GameLoop } from '../GameLoop';
 
@@ -12,17 +13,25 @@ describe('GameLoop', () => {
     expect(classUnderTest).toBeDefined();
   });
 
-  it('should start and stop the game loop when there are no game events', () => {
+  it('should start and stop the game loop when there are no game events', async () => {
     classUnderTest.Start(60);
-    expect(classUnderTest['gameLoopTimer'].Enabled).toBeTruthy();
-    expect(classUnderTest['framerateTimer'].Enabled).toBeTruthy();
+    await Expect(
+      () => classUnderTest['gameLoopTimer'].Enabled,
+      m => m.toBeTruthy());
+    await Expect(
+      () => classUnderTest['framerateTimer'].Enabled,
+      m => m.toBeTruthy());
 
     classUnderTest.Stop();
-    expect(classUnderTest['gameLoopTimer'].Enabled).toBeFalsy();
-    expect(classUnderTest['framerateTimer'].Enabled).toBeFalsy();
+    await Expect(
+      () => classUnderTest['gameLoopTimer'].Enabled,
+      m => m.toBeFalsy());
+    await Expect(
+      () => classUnderTest['framerateTimer'].Enabled,
+      m => m.toBeFalsy());
   });
 
-  it('should start and stop the game loop when there are game events', () => {
+  it('should start and stop the game loop when there are game events', async () => {
     let framesRendered = 0;
     classUnderTest.Framerate.Subscribe((fr) => {
       framesRendered = fr || 0;
@@ -35,8 +44,12 @@ describe('GameLoop', () => {
     classUnderTest.GameEvents.push(GameStarted);
 
     classUnderTest.Start(60);
-    expect(classUnderTest['gameLoopTimer'].Enabled).toBeTruthy();
-    expect(classUnderTest['framerateTimer'].Enabled).toBeTruthy();
+    await Expect(
+      () => classUnderTest['gameLoopTimer'].Enabled,
+      m => m.toBeTruthy());
+    await Expect(
+      () => classUnderTest['framerateTimer'].Enabled,
+      m => m.toBeTruthy());
 
     setTimeout(() => {
       expect(framesRendered > 1 && framesRendered < 61).toBeTruthy();
@@ -46,14 +59,5 @@ describe('GameLoop', () => {
       expect(classUnderTest['gameLoopTimer'].Enabled).toBeFalsy();
       expect(classUnderTest['framerateTimer'].Enabled).toBeFalsy();
     }, 1000);
-  });
-
-  it('karma should cover methods in internal timers when they are called, but since it does not, this test exists', () => {
-    classUnderTest.GameEvents.push(new Observable<number>());
-    classUnderTest.Framerate.Subscribe(() => null);
-    classUnderTest.Start(60);
-
-    classUnderTest['gameLoopTimer'].Elapsed.forEach(f => f());
-    classUnderTest['framerateTimer'].Elapsed.forEach(f => f());
   });
 });
