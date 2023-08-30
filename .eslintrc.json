@@ -40,7 +40,6 @@
     "no-empty": "error",
     "no-var": "error",
     "no-eval": "error",
-    "no-use-before-define": "error",
     "no-trailing-spaces": "error",
     "no-fallthrough": "error",
     "no-multiple-empty-lines": "error",

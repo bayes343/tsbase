@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Mock } from 'tsmockit';
 import { Until } from '../../Timers/Until';
 import { ISpeechRecognition, SpeechRecognitionEvents } from '../ISpeechRecognition';
@@ -30,7 +34,9 @@ describe('SpeechRecognizer', () => {
 
   it('should construct', () => {
     expect(classUnderTest).toBeDefined();
-    expect(new SpeechRecognizer()).toBeDefined();
+    expect(() => {
+      new SpeechRecognizer();
+    }).toThrowError('No speech recognition service is available.');
   });
 
   it('should throw an error if speech recognition is not set', () => {

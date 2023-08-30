@@ -8,7 +8,7 @@ export class HttpClient implements IHttpClient {
 
   constructor(
     public DefaultRequestHeaders: Record<string, string> = {},
-    protected fetchRef: Fetch = globalThis.fetch.bind(globalThis)
+    protected fetchRef: Fetch = globalThis.fetch?.bind(globalThis)
   ) { }
 
   public async Request(

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { Mock } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
 import { JsonSerializer } from '../../../Utility/Serialization/JsonSerializer';

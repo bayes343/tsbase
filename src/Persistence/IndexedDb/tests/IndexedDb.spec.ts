@@ -1,3 +1,4 @@
+import 'fake-indexeddb/auto';
 import { IIndexedDb } from '../IIndexedDb';
 import { IndexedDb } from '../IndexedDb';
 

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 /* eslint-disable max-lines */
 import { Expect } from 'tsmockit';
 import { Strings } from '../../../System/Strings';

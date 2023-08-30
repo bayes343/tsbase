@@ -6,8 +6,13 @@ import { Migration } from './Migration';
 import { TransactionMode } from './TransactionModes';
 
 export class IndexedDb implements IIndexedDb {
-  public static Instance(name: string, version: number, migrations: Migration[]): IIndexedDb {
-    return new IndexedDb(name, version, migrations);
+  public static Instance(
+    name: string,
+    version: number,
+    migrations: Migration[],
+    indexedDbFactory = indexedDB
+  ): IIndexedDb {
+    return new IndexedDb(name, version, migrations, indexedDbFactory);
   }
 
   private database: IDBDatabase | null = null;
@@ -18,7 +23,8 @@ export class IndexedDb implements IIndexedDb {
   private constructor(
     public Name: string,
     public Version: number,
-    private migrations: Migration[]
+    private migrations: Migration[],
+    private indexedDbFactory: typeof indexedDB
   ) { }
 
   public async Connect(): Promise<Result<IDBDatabase | null>> {
@@ -26,7 +32,7 @@ export class IndexedDb implements IIndexedDb {
       if (this.Connected) {
         return this.database;
       } else {
-        const openRequest = indexedDB.open(this.Name, this.Version);
+        const openRequest = this.indexedDbFactory.open(this.Name, this.Version);
         this.setOpenRequestHandlers(openRequest, this.migrations);
 
         await Until(() => this.Connected);

@@ -2,7 +2,7 @@ import { ISpeechSynthesizer } from './ISpeechSynthesizer';
 
 export class SpeechSynthesizer implements ISpeechSynthesizer {
   constructor(
-    private ss: SpeechSynthesis = speechSynthesis
+    private ss: SpeechSynthesis = globalThis.speechSynthesis
   ) {
     if (!ss) {
       throw new Error('Speech synthesis is unavailable on this device.');

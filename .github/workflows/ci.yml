@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 18.x
       - run: npm i
       - run: npm run lint
       - run: npm run test-once
@@ -28,7 +28,7 @@ jobs:
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.1.0
         with:
-          filename: coverage/cobertura.xml
+          filename: coverage/cobertura-coverage.xml
           badge: true
           format: 'markdown'
           output: 'both'

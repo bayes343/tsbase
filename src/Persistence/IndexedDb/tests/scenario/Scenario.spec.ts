@@ -1,3 +1,4 @@
+import 'fake-indexeddb/auto';
 import { IndexedDb } from '../../IndexedDb';
 import { customerData, transactionData } from './data';
 import { migrations } from './migrations';

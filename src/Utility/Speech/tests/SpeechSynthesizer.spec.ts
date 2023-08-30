@@ -20,7 +20,9 @@ describe('SpeechSynthesizer', () => {
   });
 
   it('should construct with default parameters', () => {
-    expect(new SpeechSynthesizer()).toBeDefined();
+    expect(() => {
+      new SpeechSynthesizer();
+    }).toThrowError('Speech synthesis is unavailable on this device.');;
   });
 
   it('should throw an error when constructing if speechSynthesizer is undefined', () => {

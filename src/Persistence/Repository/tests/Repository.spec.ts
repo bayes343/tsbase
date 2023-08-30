@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 /* eslint-disable max-lines */
 import { Repository } from '../Repository';
 import { DomStoragePersister } from '../Persisters/DomStoragePersister';

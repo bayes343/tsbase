@@ -11,7 +11,7 @@ export class CachedHttpClient extends HttpClient {
   constructor(
     private cache: ICache<Response>,
     public DefaultRequestHeaders: Record<string, string> = {},
-    protected fetchRef: Fetch = globalThis.fetch.bind(globalThis)
+    protected fetchRef: Fetch = globalThis.fetch?.bind(globalThis)
   ) {
     super(DefaultRequestHeaders, fetchRef);
   }
