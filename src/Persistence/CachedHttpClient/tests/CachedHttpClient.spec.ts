@@ -59,10 +59,10 @@ describe('CachedHttpClient', () => {
   });
 
   it('should not cache a request made with a method other than get', async () => {
-    await classUnderTest.Post(testUri, {});
-    await classUnderTest.Put(testUri, {});
-    await classUnderTest.Patch(testUri, {});
-    await classUnderTest.Delete(testUri, {});
+    await classUnderTest.Post(testUri, '');
+    await classUnderTest.Put(testUri, '');
+    await classUnderTest.Patch(testUri, '');
+    await classUnderTest.Delete(testUri);
 
     mockCache.Verify(c => c.Add(testUri, {} as Response), Times.Never);
   });

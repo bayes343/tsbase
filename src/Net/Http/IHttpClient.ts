@@ -40,21 +40,21 @@ export interface IHttpClient {
    * @param uri
    * @param body
    */
-  Patch<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
+  Patch<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a POST request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  Post<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
+  Post<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a PUT request to the specified Uri as an asynchronous operation.
    * @param uri
    * @param body
    */
-  Put<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
+  Put<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>>;
 
   /**
    * Send a DELETE request to the specified Uri as an asynchronous operation.

@@ -57,32 +57,32 @@ describe('HttpClient', () => {
   });
 
   it('should send a patch request to the given uri with the given body and any additional headers', async () => {
-    const text = await classUnderTest.Patch(testUri, {}, { test: 'test' });
+    const text = await classUnderTest.Patch(testUri, '', { test: 'test' });
 
     expect(fetchCalledWithUri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Patch);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
-    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(fetchCalledWithRequestInit?.body).toEqual('');
     expect(text.body).toEqual(Strings.Empty);
   });
 
   it('should send a post request to the given uri with the given body and any additional headers', async () => {
-    const text = await classUnderTest.Post(testUri, {}, { test: 'test' });
+    const text = await classUnderTest.Post(testUri, '', { test: 'test' });
 
     expect(fetchCalledWithUri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Post);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
-    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(fetchCalledWithRequestInit?.body).toEqual('');
     expect(text.body).toEqual(Strings.Empty);
   });
 
   it('should send a put request to the given uri with the given body and any additional headers', async () => {
-    const text = await classUnderTest.Put(testUri, {}, { test: 'test' });
+    const text = await classUnderTest.Put(testUri, '', { test: 'test' });
 
     expect(fetchCalledWithUri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Put);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
-    expect(fetchCalledWithRequestInit?.body).toEqual({} as any);
+    expect(fetchCalledWithRequestInit?.body).toEqual('');
     expect(text.body).toEqual(Strings.Empty);
   });
 

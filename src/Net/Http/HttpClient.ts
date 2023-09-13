@@ -32,15 +32,15 @@ export class HttpClient implements IHttpClient {
     return await this.getRestResponse(uri, HttpMethod.Get, undefined, additionalHeaders);
   }
 
-  public async Patch<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
+  public async Patch<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Patch, body, additionalHeaders);
   }
 
-  public async Post<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
+  public async Post<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Post, body, additionalHeaders);
   }
 
-  public async Put<T>(uri: string, body: any, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
+  public async Put<T>(uri: string, body?: string, additionalHeaders?: Record<string, string>): Promise<RestResponse<T>> {
     return await this.getRestResponse(uri, HttpMethod.Put, body, additionalHeaders);
   }
 
