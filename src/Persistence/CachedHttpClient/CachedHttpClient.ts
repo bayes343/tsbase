@@ -2,7 +2,7 @@ import { Fetch, HttpClient, HttpMethod } from '../../Net/Http/module';
 import { ICache } from '../Cache/module';
 
 /**
- * @deprecated
+ * @deprecated - implement caching logic via IHttpClient.OnRequestReceived instead
  * An extension of HttpClient that uses a given cache and storage interface
  */
 export class CachedHttpClient extends HttpClient {
