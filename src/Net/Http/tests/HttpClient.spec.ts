@@ -3,7 +3,15 @@ import { IHttpClient } from '../IHttpClient';
 import { HttpClient } from '../HttpClient';
 import { HttpMethod } from '../HttpMethod';
 
+class Response { }
+
 class Request {
+  public headers = {
+    set: (key: string, value: string) => {
+      this.init.headers[key] = value;
+    }
+  };
+
   constructor(
     public uri: string,
     public init: any
@@ -11,6 +19,7 @@ class Request {
 }
 
 globalThis.Request = Request as any;
+globalThis.Response = Response as any;
 
 describe('HttpClient', () => {
   const testUri = 'https://www.fake.com';
@@ -111,5 +120,28 @@ describe('HttpClient', () => {
     await classUnderTest.Get(testUri);
 
     expect(onResponseResolvedFired).toBeTruthy();
+  });
+
+  it('should use a request modified in OnRequestReceived', async () => {
+    classUnderTest.OnRequestReceived = async (r) => {
+      r.headers.set('test', 'test');
+      return r;
+    };
+
+    await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWith?.uri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect((fetchCalledWithRequestInit?.headers as any)['test']).toEqual('test');
+  });
+
+  it('should return a response returned in OnRequestReceived', async () => {
+    classUnderTest.OnRequestReceived = async () => {
+      return new Response() as any;
+    };
+
+    const response = await classUnderTest.Request(testUri, HttpMethod.Get);
+
+    expect(response instanceof Response).toBe(true);
   });
 });
