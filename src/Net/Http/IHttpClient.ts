@@ -10,6 +10,14 @@ export type RestResponse<T> = {
 
 export interface IHttpClient {
   /**
+   * An operation used to modify a request prior to submission OR
+   * override the normal request process and return a response.
+   * @param request the original request
+   * @returns a modified request or a response
+   */
+  OnRequestReceived?: (request: Request) => Promise<Request | Response>;
+
+  /**
    * An operation to be performed just after a response is resolved from a request,
    * but prior to the response being returned.
    */

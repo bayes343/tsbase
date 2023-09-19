@@ -1,7 +1,25 @@
+import { Strings } from '../../../System/Strings';
 import { IHttpClient } from '../IHttpClient';
 import { HttpClient } from '../HttpClient';
-import { Strings } from '../../../System/Strings';
 import { HttpMethod } from '../HttpMethod';
+
+class Response { }
+
+class Request {
+  public headers = {
+    set: (key: string, value: string) => {
+      this.init.headers[key] = value;
+    }
+  };
+
+  constructor(
+    public uri: string,
+    public init: any
+  ) { }
+}
+
+globalThis.Request = Request as any;
+globalThis.Response = Response as any;
 
 describe('HttpClient', () => {
   const testUri = 'https://www.fake.com';
@@ -13,11 +31,11 @@ describe('HttpClient', () => {
   const responseHeaders = new Map();
   let onResponseResolvedFired = false;
   let classUnderTest: IHttpClient;
-  let fetchCalledWithUri: RequestInfo | null = null;
+  let fetchCalledWith: Request | null = null;
   let fetchCalledWithRequestInit: RequestInit | undefined;
-  const mockFetch = (uri: RequestInfo, init?: RequestInit) => {
-    fetchCalledWithUri = uri;
-    fetchCalledWithRequestInit = init;
+  const mockFetch = (request: RequestInfo) => {
+    fetchCalledWith = request as any;
+    fetchCalledWithRequestInit = (request as unknown as Request).init;
     return new Promise<any>((resolve) => resolve({
       headers: responseHeaders,
       json: () => { },
@@ -28,7 +46,7 @@ describe('HttpClient', () => {
   beforeEach(() => {
     onResponseResolvedFired = false;
     responseHeaders.delete('content-type');
-    fetchCalledWithUri = null;
+    fetchCalledWith = null;
     fetchCalledWithRequestInit = undefined;
     classUnderTest = new HttpClient(defaultHeaders, mockFetch);
   });
@@ -41,7 +59,7 @@ describe('HttpClient', () => {
   it('should get the response for a uri and return body as text when content-type is not json', async () => {
     const text = await classUnderTest.Get(testUri);
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
     expect(text.body).toEqual(Strings.Empty);
   });
@@ -51,7 +69,7 @@ describe('HttpClient', () => {
 
     const json = await classUnderTest.Get(testUri);
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
     expect(typeof json).toEqual('object');
   });
@@ -59,7 +77,7 @@ describe('HttpClient', () => {
   it('should send a patch request to the given uri with the given body and any additional headers', async () => {
     const text = await classUnderTest.Patch(testUri, '', { test: 'test' });
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Patch);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
     expect(fetchCalledWithRequestInit?.body).toEqual('');
@@ -69,7 +87,7 @@ describe('HttpClient', () => {
   it('should send a post request to the given uri with the given body and any additional headers', async () => {
     const text = await classUnderTest.Post(testUri, '', { test: 'test' });
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Post);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
     expect(fetchCalledWithRequestInit?.body).toEqual('');
@@ -79,7 +97,7 @@ describe('HttpClient', () => {
   it('should send a put request to the given uri with the given body and any additional headers', async () => {
     const text = await classUnderTest.Put(testUri, '', { test: 'test' });
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Put);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
     expect(fetchCalledWithRequestInit?.body).toEqual('');
@@ -89,7 +107,7 @@ describe('HttpClient', () => {
   it('should send a delete request to the given uri with the given body and any additional headers', async () => {
     const text = await classUnderTest.Delete(testUri, { test: 'test' });
 
-    expect(fetchCalledWithUri).toEqual(testUri);
+    expect(fetchCalledWith?.uri).toEqual(testUri);
     expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Delete);
     expect(fetchCalledWithRequestInit?.headers).toEqual({ ...defaultHeaders, ...{ test: 'test' } });
     expect(text.body).toEqual(Strings.Empty);
@@ -102,5 +120,28 @@ describe('HttpClient', () => {
     await classUnderTest.Get(testUri);
 
     expect(onResponseResolvedFired).toBeTruthy();
+  });
+
+  it('should use a request modified in OnRequestReceived', async () => {
+    classUnderTest.OnRequestReceived = async (r) => {
+      r.headers.set('test', 'test');
+      return r;
+    };
+
+    await classUnderTest.Get(testUri);
+
+    expect(fetchCalledWith?.uri).toEqual(testUri);
+    expect(fetchCalledWithRequestInit?.method).toEqual(HttpMethod.Get);
+    expect((fetchCalledWithRequestInit?.headers as any)['test']).toEqual('test');
+  });
+
+  it('should return a response returned in OnRequestReceived', async () => {
+    classUnderTest.OnRequestReceived = async () => {
+      return new Response() as any;
+    };
+
+    const response = await classUnderTest.Request(testUri, HttpMethod.Get);
+
+    expect(response instanceof Response).toBe(true);
   });
 });

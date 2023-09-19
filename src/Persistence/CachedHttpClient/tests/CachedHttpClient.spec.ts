@@ -4,6 +4,15 @@ import { CachedHttpClient } from '../CachedHttpClient';
 import { ICache } from '../../Cache/ICache';
 import { Strings } from '../../../System/Strings';
 
+class Request {
+  constructor(
+    public uri: string,
+    public init: any
+  ) { }
+}
+
+globalThis.Request = Request as any;
+
 describe('CachedHttpClient', () => {
   let classUnderTest: IHttpClient;
   const mockCache = new Mock<ICache<Response>>();

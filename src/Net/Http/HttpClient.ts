@@ -4,6 +4,7 @@ import { HttpMethod } from './HttpMethod';
 export type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export class HttpClient implements IHttpClient {
+  public OnRequestReceived?: ((request: Request) => Promise<Response | Request>) | undefined;
   public OnResponseResolved?: (response: Response) => void;
 
   constructor(
@@ -17,11 +18,16 @@ export class HttpClient implements IHttpClient {
     body?: string,
     additionalHeaders?: Record<string, string>
   ): Promise<Response> {
-    const response = await this.fetchRef(uri, {
-      method: method,
-      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders },
-      body: body
+    const request = new Request(uri, {
+      method,
+      body,
+      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders }
     });
+
+    const requestOrResponse = await this.OnRequestReceived?.(request);
+    const response = requestOrResponse && requestOrResponse instanceof Response ?
+      requestOrResponse :
+      await this.fetchRef(request);
 
     this.OnResponseResolved?.(response);
 
