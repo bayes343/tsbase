@@ -1,2 +1,2 @@
 export * from './Queryable';
-export * from './Index';
+export * from './SearchIndex/SearchIndex';

@@ -1,4 +1,4 @@
-import { IIndex, Index, Indexer } from '../Index';
+import { ISearchIndex, Indexer, SearchIndex } from './module';
 
 type Name = {
   given: string;
@@ -6,8 +6,8 @@ type Name = {
   surname: string;
 }
 
-describe('Index', () => {
-  const classUnderTest: IIndex<Name> = new Index();
+describe('SearchIndex', () => {
+  const classUnderTest: ISearchIndex<Name> = new SearchIndex();
   const data = [
     {
       given: 'John',
@@ -93,7 +93,7 @@ describe('Index', () => {
   });
 
   it('search should return results based on indexer and qualifier functions', async () => {
-    const answerIndex = new Index<() => string>();
+    const answerIndex = new SearchIndex<() => string>();
     await answerIndex.Insert(data, (d) => [
       [`What is ${d.given} ${d.surname}'s middle name?`, {
         item: () => d.middle,

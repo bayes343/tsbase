@@ -1,20 +1,7 @@
-import { Queryable } from './Queryable';
+import { Queryable } from '../Queryable';
+import { ISearchIndex, SearchResult, Indexer } from './ISearchIndex';
 
-export type Qualifier = (query: string) => boolean;
-export type SearchResult<T> = {
-  item: T,
-  qualifier: Qualifier
-};
-export type Indexer<D, T> = (d: D) => [string, SearchResult<T>][];
-
-export interface IIndex<T> {
-  Insert<D>(data: D[], indexer: Indexer<D, T>): Promise<void>;
-  AutoComplete(query: string, limit?: number): Promise<string[]>;
-  Search(query: string, limit?: number): Promise<T[]>;
-  Reset(): void;
-}
-
-export class Index<T> implements IIndex<T> {
+export class SearchIndex<T> implements ISearchIndex<T> {
   private index: Record<string, SearchResult<T>[]> = {};
 
   async Insert<D>(items: D[], indexer: Indexer<D, T>): Promise<void> {
