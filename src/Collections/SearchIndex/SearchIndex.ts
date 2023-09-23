@@ -4,7 +4,7 @@ import { ISearchIndex, SearchResult, Indexer } from './ISearchIndex';
 export class SearchIndex<T> implements ISearchIndex<T> {
   private index: Record<string, SearchResult<T>[]> = {};
 
-  async Insert<D>(items: D[], indexer: Indexer<D, T>): Promise<void> {
+  public async Insert<D>(items: D[], indexer: Indexer<D, T>): Promise<void> {
     items.forEach(item => {
       const entries = indexer(item);
       entries.forEach(entry => {
@@ -14,11 +14,11 @@ export class SearchIndex<T> implements ISearchIndex<T> {
     });
   }
 
-  async AutoComplete(query: string, limit = 10): Promise<string[]> {
+  public async GetIndexesForQuery(query: string, limit = 10): Promise<string[]> {
     return Queryable.From(Object.keys(this.index)).Search(query).slice(0, limit);
   }
 
-  async Search(query: string, limit = 10): Promise<T[]> {
+  public async Search(query: string, limit = 10): Promise<T[]> {
     const matchingIndexes = Queryable.From(Object.keys(this.index)).Search(query);
     let results: T[] = [];
     matchingIndexes.forEach(i => {
@@ -28,7 +28,12 @@ export class SearchIndex<T> implements ISearchIndex<T> {
     return Queryable.From(results).Distinct().slice(0, limit);
   }
 
-  Reset(): void {
+  public async Answer(query: string): Promise<T | null> {
+    const results = await this.Search(query, 1);
+    return results[0] || null;
+  }
+
+  public Reset(): void {
     this.index = {};
   }
 }
