@@ -1,2 +1,2 @@
 export * from './Queryable';
-export * from './SearchIndex/SearchIndex';
+export * from './SearchIndex/module';

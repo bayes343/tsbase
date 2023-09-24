@@ -1,14 +1,9 @@
 /**
- * Function which determines whether the result will be considered for a given query
- */
-export type Qualifier = (query: string) => boolean;
-
-/**
- * Data structure containing the subject (T) of the search as well as a "qualifier" function
+ * Data structure containing the subject (T) of the search as well as a "qualifier" function for further constraining results
  */
 export type SearchResult<T> = {
   item: T,
-  qualifier: Qualifier
+  qualifier: (query: string) => boolean
 };
 
 /**
@@ -17,7 +12,7 @@ export type SearchResult<T> = {
 export type Indexer<D, T> = (d: D) => [string, SearchResult<T>][];
 
 /**
- * A collection where all representations of data are indexed upon insertion for efficient querying based on given configuration
+ * A collection where all representations (T) of data (D) are indexed upon insertion for efficient querying based on given configuration
  * Use cases include:
  * - Search feature which returns relevant results with the option to support "autocomplete" functionality
  * - Answering potentially complex but predictable questions based on parameters of an "indexer" function

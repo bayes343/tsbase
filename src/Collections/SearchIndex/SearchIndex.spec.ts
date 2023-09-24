@@ -50,25 +50,19 @@ describe('SearchIndex', () => {
 
   it('search should return one result for the query "John" given available data', async () => {
     await classUnderTest.Insert(data, indexer);
-
     const results = await classUnderTest.Search('John');
-
     expect(results.length).toEqual(1);
   });
 
   it('search should return two results for the query "Doe" given available data', async () => {
     await classUnderTest.Insert(data, indexer);
-
     const results = await classUnderTest.Search('Doe');
-
     expect(results.length).toEqual(2);
   });
 
   it('search should return three results for the query "JDD" given available data', async () => {
     await classUnderTest.Insert(data, indexer);
-
     const results = await classUnderTest.Search('JDD');
-
     expect(results.length).toEqual(3);
   });
 
@@ -76,15 +70,13 @@ describe('SearchIndex', () => {
     await classUnderTest.Insert(data, indexer);
 
     let results = await classUnderTest.Search('What is John Doe\'s middle name?');
-
     expect(results[0]).toEqual({
       given: 'John',
       middle: 'Dee',
       surname: 'Doe'
     });
 
-    results = await classUnderTest.Search('What is the middle name of John Doe\'s?');
-
+    results = await classUnderTest.Search('What is the middle name of John Doe?');
     expect(results[0]).toEqual({
       given: 'John',
       middle: 'Dee',
@@ -101,7 +93,7 @@ describe('SearchIndex', () => {
           [d.given, d.surname].some(s => q.includes(s)) &&
           ![d.middle, 'last name'].some(s => q.includes(s))
       }],
-      [`who has the last name "${d.surname}"?`, {
+      [`Who has the last name "${d.surname}"?`, {
         item: () => `${d.given} ${d.surname}`,
         qualifier: (q) =>
           [d.surname.toLowerCase(), 'who'].every(s => q.toLowerCase().includes(s))
