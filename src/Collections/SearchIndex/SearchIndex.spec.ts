@@ -104,7 +104,7 @@ describe('SearchIndex', () => {
     expect(joesMiddleNameResults?.()).toEqual('Dee');
 
     const lastNameDoeResults = await answerIndex.Search('Who has the last name Doe?');
-    expect(lastNameDoeResults.map(r => r()).slice(0, 2)).toEqual([
+    expect(lastNameDoeResults.map(r => r())).toEqual([
       'John Doe',
       'Jane Doe'
     ]);
