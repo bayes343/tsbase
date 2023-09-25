@@ -100,8 +100,8 @@ describe('SearchIndex', () => {
       }]
     ]);
 
-    const joesMiddleNameResults = await answerIndex.Search('What is John\'s middle name?');
-    expect(joesMiddleNameResults[0]()).toEqual('Dee');
+    const joesMiddleNameResults = await answerIndex.Answer('What is John\'s middle name?');
+    expect(joesMiddleNameResults?.()).toEqual('Dee');
 
     const lastNameDoeResults = await answerIndex.Search('Who has the last name Doe?');
     expect(lastNameDoeResults.map(r => r()).slice(0, 2)).toEqual([

@@ -19,7 +19,7 @@ export class SearchIndex<T> implements ISearchIndex<T> {
   }
 
   public async Search(query: string, limit = 10): Promise<T[]> {
-    const matchingIndexes = Queryable.From(Object.keys(this.index)).Search(query);
+    const matchingIndexes = await this.GetIndexesForQuery(query, limit);
     let results: T[] = [];
     matchingIndexes.forEach(i => {
       const qualifiedResults = this.index[i].filter(e => e.qualifier(query));
