@@ -1,4 +1,4 @@
-import { ISearchIndex, Indexer, SearchIndex } from './module';
+import { ISearchIndex, Indexer, SearchIndex } from '../module';
 
 type Name = {
   given: string;

@@ -29,7 +29,7 @@ export class SearchIndex<T> implements ISearchIndex<T> {
   }
 
   public async Answer(query: string): Promise<T | null> {
-    const results = await this.Search(query, 1);
+    const results = await this.Search(query);
     return results[0] || null;
   }
 
