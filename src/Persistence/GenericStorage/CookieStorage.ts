@@ -79,9 +79,13 @@ export class CookieStorage implements IGenericStorage {
     }).Execute();
   }
 
-  public Remove(key: string, path = '/'): Result<null> {
+  public Remove(key: string, path = '/', domain?: string): Result<null> {
     return new Command(() => {
-      this.mainDocument.cookie = `${key}=;expires=${new Date(0).toUTCString()};path=${path}`;
+      this.SetValue(key, Strings.Empty, {
+        expires: new Date(0),
+        domain,
+        path
+      });
     }).Execute();
   }
 }
