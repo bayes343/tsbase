@@ -23,7 +23,7 @@ export interface ISearchIndex<T> {
    * @param data
    * @param indexer
    */
-  Insert<D>(data: D[], indexer: Indexer<D, T>): Promise<void>;
+  Insert<D>(indexer: Indexer<D, T>, data?: D[]): Promise<void>;
   /**
    * Return the best match indexes for a given query (consider for an autocomplete feature)
    * @param query

@@ -8,8 +8,8 @@ class Bot {
     private index = new SearchIndex<() => string>()
   ) { }
 
-  Program = async <T>(data: T[], questionConfiguration: Indexer<T, () => string>): Promise<void> => {
-    await this.index.Insert(data, questionConfiguration);
+  Program = async <T>(questionConfiguration: Indexer<T, () => string>, data?: T[]): Promise<void> => {
+    await this.index.Insert(questionConfiguration, data);
   };
 
   Answer = async (question: string): Promise<string> => {
@@ -22,7 +22,7 @@ describe('Bot', () => {
   const bot = new Bot();
 
   beforeAll(() => {
-    bot.Program([{}], () => [
+    bot.Program(() => [
       ['What year is it?', {
         item: () => `The year is ${new Date().getFullYear().toString()}`,
         qualifier: (q) => ['what', 'year', 'is', 'it'].every(s => q.toLowerCase().toString().includes(s))
@@ -33,7 +33,13 @@ describe('Bot', () => {
       }]
     ]);
 
-    bot.Program([
+    bot.Program((d) => [
+      [`How old is ${d.firstName} ${d.surname}?`, {
+        item: () => (Math.round((new Date(2023, 8, 25).getTime() - d.birthDate.getTime()) / 1000 / 60 / 60 / 24 / 365)).toString(),
+        qualifier: (q) => ['how', 'old'].every(s => q.toLowerCase().includes(s)) &&
+          [d.firstName.toLowerCase(), d.surname.toLowerCase()].some(s => q.toLowerCase().includes(s))
+      }]
+    ], [
       {
         firstName: 'John',
         surname: 'Doe',
@@ -44,12 +50,6 @@ describe('Bot', () => {
         surname: 'Doe',
         birthDate: new Date(1992, 3, 15)
       }
-    ], (d) => [
-      [`How old is ${d.firstName} ${d.surname}?`, {
-        item: () => (Math.round((new Date(2023, 8, 25).getTime() - d.birthDate.getTime()) / 1000 / 60 / 60 / 24 / 365)).toString(),
-        qualifier: (q) => ['how', 'old'].every(s => q.toLowerCase().includes(s)) &&
-          [d.firstName.toLowerCase(), d.surname.toLowerCase()].some(s => q.toLowerCase().includes(s))
-      }]
     ]);
   });
 

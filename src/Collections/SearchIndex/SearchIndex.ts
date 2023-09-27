@@ -4,8 +4,8 @@ import { ISearchIndex, SearchResult, Indexer } from './ISearchIndex';
 export class SearchIndex<T> implements ISearchIndex<T> {
   private index: Record<string, SearchResult<T>[]> = {};
 
-  public async Insert<D>(items: D[], indexer: Indexer<D, T>): Promise<void> {
-    items.forEach(item => {
+  public async Insert<D>(indexer: Indexer<D, T>, items?: D[]): Promise<void> {
+    (items || [1 as D]).forEach(item => {
       const entries = indexer(item);
       entries.forEach(entry => {
         this.index[entry[0]] = !!this.index[entry[0]] ?
