@@ -38,6 +38,11 @@ describe('Bot', () => {
         item: () => (Math.round((new Date(2023, 8, 25).getTime() - d.birthDate.getTime()) / 1000 / 60 / 60 / 24 / 365)).toString(),
         qualifier: (q) => ['how', 'old'].every(s => q.toLowerCase().includes(s)) &&
           [d.firstName.toLowerCase(), d.surname.toLowerCase()].some(s => q.toLowerCase().includes(s))
+      }],
+      [`What is ${d.firstName}'s last name?`, {
+        item: () => d.surname,
+        qualifier: (q) => [d.firstName.toLowerCase(), 'what', 'is'].every(s => q.toLowerCase().includes(s)) &&
+          ['last name', 'surname'].some(s => q.toLowerCase().includes(s))
       }]
     ], [
       {
@@ -74,5 +79,18 @@ describe('Bot', () => {
 
     answer = await bot.Answer('How old is Jane?');
     expect(answer).toEqual('31');
+  });
+
+  it('should know Jane\'s last name', async () => {
+    let answer = await bot.Answer('What is Jane\'s last name?');
+    expect(answer).toEqual('Doe');
+
+    answer = await bot.Answer('What is Jane\'s surname?');
+    expect(answer).toEqual('Doe');
+  });
+
+  it('should not know Jane\'s middle name', async () => {
+    const answer = await bot.Answer('What is Jane\'s middle name?');
+    expect(answer).toEqual(Bot.Unknown);
   });
 });
