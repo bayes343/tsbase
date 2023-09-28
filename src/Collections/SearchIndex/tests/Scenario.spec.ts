@@ -52,7 +52,7 @@ describe('Bot', () => {
       },
       {
         firstName: 'Jane',
-        surname: 'Doe',
+        surname: 'Dee',
         birthDate: new Date(1992, 3, 15)
       }
     ]);
@@ -83,14 +83,72 @@ describe('Bot', () => {
 
   it('should know Jane\'s last name', async () => {
     let answer = await bot.Answer('What is Jane\'s last name?');
-    expect(answer).toEqual('Doe');
+    expect(answer).toEqual('Dee');
 
     answer = await bot.Answer('What is Jane\'s surname?');
-    expect(answer).toEqual('Doe');
+    expect(answer).toEqual('Dee');
   });
 
   it('should not know Jane\'s middle name', async () => {
     const answer = await bot.Answer('What is Jane\'s middle name?');
     expect(answer).toEqual(Bot.Unknown);
+  });
+});
+
+type Person = {
+  firstName: string,
+  middleName: string,
+  lastName: string,
+  getQuoteFromWebsite: () => Promise<string>
+};
+
+describe('People index', () => {
+  const peopleIndex = new SearchIndex<Person>();
+
+  beforeAll(() => {
+    peopleIndex.Insert((d) => [
+      [`${d.firstName} ${d.middleName} ${d.lastName}`, {
+        item: d,
+        qualifier: () => true
+      }],
+      [`${d.getQuoteFromWebsite}
+- ${d.firstName} ${d.lastName}`, {
+        item: d,
+        qualifier: () => true
+      }]
+    ], [
+      {
+        firstName: 'John',
+        middleName: 'Dee',
+        lastName: 'Doe',
+        getQuoteFromWebsite: async () => 'I\'m the man!'
+      },
+      {
+        firstName: 'Jane',
+        middleName: 'Dee',
+        lastName: 'Doe',
+        getQuoteFromWebsite: async () => 'Do unto others as you would have them do unto you.'
+      }
+    ] as Person[]);
+  });
+
+  it('should return the record for John for the query "John Doe"', async () => {
+    const results = await peopleIndex.Search('John Doe');
+    expect(results[0].firstName).toEqual('John');
+  });
+
+  it('should return the record for Jane for the query "Jane Dee Doe"', async () => {
+    const results = await peopleIndex.Search('Jane Dee Doe');
+    expect(results[0].firstName).toEqual('Jane');
+  });
+
+  it('should return the record for John for the query "I\'m the man"', async () => {
+    const results = await peopleIndex.Search('I\'m the man');
+    expect(results[0].firstName).toEqual('John');
+  });
+
+  it('should return the record for Jane for the query "as you would have them"', async () => {
+    const results = await peopleIndex.Search('as you would have them');
+    expect(results[0].firstName).toEqual('Jane');
   });
 });
