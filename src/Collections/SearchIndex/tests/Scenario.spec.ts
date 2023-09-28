@@ -107,15 +107,9 @@ describe('People index', () => {
 
   beforeAll(() => {
     peopleIndex.Insert((d) => [
-      [`${d.firstName} ${d.middleName} ${d.lastName}`, {
-        item: d,
-        qualifier: () => true
-      }],
+      [`${d.firstName} ${d.middleName} ${d.lastName}`, d],
       [`${d.getQuoteFromWebsite}
-- ${d.firstName} ${d.lastName}`, {
-        item: d,
-        qualifier: () => true
-      }]
+- ${d.firstName} ${d.lastName}`, d]
     ], [
       {
         firstName: 'John',

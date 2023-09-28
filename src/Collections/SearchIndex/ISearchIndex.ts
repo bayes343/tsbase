@@ -4,7 +4,7 @@
 export type SearchResult<T> = {
   item: T,
   qualifier: (query: string) => boolean
-};
+} | T;
 
 /**
  * Function which generates indexes or queries from data (D) and their corresponding results (T)

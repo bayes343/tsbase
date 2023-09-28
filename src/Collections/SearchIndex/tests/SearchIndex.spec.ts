@@ -26,22 +26,10 @@ describe('SearchIndex', () => {
     }
   ];
   const indexer: Indexer<Name, Name> = (d: Name) => [
-    [`${d.given} ${d.middle} ${d.surname}`, {
-      item: d,
-      qualifier: () => true
-    }],
-    [`${d.given} ${d.middle.slice(0, 1)}. ${d.surname}`, {
-      item: d,
-      qualifier: () => true
-    }],
-    [`${d.given.slice(0, 1)}${d.middle.slice(0, 1)}${d.surname.slice(0, 1)}`, {
-      item: d,
-      qualifier: () => true
-    }],
-    [`What is ${d.given} ${d.surname}'s middle name?`, {
-      item: d,
-      qualifier: () => true
-    }]
+    [`${d.given} ${d.middle} ${d.surname}`, d],
+    [`${d.given} ${d.middle.slice(0, 1)}. ${d.surname}`, d],
+    [`${d.given.slice(0, 1)}${d.middle.slice(0, 1)}${d.surname.slice(0, 1)}`, d],
+    [`What is ${d.given} ${d.surname}'s middle name?`, d]
   ];
 
   beforeEach(() => {
