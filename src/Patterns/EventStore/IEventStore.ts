@@ -46,7 +46,7 @@ export interface IEventStore<T> {
   Undo(): Result<T | undefined>;
 
   /**
-   * Reverses the void on the oldest voided transaction excluding any
+   * Reverses the void on the newest voided transaction excluding any
    * voided transaction that follows a non-voided one
    * (Once state is set, prior voided transactions cannot be reversed)
    */
