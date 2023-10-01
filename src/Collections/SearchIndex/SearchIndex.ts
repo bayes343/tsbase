@@ -22,7 +22,7 @@ export class SearchIndex<T> implements ISearchIndex<T> {
     const matchingIndexes = await this.GetIndexesForQuery(query, limit);
     let results: T[] = [];
     matchingIndexes.forEach(i => {
-      const qualifiedResults = this.index[i].filter(e => !this.isQualifiedResult(e) || (!e?.['qualifier'] || e?.['qualifier'](query)));
+      const qualifiedResults = this.index[i].filter(e => !this.isQualifiedResult(e) || (e.qualifier(query)));
       results = results.concat(qualifiedResults.map(r => this.isQualifiedResult(r) ? r.item : r));
     });
     return Queryable.From(results).Distinct().slice(0, limit);
