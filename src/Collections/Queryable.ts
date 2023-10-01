@@ -101,17 +101,7 @@ export class Queryable<T> extends Array<T> {
    */
   public First(func?: (item: T) => boolean): T | null {
     if (func) {
-      let firstSatisfyingElement: T | null = null;
-
-      for (let index = 0; index < this.length; index++) {
-        const element = this[index];
-        if (func(element)) {
-          firstSatisfyingElement = element;
-          break;
-        }
-      }
-
-      return firstSatisfyingElement;
+      return this.find(func) || null;
     } else {
       const firstElement = this.length >= 1 ? this[0] : null;
       return firstElement;
@@ -124,17 +114,7 @@ export class Queryable<T> extends Array<T> {
    */
   public Last(func?: (item: T) => boolean): T | null {
     if (func) {
-      let lastSatisfyingElement: T | null = null;
-
-      for (let index = this.length - 1; index >= 0; index--) {
-        const element = this[index];
-        if (func(element)) {
-          lastSatisfyingElement = element;
-          break;
-        }
-      }
-
-      return lastSatisfyingElement;
+      return this.slice().reverse().find(func) || null;
     } else {
       const lastElement = this.length >= 1 ? this[this.length - 1] : null;
       return lastElement;
