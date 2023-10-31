@@ -13,7 +13,9 @@
     "build": "tsc",
     "lint": "eslint ./src --ext .ts,.tsx && jscpd src",
     "lint-fix": "eslint ./src --ext .ts,.tsx --fix",
-    "docs": "typedoc src/public_api.ts"
+    "build-playground": "./node_modules/.bin/esbuild ./playground.ts --outfile=./docs/playground.js --bundle --minify && ./node_modules/.bin/esbuild ./addPlaygroundScript.ts --outfile=./docs/addPlaygroundScript.js --bundle --platform=node --minify",
+    "add-playground-script": "node ./docs/addPlaygroundScript.js",
+    "docs": "typedoc src/public_api.ts && npm run build-playground && npm run add-playground-script"
   },
   "devDependencies": {
     "@types/dlv": "^1.1.2",
@@ -32,7 +34,8 @@
     "jscpd": "^3.5.9",
     "typedoc": "^0.25.0",
     "jest-environment-jsdom": "^29.6.4",
-    "fake-indexeddb": "^4.0.2"
+    "fake-indexeddb": "^4.0.2",
+    "esbuild": "^0.19.5"
   },
   "dependencies": {
     "dlv": "^1.1.3",
