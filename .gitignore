@@ -1,7 +1,6 @@
 # Dependencies
 # Artifacts
 dist/**/*.js
-docs/**/*.js
 dist/**/*.ts
 dist/**/*.map
 coverage
