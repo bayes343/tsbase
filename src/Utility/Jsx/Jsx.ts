@@ -2,6 +2,8 @@ import { Guid } from '../../System/Guid';
 import { Strings } from '../../System/Strings';
 import { DomEvents, EventTypes } from './EventTypes';
 
+type QueryableContainer = { querySelector: Document['querySelector'] };
+
 const asap = (func: () => void) => {
   setTimeout(() => {
     try {
@@ -35,30 +37,35 @@ export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...
 export class JsxRenderer {
   private constructor() { }
 
-  public static RenderJsx(jsx: Jsx, mainDocument: Document | ShadowRoot = document): string {
-    return JsxRenderer.transformJsxToHtml(jsx, mainDocument)
+  public static RenderJsx(jsx: Jsx, container: QueryableContainer = document): string {
+    return JsxRenderer.transformJsxToHtml(jsx, container)
       .outerHTML
       .replace(/<(f|.f)ragment>/g, Strings.Empty);
   }
 
-  private static addElementEventListener(attribute: string, jsx: Jsx, element: HTMLElement, mainDocument: Document | ShadowRoot) {
+  private static addElementEventListener(
+    attribute: string,
+    jsx: Jsx,
+    element: HTMLElement,
+    container: QueryableContainer
+  ) {
     const event = attribute.split('on')[1] as EventTypes;
     const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
     const id = (element.attributes['id' as any] ? element.attributes['id' as any].nodeValue : Guid.NewGuid()) as string;
     element.setAttribute('id', id);
 
     asap(() => {
-      mainDocument.getElementById(id)?.addEventListener(event, func);
+      container.querySelector(`#${id}`)?.addEventListener(event, func);
     });
   }
 
   // eslint-disable-next-line complexity
-  private static transformJsxToHtml(jsx: Jsx, mainDocument: Document | ShadowRoot): HTMLElement {
+  private static transformJsxToHtml(jsx: Jsx, container: QueryableContainer): HTMLElement {
     const dom: HTMLElement = document.createElement(jsx.nodeName);
 
     for (const key in jsx.attributes) {
       if (DomEvents.includes(key)) {
-        this.addElementEventListener(key, jsx, dom, mainDocument);
+        this.addElementEventListener(key, jsx, dom, container);
       } else {
         const value = jsx.attributes[key];
         const shouldAddAttribute = !(typeof value === 'boolean' && value === false);
@@ -72,7 +79,7 @@ export class JsxRenderer {
       if (typeof child === 'string' || typeof child === 'number') {
         dom.appendChild(document.createTextNode(child.toString()));
       } else if (child) {
-        dom.appendChild(JsxRenderer.transformJsxToHtml(child, mainDocument));
+        dom.appendChild(JsxRenderer.transformJsxToHtml(child, container));
       }
     }
 
