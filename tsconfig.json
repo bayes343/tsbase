@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "lib": ["dom", "es2015"],
+    "lib": [
+      "dom",
+      "es2015"
+    ],
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
@@ -18,12 +21,19 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "types": ["jasmine", "node"],
+    "types": [
+      "jasmine",
+      "node"
+    ],
     "esModuleInterop": true,
     "inlineSources": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": [
+    "./playground.ts",
+    "./addPlaygroundScript.ts"
+  ]
 }
