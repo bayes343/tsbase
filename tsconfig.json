@@ -34,6 +34,7 @@
   },
   "exclude": [
     "./playground.ts",
-    "./addPlaygroundScript.ts"
+    "./addPlaygroundScript.ts",
+    "./dist"
   ]
 }
