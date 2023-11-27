@@ -1,7 +1,7 @@
 export class Cookies {
   private constructor() { }
 
-  public static GetCookieMap(mainDocument: Document): Map<string, string>;
+  public static GetCookieMap(mainDocument?: Document): Map<string, string>;
   public static GetCookieMap(cookieValue: string): Map<string, string>;
   public static GetCookieMap(
     mainDocumentOrCookieValue: Document | string = document
