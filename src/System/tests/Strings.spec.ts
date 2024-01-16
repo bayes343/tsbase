@@ -59,7 +59,7 @@ describe('Strings', () => {
 
   it('should slugify a given string', () => {
     const expected = '25-gift-card';
-    const actual = Strings.Slugify('$25 Gift Card');
+    const actual = Strings.Slugify('$ 25  Gift   Card');
     expect(actual).toEqual(expected);
   });
 });

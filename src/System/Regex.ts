@@ -6,7 +6,7 @@ export class Regex {
 
   public static readonly NonAlphaNumeric = /[^a-zA-Z0-9 -]/g;
   public static readonly AnyString = /(.*)/;
-  public static readonly WhiteSpace = / /g;
+  public static readonly WhiteSpace = /\s+/g;
   public static readonly XmlTag = /(<.[^(><.)]+>)/g;
 
   /**
