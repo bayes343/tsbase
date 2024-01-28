@@ -36,6 +36,12 @@ export interface IEventStore<T extends object> {
 
   /**
    * Returns an observable which can be subscribed to in order
+   * to act on ANY state changes within the store
+   */
+  ObservableAt(): Observable<T>;
+
+  /**
+   * Returns an observable which can be subscribed to in order
    * to act on state changes
    * @param path object path to the desired state
    */
