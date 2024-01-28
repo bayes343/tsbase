@@ -2,11 +2,13 @@ import { Observable } from '../Observable/Observable';
 import { Result } from '../Result/Result';
 import { Transaction } from './Transaction';
 
+export type MemberLambda<Store, Member> = (func: Store) => Member;
+
 /**
  * A light state management pattern allowing storage, retrieval, and
  * monitoring of state.
  */
-export interface IEventStore<T> {
+export interface IEventStore<T extends object> {
   /**
    * Returns a copy of the current state
    */
@@ -16,7 +18,13 @@ export interface IEventStore<T> {
    * Returns a portion of the state based on the given path
    * @param path object path to the desired state
    */
-  GetStateAt<T>(path: string): T | undefined;
+  GetState<V>(member: MemberLambda<T, V>): V;
+
+  /**
+   * Update the current state of the entire store
+   * @param state state to set at a root level
+   */
+  SetState(state: T): Result<T>;
 
   /**
    * Sets the state at a given path, returning a result indicating
@@ -24,20 +32,20 @@ export interface IEventStore<T> {
    * @param state state to set
    * @param path object path to be set
    */
-  SetStateAt<T>(path: string, state: T): Result<T>;
+  SetState<V>(member: MemberLambda<T, V>, state: V): Result<V>;
 
   /**
    * Returns an observable which can be subscribed to in order
    * to act on state changes
    * @param path object path to the desired state
    */
-  ObservableAt<T>(path: string): Observable<T>;
+  ObservableAt<V>(member: MemberLambda<T, V>): Observable<V>;
 
   /**
    * Returns a collection of all the transactions which resulted
    * in the current state
    */
-  GetLedger(): Array<Transaction<any>>;
+  GetLedger(): Array<Transaction<T>>;
 
   /**
    * Voids the most recent (non-voided) transaction, returning the
