@@ -27,7 +27,7 @@ export class EventStore<T extends Object> implements IEventStore<T> {
 
   public SetState<V>(memberOrState: MemberLambda<T, V> | T, state?: T): Result<V | T> {
     return new Query<V | T>(() => {
-      const isGranularUpdate = typeof memberOrState === 'function' && state;
+      const isGranularUpdate = typeof memberOrState === 'function' && !!state;
       const getCurrentState = () => isGranularUpdate ? memberOrState(this.cloneOf(this.state)) : this.cloneOf(this.state);
       const newState = isGranularUpdate ? state : memberOrState as V;
 
@@ -45,7 +45,7 @@ export class EventStore<T extends Object> implements IEventStore<T> {
   }
 
   public ObservableAt<V>(member?: MemberLambda<T, V>): Observable<V> {
-    const path = member?.toString() || Strings.Empty;
+    const path = this.getPathFromMemberFunction(member);
     if (!this.stateObservers.has(path)) {
       this.stateObservers.set(path, new Observable<V>());
     };
@@ -100,14 +100,19 @@ export class EventStore<T extends Object> implements IEventStore<T> {
     return value ? JSON.parse(JSON.stringify(value)) : value;
   }
 
-  private getPathFromMemberFunction<R>(member: MemberLambda<T, R>): string {
-    return member.toString()
-      .trim()
-      .replace(/\?/g, Strings.Empty)
-      .split('.')
-      .slice(1)
-      .join('.')
-      .split(';')[0];
+  private getPathFromMemberFunction<R>(member?: MemberLambda<T, R>): string {
+    const regex = /[.][a-zA-Z0-9]*/g;
+    let path = Strings.Empty;
+
+    if (member) {
+      let match: RegExpExecArray | null;
+      while ((match = regex.exec(member.toString())) !== null) {
+        const matchValue = path.length ? match[0] : match[0].replace('.', Strings.Empty);
+        path += matchValue;
+      }
+    }
+
+    return path;
   }
 
   private getStateAtPath(path: string): any {

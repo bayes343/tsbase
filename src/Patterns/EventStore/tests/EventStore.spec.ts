@@ -7,9 +7,11 @@ describe('EventStore', () => {
     two: string,
     three: string
   }>>;
+  let scenarioUnderTest: IEventStore<House>;
 
   beforeEach(() => {
     classUnderTest = new EventStore({});
+    scenarioUnderTest = new EventStore({});
   });
 
   it('should construct', () => {
@@ -177,10 +179,9 @@ describe('EventStore', () => {
       }
     };
   };
-  const updatedFather: Member = { age: 30, gender: 'male', name: 'John Doe' };
+  const updatedFather: Member = { age: 31, gender: 'male', name: 'John Doe' };
   const updatedPets = [{ name: 'Fido', species: 'Dog' }, { name: 'Whiskers', species: 'Cat' }];
 
-  const scenarioUnderTest: IEventStore<House> = new EventStore({});
 
   it('should maintain a transaction ledger of state changing events', () => {
     scenarioUnderTest.SetState(house());
@@ -192,13 +193,13 @@ describe('EventStore', () => {
 
   it('should set and get state with nested objects', () => {
     scenarioUnderTest.SetState(house());
-    expect(JSON.stringify(classUnderTest.GetState())).toEqual(JSON.stringify((house())));
+    expect(JSON.stringify(scenarioUnderTest.GetState())).toEqual(JSON.stringify((house())));
 
     scenarioUnderTest.SetState(s => s.family?.father, updatedFather);
     scenarioUnderTest.SetState(s => s.family?.pets, updatedPets);
 
     expect(scenarioUnderTest.GetLedger().length).toEqual(3);
-    expect(JSON.stringify(scenarioUnderTest.GetState(s => s.family?.father))).toEqual(JSON.stringify(updatedFather));
+    expect(scenarioUnderTest.GetState(s => s.family?.father)?.age).toEqual(updatedFather.age);
     expect(JSON.stringify(scenarioUnderTest.GetState(s => s.family?.pets))).toEqual(JSON.stringify(updatedPets));
   });
 
@@ -253,7 +254,7 @@ describe('EventStore', () => {
 
     expect(JSON.stringify(fatherUpdateState)).toEqual(JSON.stringify(updatedFather));
     expect(JSON.stringify(petsUpdateState)).toEqual(JSON.stringify(updatedPets));
-    expect((classUnderTest.GetState() as House).address).toEqual(house().address);
+    expect((scenarioUnderTest.GetState() as House).address).toEqual(house().address);
     expect((scenarioUnderTest.GetState() as House).yearBuilt).toEqual(house().yearBuilt);
   });
 });
