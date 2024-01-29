@@ -12,18 +12,13 @@ const keysToCheck = [
 ];
 
 /**
- * Serializes raw json data into an instance of T
+ * Deserializes raw json data into an instance of T
  * **Some conventions are necessary - see wiki for full details**
  * - No ***required*** constructor params
  * - Init all property values
  * - Array<T> / List<T> values must be initialized with a single instance inside
  */
 export class JsonSerializer implements ISerializer {
-  /**
-   * Recursively serializes the data passed into an instance of t
-   * @param t class type to instantiate
-   * @param data data to initialize on instantiated class
-   */
   public Deserialize<T>(t: { new(): T; }, data: any): T {
     const object: any = new t();
 
