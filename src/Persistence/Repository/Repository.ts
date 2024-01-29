@@ -1,4 +1,4 @@
-import { Queryable } from '../../Collections/Queryable';
+import { Queryable } from '../../Collections/Queryable/Queryable';
 import { Result } from '../../Patterns/Result/Result';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { Strings } from '../../System/Strings';

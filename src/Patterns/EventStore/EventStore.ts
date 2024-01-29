@@ -1,6 +1,6 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { Queryable } from '../../Collections/Queryable';
+import { Queryable } from '../../Collections/Queryable/Queryable';
 import { Strings } from '../../System/Strings';
 import { Query } from '../CommandQuery/Query';
 import { Observable } from '../Observable/Observable';

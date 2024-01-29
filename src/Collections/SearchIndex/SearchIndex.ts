@@ -1,4 +1,4 @@
-import { Queryable } from '../Queryable';
+import { Queryable } from '../Queryable/Queryable';
 import { ISearchIndex, SearchResult, Indexer } from './ISearchIndex';
 
 export class SearchIndex<T> implements ISearchIndex<T> {
