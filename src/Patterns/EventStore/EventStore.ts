@@ -1,52 +1,56 @@
 import dlv from 'dlv';
 import { dset } from 'dset';
-import { Queryable } from '../../Collections/Queryable';
+import { Queryable } from '../../Collections/Queryable/Queryable';
 import { Strings } from '../../System/Strings';
 import { Query } from '../CommandQuery/Query';
 import { Observable } from '../Observable/Observable';
 import { Result } from '../Result/Result';
 import { Transaction } from './Transaction';
-import { IEventStore } from './IEventStore';
+import { IEventStore, MemberLambda } from './IEventStore';
 
 export const StateChangeUnnecessary = 'State change unnecessary - nothing changed';
 export const NoTransactionToUndo = 'No transaction to undo';
 export const NoTransactionToRedo = 'No transaction to redo';
 
-export class EventStore<T> implements IEventStore<T> {
-  private state = {};
+export class EventStore<T extends Object> implements IEventStore<T> {
   private stateObservers = new Map<string, Observable<any>>();
   private ledger = new Array<Transaction<any>>();
 
-  public GetState(): T {
-    return this.cloneOf(this.state) as T;
+  constructor(
+    private state: T
+  ) { }
+
+  public GetState<V>(member?: MemberLambda<T, V>) {
+    const clone = this.cloneOf(this.state);
+    return member ? member(clone) : clone;
   }
 
-  public GetStateAt<T>(path: string): T | undefined {
-    return Strings.IsEmptyOrWhiteSpace(path) ?
-      this.GetState() :
-      this.cloneOf(dlv(this.state as object, path));
-  }
+  public SetState<V>(memberOrState: MemberLambda<T, V> | T, state?: T): Result<V | T> {
+    return new Query<V | T>(() => {
+      const isGranularUpdate = typeof memberOrState === 'function' && !!state;
+      const getCurrentState = () => isGranularUpdate ? memberOrState(this.cloneOf(this.state)) : this.cloneOf(this.state);
+      const newState = isGranularUpdate ? state : memberOrState as V;
 
-  public SetStateAt<T>(path: string, state: T): Result<T> {
-    return new Query<T>(() => {
-      const previousState = dlv(this.state, path);
-
-      if (JSON.stringify(previousState) !== JSON.stringify(state)) {
-        this.updateState<T>(path, previousState, state);
+      if (JSON.stringify(getCurrentState()) !== JSON.stringify(newState)) {
+        this.updateState(
+          isGranularUpdate ? memberOrState : Strings.Empty,
+          getCurrentState(),
+          newState);
       } else {
         throw new Error(StateChangeUnnecessary);
       }
 
-      return this.cloneOf(state);
+      return getCurrentState();
     }).Execute();
   }
 
-  public ObservableAt<T>(path: string): Observable<T> {
+  public ObservableAt<V>(member?: MemberLambda<T, V>): Observable<V> {
+    const path = this.getPathFromMemberFunction(member);
     if (!this.stateObservers.has(path)) {
-      this.stateObservers.set(path, new Observable<T>());
+      this.stateObservers.set(path, new Observable<V>());
     };
 
-    return this.stateObservers.get(path) as Observable<T>;
+    return this.stateObservers.get(path) as Observable<V>;
   }
 
   public GetLedger(): Array<Transaction<any>> {
@@ -64,7 +68,7 @@ export class EventStore<T> implements IEventStore<T> {
         throw new Error(NoTransactionToUndo);
       }
 
-      return this.GetStateAt<T>(lastVoidableTransaction.path);
+      return this.getStateAtPath(lastVoidableTransaction.path);
     }).Execute();
   }
 
@@ -88,7 +92,7 @@ export class EventStore<T> implements IEventStore<T> {
         throw new Error(NoTransactionToRedo);
       }
 
-      return this.GetStateAt<T>(lastRedoableTransaction.path);
+      return this.getStateAtPath(lastRedoableTransaction.path);
     }).Execute();
   }
 
@@ -96,10 +100,33 @@ export class EventStore<T> implements IEventStore<T> {
     return value ? JSON.parse(JSON.stringify(value)) : value;
   }
 
-  private updateState<T>(path: string, previousState: any, value: T, updateLedger = true) {
+  private getPathFromMemberFunction<R>(member?: MemberLambda<T, R>): string {
+    const regex = /[.][a-zA-Z0-9]*/g;
+    let path = Strings.Empty;
+
+    if (member) {
+      let match: RegExpExecArray | null;
+      while ((match = regex.exec(member.toString())) !== null) {
+        const matchValue = path.length ? match[0] : match[0].replace('.', Strings.Empty);
+        path += matchValue;
+      }
+    }
+
+    return path;
+  }
+
+  private getStateAtPath(path: string): any {
+    return this.cloneOf(dlv(this.state as object, path));
+  }
+
+  private updateState<V>(member: string | MemberLambda<T, V>, previousState: any, value: T | V, updateLedger = true) {
+    if (typeof member !== 'string') {
+      member = this.getPathFromMemberFunction(member);
+    }
+
     if (updateLedger) {
       this.ledger.push({
-        path: path,
+        path: member,
         timestamp: Date.now(),
         toState: this.cloneOf(value),
         fromState: previousState,
@@ -107,17 +134,17 @@ export class EventStore<T> implements IEventStore<T> {
       });
     }
 
-    const rootUpdate = Strings.IsEmptyOrWhiteSpace(path);
+    const rootUpdate = Strings.IsEmptyOrWhiteSpace(member.toString());
     if (rootUpdate) {
-      this.state = value || {};
+      this.state = value as T;
     } else {
-      dset(this.state, path, value);
+      dset(this.state, member.toString(), value);
     }
 
-    this.publishToDependentObservers(path);
+    this.publishToDependentObservers(member);
   }
 
-  private publishToDependentObservers<T>(path: string): void {
+  private publishToDependentObservers(path: string): void {
     const targetObserverKeys = this.getTargetObservers(path);
 
     targetObserverKeys.forEach(key => {

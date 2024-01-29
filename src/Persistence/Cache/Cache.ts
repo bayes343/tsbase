@@ -37,7 +37,7 @@ export class Cache<T> implements ICache<T> {
       const cacheValue = () => {
         if (this.cacheIsValid(result)) {
           return type && typeof result.Value.value === 'object' ?
-            this.serializer.Serialize(type, result.Value.value) :
+            this.serializer.Deserialize(type, result.Value.value) :
             result.Value.value;
         } else {
           this.Delete(key);

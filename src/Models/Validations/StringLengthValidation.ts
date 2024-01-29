@@ -25,6 +25,5 @@ export class StringLengthValidation<T> implements IValidation<Model<T>> {
           `\"${label}\" length must be within ${this.minimum} and ${this.maximum} characters.`);
       }
     }).Execute();
-
   }
 }

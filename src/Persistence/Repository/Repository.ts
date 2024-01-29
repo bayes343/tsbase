@@ -1,4 +1,4 @@
-import { Queryable } from '../../Collections/Queryable';
+import { Queryable } from '../../Collections/Queryable/Queryable';
 import { Result } from '../../Patterns/Result/Result';
 import { Validator } from '../../Patterns/Validator/Validator';
 import { Strings } from '../../System/Strings';
@@ -119,7 +119,7 @@ export class Repository<T> extends Queryable<T> {
 
     initialData.forEach(element => {
       classInstances.push((this.serializer as ISerializer)
-        .Serialize((this.serializeAs as { new(): T; }), element));
+        .Deserialize((this.serializeAs as { new(): T; }), element));
     });
 
     return Queryable.From(classInstances);

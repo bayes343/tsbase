@@ -36,7 +36,7 @@ export class CookieStorage implements IGenericStorage {
     return new Query(() => {
       const value = this.GetValue(key).Value;
       if (value) {
-        return this.serializer.Serialize(type, JSON.parse(value)) as T;
+        return this.serializer.Deserialize(type, JSON.parse(value)) as T;
       } else {
         throw new Error(`Unable to retrieve "${key}"`);
       }

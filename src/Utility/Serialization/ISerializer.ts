@@ -1,11 +1,11 @@
 /**
- * Contract for tsbase objects that serialize data into class instances
+ * Contract for tsbase classes that deserialize data into class instances
  */
 export interface ISerializer {
   /**
-   * Serializes data into an instance of t
+   * Deserializes data into an instance of t
    * @param t
    * @param data
    */
-  Serialize<T>(t: { new(): T; }, data: any): T;
+  Deserialize<T>(t: { new(): T; }, data: any): T;
 }
