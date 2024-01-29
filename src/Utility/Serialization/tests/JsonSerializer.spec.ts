@@ -99,7 +99,7 @@ describe('JsonSerializer', () => {
     expect(classUnderTest).toBeDefined();
   });
 
-  it('should serialize simple values from json', () => {
+  it('should deserialize simple values from json', () => {
     // PascalCase
     let personInstance = classUnderTest.Deserialize(Person, {
       FirstName: 'John',
@@ -127,7 +127,7 @@ describe('JsonSerializer', () => {
     expect(personInstance.FakeField.one).toEqual('one');
   });
 
-  it('should serialized array values from json', () => {
+  it('should deserialize array values from json', () => {
     const pet = {
       name: 'Freya',
       breed: 'GSD'
@@ -150,20 +150,20 @@ describe('JsonSerializer', () => {
     expect(personInstance.ArrayPets[0].name).toEqual('Freya');
   });
 
-  it('should serialize nested classes from complex json', () => {
+  it('should deserialize nested classes from complex json', () => {
     classUnderTest = new JsonSerializer();
     const userInstance: User = classUnderTest.Deserialize(User, stubUserJsonResponse.node);
     expect(userInstance.path.langcode).toEqual('en');
   });
 
-  it('should serialize a loan response from wbcw', () => {
+  it('should deserialize a loan response from wbcw', () => {
     classUnderTest = new JsonSerializer();
     const loanInstance: LoanResults = classUnderTest.Deserialize(LoanResults, stubLoanResponse);
     expect(loanInstance.amortizationMonthlySchedule.length).toEqual(60);
     expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
   });
 
-  it('should serialize small string array values', () => {
+  it('should deserialize small string array values', () => {
     const product = new Product();
     product.name = 'test';
     product.categories = ['toy'];
