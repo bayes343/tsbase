@@ -24,7 +24,7 @@ export class JsonSerializer implements ISerializer {
    * @param t class type to instantiate
    * @param data data to initialize on instantiated class
    */
-  public Serialize<T>(t: { new(): T; }, data: any): T {
+  public Deserialize<T>(t: { new(): T; }, data: any): T {
     const object: any = new t();
 
     const classProperties = Object.keys(object);
@@ -85,7 +85,7 @@ export class JsonSerializer implements ISerializer {
   private getValueFromSerializer(property: any, json: any): any {
     const newSerializer = new JsonSerializer();
     try {
-      return newSerializer.Serialize(property.constructor, json);
+      return newSerializer.Deserialize(property.constructor, json);
     } catch (error) {
       return new property.constructor();
     }

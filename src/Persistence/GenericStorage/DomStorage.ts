@@ -22,7 +22,7 @@ export class DomStorage implements IGenericStorage {
     return new Query((): T | null => {
       const value = this.getStorageMedium().getItem(key);
       if (value) {
-        return this.serializer.Serialize(type, JSON.parse(value)) as T;
+        return this.serializer.Deserialize(type, JSON.parse(value)) as T;
       } else {
         return null;
       }

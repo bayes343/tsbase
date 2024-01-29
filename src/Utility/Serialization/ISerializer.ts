@@ -7,5 +7,5 @@ export interface ISerializer {
    * @param t
    * @param data
    */
-  Serialize<T>(t: { new(): T; }, data: any): T;
+  Deserialize<T>(t: { new(): T; }, data: any): T;
 }

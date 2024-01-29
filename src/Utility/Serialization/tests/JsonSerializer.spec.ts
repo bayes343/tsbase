@@ -101,7 +101,7 @@ describe('JsonSerializer', () => {
 
   it('should serialize simple values from json', () => {
     // PascalCase
-    let personInstance = classUnderTest.Serialize(Person, {
+    let personInstance = classUnderTest.Deserialize(Person, {
       FirstName: 'John',
       LastName: 'Doe',
       Age: 30
@@ -109,7 +109,7 @@ describe('JsonSerializer', () => {
     expect(personInstance.Age).toEqual(30);
 
     // camelCase
-    personInstance = classUnderTest.Serialize(Person, {
+    personInstance = classUnderTest.Deserialize(Person, {
       firstName: 'John',
       lastName: 'Doe',
       age: 30
@@ -117,7 +117,7 @@ describe('JsonSerializer', () => {
     expect(personInstance.FirstName).toEqual('John');
 
     // snake_case
-    personInstance = classUnderTest.Serialize(Person, {
+    personInstance = classUnderTest.Deserialize(Person, {
       first_name: 'John',
       last_name: 'Doe',
       age: 30
@@ -132,7 +132,7 @@ describe('JsonSerializer', () => {
       name: 'Freya',
       breed: 'GSD'
     };
-    const personInstance: Person = classUnderTest.Serialize(Person, {
+    const personInstance: Person = classUnderTest.Deserialize(Person, {
       FirstName: 'John',
       LastName: 'Doe',
       Age: 30,
@@ -152,13 +152,13 @@ describe('JsonSerializer', () => {
 
   it('should serialize nested classes from complex json', () => {
     classUnderTest = new JsonSerializer();
-    const userInstance: User = classUnderTest.Serialize(User, stubUserJsonResponse.node);
+    const userInstance: User = classUnderTest.Deserialize(User, stubUserJsonResponse.node);
     expect(userInstance.path.langcode).toEqual('en');
   });
 
   it('should serialize a loan response from wbcw', () => {
     classUnderTest = new JsonSerializer();
-    const loanInstance: LoanResults = classUnderTest.Serialize(LoanResults, stubLoanResponse);
+    const loanInstance: LoanResults = classUnderTest.Deserialize(LoanResults, stubLoanResponse);
     expect(loanInstance.amortizationMonthlySchedule.length).toEqual(60);
     expect(loanInstance.amortizationYearlySchedule.length).toEqual(5);
   });
@@ -170,7 +170,7 @@ describe('JsonSerializer', () => {
     const productJson = JSON.stringify(product);
 
     classUnderTest = new JsonSerializer();
-    const productInstance: Product = classUnderTest.Serialize(Product, JSON.parse(productJson));
+    const productInstance: Product = classUnderTest.Deserialize(Product, JSON.parse(productJson));
 
     expect(typeof productInstance.categories).toBe('object');
     expect(productInstance.categories.indexOf('toy') >= 0).toBeTruthy();
@@ -183,7 +183,7 @@ describe('JsonSerializer', () => {
     const json = JSON.parse(jsonString);
     classUnderTest = new JsonSerializer();
 
-    const verifyResponseInstance: VerifyResponse = classUnderTest.Serialize(VerifyResponse, json);
+    const verifyResponseInstance: VerifyResponse = classUnderTest.Deserialize(VerifyResponse, json);
 
     expect(verifyResponseInstance.Success).toEqual(false);
     expect(verifyResponseInstance.ErrorCodes.length).toEqual(2);

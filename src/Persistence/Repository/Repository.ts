@@ -119,7 +119,7 @@ export class Repository<T> extends Queryable<T> {
 
     initialData.forEach(element => {
       classInstances.push((this.serializer as ISerializer)
-        .Serialize((this.serializeAs as { new(): T; }), element));
+        .Deserialize((this.serializeAs as { new(): T; }), element));
     });
 
     return Queryable.From(classInstances);
