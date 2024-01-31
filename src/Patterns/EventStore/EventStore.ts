@@ -20,20 +20,32 @@ export class EventStore<T extends Object> implements IEventStore<T> {
     private state: T
   ) { }
 
-  public GetState<V>(member?: MemberLambda<T, V>) {
+  public GetState<V>(member?: MemberLambda<T, V> | string) {
+    if (typeof member === 'string') {
+      return this.getStateAtPath(member);
+    }
+
     const clone = this.cloneOf(this.state);
     return member ? member(clone) : clone;
   }
 
-  public SetState<V>(memberOrState: MemberLambda<T, V> | T, state?: T): Result<V | T> {
+  public SetState<V>(memberOrState: MemberLambda<T, V> | string | T, state?: T): Result<V | T> {
     return new Query<V | T>(() => {
-      const isGranularUpdate = typeof memberOrState === 'function' && !!state;
-      const getCurrentState = () => isGranularUpdate ? memberOrState(this.cloneOf(this.state)) : this.cloneOf(this.state);
+      const isGranularUpdate = ['function', 'string'].includes(typeof memberOrState) && !!state;
+      const getCurrentState = () => {
+        if (isGranularUpdate && typeof memberOrState === 'function') {
+          return memberOrState(this.cloneOf(this.state));
+        } else if (isGranularUpdate && typeof memberOrState === 'string') {
+          return this.getStateAtPath(memberOrState);
+        } else {
+          return this.cloneOf(this.state);
+        }
+      };
       const newState = isGranularUpdate ? state : memberOrState as V;
 
       if (JSON.stringify(getCurrentState()) !== JSON.stringify(newState)) {
         this.updateState(
-          isGranularUpdate ? memberOrState : Strings.Empty,
+          isGranularUpdate ? memberOrState as MemberLambda<T, V> | string : Strings.Empty,
           getCurrentState(),
           newState);
       } else {
@@ -44,8 +56,8 @@ export class EventStore<T extends Object> implements IEventStore<T> {
     }).Execute();
   }
 
-  public ObservableAt<V>(member?: MemberLambda<T, V>): Observable<V> {
-    const path = this.getPathFromMemberFunction(member);
+  public ObservableAt<V>(member?: MemberLambda<T, V> | string): Observable<V> {
+    const path = typeof member === 'string' ? member : this.getPathFromMemberFunction(member);
     if (!this.stateObservers.has(path)) {
       this.stateObservers.set(path, new Observable<V>());
     };

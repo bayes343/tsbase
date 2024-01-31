@@ -5,7 +5,8 @@ describe('EventStore', () => {
   let classUnderTest: IEventStore<Partial<{
     one: string,
     two: string,
-    three: string
+    three: string,
+    dynamic: Record<string, string>
   }>>;
   let scenarioUnderTest: IEventStore<House>;
 
@@ -156,6 +157,16 @@ describe('EventStore', () => {
     const actual = JSON.stringify(classUnderTest.GetState());
 
     expect(actual).toEqual(expected);
+  });
+
+  it('should get state using dynamic strings', () => {
+    classUnderTest.SetState(s => s.dynamic?.test, 'one');
+    expect(classUnderTest.GetState('dynamic.test')).toEqual('one');
+  });
+
+  it('should set state using dynamic strings', () => {
+    classUnderTest.SetState('dynamic.test', 'two');
+    expect(classUnderTest.GetState(s => s.dynamic?.test)).toEqual('two');
   });
 
   /* ========================= Scenario Tests ========================= */

@@ -18,7 +18,7 @@ export interface IEventStore<T extends object> {
    * Returns a portion of the state based on the given path
    * @param path object path to the desired state
    */
-  GetState<V>(member: MemberLambda<T, V>): V;
+  GetState<V>(member: MemberLambda<T, V> | string): V;
 
   /**
    * Update the current state of the entire store
@@ -32,7 +32,7 @@ export interface IEventStore<T extends object> {
    * @param state state to set
    * @param path object path to be set
    */
-  SetState<V>(member: MemberLambda<T, V>, state: V): Result<V>;
+  SetState<V>(member: MemberLambda<T, V> | string, state: V): Result<V>;
 
   /**
    * Returns an observable which can be subscribed to in order
@@ -45,7 +45,7 @@ export interface IEventStore<T extends object> {
    * to act on state changes
    * @param path object path to the desired state
    */
-  ObservableAt<V>(member: MemberLambda<T, V>): Observable<V>;
+  ObservableAt<V>(member: MemberLambda<T, V> | string): Observable<V>;
 
   /**
    * Returns a collection of all the transactions which resulted
