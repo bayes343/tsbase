@@ -55,7 +55,7 @@ export class JsxRenderer {
     element.setAttribute('id', id);
 
     asap(() => {
-      container.querySelector(`#${id}`)?.addEventListener(event, func);
+      container.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
     });
   }
 
