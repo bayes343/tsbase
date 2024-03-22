@@ -6,7 +6,10 @@ describe('EventStore', () => {
     one: string,
     two: string,
     three: string,
-    dynamic: Record<string, string>
+    dynamic: Record<string, string>,
+    zero: 0,
+    empty: '',
+    null: null
   }>>;
   let scenarioUnderTest: IEventStore<House>;
 
@@ -167,6 +170,21 @@ describe('EventStore', () => {
   it('should set state using dynamic strings', () => {
     classUnderTest.SetState('dynamic.test', 'two');
     expect(classUnderTest.GetState(s => s.dynamic?.test)).toEqual('two');
+  });
+
+  it('should set a key in the store with the value 0', () => {
+    classUnderTest.SetState('zero', 0);
+    expect(classUnderTest.GetState()).toEqual({ zero: 0 });
+  });
+
+  it('should set a key in the store with the value of an empty string', () => {
+    classUnderTest.SetState('empty', '');
+    expect(classUnderTest.GetState()).toEqual({ empty: '' });
+  });
+
+  it('should set a key in the store with the value of null', () => {
+    classUnderTest.SetState(s => s.null, null);
+    expect(classUnderTest.GetState()).toEqual({ null: null });
   });
 
   /* ========================= Scenario Tests ========================= */

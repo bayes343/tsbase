@@ -31,7 +31,7 @@ export class EventStore<T extends Object> implements IEventStore<T> {
 
   public SetState<V>(memberOrState: MemberLambda<T, V> | string | T, state?: T): Result<V | T> {
     return new Query<V | T>(() => {
-      const isGranularUpdate = ['function', 'string'].includes(typeof memberOrState) && !!state;
+      const isGranularUpdate = ['function', 'string'].includes(typeof memberOrState) && state !== undefined;
       const getCurrentState = () => {
         if (isGranularUpdate && typeof memberOrState === 'function') {
           return memberOrState(this.cloneOf(this.state));
