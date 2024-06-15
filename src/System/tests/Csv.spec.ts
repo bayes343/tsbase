@@ -16,20 +16,52 @@ describe('Csv', () => {
   const csv = `Submission ID,Submission Date,Amount,"10"" Dutch Apple Pie - Details","10"" Dutch Apple Pie - Quantity","10"" Dutch Apple Pie - Deductible",OCS Family (Optional),Name - Prefix,Name - First Name,Name - Last Name,Name - Suffix,Email,Phone,Is Recurring,Payment Status,Combined Buyer Name
 5d52d4ee-16ac-4a45-9241-acefa27e0f7a,7/18/23 12:48,16,"
 1 x $16.00 :
-Subtotal : $16.00",1,,Houston,,Chris,Houston,,test@qa.org,444-555-1111,FALSE,paid,#N/A`;
+Subtotal : $16.00",1,,Houston,,Chris,Houston,,test@qa.org,444-555-1111,FALSE,paid,#N/A
+5d52d4ee-16ac-4a45-9241-acefa27e0f7b,7/18/23 12:48,16,"
+1 x $16.00 :
+Subtotal : $16.00",1,,Houston,,Cris,Houston,,test@qa.org,444-555-1111,FALSE,paid,#N/A
+5d52d4ee-16ac-4a45-9241-acefa27e0f7c,7/18/23 12:48,16,"
+1 x $16.00 :
+Subtotal : $16.00",1,,Houston,,Kris,Houston,,test@qa.org,444-555-1111,FALSE,paid,#N/A`;
   const keys = ['id', 'date', 'amountDue', null, 'quantity', null, 'family', null, 'customerFirstName', 'customerLastName', null, 'email', 'phone', null, 'paymentStatus', null];
-  const expectedJson = [{
-    id: '5d52d4ee-16ac-4a45-9241-acefa27e0f7a',
-    date: '7/18/23 12:48',
-    amountDue: '16',
-    quantity: '1',
-    family: 'Houston',
-    customerFirstName: 'Chris',
-    customerLastName: 'Houston',
-    email: 'test@qa.org',
-    phone: '444-555-1111',
-    paymentStatus: 'paid'
-  }];
+  const expectedJson = [
+    {
+      id: '5d52d4ee-16ac-4a45-9241-acefa27e0f7a',
+      date: '7/18/23 12:48',
+      amountDue: '16',
+      quantity: '1',
+      family: 'Houston',
+      customerFirstName: 'Chris',
+      customerLastName: 'Houston',
+      email: 'test@qa.org',
+      phone: '444-555-1111',
+      paymentStatus: 'paid'
+    },
+    {
+      id: '5d52d4ee-16ac-4a45-9241-acefa27e0f7b',
+      date: '7/18/23 12:48',
+      amountDue: '16',
+      quantity: '1',
+      family: 'Houston',
+      customerFirstName: 'Cris',
+      customerLastName: 'Houston',
+      email: 'test@qa.org',
+      phone: '444-555-1111',
+      paymentStatus: 'paid'
+    },
+    {
+      id: '5d52d4ee-16ac-4a45-9241-acefa27e0f7c',
+      date: '7/18/23 12:48',
+      amountDue: '16',
+      quantity: '1',
+      family: 'Houston',
+      customerFirstName: 'Kris',
+      customerLastName: 'Houston',
+      email: 'test@qa.org',
+      phone: '444-555-1111',
+      paymentStatus: 'paid'
+    }
+  ];
 
   it('DecodeAsJson should convert csv string to json object', () => {
     expect(Csv.DecodeAsJson(csv, keys)).toEqual(expectedJson);
@@ -41,5 +73,9 @@ Subtotal : $16.00",1,,Houston,,Chris,Houston,,test@qa.org,444-555-1111,FALSE,pai
 
   it('DecodeAsJson should return an empty array when given an empty array of headers', () => {
     expect(Csv.DecodeAsJson(csv, [])).toEqual([]);
+  });
+
+  it('DecodeAsJson should return an empty array when csv header count is different than given headerKeys length', () => {
+    expect(Csv.DecodeAsJson(csv, ['one', 'two', 'three'])).toEqual([]);
   });
 });

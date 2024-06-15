@@ -25,29 +25,23 @@ export class Csv {
    * @param headerKeys sequential array of keys for each header in the given csv
    * @returns
   */
-  // eslint-disable-next-line complexity
   public static DecodeAsJson<T extends object>(csv: string, headerKeys: Array<string | null>): T[] {
     const json = [] as T[];
     const lines = csv.split('\n');
-    const headers = lines.shift();
+    const headersString = lines.shift();
+    const headers = headersString && this.getCsvHeaders(headersString);
 
-    if (!headers || !headerKeys.length) {
+    if (!headers || !headerKeys.length || headers.length !== headerKeys.length) {
+      console.error(
+        'Unable to decode CSV to JSON - ensure the given headerKeys is the same length as the CSV headers',
+        `CSV Headers Count: ${headers?.length} | headerKeys Length: ${headerKeys.length}`
+      );
       return json;
     }
 
     const valueString = lines.join('\n');
-    const lineValues: string[][] = [];
-    let match: RegExpExecArray | undefined | null;
-    while ((match = Regex.CsvData.exec(valueString)) !== null) {
-      if (lineValues.length === 0 || lineValues.length % headers.length === 0) {
-        lineValues.push([]);
-      }
-
-      if (match) {
-        lineValues[lineValues.length - 1].push(match[1] || '');
-      }
-    }
-    lineValues.forEach(lv => {
+    const recordValues: string[][] = Csv.getCsvRecordValues(valueString, headers);
+    recordValues.forEach(lv => {
       const entry = {} as any;
       headerKeys.forEach((k, i) => {
         if (k) {
@@ -57,6 +51,31 @@ export class Csv {
       json.push(entry);
     });
     return json;
+  }
+
+  private static getCsvHeaders(headersString: string) {
+    const headers: string[] = [];
+    let match: RegExpExecArray | undefined | null;
+    while ((match = Regex.CsvData.exec(headersString)) !== null) {
+      if (match) {
+        headers.push(match[1]);
+      }
+    }
+    return headers;
+  }
+
+  private static getCsvRecordValues(valueString: string, headers: string[]) {
+    const recordValues: string[][] = [];
+    let match: RegExpExecArray | undefined | null;
+    while ((match = Regex.CsvData.exec(valueString)) !== null) {
+      if (recordValues.length === 0 || recordValues[recordValues.length - 1].length % headers.length === 0) {
+        recordValues.push([]);
+      }
+      if (match) {
+        recordValues[recordValues.length - 1].push(match[1] || '');
+      }
+    }
+    return recordValues;
   }
 
   private static convertToCSV(json: object) {
