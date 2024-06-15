@@ -52,4 +52,26 @@ export class Regex {
    * Non-Matches: 14467 955 | 14467- | 1446-9554
    */
   public static readonly USPostalCode = /^[0-9]{5}([- /]?[0-9]{4})?$/;
+
+  /**
+   * Executes the given RegExp on a string returning the final aggregated value after
+   * running the aggregator across all matches.
+   * @param regex
+   * @param str
+   * @param initialValue
+   * @param aggregator
+   * @returns
+   */
+  public static AggregateMatches<T>(
+    regex: RegExp,
+    str: string,
+    initialValue: T,
+    aggregator: (match: RegExpExecArray | undefined | null, currentValue: T) => void
+  ): T {
+    let match: RegExpExecArray | undefined | null;
+    while ((match = regex.exec(str)) !== null) {
+      aggregator(match, initialValue);
+    }
+    return initialValue;
+  }
 };

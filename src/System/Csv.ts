@@ -29,7 +29,9 @@ export class Csv {
     const json = [] as T[];
     const lines = csv.split('\n');
     const headersString = lines.shift();
-    const headers = headersString && this.getCsvHeaders(headersString);
+    const headers = headersString && Regex.AggregateMatches<string[]>(Regex.CsvData, headersString, [], (match, cv) => {
+      match && cv.push(match[1]);
+    });
 
     if (!headers || !headerKeys.length || headers.length !== headerKeys.length) {
       console.error(
@@ -40,42 +42,23 @@ export class Csv {
     }
 
     const valueString = lines.join('\n');
-    const recordValues: string[][] = Csv.getCsvRecordValues(valueString, headers);
-    recordValues.forEach(lv => {
+    const recordValues: string[][] = Regex.AggregateMatches<string[][]>(Regex.CsvData, valueString, [], (match, cv) => {
+      if (cv.length === 0 || cv[cv.length - 1].length % headers.length === 0) {
+        cv.push([]);
+      }
+      match && cv[cv.length - 1].push(match[1] || '');
+    });
+
+    recordValues.forEach(rv => {
       const entry = {} as any;
       headerKeys.forEach((k, i) => {
         if (k) {
-          entry[k] = lv[i];
+          entry[k] = rv[i];
         }
       });
       json.push(entry);
     });
     return json;
-  }
-
-  private static getCsvHeaders(headersString: string) {
-    const headers: string[] = [];
-    let match: RegExpExecArray | undefined | null;
-    while ((match = Regex.CsvData.exec(headersString)) !== null) {
-      if (match) {
-        headers.push(match[1]);
-      }
-    }
-    return headers;
-  }
-
-  private static getCsvRecordValues(valueString: string, headers: string[]) {
-    const recordValues: string[][] = [];
-    let match: RegExpExecArray | undefined | null;
-    while ((match = Regex.CsvData.exec(valueString)) !== null) {
-      if (recordValues.length === 0 || recordValues[recordValues.length - 1].length % headers.length === 0) {
-        recordValues.push([]);
-      }
-      if (match) {
-        recordValues[recordValues.length - 1].push(match[1] || '');
-      }
-    }
-    return recordValues;
   }
 
   private static convertToCSV(json: object) {
