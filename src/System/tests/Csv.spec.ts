@@ -9,7 +9,7 @@ describe('Csv', () => {
 "16504","Issue","Fix issues with code",,"To Do","1","Bug, Defect"\r\n\
 "16505","Issue","Merge testing modules",,"To Do","3",';
 
-  it('should convert json object to csv string', () => {
+  it('EncodeAsCsv should convert json object to csv string', () => {
     expect(Csv.EncodeAsCsv(headers, json)).toEqual(expectedCsv);
   });
 
@@ -31,7 +31,15 @@ Subtotal : $16.00",1,,Houston,,Chris,Houston,,test@qa.org,444-555-1111,FALSE,pai
     paymentStatus: 'paid'
   }];
 
-  it('should convert csv string to json object', () => {
+  it('DecodeAsJson should convert csv string to json object', () => {
     expect(Csv.DecodeAsJson(csv, keys)).toEqual(expectedJson);
+  });
+
+  it('DecodeAsJson should return an empty array when given an empty csv string', () => {
+    expect(Csv.DecodeAsJson('', keys)).toEqual([]);
+  });
+
+  it('DecodeAsJson should return an empty array when given an empty array of headers', () => {
+    expect(Csv.DecodeAsJson(csv, [])).toEqual([]);
   });
 });

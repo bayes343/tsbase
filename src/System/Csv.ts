@@ -30,12 +30,16 @@ export class Csv {
     const json = [] as T[];
     const lines = csv.split('\n');
     const headers = lines.shift();
-    const valueString = lines.join('\n');
 
+    if (!headers || !headerKeys.length) {
+      return json;
+    }
+
+    const valueString = lines.join('\n');
     const lineValues: string[][] = [];
     let match: RegExpExecArray | undefined | null;
-    while ((match = Regex.CsvData.exec(valueString || '')) !== null) {
-      if (lineValues.length === 0 || lineValues.length % (headers?.length || 0) === 0) {
+    while ((match = Regex.CsvData.exec(valueString)) !== null) {
+      if (lineValues.length === 0 || lineValues.length % headers.length === 0) {
         lineValues.push([]);
       }
 
