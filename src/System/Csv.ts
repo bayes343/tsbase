@@ -1,4 +1,5 @@
 import { Query } from '../Patterns/CommandQuery/Query';
+import { Regex } from './Regex';
 import { Strings } from './Strings';
 
 export class Csv {
@@ -16,6 +17,42 @@ export class Csv {
     return csvConversionResult.IsSuccess && csvConversionResult.Value ?
       `${headers.toString()}\r\n${csvConversionResult.Value}` :
       Strings.Empty;
+  }
+
+  /**
+   * Accepts a csv string amd returns the JSON equivalent object.
+   * @param csv
+   * @param headerKeys sequential array of keys for each header in the given csv
+   * @returns
+  */
+  // eslint-disable-next-line complexity
+  public static DecodeAsJson<T extends object>(csv: string, headerKeys: Array<string | null>): T[] {
+    const json = [] as T[];
+    const lines = csv.split('\n');
+    const headers = lines.shift();
+    const valueString = lines.join('\n');
+
+    const lineValues: string[][] = [];
+    let match: RegExpExecArray | undefined | null;
+    while ((match = Regex.CsvData.exec(valueString || '')) !== null) {
+      if (lineValues.length === 0 || lineValues.length % (headers?.length || 0) === 0) {
+        lineValues.push([]);
+      }
+
+      if (match) {
+        lineValues[lineValues.length - 1].push(match[1] || '');
+      }
+    }
+    lineValues.forEach(lv => {
+      const entry = {} as any;
+      headerKeys.forEach((k, i) => {
+        if (k) {
+          entry[k] = lv[i];
+        }
+      });
+      json.push(entry);
+    });
+    return json;
   }
 
   private static convertToCSV(json: object) {
