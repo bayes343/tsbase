@@ -1,3 +1,4 @@
+import { Regex } from './Regex';
 import { Strings } from './Strings';
 
 type Tag = {
@@ -39,14 +40,11 @@ export class Xml {
    */
   public static ToJson<T>(xml: string): T {
     const xmlTagsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>.*)(?<closeTag><\/\2>)/g;
-    const results: Tag[] = [];
-    let match: RegExpExecArray | undefined | null;
-    while ((match = xmlTagsRegex.exec(xml)) !== null) {
+    const results = Regex.AggregateMatches<Tag[]>(xmlTagsRegex, xml, [], (match, cv) => {
       if (match) {
-        results.push(match.groups as Tag);
+        cv.push(match.groups as Tag);
       }
-    }
-    let obj = {};
+    });
 
     const getValueForTypeFunctionMap = new Map<NodeTypes, (tag: Tag) => undefined | string | number | boolean | object | Array<any>>([
       [NodeTypes.Object, (tag) => this.ToJson(tag.content || '')],
@@ -57,18 +55,16 @@ export class Xml {
       [NodeTypes.Array, (tag) => {
         // eslint-disable-next-line max-len
         const xmlArrayItemsRegex = /(?<openTag><(?<tagName>[^\s]*)[\s]?(?<typeAttribute>type="xs:(?<type>[^"]*)")?[^<]*>)(?<content>[^<]*)(?<closeTag><\/\2>)/g;
-        const items: any[] = [];
-        let match: RegExpExecArray | undefined | null;
-        while ((match = xmlArrayItemsRegex.exec(tag.content || '')) !== null) {
+        return Regex.AggregateMatches<any[]>(xmlArrayItemsRegex, tag.content || '', [], (match, cv) => {
           if (match) {
             const valueFunction = getValueForTypeFunctionMap.get((match.groups as Tag).type as NodeTypes);
-            items.push(valueFunction ? valueFunction(match.groups as Tag) : (match.groups as Tag).content);
+            cv.push(valueFunction ? valueFunction(match.groups as Tag) : (match.groups as Tag).content);
           }
-        }
-
-        return items;
+        });
       }]
     ]);
+
+    let obj = {};
 
     results.forEach(tag => {
       const type = tag.type || (() => {
