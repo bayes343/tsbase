@@ -61,16 +61,23 @@ export class Csv {
     return json;
   }
 
+  // eslint-disable-next-line complexity
   private static convertToCSV(json: object) {
-    const array = typeof json !== 'object' ? JSON.parse(json) : json;
+    const items = typeof json !== 'object' ? JSON.parse(json) : json;
     let str = Strings.Empty;
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       let line = Strings.Empty;
-      for (const index in array[i]) {
-        if (line !== Strings.Empty) { line += ','; }
-        const value = array[i][index];
-        line += value !== Strings.Empty ? `"${value}"` : Strings.Empty;
+      for (const key in item) {
+        if (line !== Strings.Empty) {
+          line += ',';
+        }
+        const value = item[key];
+        const literalQuotes = value?.toString().includes(',') ? '"' : '';
+        line += value !== Strings.Empty ?
+          `${literalQuotes}"${value}"${literalQuotes}` :
+          Strings.Empty;
       }
 
       str += line + '\r\n';
