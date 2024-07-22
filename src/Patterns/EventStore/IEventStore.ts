@@ -24,7 +24,7 @@ export interface IEventStore<T extends object> {
    * Update the current state of the entire store
    * @param state state to set at a root level
    */
-  SetState<V>(memberOrState: MemberLambda<T, V> | string | T, state?: T): Result<V | T>;
+  SetState<T>(state: T): Result<T>;
 
   /**
    * Sets the state at a given path, returning a result indicating
