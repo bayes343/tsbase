@@ -5,16 +5,6 @@ import { Strings } from '../../System/Strings';
 type OptionalDocument = Document | null;
 const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
-const asap = (func: () => void) => {
-  setTimeout(() => {
-    try {
-      func();
-    } catch (error) {
-      console.error(error);
-    }
-  });
-};
-
 export type Jsx = {
   attributes?: Record<string, string | number | boolean> | null,
   children?: (Jsx | string)[],
@@ -60,8 +50,10 @@ export class JsxRenderer {
         element += ` id="${id}"`;
       }
 
-      asap(() => {
-        documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
+      setTimeout(() => {
+        try {
+          documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
+        } catch { /* empty */ }
       });
     }
 
@@ -88,7 +80,9 @@ export class JsxRenderer {
 
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
-        element += child.toString();
+        element += child.toString()
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
       } else if (child) {
         element += JsxRenderer.transformJsxToHtml(child, documentRef);
       }

@@ -41,7 +41,7 @@ describe('JsxRenderer', () => {
       children: ['<div id="fy-"></div><img src="fake" onerror="alert(1)">'],
       attributes: {}
     };
-    const expectedOuterHtml = '<div><div id=\"fy-\"></div><img src=\"fake\" onerror=\"alert(1)\"></div>';
+    const expectedOuterHtml = '<div>&lt;div id="fy-"&gt;&lt;/div&gt;&lt;img src="fake" onerror="alert(1)"&gt;</div>';
     expect(JsxRenderer.RenderJsx(jsxToParse)).toContain(expectedOuterHtml);
   });
 
