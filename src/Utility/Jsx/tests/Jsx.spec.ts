@@ -1,13 +1,16 @@
-/**
- * @jest-environment jsdom
- */
-
 /* eslint-disable max-lines */
-import { Expect } from 'tsmockit';
+import { Any, Mock } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
+import { Until } from '../../Timers/Until';
 import { Jsx, JsxRenderer, ParseJsx } from '../Jsx';
 
 describe('JsxRenderer', () => {
+  let mockDocument: Mock<Document>;
+
+  beforeEach(() => {
+    mockDocument = new Mock<Document>();
+  });
+
   it('should return the outer html of a parsed jsx node with only inner text', () => {
     const jsxToParse: Jsx = {
       nodeName: 'div',
@@ -38,7 +41,7 @@ describe('JsxRenderer', () => {
       children: ['<div id="fy-"></div><img src="fake" onerror="alert(1)">'],
       attributes: {}
     };
-    const expectedOuterHtml = '<div>&lt;div id="fy-"&gt;&lt;/div&gt;&lt;img src="fake" onerror="alert(1)"&gt;</div>';
+    const expectedOuterHtml = '<div><div id=\"fy-\"></div><img src=\"fake\" onerror=\"alert(1)\"></div>';
     expect(JsxRenderer.RenderJsx(jsxToParse)).toContain(expectedOuterHtml);
   });
 
@@ -68,6 +71,14 @@ describe('JsxRenderer', () => {
   });
 
   it('should add event listeners to bound events', async () => {
+    let event: string | undefined;
+    let callback: (() => void) | undefined;
+    mockDocument.SetupOnce(d => d.querySelector(Any<string>()), {
+      addEventListener: (e: string, cb: () => void) => {
+        event = e;
+        callback = cb;
+      }
+    });
     let testVariable = 0;
     const jsxToParse: Jsx = {
       nodeName: 'button',
@@ -77,20 +88,18 @@ describe('JsxRenderer', () => {
         onclick: (() => testVariable = 1) as any
       }
     };
-    const renderedHtml = JsxRenderer.RenderJsx(jsxToParse);
-    document.body.innerHTML = renderedHtml;
+
+    const renderedHtml = JsxRenderer.RenderJsx(jsxToParse, mockDocument.Object);
 
     expect(renderedHtml).toEqual('<button id="test-id"></button>');
-    await Expect(
-      () => {
-        document.getElementById('test-id')?.click();
-        return testVariable === 1;
-      },
-      (m) => m.toBeTruthy());
+    await Until(() => !!event);
+    expect(event).toEqual('click');
+    callback?.();
+    expect(testVariable).toEqual(1);
   });
 
-  it('should not attempt to add event listeners if bind element is deleted', async () => {
-    document.body.innerHTML = Strings.Empty;
+  it('should not throw an error when attempting to add listener to element that is not in the dom', async () => {
+    mockDocument.Setup(d => d.querySelector(Any<string>()), null);
     const jsxToParse: Jsx = {
       nodeName: 'button',
       children: [],
@@ -99,12 +108,8 @@ describe('JsxRenderer', () => {
         onclick: (() => null) as any
       }
     };
-
-    JsxRenderer.RenderJsx(jsxToParse);
-
-    await Expect(
-      () => document.getElementById('test-id'),
-      (m) => m.toBeNull());
+    JsxRenderer.RenderJsx(jsxToParse, mockDocument.Object);
+    await Until(() => !!mockDocument.TimesMemberCalled(d => d.querySelector(Any<string>())));
   });
 
   it('should add guid ids for bound events if none are given', () => {
@@ -115,8 +120,12 @@ describe('JsxRenderer', () => {
       },
       children: []
     };
-    const renderedHtml = JsxRenderer.RenderJsx(jsxToParse);
+
+    const renderedHtml = JsxRenderer.RenderJsx(jsxToParse, mockDocument.Object);
+
     expect(renderedHtml.startsWith('<button id=')).toBeTruthy();
+    expect(renderedHtml.endsWith('</button>')).toBeTruthy();
+    expect(renderedHtml.length).toBeGreaterThan('<button id=></button>'.length + 10);
   });
 
   it('should parse jsx containing fragments', () => {

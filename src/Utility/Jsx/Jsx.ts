@@ -1,8 +1,9 @@
+import type { EventTypes } from './EventTypes';
 import { Guid } from '../../System/Guid';
 import { Strings } from '../../System/Strings';
-import { DomEvents, EventTypes } from './EventTypes';
 
-type QueryableContainer = { querySelector: Document['querySelector'] };
+type OptionalDocument = Document | null;
+const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 const asap = (func: () => void) => {
   setTimeout(() => {
@@ -37,52 +38,62 @@ export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...
 export class JsxRenderer {
   private constructor() { }
 
-  public static RenderJsx(jsx: Jsx, container: QueryableContainer = document): string {
-    return JsxRenderer.transformJsxToHtml(jsx, container)
-      .outerHTML
+  public static RenderJsx(jsx: Jsx, documentRef: OptionalDocument = globalThis.document || null): string {
+    return JsxRenderer.transformJsxToHtml(jsx, documentRef)
       .replace(/<(f|.f)ragment>/g, Strings.Empty);
   }
 
   private static addElementEventListener(
     attribute: string,
     jsx: Jsx,
-    element: HTMLElement,
-    container: QueryableContainer
-  ) {
-    const event = attribute.split('on')[1] as EventTypes;
-    const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
-    const id = (element.attributes['id' as any] ? element.attributes['id' as any].nodeValue : Guid.NewGuid()) as string;
-    element.setAttribute('id', id);
+    element: string,
+    documentRef: OptionalDocument
+  ): string {
+    if (documentRef) {
+      const event = attribute.split('on')[1] as EventTypes;
+      const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
+      let id: string;
+      if (element.includes('id')) {
+        id = element.split('id="')[1].split('"')[0];
+      } else {
+        id = Guid.NewGuid();
+        element += ` id="${id}"`;
+      }
 
-    asap(() => {
-      container.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
-    });
+      asap(() => {
+        documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
+      });
+    }
+
+    return element;
   }
 
   // eslint-disable-next-line complexity
-  private static transformJsxToHtml(jsx: Jsx, container: QueryableContainer): HTMLElement {
-    const dom: HTMLElement = document.createElement(jsx.nodeName);
+  private static transformJsxToHtml(jsx: Jsx, documentRef: OptionalDocument): string {
+    let element = `<${jsx.nodeName}`;
 
     for (const key in jsx.attributes) {
-      if (DomEvents.includes(key)) {
-        this.addElementEventListener(key, jsx, dom, container);
+      if (key.startsWith('on')) {
+        element = this.addElementEventListener(key, jsx, element, documentRef);
       } else {
         const value = jsx.attributes[key];
         const shouldAddAttribute = !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
-          dom.setAttribute(key, jsx.attributes[key].toString());
+          element += ` ${key}="${jsx.attributes[key].toString()}"`;
         }
       }
     }
 
+    element += '>';
+
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
-        dom.appendChild(document.createTextNode(child.toString()));
+        element += child.toString();
       } else if (child) {
-        dom.appendChild(JsxRenderer.transformJsxToHtml(child, container));
+        element += JsxRenderer.transformJsxToHtml(child, documentRef);
       }
     }
 
-    return dom;
+    return `${element}${!voidElementTagNames.includes(jsx.nodeName) ? `</${jsx.nodeName}>` : Strings.Empty}`;
   }
 }
