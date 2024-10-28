@@ -81,8 +81,11 @@ export class JsxRenderer {
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
         element += child.toString()
+          .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#x27;');
       } else if (child) {
         element += JsxRenderer.transformJsxToHtml(child, documentRef);
       }

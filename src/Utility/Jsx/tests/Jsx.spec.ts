@@ -38,10 +38,14 @@ describe('JsxRenderer', () => {
   it('should return the neutralized outer html of a parsed jsx node with nested string mimicking a component', async () => {
     const jsxToParse: Jsx = {
       nodeName: 'div',
-      children: ['<div id="fy-"></div><img src="fake" onerror="alert(1)">'],
+      children: [`<div id="fy-"></div><img src="fake" onerror="alert(1)">
+<script>alert("test");</script>
+&& <button onfocus='alert(\'haxed\')'>click me!</button>`],
       attributes: {}
     };
-    const expectedOuterHtml = '<div>&lt;div id="fy-"&gt;&lt;/div&gt;&lt;img src="fake" onerror="alert(1)"&gt;</div>';
+    const expectedOuterHtml = `<div>&lt;div id=&quot;fy-&quot;&gt;&lt;/div&gt;&lt;img src=&quot;fake&quot; onerror=&quot;alert(1)&quot;&gt;
+&lt;script&gt;alert(&quot;test&quot;);&lt;/script&gt;
+&amp;&amp; &lt;button onfocus=&#x27;alert(&#x27;haxed&#x27;)&#x27;&gt;click me!&lt;/button&gt;</div>`;
     expect(JsxRenderer.RenderJsx(jsxToParse)).toContain(expectedOuterHtml);
   });
 
