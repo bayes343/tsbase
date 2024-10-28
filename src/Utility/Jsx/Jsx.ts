@@ -53,8 +53,8 @@ export class JsxRenderer {
       const event = attribute.split('on')[1] as EventTypes;
       const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
       let id: string;
-      if (element.includes('id')) {
-        id = element.split('id="')[1].split('"')[0];
+      if (element.includes(' id')) {
+        id = element.split(' id="')[1].split('"')[0];
       } else {
         id = Guid.NewGuid();
         element += ` id="${id}"`;

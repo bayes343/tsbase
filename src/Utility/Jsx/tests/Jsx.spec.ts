@@ -70,10 +70,10 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
-  it('should add event listeners to bound events', async () => {
+  it('should add event listeners to bound events using existing id attribute', async () => {
     let event: string | undefined;
     let callback: (() => void) | undefined;
-    mockDocument.SetupOnce(d => d.querySelector(Any<string>()), {
+    mockDocument.SetupOnce(d => d.querySelector('[id="test-id"]'), {
       addEventListener: (e: string, cb: () => void) => {
         event = e;
         callback = cb;
@@ -84,6 +84,7 @@ describe('JsxRenderer', () => {
       nodeName: 'button',
       children: [],
       attributes: {
+        'data-id': 'test-data-id',
         id: 'test-id',
         onclick: (() => testVariable = 1) as any
       }
@@ -91,7 +92,7 @@ describe('JsxRenderer', () => {
 
     const renderedHtml = JsxRenderer.RenderJsx(jsxToParse, mockDocument.Object);
 
-    expect(renderedHtml).toEqual('<button id="test-id"></button>');
+    expect(renderedHtml).toEqual('<button data-id="test-data-id" id="test-id"></button>');
     await Until(() => !!event);
     expect(event).toEqual('click');
     callback?.();
@@ -116,6 +117,7 @@ describe('JsxRenderer', () => {
     const jsxToParse: Jsx = {
       nodeName: 'button',
       attributes: {
+        'data-id': 'data-id',
         onclick: (() => true) as any
       },
       children: []
@@ -123,7 +125,7 @@ describe('JsxRenderer', () => {
 
     const renderedHtml = JsxRenderer.RenderJsx(jsxToParse, mockDocument.Object);
 
-    expect(renderedHtml.startsWith('<button id=')).toBeTruthy();
+    expect(renderedHtml.startsWith('<button data-id="data-id" id=')).toBeTruthy();
     expect(renderedHtml.endsWith('</button>')).toBeTruthy();
     expect(renderedHtml.length).toBeGreaterThan('<button id=></button>'.length + 10);
   });
