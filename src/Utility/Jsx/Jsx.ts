@@ -6,7 +6,7 @@ type OptionalDocument = Document | null;
 const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 export type Jsx = {
-  attributes?: Record<string, string | number | boolean> | null,
+  attributes?: Record<string, string | number | boolean | undefined | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
   nodeName: string
 };
@@ -14,14 +14,13 @@ export type Jsx = {
 export const Fragment = 'fragment';
 
 export function ParseJsx(
-  nodeName: (attributes: Jsx['attributes'], children: Jsx['children']) => Jsx,
-  attributes?: Record<string, string>,
+  nodeName: string | ((attributes: Jsx['attributes'], children: Jsx['children']) => Jsx),
+  attributes?: Jsx['attributes'],
   ...children: (Jsx | string)[]
 ): Jsx {
-  return nodeName(
-    attributes ? attributes : {},
-    children
-  );
+  return typeof nodeName === 'function' ?
+    nodeName(attributes || {}, children) :
+    { nodeName, attributes, children: ([] as (Jsx | string)[]).concat(...children) };
 }
 
 export class JsxRenderer {
@@ -33,14 +32,13 @@ export class JsxRenderer {
   }
 
   private static addElementEventListener(
-    attribute: string,
-    jsx: Jsx,
+    attributeName: string,
+    handler: (event: Event | null) => void | undefined,
     element: string,
     documentRef: OptionalDocument
   ): string {
     if (documentRef) {
-      const event = attribute.split('on')[1] as EventTypes;
-      const func = jsx.attributes![attribute] as unknown as (event: Event | null) => any;
+      const event = attributeName.split('on')[1] as EventTypes;
       let id: string;
       if (element.includes(' id')) {
         id = element.split(' id="')[1].split('"')[0];
@@ -51,7 +49,7 @@ export class JsxRenderer {
 
       setTimeout(() => {
         try {
-          documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
+          documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, handler);
         } catch { /* empty */ }
       });
     }
@@ -64,13 +62,13 @@ export class JsxRenderer {
     let element = `<${jsx.nodeName}`;
 
     for (const key in jsx.attributes) {
+      const value = jsx.attributes[key];
       if (key.startsWith('on')) {
-        element = this.addElementEventListener(key, jsx, element, documentRef);
+        element = this.addElementEventListener(key, value as any, element, documentRef);
       } else {
-        const value = jsx.attributes[key];
-        const shouldAddAttribute = !(typeof value === 'boolean' && value === false);
+        const shouldAddAttribute = value !== undefined && !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
-          element += ` ${key}="${jsx.attributes[key].toString()}"`;
+          element += ` ${key}="${value.toString()}"`;
         }
       }
     }

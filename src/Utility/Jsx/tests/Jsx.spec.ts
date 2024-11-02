@@ -158,6 +158,12 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
+  it('should parse jsx string node', () => {
+    const jsxToParse = ParseJsx('p', undefined, 'test');
+    const expectedHtml = '<p>test</p>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedHtml);
+  });
+
   it('should parse jsx containing fragments returned by a function', () => {
     const jsxToParse: Jsx = ParseJsx(() => ({
       nodeName: 'fragment',
