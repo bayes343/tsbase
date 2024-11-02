@@ -13,16 +13,15 @@ export type Jsx = {
 
 export const Fragment = 'fragment';
 
-export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...children: any): Jsx {
-  if (typeof nodeName === 'function') {
-    return nodeName(
-      attributes ? attributes : {},
-      children.length ? children : undefined
-    );
-  }
-
-  children = [].concat(...children);
-  return { nodeName, attributes, children };
+export function ParseJsx(
+  nodeName: (attributes: Jsx['attributes'], children: Jsx['children']) => Jsx,
+  attributes?: Record<string, string>,
+  ...children: (Jsx | string)[]
+): Jsx {
+  return nodeName(
+    attributes ? attributes : {},
+    children
+  );
 }
 
 export class JsxRenderer {
@@ -41,7 +40,7 @@ export class JsxRenderer {
   ): string {
     if (documentRef) {
       const event = attribute.split('on')[1] as EventTypes;
-      const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
+      const func = jsx.attributes![attribute] as unknown as (event: Event | null) => any;
       let id: string;
       if (element.includes(' id')) {
         id = element.split(' id="')[1].split('"')[0];

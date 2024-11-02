@@ -26,8 +26,7 @@ describe('JsxRenderer', () => {
       nodeName: 'div',
       children: [{
         nodeName: 'p',
-        children: ['test'],
-        attributes: {}
+        children: ['test']
       }],
       attributes: {}
     };
@@ -274,8 +273,7 @@ describe('JsxRenderer', () => {
       attributes: {
         type: 'checkbox',
         checked: false
-      },
-      children: [false as unknown as string]
+      }
     };
     const expectedOuterHtml = '<input type="checkbox">';
     expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
