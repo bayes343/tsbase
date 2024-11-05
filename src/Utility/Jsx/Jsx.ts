@@ -1,88 +1,93 @@
+import type { EventTypes } from './EventTypes';
 import { Guid } from '../../System/Guid';
 import { Strings } from '../../System/Strings';
-import { DomEvents, EventTypes } from './EventTypes';
 
-type QueryableContainer = { querySelector: Document['querySelector'] };
-
-const asap = (func: () => void) => {
-  setTimeout(() => {
-    try {
-      func();
-    } catch (error) {
-      console.error(error);
-    }
-  });
-};
+type OptionalDocument = Document | null;
+const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 export type Jsx = {
-  attributes?: Record<string, string | number | boolean> | null,
+  attributes?: Record<string, string | number | boolean | undefined | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
   nodeName: string
 };
 
 export const Fragment = 'fragment';
 
-export function ParseJsx(nodeName: any, attributes?: Record<string, string>, ...children: any): Jsx {
-  if (typeof nodeName === 'function') {
-    return nodeName(
-      attributes ? attributes : {},
-      children.length ? children : undefined
-    );
-  }
-
-  children = [].concat(...children);
-  return { nodeName, attributes, children };
+export function ParseJsx(
+  nodeName: string | ((attributes: Jsx['attributes'], children: Jsx['children']) => Jsx),
+  attributes?: Jsx['attributes'],
+  ...children: (Jsx | string)[]
+): Jsx {
+  return typeof nodeName === 'function' ?
+    nodeName(attributes || {}, children) :
+    { nodeName, attributes, children: ([] as (Jsx | string)[]).concat(...children) };
 }
 
 export class JsxRenderer {
   private constructor() { }
 
-  public static RenderJsx(jsx: Jsx, container: QueryableContainer = document): string {
-    return JsxRenderer.transformJsxToHtml(jsx, container)
-      .outerHTML
+  public static RenderJsx(jsx: Jsx, documentRef: OptionalDocument = globalThis.document || null): string {
+    return JsxRenderer.transformJsxToHtml(jsx, documentRef)
       .replace(/<(f|.f)ragment>/g, Strings.Empty);
   }
 
   private static addElementEventListener(
-    attribute: string,
-    jsx: Jsx,
-    element: HTMLElement,
-    container: QueryableContainer
-  ) {
-    const event = attribute.split('on')[1] as EventTypes;
-    const func = jsx.attributes?.[attribute] as unknown as (event: Event | null) => any;
-    const id = (element.attributes['id' as any] ? element.attributes['id' as any].nodeValue : Guid.NewGuid()) as string;
-    element.setAttribute('id', id);
+    attributeName: string,
+    handler: (event: Event | null) => void | undefined,
+    element: string,
+    documentRef: OptionalDocument
+  ): string {
+    if (documentRef) {
+      const event = attributeName.split('on')[1] as EventTypes;
+      let id: string;
+      if (element.includes(' id')) {
+        id = element.split(' id="')[1].split('"')[0];
+      } else {
+        id = Guid.NewGuid();
+        element += ` id="${id}"`;
+      }
 
-    asap(() => {
-      container.querySelector(`[id="${id}"]`)?.addEventListener(event, func);
-    });
+      setTimeout(() => {
+        try {
+          documentRef.querySelector(`[id="${id}"]`)?.addEventListener(event, handler);
+        } catch { /* empty */ }
+      });
+    }
+
+    return element;
   }
 
   // eslint-disable-next-line complexity
-  private static transformJsxToHtml(jsx: Jsx, container: QueryableContainer): HTMLElement {
-    const dom: HTMLElement = document.createElement(jsx.nodeName);
+  private static transformJsxToHtml(jsx: Jsx, documentRef: OptionalDocument): string {
+    let element = `<${jsx.nodeName}`;
 
     for (const key in jsx.attributes) {
-      if (DomEvents.includes(key)) {
-        this.addElementEventListener(key, jsx, dom, container);
+      const value = jsx.attributes[key];
+      if (key.startsWith('on')) {
+        element = this.addElementEventListener(key, value as any, element, documentRef);
       } else {
-        const value = jsx.attributes[key];
-        const shouldAddAttribute = !(typeof value === 'boolean' && value === false);
+        const shouldAddAttribute = value !== undefined && !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
-          dom.setAttribute(key, jsx.attributes[key].toString());
+          element += ` ${key}="${value.toString()}"`;
         }
       }
     }
 
+    element += '>';
+
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
-        dom.appendChild(document.createTextNode(child.toString()));
+        element += child.toString()
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#x27;');
       } else if (child) {
-        dom.appendChild(JsxRenderer.transformJsxToHtml(child, container));
+        element += JsxRenderer.transformJsxToHtml(child, documentRef);
       }
     }
 
-    return dom;
+    return `${element}${!voidElementTagNames.includes(jsx.nodeName) ? `</${jsx.nodeName}>` : Strings.Empty}`;
   }
 }
