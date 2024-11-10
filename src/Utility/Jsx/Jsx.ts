@@ -6,7 +6,7 @@ type OptionalDocument = Document | null;
 const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
 export type Jsx = {
-  attributes?: Record<string, string | number | boolean | undefined | ((event: Event | null) => void)> | null,
+  attributes?: Record<string, string | number | boolean | undefined | null | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
   nodeName: string
 };
@@ -66,7 +66,7 @@ export class JsxRenderer {
       if (key.startsWith('on')) {
         element = this.addElementEventListener(key, value as any, element, documentRef);
       } else {
-        const shouldAddAttribute = value !== undefined && !(typeof value === 'boolean' && value === false);
+        const shouldAddAttribute = value !== undefined && value !== null && !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
           element += ` ${key}="${value.toString()}"`;
         }

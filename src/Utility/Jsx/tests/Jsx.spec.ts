@@ -284,4 +284,16 @@ describe('JsxRenderer', () => {
     const expectedOuterHtml = '<input type="checkbox">';
     expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
+
+  it('should not render an attribute with the value null', async () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'input',
+      attributes: {
+        type: 'checkbox',
+        value: null
+      }
+    };
+    const expectedOuterHtml = '<input type="checkbox">';
+    expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
 });
