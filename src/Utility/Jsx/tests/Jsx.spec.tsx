@@ -62,6 +62,26 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
+  it('should set attributes defined in jsx', () => {
+    expect(JsxRenderer.RenderJsx(<div class="test"><p>test</p></div>)).toEqual('<div class=\"test\"><p>test</p></div>');
+  });
+
+  it('should set global attributes given to render jsx', () => {
+    const Foo = ({ test }: { test?: { pathname: string } }) => <p>{test?.pathname}</p>;
+    expect(JsxRenderer.RenderJsx(
+      <div>
+        <Foo test={{ pathname: '/local' }} />
+        <Foo />
+      </div>,
+      undefined,
+      {
+        test: {
+          pathname: '/global'
+        }
+      }
+    )).toEqual('<div><p>/local</p><p>/global</p></div>');
+  });
+
   it('should return jsx when a child is undefined', () => {
     const undefinedVariable = undefined;
     const jsxToParse: Jsx = {

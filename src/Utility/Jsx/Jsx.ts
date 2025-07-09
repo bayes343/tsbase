@@ -5,29 +5,30 @@ import { Strings } from '../../System/Strings';
 type OptionalDocument = Document | null;
 const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
+type JsxFunc = ((attributes: Jsx['attributes'], children: Jsx['children']) => Jsx);
+
 export type Jsx = {
   attributes?: Record<string, string | number | boolean | undefined | null | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
-  nodeName: string
+  nodeName: string | JsxFunc
 };
 
 export const Fragment = 'fragment';
 
+
 export function ParseJsx(
-  nodeName: string | ((attributes: Jsx['attributes'], children: Jsx['children']) => Jsx),
+  nodeName: string | JsxFunc,
   attributes?: Jsx['attributes'],
   ...children: (Jsx | string)[]
 ): Jsx {
-  return typeof nodeName === 'function' ?
-    nodeName(attributes || {}, children) :
-    { nodeName, attributes, children: ([] as (Jsx | string)[]).concat(...children) };
+  return { nodeName, attributes, children: ([] as (Jsx | string)[]).concat(...children) };
 }
 
 export class JsxRenderer {
   private constructor() { }
 
-  public static RenderJsx(jsx: Jsx, documentRef: OptionalDocument = globalThis.document || null): string {
-    return JsxRenderer.transformJsxToHtml(jsx, documentRef)
+  public static RenderJsx(jsx: Jsx, documentRef: OptionalDocument = globalThis.document || null, globalAttributes = {}): string {
+    return JsxRenderer.transformJsxToHtml(jsx, documentRef, globalAttributes)
       .replace(/<(f|.f)ragment>/g, Strings.Empty);
   }
 
@@ -58,7 +59,8 @@ export class JsxRenderer {
   }
 
   // eslint-disable-next-line complexity
-  private static transformJsxToHtml(jsx: Jsx, documentRef: OptionalDocument): string {
+  private static transformJsxToHtml(jsx: Jsx, documentRef: OptionalDocument, globalAttributes = {}): string {
+    jsx = typeof jsx.nodeName === 'function' ? jsx.nodeName({ ...globalAttributes, ...jsx.attributes }, jsx.children) : jsx;
     let element = `<${jsx.nodeName}`;
 
     for (const key in jsx.attributes) {
@@ -84,10 +86,11 @@ export class JsxRenderer {
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#x27;');
       } else if (child) {
-        element += JsxRenderer.transformJsxToHtml(child, documentRef);
+        element += JsxRenderer.transformJsxToHtml(child, documentRef, globalAttributes);
       }
     }
 
-    return `${element}${!voidElementTagNames.includes(jsx.nodeName) ? `</${jsx.nodeName}>` : Strings.Empty}`;
+    return `${element}${typeof jsx.nodeName === 'string' && !voidElementTagNames.includes(jsx.nodeName) ?
+      `</${jsx.nodeName}>` : Strings.Empty}`;
   }
 }
