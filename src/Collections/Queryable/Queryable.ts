@@ -194,7 +194,7 @@ export class Queryable<T> extends Array<T> {
    * @param func
    */
   public Distinct(): Queryable<T> {
-    const itemsToReturn = [];
+    const itemsToReturn: T[] = [];
 
     for (let index = 0; index < this.length; index++) {
       const element = this[index];
