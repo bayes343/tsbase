@@ -87,7 +87,7 @@ export class JsonSerializer implements ISerializer {
   }
 
   private getArrayValuesFromSerializer(property: any, json: any): Array<any> {
-    const values = [];
+    const values: any[] = [];
     if (property) {
       for (const element of json) {
         values.push(this.getValueFromSerializer(property, element));
