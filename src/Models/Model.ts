@@ -13,7 +13,7 @@ export abstract class Model<T> {
 
   public static GetKeyFromMemberFunc(member: (func: any) => any): string {
     try {
-      const postReturnString = member.toString().split('return')[1];
+      const postReturnString = member.toString().split('=>')[1];
       const splitChar = postReturnString.includes('.') ? '.' : '[';
       return postReturnString.split(splitChar)[1].replace(Regex.NonAlphaNumeric, '').trim();
     } catch {
