@@ -4,12 +4,13 @@ import { MetadataKeys } from './MetadataKeys';
 import { RequiredValidation, RangeValidation, RegExpValidation, StringLengthValidation, OptionValidation } from './Validations/module';
 import { InputTypes } from './inputTypes';
 
-function metadata<T>(metadataKey: MetadataKeys, value: any) {
-  return function (target: Model<T>, key: string) {
-    const metaData = Model.Metadata[metadataKey] ||
-      (Model.Metadata[metadataKey] = {});
-
-    metaData[`${target.constructor.name}-${key}`] = value;
+function metadata(metadataKey: MetadataKeys, value: any) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    member.addInitializer(function () {
+      const metaData = Model.Metadata[metadataKey] || (Model.Metadata[metadataKey] = {});
+      const className = (this as any).constructor.name;
+      metaData[`${className}-${String(member.name)}`] = value;
+    });
   };
 }
 
@@ -26,42 +27,45 @@ export function InputType(inputType: InputTypes) {
 }
 
 export function Validations<T>(validations: Array<IValidation<Model<T>>>) {
-  return function (target: Model<T>, key: string) {
-    const metaData = Model.Metadata[MetadataKeys.Validations] ||
-      (Model.Metadata[MetadataKeys.Validations] = {});
-
-    const validationMetadata = metaData[`${target.constructor.name}-${key}`];
-    metaData[`${target.constructor.name}-${key}`] = validationMetadata ? validationMetadata.concat(validations) : validations;
+  return function (_, member: ClassFieldDecoratorContext) {
+    member.addInitializer(function () {
+      const metaData = Model.Metadata[MetadataKeys.Validations] || (Model.Metadata[MetadataKeys.Validations] = {});
+      const className = (this as any).constructor.name;
+      const memberName = String(member.name);
+      const validationMetadata = metaData[`${className}-${memberName}`];
+      metaData[`${className}-${memberName}`] = validationMetadata ? validationMetadata.concat(validations) : validations;
+    });
   };
 }
 
-export function Options<T>(options: Record<string, string>, customErrorMessage?: string) {
-  return function (target: Model<T>, key: string) {
-    Validations([new OptionValidation(key, customErrorMessage)])(target, key);
-    metadata(MetadataKeys.Options, options)(target, key);
+export function Options(options: Record<string, string>, customErrorMessage?: string) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    const memberName = String(member.name);
+    Validations([new OptionValidation(memberName, customErrorMessage)])(_, member);
+    metadata(MetadataKeys.Options, options)(_, member);
   };
 }
 
-export function Required<T>(customErrorMessage?: string) {
-  return function (target: Model<T>, key: string) {
-    Validations([new RequiredValidation(key, customErrorMessage)])(target, key);
+export function Required(customErrorMessage?: string) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    Validations([new RequiredValidation(String(member.name), customErrorMessage)])(_, member);
   };
 }
 
-export function Range<T>(minimum: number, maximum: number, customErrorMessage?: string) {
-  return function (target: Model<T>, key: string) {
-    Validations([new RangeValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+export function Range(minimum: number, maximum: number, customErrorMessage?: string) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    Validations([new RangeValidation(String(member.name), minimum, maximum, customErrorMessage)])(_, member);
   };
 }
 
-export function StringLength<T>(minimum: number, maximum: number, customErrorMessage?: string) {
-  return function (target: Model<T>, key: string) {
-    Validations([new StringLengthValidation(key, minimum, maximum, customErrorMessage)])(target, key);
+export function StringLength(minimum: number, maximum: number, customErrorMessage?: string) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    Validations([new StringLengthValidation(String(member.name), minimum, maximum, customErrorMessage)])(_, member);
   };
 }
 
-export function RegExp<T>(regex: RegExp, customErrorMessage?: string) {
-  return function (target: Model<T>, key: string) {
-    Validations([new RegExpValidation(key, regex, customErrorMessage)])(target, key);
+export function RegExp(regex: RegExp, customErrorMessage?: string) {
+  return function (_, member: ClassFieldDecoratorContext) {
+    Validations([new RegExpValidation(String(member.name), regex, customErrorMessage)])(_, member);
   };
 }

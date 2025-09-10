@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { Model } from '../Model';
 import { Label, Options, Required, Range, RegExp, StringLength, Description, InputType } from '../Metadata';
 import { Strings } from '../../System/Strings';
@@ -12,25 +13,36 @@ enum Genders {
 class ModelTest extends Model<ModelTest> {
   @Label('full name')
   @Required()
-  public Name = '';
+  public Name: string;
 
   @Range(0, 120)
   @Description('Age of subject between 0 and 120')
   @InputType(InputTypes.Number)
-  public Age = 0;
+  public Age: number;
 
   @Options(Genders)
-  public Gender: Genders = Genders.Male;
+  public Gender: Genders;
 
   @Required()
   @RegExp(Regex.Email, 'Must be a valid email address')
-  public Email: string = 'some@email.com';
+  public Email: string;
 
   @RegExp(Regex.Email)
-  public SecondaryEmail: string = '';
+  public SecondaryEmail: string;
 
   @StringLength(1, 100)
-  public Notes = Strings.Space;
+  public Notes: string;
+
+  constructor() {
+    super();
+
+    this.Name = Strings.Empty;
+    this.Age = 0;
+    this.Email = 'some@email.com';
+    this.SecondaryEmail = Strings.Empty;
+    this.Notes = Strings.Space;
+    this.Gender = Genders.Male;
+  }
 }
 
 describe('Model', () => {
