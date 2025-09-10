@@ -13,6 +13,7 @@ enum Genders {
 class ModelTest extends Model<ModelTest> {
   @Label('full name')
   @Required()
+  @Required()
   public Name: string;
 
   @Range(0, 120)
@@ -70,6 +71,13 @@ describe('Model', () => {
 
   it('should return an empty object for options when none are declared', () => {
     expect(classUnderTest.OptionsFor(l => l.Name)).toEqual({});
+  });
+
+  it('should only add a validation once via decorator', () => {
+    const falsyValidation = classUnderTest.Validate(m => m.Name);
+
+    expect(falsyValidation.ErrorMessages).toEqual(['"full name" is a required field.']);
+    expect(falsyValidation.IsSuccess).toBeFalsy();
   });
 
   it('should validate a single field on the model', () => {

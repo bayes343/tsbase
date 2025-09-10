@@ -32,8 +32,9 @@ export function Validations<T>(validations: Array<IValidation<Model<T>>>) {
       const metaData = Model.Metadata[MetadataKeys.Validations] || (Model.Metadata[MetadataKeys.Validations] = {});
       const className = (this as any).constructor.name;
       const memberName = String(member.name);
-      const validationMetadata = metaData[`${className}-${memberName}`];
-      metaData[`${className}-${memberName}`] = validationMetadata ? validationMetadata.concat(validations) : validations;
+      const validationMetadata: IValidation<unknown>[] = metaData[`${className}-${memberName}`] || [];
+      validations = validations.filter(v => !validationMetadata.find(existing => JSON.stringify(v) === JSON.stringify(existing)));
+      metaData[`${className}-${memberName}`] = validationMetadata.concat(validations);
     });
   };
 }
