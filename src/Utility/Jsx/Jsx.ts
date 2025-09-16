@@ -4,13 +4,15 @@ import { Strings } from '../../System/Strings';
 
 type OptionalDocument = Document | null;
 const voidElementTagNames = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
-
 type JsxFunc = ((attributes: Jsx['attributes'], children: Jsx['children']) => Jsx);
+type ClassComponent = { new(): { render: JsxFunc } };
+
+const isClassComponent = (nodeName: string | JsxFunc | ClassComponent): nodeName is ClassComponent => !!nodeName['prototype'];
 
 export type Jsx = {
   attributes?: Record<string, string | number | boolean | undefined | null | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
-  nodeName: string | JsxFunc
+  nodeName: string | JsxFunc | ClassComponent
 };
 
 export const Fragment = 'fragment';
@@ -60,7 +62,12 @@ export class JsxRenderer {
 
   // eslint-disable-next-line complexity
   private static transformJsxToHtml(jsx: Jsx, documentRef: OptionalDocument, globalAttributes = {}): string {
-    jsx = typeof jsx.nodeName === 'function' ? jsx.nodeName({ ...globalAttributes, ...jsx.attributes }, jsx.children) : jsx;
+    const attributes = { ...globalAttributes, ...jsx.attributes };
+    if (typeof jsx.nodeName === 'function') {
+      jsx = isClassComponent(jsx.nodeName) ?
+        new jsx.nodeName().render(attributes, jsx.children) :
+        jsx.nodeName({ ...globalAttributes, ...jsx.attributes }, jsx.children);
+    }
     let element = `<${jsx.nodeName}`;
 
     for (const key in jsx.attributes) {

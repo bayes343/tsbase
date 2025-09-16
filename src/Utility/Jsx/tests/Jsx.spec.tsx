@@ -316,4 +316,13 @@ describe('JsxRenderer', () => {
     const expectedOuterHtml = '<input type="checkbox">';
     expect(await JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
+
+  class Component {
+    render({ test }, children) {
+      return <p id={test}>{children}</p>;
+    }
+  }
+  it('should render the jsx response of a class\'s render method', () => {
+    expect(JsxRenderer.RenderJsx(<Component test="fake id">test</Component>)).toEqual('<p id="fake id">test</p>');
+  });
 });
