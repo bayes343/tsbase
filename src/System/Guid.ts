@@ -1,7 +1,11 @@
+/**
+ * @deprecated To be removed in v8 in favor of crypto.randomUUID
+ */
 export class Guid {
   private constructor() { }
 
   /**
+   * @deprecated To be removed in v8 in favor of crypto.randomUUID
    * Returns a new globally unique identifier (GUID)
    */
   public static NewGuid(): string {
