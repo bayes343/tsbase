@@ -209,6 +209,7 @@ export class Queryable<T> extends Array<T> {
   }
 
   /**
+   * V8 change - change params to an object
    * Perform a full text search on a collection for a given search term. Elements containing the entire search term
    * are given precedence over keyword matches.
    * @param term The term being searched for
@@ -221,7 +222,8 @@ export class Queryable<T> extends Array<T> {
     term: string,
     minimumKeywordLength = 3,
     stopWords = new Array<string>(),
-    ignorableSuffixCharacters = new Array<string>()
+    ignorableSuffixCharacters = new Array<string>(),
+    fuzzyMatchPercentage = 0
   ): Queryable<T> {
     const keywords = this.getKeywordsForTerm(term, ignorableSuffixCharacters);
 
@@ -230,7 +232,7 @@ export class Queryable<T> extends Array<T> {
     const exactMatches = this.filter(
       item => JSON.stringify(item).toLowerCase().indexOf(term.toLowerCase()) >= 0).slice();
 
-    const keywordMatches = this.getKeywordMatches(keywords, minimumKeywordLength, stopWords);
+    const keywordMatches = this.getKeywordMatches(keywords, minimumKeywordLength, stopWords, fuzzyMatchPercentage);
 
     const distinctResults = Queryable.From(exactMatches.concat(keywordMatches)).Distinct();
     return distinctResults;
@@ -251,15 +253,34 @@ export class Queryable<T> extends Array<T> {
     return keywords;
   }
 
-  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[]) {
+  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[], fuzzyMatchPercentage: number) {
     let keywordMatches = new Array<T>();
 
     if (keywords.length > 0) {
       keywords.forEach(keyword => {
-        if (keyword.length >= minimumKeywordLength &&
-          stopWords.indexOf(keyword.toLowerCase()) < 0) {
-          const keywordMatchesFound = this.filter(
-            item => JSON.stringify(item).toLowerCase().indexOf(keyword.toLowerCase()) >= 0);
+        if (keyword.length >= minimumKeywordLength && !stopWords.includes(keyword.toLowerCase())) {
+          const keywordMatchesFound = this.filter(item => {
+            const stringifiedItem = JSON.stringify(item).toLowerCase();
+            let matches = stringifiedItem.includes(keyword.toLowerCase());
+            if (fuzzyMatchPercentage > 0) {
+              const itemKeywords = stringifiedItem.split(/[\s\"]/);
+              itemKeywords.forEach(itemKeyword => {
+                const increment = 100 / itemKeyword.length;
+                let matchPercentage = 0;
+
+                itemKeyword.split('').forEach((l, i) => {
+                  if (l.toLowerCase() === keyword[i]?.toLowerCase()) {
+                    matchPercentage += increment;
+                  }
+                });
+
+                if (matchPercentage >= fuzzyMatchPercentage) {
+                  matches = true;
+                }
+              });
+            }
+            return matches;
+          });
           keywordMatches = keywordMatches.concat(keywordMatchesFound.slice());
         }
       });

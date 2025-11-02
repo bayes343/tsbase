@@ -211,6 +211,18 @@ describe('Queryable', () => {
     expect(badSearch.length).toEqual(0);
   });
 
+  it('should return a fuzzy match when candidate matches equal or greater to given percentage', () => {
+    const badSearch = Queryable.From(dataToSearch).Search('Hane', undefined, undefined, undefined, 75).slice();
+    expect(badSearch).toEqual([
+      { name: 'Jane Doe', age: 18, gender: 'female' }
+    ]);
+  });
+
+  it('should NOT return a fuzzy match when candidate matches below given percentage', () => {
+    const badSearch = Queryable.From(dataToSearch).Search('Hane', undefined, undefined, undefined, 80).slice();
+    expect(badSearch.length).toEqual(0);
+  });
+
   it('should search a collection with custom keyword length', () => {
     const ageSearch = Queryable.From(dataToSearch).Search('18', 2);
     const failedDoeSearch = Queryable.From(dataToSearch).Search('So Doe', 4);
