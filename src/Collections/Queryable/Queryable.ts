@@ -40,7 +40,7 @@ export class Queryable<T> extends Array<T> {
   public Except(items: Array<T>): Queryable<T> {
     return this.mutableArrayQuery((array) => {
       const stringifiedItemsToExclude = JSON.stringify(items);
-      array = array.filter(item => stringifiedItemsToExclude.indexOf(JSON.stringify(item)) < 0);
+      array = array.filter(item => !stringifiedItemsToExclude.includes(JSON.stringify(item)));
 
       return Queryable.From(array);
     });
@@ -200,7 +200,7 @@ export class Queryable<T> extends Array<T> {
       const element = this[index];
       const stringifiedItems = JSON.stringify(itemsToReturn);
 
-      if (stringifiedItems.indexOf(JSON.stringify(element)) === -1) {
+      if (!stringifiedItems.includes(JSON.stringify(element))) {
         itemsToReturn.push(element);
       }
     }
@@ -230,7 +230,7 @@ export class Queryable<T> extends Array<T> {
     stopWords = stopWords.map(s => s.toLowerCase());
 
     const exactMatches = this.filter(
-      item => JSON.stringify(item).toLowerCase().indexOf(term.toLowerCase()) >= 0).slice();
+      item => JSON.stringify(item).toLowerCase().includes(term.toLowerCase())).slice();
 
     const keywordMatches = this.getKeywordMatches(keywords, minimumKeywordLength, stopWords, fuzzyMatchPercentage);
 
@@ -245,7 +245,7 @@ export class Queryable<T> extends Array<T> {
       element = element.replace(Regex.NonAlphaNumeric, Strings.Empty);
 
       const lastCharacter = element[element.length - 1];
-      if (ignorableSuffixCharacters && ignorableSuffixCharacters.indexOf(lastCharacter) >= 0) {
+      if (ignorableSuffixCharacters && ignorableSuffixCharacters.includes(lastCharacter)) {
         keywords.push(element.split(lastCharacter)[0]);
       }
     });

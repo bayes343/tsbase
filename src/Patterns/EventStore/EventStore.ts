@@ -180,12 +180,12 @@ export class EventStore<T extends Object> implements IEventStore<T> {
   private childOf(parentPath: string, childPath: string): boolean {
     return parentPath.startsWith(`${childPath}.`) ||
       parentPath.startsWith(`.${childPath}`) ||
-      parentPath.indexOf(`.${childPath}.`) >= 0;
+      parentPath.includes(`.${childPath}.`);
   }
 
   private parentOf(parentPath: string, childPath: string): boolean {
     return childPath.startsWith(`${parentPath}.`) ||
       childPath.startsWith(`.${parentPath}`) ||
-      childPath.indexOf(`.${parentPath}.`) >= 0;
+      childPath.includes(`.${parentPath}.`);
   }
 }

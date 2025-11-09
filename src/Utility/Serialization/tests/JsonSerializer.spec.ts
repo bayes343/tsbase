@@ -173,7 +173,7 @@ describe('JsonSerializer', () => {
     const productInstance: Product = classUnderTest.Deserialize(Product, JSON.parse(productJson));
 
     expect(typeof productInstance.categories).toBe('object');
-    expect(productInstance.categories.indexOf('toy') >= 0).toBeTruthy();
+    expect(productInstance.categories).toContain('toy');
   });
 
   it('should parse a json key without acknowledging hyphens, capitalization, or spaces', () => {
@@ -187,7 +187,7 @@ describe('JsonSerializer', () => {
 
     expect(verifyResponseInstance.Success).toEqual(false);
     expect(verifyResponseInstance.ErrorCodes.length).toEqual(2);
-    expect(verifyResponseInstance.ErrorCodes.indexOf('missing-input-response')).toEqual(0);
-    expect(verifyResponseInstance.ErrorCodes.indexOf('missing-input-secret')).toEqual(1);
+    expect(verifyResponseInstance.ErrorCodes).toContain('missing-input-response');
+    expect(verifyResponseInstance.ErrorCodes).toContain('missing-input-secret');
   });
 });

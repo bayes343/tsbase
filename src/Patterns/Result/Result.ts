@@ -34,7 +34,7 @@ export class Result<T> {
    * @param error
    */
   public AddError(error: string): void {
-    if (this.ErrorMessages.indexOf(error) === -1) {
+    if (!this.ErrorMessages.includes(error)) {
       this.ErrorMessages.push(error);
     }
   }

@@ -27,8 +27,8 @@ export class FormUrl {
   public static DecodeToJson<T>(formData: string): T {
     const json: any = {};
 
-    if (formData.indexOf('=') >= 0) {
-      if (formData.indexOf('&') >= 0) {
+    if (formData.includes('=')) {
+      if (formData.includes('&')) {
         const keyValuePairs = formData.split('&');
         keyValuePairs.forEach(keyValuePair => {
           FormUrl.SetKeyValuePair(keyValuePair, json);

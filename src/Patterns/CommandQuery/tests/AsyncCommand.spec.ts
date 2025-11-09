@@ -22,6 +22,6 @@ describe('AsyncCommand', () => {
     const result = await classUnderTest.Execute();
 
     expect(result.IsSuccess).toBeFalsy();
-    expect(result.ErrorMessages.indexOf('test') >= 0).toBeTruthy();
+    expect(result.ErrorMessages).toContain('test');
   });
 });

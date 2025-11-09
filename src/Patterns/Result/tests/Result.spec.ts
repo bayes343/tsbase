@@ -33,7 +33,7 @@ describe('Result', () => {
 
     result.AddError(error);
 
-    expect(result.ErrorMessages.indexOf(error) >= 0).toBeTruthy();
+    expect(result.ErrorMessages).toContain(error);
     expect(result.ErrorMessages.length).toEqual(1);
   });
 
@@ -44,7 +44,7 @@ describe('Result', () => {
 
     result.AddError(error);
 
-    expect(result.ErrorMessages.indexOf(error) >= 0).toBeTruthy();
+    expect(result.ErrorMessages).toContain(error);
     expect(result.ErrorMessages.length).toEqual(1);
   });
 });
