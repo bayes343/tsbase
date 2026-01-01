@@ -77,7 +77,7 @@ export class JsxRenderer {
       } else {
         const shouldAddAttribute = value !== undefined && value !== null && !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
-          element += ` ${key}="${JsxRenderer.sanitize(value.toString())}"`;
+          element += ` ${key}="${JsxRenderer.sanitize(value.toString(), true)}"`;
         }
       }
     }
@@ -96,11 +96,20 @@ export class JsxRenderer {
       `</${jsx.nodeName}>` : Strings.Empty}`;
   }
 
-  private static sanitize(value: string): string {
-    return value.replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#x27;');
+  private static sanitize(value: string, allowAmpersand = false): string {
+    const replacePatterns: [RegExp, string][] = [
+      [/&/g, '&amp;'],
+      [/</g, '&lt;'],
+      [/>/g, '&gt;'],
+      [/"/g, '&quot;'],
+      [/'/g, '&#x27;']
+    ];
+    let sanitizedValue = value;
+    replacePatterns.slice(allowAmpersand ? 1 : 0).forEach(
+      (pattern) => {
+        sanitizedValue = sanitizedValue.replace(pattern[0], pattern[1]);
+      }
+    );
+    return sanitizedValue;
   }
 }
