@@ -74,6 +74,38 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
   });
 
+  it('should set bool attributes defined in jsx', () => {
+    let jsxToParse: Jsx = {
+      nodeName: 'div',
+      attributes: { custom: true }
+    };
+    let expectedOuterHtml = '<div custom="true"></div>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+
+    jsxToParse = {
+      nodeName: 'div',
+      attributes: { custom: false }
+    };
+    expectedOuterHtml = '<div></div>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
+  it('should set number attributes defined in jsx', () => {
+    let jsxToParse: Jsx = {
+      nodeName: 'div',
+      attributes: { custom: 1 }
+    };
+    let expectedOuterHtml = '<div custom="1"></div>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+
+    jsxToParse = {
+      nodeName: 'div',
+      attributes: { custom: 0 }
+    };
+    expectedOuterHtml = '<div custom="0"></div>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toEqual(expectedOuterHtml);
+  });
+
   it('should set attributes defined in jsx', () => {
     expect(JsxRenderer.RenderJsx(<div class="test"><p>test</p></div>)).toEqual('<div class=\"test\"><p>test</p></div>');
   });

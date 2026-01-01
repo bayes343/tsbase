@@ -86,7 +86,7 @@ export class JsxRenderer {
 
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
-        element += JsxRenderer.sanitize(child);
+        element += JsxRenderer.sanitize(child.toString());
       } else if (child) {
         element += JsxRenderer.transformJsxToHtml(child, documentRef, globalAttributes);
       }
