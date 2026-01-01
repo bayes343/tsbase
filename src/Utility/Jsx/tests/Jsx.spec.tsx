@@ -48,6 +48,18 @@ describe('JsxRenderer', () => {
     expect(JsxRenderer.RenderJsx(jsxToParse)).toContain(expectedOuterHtml);
   });
 
+  it('should return the neutralized outer html of a parsed jsx node sketchy attribute', async () => {
+    const jsxToParse: Jsx = {
+      nodeName: 'div',
+      children: ['super safe'],
+      attributes: {
+        id: 'fake_id\"></div> <script>alert(document.cookie)</script>'
+      }
+    };
+    const expectedOuterHtml = '<div id=\"fake_id&quot;&gt;&lt;/div&gt; &lt;script&gt;alert(document.cookie)&lt;/script&gt;\">super safe</div>';
+    expect(JsxRenderer.RenderJsx(jsxToParse)).toContain(expectedOuterHtml);
+  });
+
   it('should set attributes defined in jsx', () => {
     const jsxToParse: Jsx = {
       nodeName: 'div',

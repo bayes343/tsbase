@@ -77,7 +77,7 @@ export class JsxRenderer {
       } else {
         const shouldAddAttribute = value !== undefined && value !== null && !(typeof value === 'boolean' && value === false);
         if (shouldAddAttribute) {
-          element += ` ${key}="${value.toString()}"`;
+          element += ` ${key}="${JsxRenderer.sanitize(value.toString())}"`;
         }
       }
     }
@@ -86,12 +86,7 @@ export class JsxRenderer {
 
     for (const child of jsx.children || []) {
       if (typeof child === 'string' || typeof child === 'number') {
-        element += child.toString()
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#x27;');
+        element += JsxRenderer.sanitize(child);
       } else if (child) {
         element += JsxRenderer.transformJsxToHtml(child, documentRef, globalAttributes);
       }
@@ -99,5 +94,13 @@ export class JsxRenderer {
 
     return `${element}${typeof jsx.nodeName === 'string' && !voidElementTagNames.includes(jsx.nodeName) ?
       `</${jsx.nodeName}>` : Strings.Empty}`;
+  }
+
+  private static sanitize(value: string): string {
+    return value.replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#x27;');
   }
 }
