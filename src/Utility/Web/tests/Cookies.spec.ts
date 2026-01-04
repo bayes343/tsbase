@@ -18,4 +18,12 @@ describe('Cookies', () => {
     expect(map.get('three')).toEqual('3');
     expect(map.get('4')).toEqual('four');
   });
+
+  it('should return null when cookie not set', () => {
+    expect(Cookies.GetCookieValue('test' as any, '')).toEqual(null);
+  });
+
+  it('should return null for empty cookies value', () => {
+    expect(Cookies.GetCookieValue('test' as any, 'test=')).toEqual(null);
+  });
 });

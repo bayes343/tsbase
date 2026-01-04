@@ -18,4 +18,11 @@ export class Cookies {
 
     return map;
   }
+
+  public static GetCookieValue(key: string, cookieString: string): string | null {
+    return cookieString
+      .split(';')
+      .find((e) => e.trim().split('=')[0] === key)
+      ?.split('=')[1] || null;
+  }
 }
