@@ -4,7 +4,8 @@
     "module": "commonjs",
     "lib": [
       "dom",
-      "es2018"
+      "es2018",
+      "webworker"
     ],
     "declaration": true,
     "sourceMap": true,

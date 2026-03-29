@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { Observable } from '../../Patterns/Observable/Observable';
 import { LogEntry } from './LogEntry';
+import { LogLevel } from './LogLevel';
 
 export class Logger {
   private static instance: Logger | null = null;
@@ -26,5 +28,16 @@ export class Logger {
   public Log(entry: LogEntry): void {
     Logger.Instance.LogEntries.push(entry);
     Logger.Instance.EntryLogged.Publish(entry);
+  }
+
+  /**
+   * Forwards log entries to console via standard console api - useful for debugging and dev envs
+   */
+  public static DisplayLogsInConsole() {
+    Logger.Instance.EntryLogged.Subscribe((le) => {
+      le?.Level === LogLevel.Info && console.log(le.Message);
+      le?.Level === LogLevel.Warn && console.warn(le.Message);
+      le?.Level === LogLevel.Error && console.error(le.Message);
+    });
   }
 }
