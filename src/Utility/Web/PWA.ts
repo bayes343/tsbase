@@ -25,6 +25,12 @@ export class PWA {
     private readonly version: string
   ) { }
 
+  /**
+   * Sets up worker context listeners to support offline capability, defaulting to a network first cache fallback strategy
+   * @param workerGlobalScopeRef typically "globalThis.self"
+   * @param staticAssets file pathnames to immediately cache for future use
+   * @param options other overrides
+   */
   public EnableOfflineCompatibility(
     workerGlobalScopeRef: ServiceWorkerGlobalScope,
     staticAssets: string[] = [],
@@ -104,6 +110,10 @@ export class PWA {
     });
   }
 
+  /**
+   * Add event listeners to apply haptic vibration on buttons and links when "clicked"
+   * @param pattern Milliseconds to "vibrate" on tap of buttons and links
+   */
   public static EnableHaptics(
     pattern: number | number[] = 100
   ) {
