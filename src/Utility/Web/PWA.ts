@@ -126,7 +126,7 @@ export class PWA {
 
     new Command(() => {
       Array.from(dependencies.windowRef.document.querySelectorAll('a, button')).forEach(e => {
-        e.addEventListener('click', () => navigator.vibrate(pattern));
+        e.addEventListener('click', () => dependencies.windowRef.navigator.vibrate(pattern));
       });
     }).Execute();
   }
