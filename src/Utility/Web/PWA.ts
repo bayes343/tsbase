@@ -115,14 +115,17 @@ export class PWA {
    * @param pattern Milliseconds to "vibrate" on tap of buttons and links
    */
   public static EnableHaptics(
-    pattern: number | number[] = 100
+    pattern: number | number[] = 100,
+    dependencies: {
+      windowRef: Window & typeof globalThis
+    } = { windowRef: globalThis.window }
   ) {
-    if (!globalThis.window) {
+    if (!dependencies.windowRef) {
       throw new Error(Errors.BrowserContextMethodCalledInWorker);
     }
 
     new Command(() => {
-      Array.from(document.querySelectorAll('a, button')).forEach(e => {
+      Array.from(dependencies.windowRef.document.querySelectorAll('a, button')).forEach(e => {
         e.addEventListener('click', () => navigator.vibrate(pattern));
       });
     }).Execute();
