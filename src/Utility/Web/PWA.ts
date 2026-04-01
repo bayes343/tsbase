@@ -7,7 +7,7 @@ const enum ServiceWorkerEvents {
   Fetch = 'fetch',
 }
 
-const enum CacheModes {
+export const enum CacheModes {
   NetworkFirst,
   CacheFirst
 }
@@ -43,7 +43,7 @@ export class PWA {
     if (options.cacheMode === CacheModes.CacheFirst) {
       throw new Error(`options.cacheMode "cacheFirst": ${Errors.NotImplemented}`);
     }
-    if (!workerGlobalScopeRef || globalThis.window) {
+    if (!workerGlobalScopeRef) {
       throw new Error(Errors.WorkerContextMethodCalledInBrowser);
     }
 

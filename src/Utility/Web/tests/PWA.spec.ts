@@ -1,6 +1,12 @@
-import { PWA } from '../PWA';
+import { CacheModes, PWA } from '../PWA';
 
 describe('PWA', () => {
+  let classUnderTest: PWA;
+
+  beforeEach(() => {
+    classUnderTest = new PWA('Test', '0.0.1');
+  });
+
   it('EnableHaptics should throw an error when the window is not defined', () => {
     expect(() => {
       PWA.EnableHaptics(undefined, null as any);
@@ -36,5 +42,19 @@ describe('PWA', () => {
     expect(eventListenerUsed).toEqual('click');
     callbackAdded();
     expect(patternUsed).toEqual(100);
+  });
+
+  it('EnableOfflineCompatibility should throw not implemented exception when "cache first" mode specified', () => {
+    expect(() => {
+      classUnderTest.EnableOfflineCompatibility({} as any, [], {
+        cacheMode: CacheModes.CacheFirst
+      });
+    }).toThrowError('options.cacheMode "cacheFirst": planned feature not yet implemented');
+  });
+
+  it('EnableOfflineCompatibility should throw context error when worker global scope ref not defined', () => {
+    expect(() => {
+      classUnderTest.EnableOfflineCompatibility(null as any);
+    }).toThrowError('webworker context method called in browser');
   });
 });
