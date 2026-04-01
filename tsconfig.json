@@ -33,6 +33,7 @@
     "jsx": "react",
     "jsxFactory": "ParseJsx",
     "jsxFragmentFactory": "Fragment",
+    "skipLibCheck": true
   },
   "exclude": [
     "./playground.ts",
