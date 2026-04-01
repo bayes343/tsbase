@@ -3,9 +3,7 @@ import { PWA } from '../PWA';
 describe('PWA', () => {
   it('EnableHaptics should throw an error when the window is not defined', () => {
     expect(() => {
-      PWA.EnableHaptics(undefined, {
-        windowRef: undefined as any
-      });
+      PWA.EnableHaptics(undefined, null as any);
     }).toThrowError('browser context method called in webworker');
   });
 
@@ -16,25 +14,23 @@ describe('PWA', () => {
     let callbackAdded = () => { };
 
     PWA.EnableHaptics(100, {
-      windowRef: {
-        navigator: {
-          vibrate: (pattern) => {
-            patternUsed = pattern;
-          }
-        },
-        document: {
-          querySelectorAll: (selector) => {
-            selectorUsed = selector;
-            return [{
-              addEventListener: (event, cb) => {
-                eventListenerUsed = event;
-                callbackAdded = cb;
-              }
-            }];
-          }
+      navigator: {
+        vibrate: (pattern) => {
+          patternUsed = pattern;
         }
-      } as any
-    });
+      },
+      document: {
+        querySelectorAll: (selector) => {
+          selectorUsed = selector;
+          return [{
+            addEventListener: (event, cb) => {
+              eventListenerUsed = event;
+              callbackAdded = cb;
+            }
+          }];
+        }
+      }
+    } as any);
 
     expect(selectorUsed).toEqual('a, button');
     expect(eventListenerUsed).toEqual('click');

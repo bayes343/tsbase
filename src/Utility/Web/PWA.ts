@@ -116,17 +116,15 @@ export class PWA {
    */
   public static EnableHaptics(
     pattern: number | number[] = 100,
-    dependencies: {
-      windowRef: Window & typeof globalThis
-    } = { windowRef: globalThis.window }
+    windowRef = window
   ) {
-    if (!dependencies.windowRef) {
+    if (!windowRef) {
       throw new Error(Errors.BrowserContextMethodCalledInWorker);
     }
 
     new Command(() => {
-      Array.from(dependencies.windowRef.document.querySelectorAll('a, button')).forEach(e => {
-        e.addEventListener('click', () => dependencies.windowRef.navigator.vibrate(pattern));
+      Array.from(windowRef.document.querySelectorAll('a, button')).forEach(e => {
+        e.addEventListener('click', () => windowRef.navigator.vibrate(pattern));
       });
     }).Execute();
   }
