@@ -104,4 +104,33 @@ describe('PWA', () => {
       '/bundle.js'
     ]);
   });
+
+  it('deleteOldCacheCommand called on activate event should get cached keys and delete them', async () => {
+    const deletedKeys: string[] = [];
+    globalThis.caches = {
+      keys: () => ([
+        '/index.html',
+        '/styles.css',
+        '/bundle.js'
+      ]),
+      delete: (key) => deletedKeys.push(key)
+    } as any;
+    const listeners: any = {};
+
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any);
+
+    let waitUntilPromise: Promise<any> = new Promise<void>((r) => r());
+    listeners.activate({
+      waitUntil: (promise: Promise<any>) => waitUntilPromise = promise
+    });
+    await waitUntilPromise;
+
+    expect(deletedKeys).toEqual([
+      '/index.html',
+      '/styles.css',
+      '/bundle.js'
+    ]);
+  });
 });
