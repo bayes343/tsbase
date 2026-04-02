@@ -57,4 +57,16 @@ describe('PWA', () => {
       classUnderTest.EnableOfflineCompatibility(null as any);
     }).toThrowError('webworker context method called in browser');
   });
+
+  it('EnableOfflineCompatibility should add correct event listeners', () => {
+    const listeners: any = {};
+
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any);
+
+    expect(listeners.install).toBeDefined();
+    expect(listeners.activate).toBeDefined();
+    expect(listeners.fetch).toBeDefined();
+  });
 });
