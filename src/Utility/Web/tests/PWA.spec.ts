@@ -69,4 +69,39 @@ describe('PWA', () => {
     expect(listeners.activate).toBeDefined();
     expect(listeners.fetch).toBeDefined();
   });
+
+  it('cacheFilesCommand called on install event should open a cache with the correct name and version and add static files to cache', async () => {
+    let cacheName = '';
+    let staticAssets: string[] = [];
+    globalThis.caches = {
+      open: (name) => {
+        cacheName = name;
+        return {
+          addAll: (sa) => staticAssets = sa
+        };
+      }
+    } as any;
+    const listeners: any = {};
+
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any, [
+      '/index.html',
+      '/styles.css',
+      '/bundle.js'
+    ]);
+
+    let waitUntilPromise: Promise<any> = new Promise<void>((r) => r());
+    listeners.install({
+      waitUntil: (promise: Promise<any>) => waitUntilPromise = promise
+    });
+    await waitUntilPromise;
+
+    expect(cacheName).toEqual('0.0.1Test');
+    expect(staticAssets).toEqual([
+      '/index.html',
+      '/styles.css',
+      '/bundle.js'
+    ]);
+  });
 });
