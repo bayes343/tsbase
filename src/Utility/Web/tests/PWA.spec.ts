@@ -1,9 +1,23 @@
+/* eslint-disable max-lines */
+import { Logger } from '../../Logger/module';
 import { CacheModes, PWA } from '../PWA';
 
 describe('PWA', () => {
+  let requestsMade: any[] = [];
+  let responses: any[] = [];
   let classUnderTest: PWA;
+  const fakeFetch = (req) => {
+    requestsMade.push(req);
+    return responses.shift();
+  };
+
+  beforeAll(() => {
+    globalThis.fetch = fakeFetch;
+  });
 
   beforeEach(() => {
+    requestsMade = [];
+    responses = [];
     classUnderTest = new PWA('Test', '0.0.1');
   });
 
@@ -132,5 +146,92 @@ describe('PWA', () => {
       '/styles.css',
       '/bundle.js'
     ]);
+  });
+
+  it('handleFetchCommand called on fetch event should handle uncached request', async () => {
+    responses = [{
+      clone: () => ({})
+    }];
+    const listeners: any = {};
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any);
+    globalThis.caches = {
+      open: () => ({
+        put: (_req, _cpy) => { }
+      })
+    } as any;
+
+    let respondedWith: any;
+    await listeners.fetch({
+      request: {
+        method: 'GET',
+        url: 'https://www.example.com'
+      },
+      respondWith: (v) => respondedWith = v
+    });
+    const resolved = await respondedWith;
+
+    expect(requestsMade).toEqual([{
+      method: 'GET',
+      url: 'https://www.example.com'
+    }]);
+    expect(resolved).toBeDefined();
+  });
+
+  it('handleFetchCommand called on fetch event should return cached response when network unavailable', async () => {
+    const listeners: any = {};
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any);
+    globalThis.caches = {
+      match: () => ({}),
+      open: () => ({
+        put: (_req, _cpy) => { }
+      })
+    } as any;
+
+    let respondedWith: any;
+    await listeners.fetch({
+      request: {
+        method: 'GET',
+        url: 'https://www.example.com'
+      },
+      respondWith: (v) => respondedWith = v
+    });
+    const resolved = await respondedWith;
+
+    expect(requestsMade).toEqual([{
+      method: 'GET',
+      url: 'https://www.example.com'
+    }]);
+    expect(resolved).toBeDefined();
+  });
+
+  it('handleFetchCommand called on fetch event should handle raised errors', async () => {
+    responses = [{
+      clone: () => ({})
+    }];
+    const listeners: any = {};
+    classUnderTest.EnableOfflineCompatibility({
+      addEventListener: (event, cb) => listeners[event] = cb
+    } as any);
+    globalThis.caches = {
+      open: () => ({
+        put: (_req, _cpy) => { throw new Error('test'); }
+      })
+    } as any;
+
+    let respondedWith: any;
+    await listeners.fetch({
+      request: {
+        method: 'GET',
+        url: 'https://www.example.com'
+      },
+      respondWith: (v) => respondedWith = v
+    });
+    await respondedWith;
+
+    expect(Logger.Instance.LogEntries[0].Message).toEqual('Failed to fetch');
   });
 });
