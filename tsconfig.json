@@ -23,7 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ],
     "esModuleInterop": true,

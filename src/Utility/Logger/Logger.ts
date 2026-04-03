@@ -30,14 +30,20 @@ export class Logger {
     Logger.Instance.EntryLogged.Publish(entry);
   }
 
+  private static readonly logLevelConsoleMethodMap: Record<LogLevel, typeof console.log | typeof console.warn | typeof console.error> = {
+    [LogLevel.Info]: console.log,
+    [LogLevel.Warn]: console.warn,
+    [LogLevel.Error]: console.error
+  };
+
   /**
    * Forwards log entries to console via standard console api - useful for debugging and dev envs
    */
   public static DisplayLogsInConsole() {
     Logger.Instance.EntryLogged.Subscribe((le) => {
-      le?.Level === LogLevel.Info && console.log(le.Message);
-      le?.Level === LogLevel.Warn && console.warn(le.Message);
-      le?.Level === LogLevel.Error && console.error(le.Message);
+      if (le) {
+        Logger.logLevelConsoleMethodMap[le.Level](le.Message);
+      }
     });
   }
 }
