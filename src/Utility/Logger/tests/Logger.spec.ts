@@ -1,10 +1,14 @@
+const logSpy = jest.spyOn(console, 'log');
 import { LogEntry } from '../LogEntry';
 import { Logger } from '../Logger';
 
 describe('Logger', () => {
-
   beforeEach(() => {
     Logger.Instance.LogEntries = [];
+  });
+
+  afterAll(() => {
+    logSpy.mockRestore();
   });
 
   it('should expose a static array of entries', () => {
@@ -30,5 +34,14 @@ describe('Logger', () => {
     Logger.Instance.Log(entry);
 
     expect(loggedEntry).toEqual(entry);
+  });
+
+  it('DisplayLogsInConsole should cause log entries to be logged via console methods', () => {
+    const entry = new LogEntry('test');
+
+    Logger.DisplayLogsInConsole();
+    Logger.Instance.Log(entry);
+
+    expect(logSpy).toHaveBeenCalledWith('test');
   });
 });

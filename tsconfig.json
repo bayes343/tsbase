@@ -4,7 +4,8 @@
     "module": "commonjs",
     "lib": [
       "dom",
-      "es2018"
+      "es2018",
+      "webworker"
     ],
     "declaration": true,
     "sourceMap": true,
@@ -22,7 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "types": [
-      "jasmine",
+      "jest",
       "node"
     ],
     "esModuleInterop": true,
@@ -32,6 +33,7 @@
     "jsx": "react",
     "jsxFactory": "ParseJsx",
     "jsxFragmentFactory": "Fragment",
+    "skipLibCheck": true
   },
   "exclude": [
     "./playground.ts",
