@@ -1,6 +1,9 @@
 const logSpy = jest.spyOn(console, 'log');
+const warnSpy = jest.spyOn(console, 'warn');
+const errorSpy = jest.spyOn(console, 'error');
 import { LogEntry } from '../LogEntry';
 import { Logger } from '../Logger';
+import { LogLevel } from '../LogLevel';
 
 describe('Logger', () => {
   beforeEach(() => {
@@ -43,5 +46,19 @@ describe('Logger', () => {
     Logger.Instance.Log(entry);
 
     expect(logSpy).toHaveBeenCalledWith('test');
+  });
+
+  it('DisplayLogsInConsole should only log entries greater than or equal to given log level', () => {
+    Logger.DisplayLogsInConsole(LogLevel.Error);
+    Logger.Instance.LogInfo('info');
+    Logger.Instance.LogInfo('info');
+    Logger.Instance.LogWarning('warn');
+    Logger.Instance.LogError('error');
+    Logger.Instance.LogWarning('warn');
+    Logger.Instance.LogInfo('info');
+
+    expect(logSpy).not.toHaveBeenCalledWith('info');
+    expect(warnSpy).not.toHaveBeenCalledWith('warn');
+    expect(errorSpy).toHaveBeenCalledWith('error');
   });
 });

@@ -4,6 +4,7 @@ import { LogEntry } from './LogEntry';
 import { LogLevel } from './LogLevel';
 
 export class Logger {
+  private static consoleEntryLoggedSubscription?: string;
   private static instance: Logger | null = null;
   public static get Instance(): Logger {
     return this.instance || (this.instance = new Logger());
@@ -30,6 +31,31 @@ export class Logger {
     Logger.Instance.EntryLogged.Publish(entry);
   }
 
+  /**
+   * Log at the info level
+   * @param message
+   */
+  public LogInfo(message: string): void {
+    this.Log(new LogEntry(message, LogLevel.Info));
+  }
+
+  /**
+   * Log at the warn level
+   * @param message
+   */
+  public LogWarning(message: string): void {
+    this.Log(new LogEntry(message, LogLevel.Warn));
+  }
+
+  /**
+   * Log at the error level
+   * @param message
+   * @param error
+   */
+  public LogError(message: string, error?: Error): void {
+    this.Log(new LogEntry(message, LogLevel.Error, error));
+  }
+
   private static readonly logLevelConsoleMethodMap: Record<LogLevel, typeof console.log | typeof console.warn | typeof console.error> = {
     [LogLevel.Info]: console.log,
     [LogLevel.Warn]: console.warn,
@@ -39,9 +65,21 @@ export class Logger {
   /**
    * Forwards log entries to console via standard console api - useful for debugging and dev envs
    */
-  public static DisplayLogsInConsole() {
-    Logger.Instance.EntryLogged.Subscribe((le) => {
-      if (le) {
+  public static DisplayLogsInConsole(
+    logLevel = LogLevel.Info
+  ) {
+    Logger.consoleEntryLoggedSubscription && Logger.Instance.EntryLogged.Cancel(Logger.consoleEntryLoggedSubscription);
+
+    const logLevelValueMap: Record<LogLevel, number> = {
+      [LogLevel.Info]: 0,
+      [LogLevel.Warn]: 1,
+      [LogLevel.Error]: 2
+    };
+    const logLevelValue = logLevelValueMap[logLevel];
+
+    Logger.consoleEntryLoggedSubscription = Logger.Instance.EntryLogged.Subscribe((le) => {
+      if (le && logLevelValueMap[le.Level] >= logLevelValue) {
+        console.log(logLevelValueMap[le.Level], logLevelValue);
         Logger.logLevelConsoleMethodMap[le.Level](le.Message);
       }
     });
