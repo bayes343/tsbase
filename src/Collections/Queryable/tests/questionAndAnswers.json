@@ -1,0 +1,3374 @@
+[
+  {
+    "question": "Who were the first English settlers at Jamestown?",
+    "answer": "The first English settlers at Jamestown were members of the Virginia Company who arrived in 1607."
+  },
+  {
+    "question": "What document established self-government in the Plymouth Colony?",
+    "answer": "The Mayflower Compact established self-government in the Plymouth Colony."
+  },
+  {
+    "question": "Why did colonists oppose British taxation?",
+    "answer": "Colonists opposed British taxation because they had no representation in Parliament."
+  },
+  {
+    "question": "When was the Declaration of Independence adopted?",
+    "answer": "The Declaration of Independence was adopted in 1776."
+  },
+  {
+    "question": "Who commanded the Continental Army?",
+    "answer": "George Washington commanded the Continental Army."
+  },
+  {
+    "question": "What treaty ended the Revolutionary War?",
+    "answer": "The Treaty of Paris of 1783 ended the Revolutionary War."
+  },
+  {
+    "question": "What was the Articles of Confederation's main weakness?",
+    "answer": "It created a weak central government."
+  },
+  {
+    "question": "What compromise created Congress?",
+    "answer": "The Great Compromise created a bicameral Congress."
+  },
+  {
+    "question": "What are the first ten amendments called?",
+    "answer": "They are called the Bill of Rights."
+  },
+  {
+    "question": "Who was the first U.S. president?",
+    "answer": "George Washington was the first U.S. president."
+  },
+  {
+    "question": "What purchase doubled U.S. territory?",
+    "answer": "The Louisiana Purchase doubled U.S. territory."
+  },
+  {
+    "question": "What doctrine warned Europe against colonization?",
+    "answer": "The Monroe Doctrine warned European powers."
+  },
+  {
+    "question": "What was Manifest Destiny?",
+    "answer": "The belief the U.S. was destined to expand westward."
+  },
+  {
+    "question": "What war followed Texas annexation?",
+    "answer": "The Mexican-American War followed."
+  },
+  {
+    "question": "What event began the Civil War?",
+    "answer": "The attack on Fort Sumter began the Civil War."
+  },
+  {
+    "question": "Who issued the Emancipation Proclamation?",
+    "answer": "Abraham Lincoln issued it."
+  },
+  {
+    "question": "Which amendment ended slavery?",
+    "answer": "The 13th Amendment ended slavery."
+  },
+  {
+    "question": "What was Reconstruction?",
+    "answer": "Rebuilding the South after the Civil War."
+  },
+  {
+    "question": "Who led Standard Oil?",
+    "answer": "John D. Rockefeller led Standard Oil."
+  },
+  {
+    "question": "What was the Progressive Era?",
+    "answer": "A period of social and political reform."
+  },
+  {
+    "question": "What event started the Great Depression?",
+    "answer": "The stock market crash of 1929."
+  },
+  {
+    "question": "Who created the New Deal?",
+    "answer": "Franklin D. Roosevelt."
+  },
+  {
+    "question": "What attack entered the U.S. into WWII?",
+    "answer": "The attack on Pearl Harbor."
+  },
+  {
+    "question": "What project built the atomic bomb?",
+    "answer": "The Manhattan Project."
+  },
+  {
+    "question": "What organization formed after WWII?",
+    "answer": "The United Nations."
+  },
+  {
+    "question": "What was the Cold War?",
+    "answer": "Tension between the U.S. and Soviet Union."
+  },
+  {
+    "question": "What case ended school segregation?",
+    "answer": "Brown v. Board of Education."
+  },
+  {
+    "question": "What law ended segregation?",
+    "answer": "The Civil Rights Act of 1964."
+  },
+  {
+    "question": "What war was fought in Vietnam?",
+    "answer": "The Vietnam War."
+  },
+  {
+    "question": "What scandal caused Nixon to resign?",
+    "answer": "The Watergate scandal."
+  },
+  {
+    "question": "What marked the end of the Cold War?",
+    "answer": "The collapse of the Soviet Union."
+  },
+  {
+    "question": "What happened on September 11, 2001?",
+    "answer": "Terrorist attacks on the U.S."
+  },
+  {
+    "question": "What department was created after 9/11?",
+    "answer": "The Department of Homeland Security."
+  },
+  {
+    "question": "What amendment gave women the vote?",
+    "answer": "The 19th Amendment."
+  },
+  {
+    "question": "What amendment lowered voting age?",
+    "answer": "The 26th Amendment."
+  },
+  {
+    "question": "What program helped veterans after WWII?",
+    "answer": "The G.I. Bill."
+  },
+  {
+    "question": "What was the Space Race?",
+    "answer": "Competition in space exploration."
+  },
+  {
+    "question": "Who first landed on the Moon?",
+    "answer": "Apollo 11 astronauts."
+  },
+  {
+    "question": "What was supply-side economics?",
+    "answer": "An economic policy reducing taxes and regulation."
+  },
+  {
+    "question": "What river aided U.S. trade?",
+    "answer": "The Mississippi River."
+  },
+  {
+    "question": "Who were the first English settlers at Jamestown?",
+    "answer": "The first English settlers at Jamestown were members of the Virginia Company who arrived in 1607."
+  },
+  {
+    "question": "What document established self-government in the Plymouth Colony?",
+    "answer": "The Mayflower Compact established self-government in the Plymouth Colony."
+  },
+  {
+    "question": "Why did colonists oppose British taxation?",
+    "answer": "Colonists opposed British taxation because they had no representation in Parliament."
+  },
+  {
+    "question": "When was the Declaration of Independence adopted?",
+    "answer": "The Declaration of Independence was adopted in 1776."
+  },
+  {
+    "question": "Who commanded the Continental Army?",
+    "answer": "George Washington commanded the Continental Army."
+  },
+  {
+    "question": "What treaty ended the Revolutionary War?",
+    "answer": "The Treaty of Paris of 1783 ended the Revolutionary War."
+  },
+  {
+    "question": "What was the Articles of Confederation's main weakness?",
+    "answer": "It created a weak central government."
+  },
+  {
+    "question": "What compromise created Congress?",
+    "answer": "The Great Compromise created a bicameral Congress."
+  },
+  {
+    "question": "What are the first ten amendments called?",
+    "answer": "They are called the Bill of Rights."
+  },
+  {
+    "question": "Who was the first U.S. president?",
+    "answer": "George Washington was the first U.S. president."
+  },
+  {
+    "question": "What purchase doubled U.S. territory?",
+    "answer": "The Louisiana Purchase doubled U.S. territory."
+  },
+  {
+    "question": "What doctrine warned Europe against colonization?",
+    "answer": "The Monroe Doctrine warned European powers."
+  },
+  {
+    "question": "What was Manifest Destiny?",
+    "answer": "The belief the U.S. was destined to expand westward."
+  },
+  {
+    "question": "What war followed Texas annexation?",
+    "answer": "The Mexican-American War followed."
+  },
+  {
+    "question": "What event began the Civil War?",
+    "answer": "The attack on Fort Sumter began the Civil War."
+  },
+  {
+    "question": "Who issued the Emancipation Proclamation?",
+    "answer": "Abraham Lincoln issued it."
+  },
+  {
+    "question": "Which amendment ended slavery?",
+    "answer": "The 13th Amendment ended slavery."
+  },
+  {
+    "question": "What was Reconstruction?",
+    "answer": "Rebuilding the South after the Civil War."
+  },
+  {
+    "question": "Who led Standard Oil?",
+    "answer": "John D. Rockefeller led Standard Oil."
+  },
+  {
+    "question": "What was the Progressive Era?",
+    "answer": "A period of social and political reform."
+  },
+  {
+    "question": "What event started the Great Depression?",
+    "answer": "The stock market crash of 1929."
+  },
+  {
+    "question": "Who created the New Deal?",
+    "answer": "Franklin D. Roosevelt."
+  },
+  {
+    "question": "What attack entered the U.S. into WWII?",
+    "answer": "The attack on Pearl Harbor."
+  },
+  {
+    "question": "What project built the atomic bomb?",
+    "answer": "The Manhattan Project."
+  },
+  {
+    "question": "What organization formed after WWII?",
+    "answer": "The United Nations."
+  },
+  {
+    "question": "What was the Cold War?",
+    "answer": "Tension between the U.S. and Soviet Union."
+  },
+  {
+    "question": "What case ended school segregation?",
+    "answer": "Brown v. Board of Education."
+  },
+  {
+    "question": "What law ended segregation?",
+    "answer": "The Civil Rights Act of 1964."
+  },
+  {
+    "question": "What war was fought in Vietnam?",
+    "answer": "The Vietnam War."
+  },
+  {
+    "question": "What scandal caused Nixon to resign?",
+    "answer": "The Watergate scandal."
+  },
+  {
+    "question": "What marked the end of the Cold War?",
+    "answer": "The collapse of the Soviet Union."
+  },
+  {
+    "question": "What happened on September 11, 2001?",
+    "answer": "Terrorist attacks on the U.S."
+  },
+  {
+    "question": "What department was created after 9/11?",
+    "answer": "The Department of Homeland Security."
+  },
+  {
+    "question": "What amendment gave women the vote?",
+    "answer": "The 19th Amendment."
+  },
+  {
+    "question": "What amendment lowered voting age?",
+    "answer": "The 26th Amendment."
+  },
+  {
+    "question": "What program helped veterans after WWII?",
+    "answer": "The G.I. Bill."
+  },
+  {
+    "question": "What was the Space Race?",
+    "answer": "Competition in space exploration."
+  },
+  {
+    "question": "Who first landed on the Moon?",
+    "answer": "Apollo 11 astronauts."
+  },
+  {
+    "question": "What was supply-side economics?",
+    "answer": "An economic policy reducing taxes and regulation."
+  },
+  {
+    "question": "What river aided U.S. trade?",
+    "answer": "The Mississippi River."
+  },
+  {
+    "question": "Who were the first English settlers at Jamestown?",
+    "answer": "The first English settlers at Jamestown were members of the Virginia Company who arrived in 1607."
+  },
+  {
+    "question": "What document established self-government in the Plymouth Colony?",
+    "answer": "The Mayflower Compact established self-government in the Plymouth Colony."
+  },
+  {
+    "question": "Why did colonists oppose British taxation?",
+    "answer": "Colonists opposed British taxation because they had no representation in Parliament."
+  },
+  {
+    "question": "When was the Declaration of Independence adopted?",
+    "answer": "The Declaration of Independence was adopted in 1776."
+  },
+  {
+    "question": "Who commanded the Continental Army?",
+    "answer": "George Washington commanded the Continental Army."
+  },
+  {
+    "question": "What treaty ended the Revolutionary War?",
+    "answer": "The Treaty of Paris of 1783 ended the Revolutionary War."
+  },
+  {
+    "question": "What was the Articles of Confederation's main weakness?",
+    "answer": "It created a weak central government."
+  },
+  {
+    "question": "What compromise created Congress?",
+    "answer": "The Great Compromise created a bicameral Congress."
+  },
+  {
+    "question": "What are the first ten amendments called?",
+    "answer": "They are called the Bill of Rights."
+  },
+  {
+    "question": "Who was the first U.S. president?",
+    "answer": "George Washington was the first U.S. president."
+  },
+  {
+    "question": "What purchase doubled U.S. territory?",
+    "answer": "The Louisiana Purchase doubled U.S. territory."
+  },
+  {
+    "question": "What doctrine warned Europe against colonization?",
+    "answer": "The Monroe Doctrine warned European powers."
+  },
+  {
+    "question": "What was Manifest Destiny?",
+    "answer": "The belief the U.S. was destined to expand westward."
+  },
+  {
+    "question": "What war followed Texas annexation?",
+    "answer": "The Mexican-American War followed."
+  },
+  {
+    "question": "What event began the Civil War?",
+    "answer": "The attack on Fort Sumter began the Civil War."
+  },
+  {
+    "question": "Who issued the Emancipation Proclamation?",
+    "answer": "Abraham Lincoln issued it."
+  },
+  {
+    "question": "Which amendment ended slavery?",
+    "answer": "The 13th Amendment ended slavery."
+  },
+  {
+    "question": "What was Reconstruction?",
+    "answer": "Rebuilding the South after the Civil War."
+  },
+  {
+    "question": "Who led Standard Oil?",
+    "answer": "John D. Rockefeller led Standard Oil."
+  },
+  {
+    "question": "What was the Progressive Era?",
+    "answer": "A period of social and political reform."
+  },
+  {
+    "question": "What is the fastest land animal?",
+    "answer": "The cheetah is the fastest land animal."
+  },
+  {
+    "question": "What is the largest land mammal?",
+    "answer": "The African elephant is the largest land mammal."
+  },
+  {
+    "question": "What mammal can fly?",
+    "answer": "The bat is the only mammal capable of true flight."
+  },
+  {
+    "question": "What mammal lays eggs?",
+    "answer": "The platypus is a mammal that lays eggs."
+  },
+  {
+    "question": "What mammal has the longest lifespan?",
+    "answer": "The Greenland shark is the longest living vertebrate."
+  },
+  {
+    "question": "What mammal has a pouch?",
+    "answer": "The kangaroo carries its young in a pouch."
+  },
+  {
+    "question": "What mammal is known for echolocation?",
+    "answer": "The dolphin uses echolocation to navigate."
+  },
+  {
+    "question": "What mammal has the thickest fur?",
+    "answer": "The sea otter has the thickest fur of any mammal."
+  },
+  {
+    "question": "What mammal is the tallest?",
+    "answer": "The giraffe is the tallest mammal."
+  },
+  {
+    "question": "What mammal is known for hibernation?",
+    "answer": "The bear is known for hibernation."
+  },
+  {
+    "question": "What mammal is the largest rodent?",
+    "answer": "The capybara is the largest rodent."
+  },
+  {
+    "question": "What mammal is famous for its memory?",
+    "answer": "The elephant is known for its strong memory."
+  },
+  {
+    "question": "What mammal lives entirely in the ocean?",
+    "answer": "The whale lives entirely in the ocean."
+  },
+  {
+    "question": "What mammal is the smallest?",
+    "answer": "The bumblebee bat is the smallest mammal."
+  },
+  {
+    "question": "What mammal is known for loyalty?",
+    "answer": "The dog is known for its loyalty."
+  },
+  {
+    "question": "What mammal has stripes?",
+    "answer": "The zebra is known for its stripes."
+  },
+  {
+    "question": "What mammal is the largest cat?",
+    "answer": "The tiger is the largest cat species."
+  },
+  {
+    "question": "What mammal has a trunk?",
+    "answer": "The elephant has a trunk."
+  },
+  {
+    "question": "What mammal can run the fastest long distance?",
+    "answer": "The pronghorn antelope can run fastest over long distances."
+  },
+  {
+    "question": "What mammal is native to Madagascar?",
+    "answer": "The lemur is native to Madagascar."
+  },
+  {
+    "question": "What is the largest bird?",
+    "answer": "The ostrich is the largest bird."
+  },
+  {
+    "question": "What bird can fly backward?",
+    "answer": "The hummingbird can fly backward."
+  },
+  {
+    "question": "What bird is a symbol of peace?",
+    "answer": "The dove is a symbol of peace."
+  },
+  {
+    "question": "What bird has the best eyesight?",
+    "answer": "The eagle has excellent eyesight."
+  },
+  {
+    "question": "What bird is nocturnal?",
+    "answer": "The owl is a nocturnal bird."
+  },
+  {
+    "question": "What bird cannot fly?",
+    "answer": "The penguin is a flightless bird."
+  },
+  {
+    "question": "What bird migrates long distances?",
+    "answer": "The Arctic tern migrates long distances."
+  },
+  {
+    "question": "What bird mimics human speech?",
+    "answer": "The parrot can mimic human speech."
+  },
+  {
+    "question": "What bird is the fastest in a dive?",
+    "answer": "The peregrine falcon is the fastest diving bird."
+  },
+  {
+    "question": "What bird builds elaborate nests?",
+    "answer": "The weaver bird builds elaborate nests."
+  },
+  {
+    "question": "What bird lays the largest eggs?",
+    "answer": "The ostrich lays the largest eggs."
+  },
+  {
+    "question": "What bird is known for intelligence?",
+    "answer": "The crow is known for its intelligence."
+  },
+  {
+    "question": "What bird has colorful feathers?",
+    "answer": "The peacock has colorful feathers."
+  },
+  {
+    "question": "What bird lives near water?",
+    "answer": "The heron lives near water."
+  },
+  {
+    "question": "What bird is known for night calls?",
+    "answer": "The nightjar is known for night calls."
+  },
+  {
+    "question": "What bird is a scavenger?",
+    "answer": "The vulture is a scavenger bird."
+  },
+  {
+    "question": "What bird uses tools?",
+    "answer": "The crow is known to use tools."
+  },
+  {
+    "question": "What bird is sacred in ancient Egypt?",
+    "answer": "The ibis was sacred in ancient Egypt."
+  },
+  {
+    "question": "What bird has webbed feet?",
+    "answer": "The duck has webbed feet."
+  },
+  {
+    "question": "What bird is the smallest?",
+    "answer": "The bee hummingbird is the smallest bird."
+  },
+  {
+    "question": "What is the largest reptile?",
+    "answer": "The saltwater crocodile is the largest reptile."
+  },
+  {
+    "question": "What reptile changes color?",
+    "answer": "The chameleon can change color."
+  },
+  {
+    "question": "What reptile has a shell?",
+    "answer": "The turtle has a shell."
+  },
+  {
+    "question": "What reptile is venomous?",
+    "answer": "The cobra is a venomous snake."
+  },
+  {
+    "question": "What reptile can regrow its tail?",
+    "answer": "The lizard can regrow its tail."
+  },
+  {
+    "question": "What reptile lives in deserts?",
+    "answer": "The desert tortoise lives in deserts."
+  },
+  {
+    "question": "What reptile has strong jaws?",
+    "answer": "The crocodile has strong jaws."
+  },
+  {
+    "question": "What reptile sheds its skin?",
+    "answer": "The snake sheds its skin."
+  },
+  {
+    "question": "What reptile can climb walls?",
+    "answer": "The gecko can climb walls."
+  },
+  {
+    "question": "What reptile has a frill?",
+    "answer": "The frilled lizard has a neck frill."
+  },
+  {
+    "question": "What reptile lives mostly in water?",
+    "answer": "The alligator lives mostly in water."
+  },
+  {
+    "question": "What reptile has heat sensing pits?",
+    "answer": "The python has heat sensing pits."
+  },
+  {
+    "question": "What reptile is slow moving?",
+    "answer": "The tortoise is slow moving."
+  },
+  {
+    "question": "What reptile has armored skin?",
+    "answer": "The armadillo lizard has armored skin."
+  },
+  {
+    "question": "What reptile can survive cold winters?",
+    "answer": "The garter snake can survive cold winters."
+  },
+  {
+    "question": "What reptile lives in rainforests?",
+    "answer": "The green iguana lives in rainforests."
+  },
+  {
+    "question": "What reptile is known for basking?",
+    "answer": "The lizard is known for basking."
+  },
+  {
+    "question": "What reptile has a forked tongue?",
+    "answer": "The snake has a forked tongue."
+  },
+  {
+    "question": "What reptile has a long lifespan?",
+    "answer": "The tortoise has a long lifespan."
+  },
+  {
+    "question": "What reptile is native to Australia?",
+    "answer": "The bearded dragon is native to Australia."
+  },
+  {
+    "question": "What is the largest fish?",
+    "answer": "The whale shark is the largest fish."
+  },
+  {
+    "question": "What fish can inflate itself?",
+    "answer": "The pufferfish can inflate itself."
+  },
+  {
+    "question": "What fish is known for speed?",
+    "answer": "The sailfish is known for its speed."
+  },
+  {
+    "question": "What fish lives in coral reefs?",
+    "answer": "The clownfish lives in coral reefs."
+  },
+  {
+    "question": "What fish has a hammer shaped head?",
+    "answer": "The hammerhead shark has a hammer shaped head."
+  },
+  {
+    "question": "What fish can generate electricity?",
+    "answer": "The electric eel can generate electricity."
+  },
+  {
+    "question": "What fish migrates upstream to spawn?",
+    "answer": "The salmon migrates upstream to spawn."
+  },
+  {
+    "question": "What fish has sharp teeth?",
+    "answer": "The barracuda has sharp teeth."
+  },
+  {
+    "question": "What fish is flat bodied?",
+    "answer": "The flounder has a flat body."
+  },
+  {
+    "question": "What fish lives in deep ocean?",
+    "answer": "The anglerfish lives in deep ocean."
+  },
+  {
+    "question": "What fish can walk on land briefly?",
+    "answer": "The mudskipper can walk on land briefly."
+  },
+  {
+    "question": "What fish forms schools?",
+    "answer": "The sardine forms large schools."
+  },
+  {
+    "question": "What fish is venomous?",
+    "answer": "The lionfish is venomous."
+  },
+  {
+    "question": "What fish changes sex?",
+    "answer": "The clownfish can change sex."
+  },
+  {
+    "question": "What fish glows in the dark?",
+    "answer": "The lanternfish can glow in the dark."
+  },
+  {
+    "question": "What fish has armor plates?",
+    "answer": "The sturgeon has bony armor plates."
+  },
+  {
+    "question": "What fish is known for jumping?",
+    "answer": "The flying fish can glide above water."
+  },
+  {
+    "question": "What fish lives in freshwater?",
+    "answer": "The catfish lives in freshwater."
+  },
+  {
+    "question": "What fish is bottom dwelling?",
+    "answer": "The ray is bottom dwelling."
+  },
+  {
+    "question": "What fish has a long snout?",
+    "answer": "The swordfish has a long snout."
+  },
+  {
+    "question": "What invertebrate produces honey?",
+    "answer": "The honeybee produces honey."
+  },
+  {
+    "question": "What invertebrate has eight legs?",
+    "answer": "The spider has eight legs."
+  },
+  {
+    "question": "What invertebrate has a hard shell?",
+    "answer": "The crab has a hard shell."
+  },
+  {
+    "question": "What invertebrate can regenerate arms?",
+    "answer": "The starfish can regenerate arms."
+  },
+  {
+    "question": "What invertebrate is bioluminescent?",
+    "answer": "The firefly is bioluminescent."
+  },
+  {
+    "question": "What invertebrate spins webs?",
+    "answer": "The spider spins webs."
+  },
+  {
+    "question": "What invertebrate has a stinger?",
+    "answer": "The scorpion has a stinger."
+  },
+  {
+    "question": "What invertebrate forms colonies?",
+    "answer": "The coral forms colonies."
+  },
+  {
+    "question": "What invertebrate has tentacles?",
+    "answer": "The jellyfish has tentacles."
+  },
+  {
+    "question": "What invertebrate has the most teeth?",
+    "answer": "The snail has the most teeth."
+  },
+  {
+    "question": "What invertebrate carries eggs on its back?",
+    "answer": "The water scorpion carries eggs on its back."
+  },
+  {
+    "question": "What invertebrate is known for camouflage?",
+    "answer": "The octopus is known for camouflage."
+  },
+  {
+    "question": "What invertebrate has suction cups?",
+    "answer": "The octopus has suction cups."
+  },
+  {
+    "question": "What invertebrate builds mounds?",
+    "answer": "The termite builds mounds."
+  },
+  {
+    "question": "What invertebrate is a pollinator?",
+    "answer": "The butterfly is a pollinator."
+  },
+  {
+    "question": "What invertebrate lives in shells?",
+    "answer": "The clam lives in shells."
+  },
+  {
+    "question": "What invertebrate has jointed legs?",
+    "answer": "The insect has jointed legs."
+  },
+  {
+    "question": "What invertebrate molts its exoskeleton?",
+    "answer": "The lobster molts its exoskeleton."
+  },
+  {
+    "question": "What invertebrate filters ocean water?",
+    "answer": "The sponge filters ocean water."
+  },
+  {
+    "question": "What invertebrate has a segmented body?",
+    "answer": "The earthworm has a segmented body."
+  },
+  {
+    "question": "Who invented the telephone?",
+    "answer": "Alexander Graham Bell invented the telephone."
+  },
+  {
+    "question": "Who directed the movie Jaws?",
+    "answer": "Steven Spielberg directed the movie Jaws."
+  },
+  {
+    "question": "What movie features the character Darth Vader?",
+    "answer": "Darth Vader appears in the Star Wars movies."
+  },
+  {
+    "question": "What movie won Best Picture in 1994?",
+    "answer": "Forrest Gump won Best Picture in 1994."
+  },
+  {
+    "question": "Who played Jack in Titanic?",
+    "answer": "Leonardo DiCaprio played Jack in Titanic."
+  },
+  {
+    "question": "What movie is set in Wakanda?",
+    "answer": "Black Panther is set in Wakanda."
+  },
+  {
+    "question": "What film features the quote 'I'll be back'?",
+    "answer": "The Terminator features the quote 'I'll be back'."
+  },
+  {
+    "question": "Who directed Pulp Fiction?",
+    "answer": "Quentin Tarantino directed Pulp Fiction."
+  },
+  {
+    "question": "What movie features a DeLorean time machine?",
+    "answer": "Back to the Future features a DeLorean time machine."
+  },
+  {
+    "question": "What animated movie features Simba?",
+    "answer": "The Lion King features Simba."
+  },
+  {
+    "question": "Who played the Joker in The Dark Knight?",
+    "answer": "Heath Ledger played the Joker in The Dark Knight."
+  },
+  {
+    "question": "What movie is about dreams within dreams?",
+    "answer": "Inception is about dreams within dreams."
+  },
+  {
+    "question": "What film series features James Bond?",
+    "answer": "The James Bond film series features James Bond."
+  },
+  {
+    "question": "Who directed Avatar?",
+    "answer": "James Cameron directed Avatar."
+  },
+  {
+    "question": "What movie features the character Neo?",
+    "answer": "The Matrix features the character Neo."
+  },
+  {
+    "question": "What film is set on the ship Nostromo?",
+    "answer": "Alien is set on the ship Nostromo."
+  },
+  {
+    "question": "What movie popularized the character Rocky Balboa?",
+    "answer": "Rocky popularized the character Rocky Balboa."
+  },
+  {
+    "question": "Who starred as Indiana Jones?",
+    "answer": "Harrison Ford starred as Indiana Jones."
+  },
+  {
+    "question": "What movie features the Infinity Stones?",
+    "answer": "The Avengers movies feature the Infinity Stones."
+  },
+  {
+    "question": "What film is about a boxing underdog?",
+    "answer": "Rocky is about a boxing underdog."
+  },
+  {
+    "question": "What movie is set in Middle-earth?",
+    "answer": "The Lord of the Rings is set in Middle-earth."
+  },
+  {
+    "question": "What TV show features the characters Ross and Rachel?",
+    "answer": "Friends features the characters Ross and Rachel."
+  },
+  {
+    "question": "What series is set in Westeros?",
+    "answer": "Game of Thrones is set in Westeros."
+  },
+  {
+    "question": "Who hosts The Daily Show?",
+    "answer": "Jon Stewart previously hosted The Daily Show."
+  },
+  {
+    "question": "What TV show features a meth-making chemistry teacher?",
+    "answer": "Breaking Bad features a meth-making chemistry teacher."
+  },
+  {
+    "question": "What sitcom is set in an office in Scranton?",
+    "answer": "The Office is set in an office in Scranton."
+  },
+  {
+    "question": "What show features the character Tony Soprano?",
+    "answer": "The Sopranos features the character Tony Soprano."
+  },
+  {
+    "question": "What TV series is about survivors of a plane crash?",
+    "answer": "Lost is about survivors of a plane crash."
+  },
+  {
+    "question": "What show features a family named the Simpsons?",
+    "answer": "The Simpsons features the Simpson family."
+  },
+  {
+    "question": "What series is about advertising executives in the 1960s?",
+    "answer": "Mad Men is about advertising executives in the 1960s."
+  },
+  {
+    "question": "What TV show features Sheldon Cooper?",
+    "answer": "The Big Bang Theory features Sheldon Cooper."
+  },
+  {
+    "question": "What series is about a zombie apocalypse?",
+    "answer": "The Walking Dead is about a zombie apocalypse."
+  },
+  {
+    "question": "What show features a group of kids in Hawkins?",
+    "answer": "Stranger Things features kids in Hawkins."
+  },
+  {
+    "question": "What TV show stars Larry David as himself?",
+    "answer": "Curb Your Enthusiasm stars Larry David as himself."
+  },
+  {
+    "question": "What series is about British royalty?",
+    "answer": "The Crown is about British royalty."
+  },
+  {
+    "question": "What show features the character Dexter Morgan?",
+    "answer": "Dexter features the character Dexter Morgan."
+  },
+  {
+    "question": "What TV show is about a chemistry teacher turned criminal?",
+    "answer": "Breaking Bad is about a chemistry teacher turned criminal."
+  },
+  {
+    "question": "What series features dragons and political intrigue?",
+    "answer": "Game of Thrones features dragons and political intrigue."
+  },
+  {
+    "question": "What show features a paper company called Dunder Mifflin?",
+    "answer": "The Office features Dunder Mifflin."
+  },
+  {
+    "question": "What TV show is animated and satirical?",
+    "answer": "South Park is an animated satirical show."
+  },
+  {
+    "question": "What series is about law and order in New York City?",
+    "answer": "Law & Order is about crime in New York City."
+  },
+  {
+    "question": "Who is known as the King of Pop?",
+    "answer": "Michael Jackson is known as the King of Pop."
+  },
+  {
+    "question": "Which band released the album Abbey Road?",
+    "answer": "The Beatles released the album Abbey Road."
+  },
+  {
+    "question": "Who sang 'Like a Virgin'?",
+    "answer": "Madonna sang 'Like a Virgin'."
+  },
+  {
+    "question": "What genre is Elvis Presley associated with?",
+    "answer": "Elvis Presley is associated with rock and roll."
+  },
+  {
+    "question": "Who is the lead singer of U2?",
+    "answer": "Bono is the lead singer of U2."
+  },
+  {
+    "question": "What artist released the album Thriller?",
+    "answer": "Michael Jackson released the album Thriller."
+  },
+  {
+    "question": "Who is known for the song 'Purple Rain'?",
+    "answer": "Prince is known for the song 'Purple Rain'."
+  },
+  {
+    "question": "What band is known for 'Bohemian Rhapsody'?",
+    "answer": "Queen is known for 'Bohemian Rhapsody'."
+  },
+  {
+    "question": "Who is a famous country singer named Dolly?",
+    "answer": "Dolly Parton is a famous country singer."
+  },
+  {
+    "question": "What artist is known for the album 1989?",
+    "answer": "Taylor Swift is known for the album 1989."
+  },
+  {
+    "question": "Who is known as the Boss?",
+    "answer": "Bruce Springsteen is known as the Boss."
+  },
+  {
+    "question": "What band released Dark Side of the Moon?",
+    "answer": "Pink Floyd released Dark Side of the Moon."
+  },
+  {
+    "question": "Who sang 'Rolling in the Deep'?",
+    "answer": "Adele sang 'Rolling in the Deep'."
+  },
+  {
+    "question": "What rapper released The Marshall Mathers LP?",
+    "answer": "Eminem released The Marshall Mathers LP."
+  },
+  {
+    "question": "Who is the lead singer of Nirvana?",
+    "answer": "Kurt Cobain was the lead singer of Nirvana."
+  },
+  {
+    "question": "What band is known for 'Stairway to Heaven'?",
+    "answer": "Led Zeppelin is known for 'Stairway to Heaven'."
+  },
+  {
+    "question": "Who is a famous jazz trumpeter?",
+    "answer": "Louis Armstrong was a famous jazz trumpeter."
+  },
+  {
+    "question": "What artist is known for the album Lemonade?",
+    "answer": "Beyonc\u00e9 is known for the album Lemonade."
+  },
+  {
+    "question": "Who formed the band Foo Fighters?",
+    "answer": "Dave Grohl formed the band Foo Fighters."
+  },
+  {
+    "question": "What genre is Bob Marley associated with?",
+    "answer": "Bob Marley is associated with reggae music."
+  },
+  {
+    "question": "What video game features Mario?",
+    "answer": "Mario appears in the Super Mario video game series."
+  },
+  {
+    "question": "What game features the character Link?",
+    "answer": "The Legend of Zelda features the character Link."
+  },
+  {
+    "question": "What game popularized battle royale gameplay?",
+    "answer": "Fortnite popularized battle royale gameplay."
+  },
+  {
+    "question": "What game is set in the world of Hyrule?",
+    "answer": "The Legend of Zelda is set in Hyrule."
+  },
+  {
+    "question": "What game features a character named Master Chief?",
+    "answer": "Halo features the character Master Chief."
+  },
+  {
+    "question": "What game involves catching Pok\u00e9mon?",
+    "answer": "Pok\u00e9mon involves catching Pok\u00e9mon."
+  },
+  {
+    "question": "What game is known for blocks and crafting?",
+    "answer": "Minecraft is known for blocks and crafting."
+  },
+  {
+    "question": "What game features Lara Croft?",
+    "answer": "Tomb Raider features Lara Croft."
+  },
+  {
+    "question": "What game series includes Vice City?",
+    "answer": "Grand Theft Auto includes Vice City."
+  },
+  {
+    "question": "What game is a life simulation?",
+    "answer": "The Sims is a life simulation game."
+  },
+  {
+    "question": "What game features the character Kratos?",
+    "answer": "God of War features the character Kratos."
+  },
+  {
+    "question": "What game series is about assassins?",
+    "answer": "Assassin's Creed is about assassins."
+  },
+  {
+    "question": "What game features a post-apocalyptic wasteland?",
+    "answer": "Fallout features a post-apocalyptic wasteland."
+  },
+  {
+    "question": "What game includes a plumber saving a princess?",
+    "answer": "Super Mario Bros. includes a plumber saving a princess."
+  },
+  {
+    "question": "What game is set in Skyrim?",
+    "answer": "The Elder Scrolls V is set in Skyrim."
+  },
+  {
+    "question": "What game features the island of Yara?",
+    "answer": "Far Cry 6 features the island of Yara."
+  },
+  {
+    "question": "What game series includes San Andreas?",
+    "answer": "Grand Theft Auto includes San Andreas."
+  },
+  {
+    "question": "What game is known for stealth cardboard boxes?",
+    "answer": "Metal Gear Solid is known for stealth gameplay."
+  },
+  {
+    "question": "What game features a battle bus?",
+    "answer": "Fortnite features a battle bus."
+  },
+  {
+    "question": "What game is about building a theme park?",
+    "answer": "RollerCoaster Tycoon is about building a theme park."
+  },
+  {
+    "question": "Who is a famous talk show host named Oprah?",
+    "answer": "Oprah Winfrey is a famous talk show host."
+  },
+  {
+    "question": "Who starred in Mission: Impossible?",
+    "answer": "Tom Cruise starred in Mission: Impossible."
+  },
+  {
+    "question": "Who is known for the reality show Keeping Up with the Kardashians?",
+    "answer": "Kim Kardashian is known for Keeping Up with the Kardashians."
+  },
+  {
+    "question": "Who played Iron Man in the MCU?",
+    "answer": "Robert Downey Jr. played Iron Man in the MCU."
+  },
+  {
+    "question": "Who is a famous comedian known for stand-up specials?",
+    "answer": "Dave Chappelle is a famous stand-up comedian."
+  },
+  {
+    "question": "Who is a well-known action star named Dwayne?",
+    "answer": "Dwayne Johnson is a well-known action star."
+  },
+  {
+    "question": "Who won multiple tennis Grand Slam titles named Serena?",
+    "answer": "Serena Williams won multiple Grand Slam titles."
+  },
+  {
+    "question": "Who is a famous British actor named Daniel Craig?",
+    "answer": "Daniel Craig is a famous British actor."
+  },
+  {
+    "question": "Who is known for directing many of his own films?",
+    "answer": "Clint Eastwood is known for directing many of his own films."
+  },
+  {
+    "question": "Who is a pop star known as Lady Gaga?",
+    "answer": "Lady Gaga is a pop star."
+  },
+  {
+    "question": "Who hosted The Tonight Show for many years?",
+    "answer": "Jay Leno hosted The Tonight Show for many years."
+  },
+  {
+    "question": "Who is a famous basketball player named Michael?",
+    "answer": "Michael Jordan is a famous basketball player."
+  },
+  {
+    "question": "Who is known for the character Jack Sparrow?",
+    "answer": "Johnny Depp is known for the character Jack Sparrow."
+  },
+  {
+    "question": "Who is a famous talk show host named Ellen?",
+    "answer": "Ellen DeGeneres is a famous talk show host."
+  },
+  {
+    "question": "Who starred in The Matrix?",
+    "answer": "Keanu Reeves starred in The Matrix."
+  },
+  {
+    "question": "Who is known for the character Wolverine?",
+    "answer": "Hugh Jackman is known for the character Wolverine."
+  },
+  {
+    "question": "Who is a singer and actress named Jennifer Lopez?",
+    "answer": "Jennifer Lopez is a singer and actress."
+  },
+  {
+    "question": "Who is a famous actor known for method acting?",
+    "answer": "Daniel Day-Lewis is known for method acting."
+  },
+  {
+    "question": "Who is a late-night host named Stephen Colbert?",
+    "answer": "Stephen Colbert is a late-night host."
+  },
+  {
+    "question": "How do I make Classic Chicken Breast?",
+    "answer": "To make Classic Chicken Breast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Salmon Fillet?",
+    "answer": "To make Classic Salmon Fillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Pork Chops?",
+    "answer": "To make Classic Pork Chops, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Beef Steak?",
+    "answer": "To make Classic Beef Steak, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Turkey Meatballs?",
+    "answer": "To make Classic Turkey Meatballs, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Vegetable Pasta?",
+    "answer": "To make Classic Vegetable Pasta, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Shrimp Skillet?",
+    "answer": "To make Classic Shrimp Skillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Tofu Stir Fry?",
+    "answer": "To make Classic Tofu Stir Fry, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Beef Tacos?",
+    "answer": "To make Classic Beef Tacos, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Chicken Quesadilla?",
+    "answer": "To make Classic Chicken Quesadilla, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Breakfast Hash?",
+    "answer": "To make Classic Breakfast Hash, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Egg Scramble?",
+    "answer": "To make Classic Egg Scramble, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Pancakes?",
+    "answer": "To make Classic Pancakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Waffles?",
+    "answer": "To make Classic Waffles, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic French Toast?",
+    "answer": "To make Classic French Toast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Grilled Cheese?",
+    "answer": "To make Classic Grilled Cheese, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Turkey Sandwich?",
+    "answer": "To make Classic Turkey Sandwich, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Chicken Salad?",
+    "answer": "To make Classic Chicken Salad, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Pasta Marinara?",
+    "answer": "To make Classic Pasta Marinara, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Fried Rice?",
+    "answer": "To make Classic Fried Rice, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Chocolate Cake?",
+    "answer": "To make Classic Chocolate Cake, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Vanilla Cupcakes?",
+    "answer": "To make Classic Vanilla Cupcakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Banana Bread?",
+    "answer": "To make Classic Banana Bread, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Blueberry Muffins?",
+    "answer": "To make Classic Blueberry Muffins, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Classic Apple Crisp?",
+    "answer": "To make Classic Apple Crisp, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Chicken Breast?",
+    "answer": "To make Herb Roasted Chicken Breast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Salmon Fillet?",
+    "answer": "To make Herb Roasted Salmon Fillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Pork Chops?",
+    "answer": "To make Herb Roasted Pork Chops, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Beef Steak?",
+    "answer": "To make Herb Roasted Beef Steak, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Turkey Meatballs?",
+    "answer": "To make Herb Roasted Turkey Meatballs, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Vegetable Pasta?",
+    "answer": "To make Herb Roasted Vegetable Pasta, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Shrimp Skillet?",
+    "answer": "To make Herb Roasted Shrimp Skillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Tofu Stir Fry?",
+    "answer": "To make Herb Roasted Tofu Stir Fry, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Beef Tacos?",
+    "answer": "To make Herb Roasted Beef Tacos, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Chicken Quesadilla?",
+    "answer": "To make Herb Roasted Chicken Quesadilla, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Breakfast Hash?",
+    "answer": "To make Herb Roasted Breakfast Hash, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Egg Scramble?",
+    "answer": "To make Herb Roasted Egg Scramble, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Pancakes?",
+    "answer": "To make Herb Roasted Pancakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Waffles?",
+    "answer": "To make Herb Roasted Waffles, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted French Toast?",
+    "answer": "To make Herb Roasted French Toast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Grilled Cheese?",
+    "answer": "To make Herb Roasted Grilled Cheese, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Turkey Sandwich?",
+    "answer": "To make Herb Roasted Turkey Sandwich, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Chicken Salad?",
+    "answer": "To make Herb Roasted Chicken Salad, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Pasta Marinara?",
+    "answer": "To make Herb Roasted Pasta Marinara, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Fried Rice?",
+    "answer": "To make Herb Roasted Fried Rice, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Chocolate Cake?",
+    "answer": "To make Herb Roasted Chocolate Cake, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Vanilla Cupcakes?",
+    "answer": "To make Herb Roasted Vanilla Cupcakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Banana Bread?",
+    "answer": "To make Herb Roasted Banana Bread, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Blueberry Muffins?",
+    "answer": "To make Herb Roasted Blueberry Muffins, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Herb Roasted Apple Crisp?",
+    "answer": "To make Herb Roasted Apple Crisp, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Chicken Breast?",
+    "answer": "To make Spicy Chicken Breast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Salmon Fillet?",
+    "answer": "To make Spicy Salmon Fillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Pork Chops?",
+    "answer": "To make Spicy Pork Chops, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Beef Steak?",
+    "answer": "To make Spicy Beef Steak, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Turkey Meatballs?",
+    "answer": "To make Spicy Turkey Meatballs, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Vegetable Pasta?",
+    "answer": "To make Spicy Vegetable Pasta, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Shrimp Skillet?",
+    "answer": "To make Spicy Shrimp Skillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Tofu Stir Fry?",
+    "answer": "To make Spicy Tofu Stir Fry, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Beef Tacos?",
+    "answer": "To make Spicy Beef Tacos, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Chicken Quesadilla?",
+    "answer": "To make Spicy Chicken Quesadilla, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Breakfast Hash?",
+    "answer": "To make Spicy Breakfast Hash, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Egg Scramble?",
+    "answer": "To make Spicy Egg Scramble, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Pancakes?",
+    "answer": "To make Spicy Pancakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Waffles?",
+    "answer": "To make Spicy Waffles, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy French Toast?",
+    "answer": "To make Spicy French Toast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Grilled Cheese?",
+    "answer": "To make Spicy Grilled Cheese, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Turkey Sandwich?",
+    "answer": "To make Spicy Turkey Sandwich, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Chicken Salad?",
+    "answer": "To make Spicy Chicken Salad, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Pasta Marinara?",
+    "answer": "To make Spicy Pasta Marinara, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Fried Rice?",
+    "answer": "To make Spicy Fried Rice, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Chocolate Cake?",
+    "answer": "To make Spicy Chocolate Cake, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Vanilla Cupcakes?",
+    "answer": "To make Spicy Vanilla Cupcakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Banana Bread?",
+    "answer": "To make Spicy Banana Bread, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Blueberry Muffins?",
+    "answer": "To make Spicy Blueberry Muffins, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Spicy Apple Crisp?",
+    "answer": "To make Spicy Apple Crisp, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Chicken Breast?",
+    "answer": "To make Garlic Butter Chicken Breast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Salmon Fillet?",
+    "answer": "To make Garlic Butter Salmon Fillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Pork Chops?",
+    "answer": "To make Garlic Butter Pork Chops, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Beef Steak?",
+    "answer": "To make Garlic Butter Beef Steak, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Turkey Meatballs?",
+    "answer": "To make Garlic Butter Turkey Meatballs, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Vegetable Pasta?",
+    "answer": "To make Garlic Butter Vegetable Pasta, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Shrimp Skillet?",
+    "answer": "To make Garlic Butter Shrimp Skillet, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Tofu Stir Fry?",
+    "answer": "To make Garlic Butter Tofu Stir Fry, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Beef Tacos?",
+    "answer": "To make Garlic Butter Beef Tacos, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Chicken Quesadilla?",
+    "answer": "To make Garlic Butter Chicken Quesadilla, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Breakfast Hash?",
+    "answer": "To make Garlic Butter Breakfast Hash, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Egg Scramble?",
+    "answer": "To make Garlic Butter Egg Scramble, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Pancakes?",
+    "answer": "To make Garlic Butter Pancakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Waffles?",
+    "answer": "To make Garlic Butter Waffles, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter French Toast?",
+    "answer": "To make Garlic Butter French Toast, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Grilled Cheese?",
+    "answer": "To make Garlic Butter Grilled Cheese, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Turkey Sandwich?",
+    "answer": "To make Garlic Butter Turkey Sandwich, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Chicken Salad?",
+    "answer": "To make Garlic Butter Chicken Salad, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Pasta Marinara?",
+    "answer": "To make Garlic Butter Pasta Marinara, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Fried Rice?",
+    "answer": "To make Garlic Butter Fried Rice, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Chocolate Cake?",
+    "answer": "To make Garlic Butter Chocolate Cake, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Vanilla Cupcakes?",
+    "answer": "To make Garlic Butter Vanilla Cupcakes, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Banana Bread?",
+    "answer": "To make Garlic Butter Banana Bread, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Blueberry Muffins?",
+    "answer": "To make Garlic Butter Blueberry Muffins, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "How do I make Garlic Butter Apple Crisp?",
+    "answer": "To make Garlic Butter Apple Crisp, gather the main ingredients for the dish along with oil, salt, and pepper, preheat the oven to 375 degrees Fahrenheit for baking or heat a skillet over medium heat for stovetop cooking, prepare and season the ingredients, cook until the food reaches a safe internal temperature and is fully cooked through, then remove from heat and let it rest briefly before serving."
+  },
+  {
+    "question": "What is the capital of Alabama?",
+    "answer": "The capital of Alabama is Montgomery."
+  },
+  {
+    "question": "What is the capital of Alaska?",
+    "answer": "The capital of Alaska is Juneau."
+  },
+  {
+    "question": "What is the capital of Arizona?",
+    "answer": "The capital of Arizona is Phoenix."
+  },
+  {
+    "question": "What is the capital of Arkansas?",
+    "answer": "The capital of Arkansas is Little Rock."
+  },
+  {
+    "question": "What is the capital of California?",
+    "answer": "The capital of California is Sacramento."
+  },
+  {
+    "question": "What is the capital of Colorado?",
+    "answer": "The capital of Colorado is Denver."
+  },
+  {
+    "question": "What is the capital of Connecticut?",
+    "answer": "The capital of Connecticut is Hartford."
+  },
+  {
+    "question": "What is the capital of Delaware?",
+    "answer": "The capital of Delaware is Dover."
+  },
+  {
+    "question": "What is the capital of Florida?",
+    "answer": "The capital of Florida is Tallahassee."
+  },
+  {
+    "question": "What is the capital of Georgia?",
+    "answer": "The capital of Georgia is Atlanta."
+  },
+  {
+    "question": "What is the capital of Hawaii?",
+    "answer": "The capital of Hawaii is Honolulu."
+  },
+  {
+    "question": "What is the capital of Idaho?",
+    "answer": "The capital of Idaho is Boise."
+  },
+  {
+    "question": "What is the capital of Illinois?",
+    "answer": "The capital of Illinois is Springfield."
+  },
+  {
+    "question": "What is the capital of Indiana?",
+    "answer": "The capital of Indiana is Indianapolis."
+  },
+  {
+    "question": "What is the capital of Iowa?",
+    "answer": "The capital of Iowa is Des Moines."
+  },
+  {
+    "question": "What is the capital of Kansas?",
+    "answer": "The capital of Kansas is Topeka."
+  },
+  {
+    "question": "What is the capital of Kentucky?",
+    "answer": "The capital of Kentucky is Frankfort."
+  },
+  {
+    "question": "What is the capital of Louisiana?",
+    "answer": "The capital of Louisiana is Baton Rouge."
+  },
+  {
+    "question": "What is the capital of Maine?",
+    "answer": "The capital of Maine is Augusta."
+  },
+  {
+    "question": "What is the capital of Maryland?",
+    "answer": "The capital of Maryland is Annapolis."
+  },
+  {
+    "question": "What is the capital of Massachusetts?",
+    "answer": "The capital of Massachusetts is Boston."
+  },
+  {
+    "question": "What is the capital of Michigan?",
+    "answer": "The capital of Michigan is Lansing."
+  },
+  {
+    "question": "What is the capital of Minnesota?",
+    "answer": "The capital of Minnesota is Saint Paul."
+  },
+  {
+    "question": "What is the capital of Mississippi?",
+    "answer": "The capital of Mississippi is Jackson."
+  },
+  {
+    "question": "What is the capital of Missouri?",
+    "answer": "The capital of Missouri is Jefferson City."
+  },
+  {
+    "question": "What is the capital of Montana?",
+    "answer": "The capital of Montana is Helena."
+  },
+  {
+    "question": "What is the capital of Nebraska?",
+    "answer": "The capital of Nebraska is Lincoln."
+  },
+  {
+    "question": "What is the capital of Nevada?",
+    "answer": "The capital of Nevada is Carson City."
+  },
+  {
+    "question": "What is the capital of New Hampshire?",
+    "answer": "The capital of New Hampshire is Concord."
+  },
+  {
+    "question": "What is the capital of New Jersey?",
+    "answer": "The capital of New Jersey is Trenton."
+  },
+  {
+    "question": "What is the capital of New Mexico?",
+    "answer": "The capital of New Mexico is Santa Fe."
+  },
+  {
+    "question": "What is the capital of New York?",
+    "answer": "The capital of New York is Albany."
+  },
+  {
+    "question": "What is the capital of North Carolina?",
+    "answer": "The capital of North Carolina is Raleigh."
+  },
+  {
+    "question": "What is the capital of North Dakota?",
+    "answer": "The capital of North Dakota is Bismarck."
+  },
+  {
+    "question": "What is the capital of Ohio?",
+    "answer": "The capital of Ohio is Columbus."
+  },
+  {
+    "question": "What is the capital of Oklahoma?",
+    "answer": "The capital of Oklahoma is Oklahoma City."
+  },
+  {
+    "question": "What is the capital of Oregon?",
+    "answer": "The capital of Oregon is Salem."
+  },
+  {
+    "question": "What is the capital of Pennsylvania?",
+    "answer": "The capital of Pennsylvania is Harrisburg."
+  },
+  {
+    "question": "What is the capital of Rhode Island?",
+    "answer": "The capital of Rhode Island is Providence."
+  },
+  {
+    "question": "What is the capital of South Carolina?",
+    "answer": "The capital of South Carolina is Columbia."
+  },
+  {
+    "question": "What is the capital of South Dakota?",
+    "answer": "The capital of South Dakota is Pierre."
+  },
+  {
+    "question": "What is the capital of Tennessee?",
+    "answer": "The capital of Tennessee is Nashville."
+  },
+  {
+    "question": "What is the capital of Texas?",
+    "answer": "The capital of Texas is Austin."
+  },
+  {
+    "question": "What is the capital of Utah?",
+    "answer": "The capital of Utah is Salt Lake City."
+  },
+  {
+    "question": "What is the capital of Vermont?",
+    "answer": "The capital of Vermont is Montpelier."
+  },
+  {
+    "question": "What is the capital of Virginia?",
+    "answer": "The capital of Virginia is Richmond."
+  },
+  {
+    "question": "What is the capital of Washington?",
+    "answer": "The capital of Washington is Olympia."
+  },
+  {
+    "question": "What is the capital of West Virginia?",
+    "answer": "The capital of West Virginia is Charleston."
+  },
+  {
+    "question": "What is the capital of Wisconsin?",
+    "answer": "The capital of Wisconsin is Madison."
+  },
+  {
+    "question": "What is the capital of Wyoming?",
+    "answer": "The capital of Wyoming is Cheyenne."
+  },
+  {
+    "question": "What is a good bicep workout 1?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good tricep workout 1?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good chest workout 1?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good back workout 1?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good leg workout 1?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good shoulder workout 1?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good core workout 1?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good abs workout 1?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good glutes workout 1?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good calves workout 1?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good upper body workout 1?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good lower body workout 1?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good full body workout 1?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good push workout 1?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good pull workout 1?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good arms workout 1?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good cardio workout 1?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good hiit workout 1?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good strength workout 1?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good conditioning workout 1?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good bicep workout 2?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good tricep workout 2?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good chest workout 2?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good back workout 2?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good leg workout 2?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good shoulder workout 2?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good core workout 2?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good abs workout 2?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good glutes workout 2?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good calves workout 2?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good upper body workout 2?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good lower body workout 2?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good full body workout 2?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good push workout 2?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good pull workout 2?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good arms workout 2?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good cardio workout 2?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good hiit workout 2?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good strength workout 2?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good conditioning workout 2?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good bicep workout 3?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good tricep workout 3?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good chest workout 3?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good back workout 3?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good leg workout 3?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good shoulder workout 3?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good core workout 3?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good abs workout 3?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good glutes workout 3?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good calves workout 3?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good upper body workout 3?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good lower body workout 3?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good full body workout 3?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good push workout 3?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good pull workout 3?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good arms workout 3?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good cardio workout 3?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good hiit workout 3?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good strength workout 3?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good conditioning workout 3?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good bicep workout 4?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good tricep workout 4?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good chest workout 4?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good back workout 4?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good leg workout 4?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good shoulder workout 4?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good core workout 4?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good abs workout 4?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good glutes workout 4?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good calves workout 4?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good upper body workout 4?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good lower body workout 4?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good full body workout 4?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good push workout 4?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good pull workout 4?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good arms workout 4?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good cardio workout 4?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good hiit workout 4?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good strength workout 4?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good conditioning workout 4?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good bicep workout 5?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good tricep workout 5?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good chest workout 5?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good back workout 5?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good leg workout 5?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good shoulder workout 5?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good core workout 5?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good abs workout 5?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good glutes workout 5?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good calves workout 5?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is a good upper body workout 5?",
+    "answer": "3x10 bicep curls, 3x12 hammer curls, 3x8 chin ups"
+  },
+  {
+    "question": "What is a good lower body workout 5?",
+    "answer": "4x8 bench press, 3x10 push ups, 3x12 chest flys"
+  },
+  {
+    "question": "What is a good full body workout 5?",
+    "answer": "3x8 pull ups, 3x10 barbell rows, 3x12 lat pulldowns"
+  },
+  {
+    "question": "What is a good push workout 5?",
+    "answer": "4x10 squats, 3x12 lunges, 3x15 calf raises"
+  },
+  {
+    "question": "What is a good pull workout 5?",
+    "answer": "3x12 shoulder press, 3x15 lateral raises, 3x12 front raises"
+  },
+  {
+    "question": "What is a good arms workout 5?",
+    "answer": "3x15 crunches, 3x12 leg raises, 3x30 second planks"
+  },
+  {
+    "question": "What is a good cardio workout 5?",
+    "answer": "4x6 deadlifts, 3x8 Romanian deadlifts, 3x12 hamstring curls"
+  },
+  {
+    "question": "What is a good hiit workout 5?",
+    "answer": "5x20 second sprints, 4x15 jump squats, 3x20 mountain climbers"
+  },
+  {
+    "question": "What is a good strength workout 5?",
+    "answer": "3x10 goblet squats, 3x12 dumbbell rows, 3x10 push ups"
+  },
+  {
+    "question": "What is a good conditioning workout 5?",
+    "answer": "3x40 second farmer carries, 3x15 kettlebell swings, 3x12 rows"
+  },
+  {
+    "question": "What is the capital of Afghanistan?",
+    "answer": "The capital of Afghanistan is Kabul."
+  },
+  {
+    "question": "What is the capital of Albania?",
+    "answer": "The capital of Albania is Tirana."
+  },
+  {
+    "question": "What is the capital of Algeria?",
+    "answer": "The capital of Algeria is Algiers."
+  },
+  {
+    "question": "What is the capital of Andorra?",
+    "answer": "The capital of Andorra is Andorra la Vella."
+  },
+  {
+    "question": "What is the capital of Angola?",
+    "answer": "The capital of Angola is Luanda."
+  },
+  {
+    "question": "What is the capital of Antigua and Barbuda?",
+    "answer": "The capital of Antigua and Barbuda is Saint John's."
+  },
+  {
+    "question": "What is the capital of Argentina?",
+    "answer": "The capital of Argentina is Buenos Aires."
+  },
+  {
+    "question": "What is the capital of Armenia?",
+    "answer": "The capital of Armenia is Yerevan."
+  },
+  {
+    "question": "What is the capital of Australia?",
+    "answer": "The capital of Australia is Canberra."
+  },
+  {
+    "question": "What is the capital of Austria?",
+    "answer": "The capital of Austria is Vienna."
+  },
+  {
+    "question": "What is the capital of Azerbaijan?",
+    "answer": "The capital of Azerbaijan is Baku."
+  },
+  {
+    "question": "What is the capital of Bahamas?",
+    "answer": "The capital of Bahamas is Nassau."
+  },
+  {
+    "question": "What is the capital of Bahrain?",
+    "answer": "The capital of Bahrain is Manama."
+  },
+  {
+    "question": "What is the capital of Bangladesh?",
+    "answer": "The capital of Bangladesh is Dhaka."
+  },
+  {
+    "question": "What is the capital of Barbados?",
+    "answer": "The capital of Barbados is Bridgetown."
+  },
+  {
+    "question": "What is the capital of Belarus?",
+    "answer": "The capital of Belarus is Minsk."
+  },
+  {
+    "question": "What is the capital of Belgium?",
+    "answer": "The capital of Belgium is Brussels."
+  },
+  {
+    "question": "What is the capital of Belize?",
+    "answer": "The capital of Belize is Belmopan."
+  },
+  {
+    "question": "What is the capital of Benin?",
+    "answer": "The capital of Benin is Porto-Novo."
+  },
+  {
+    "question": "What is the capital of Bhutan?",
+    "answer": "The capital of Bhutan is Thimphu."
+  },
+  {
+    "question": "What is the capital of Bolivia?",
+    "answer": "The capital of Bolivia is Sucre."
+  },
+  {
+    "question": "What is the capital of Bosnia and Herzegovina?",
+    "answer": "The capital of Bosnia and Herzegovina is Sarajevo."
+  },
+  {
+    "question": "What is the capital of Botswana?",
+    "answer": "The capital of Botswana is Gaborone."
+  },
+  {
+    "question": "What is the capital of Brazil?",
+    "answer": "The capital of Brazil is Brasília."
+  },
+  {
+    "question": "What is the capital of Brunei?",
+    "answer": "The capital of Brunei is Bandar Seri Begawan."
+  },
+  {
+    "question": "What is the capital of Bulgaria?",
+    "answer": "The capital of Bulgaria is Sofia."
+  },
+  {
+    "question": "What is the capital of Burkina Faso?",
+    "answer": "The capital of Burkina Faso is Ouagadougou."
+  },
+  {
+    "question": "What is the capital of Burundi?",
+    "answer": "The capital of Burundi is Gitega."
+  },
+  {
+    "question": "What is the capital of Cambodia?",
+    "answer": "The capital of Cambodia is Phnom Penh."
+  },
+  {
+    "question": "What is the capital of Cameroon?",
+    "answer": "The capital of Cameroon is Yaoundé."
+  },
+  {
+    "question": "What is the capital of Canada?",
+    "answer": "The capital of Canada is Ottawa."
+  },
+  {
+    "question": "What is the capital of Cape Verde?",
+    "answer": "The capital of Cape Verde is Praia."
+  },
+  {
+    "question": "What is the capital of Central African Republic?",
+    "answer": "The capital of Central African Republic is Bangui."
+  },
+  {
+    "question": "What is the capital of Chad?",
+    "answer": "The capital of Chad is N'Djamena."
+  },
+  {
+    "question": "What is the capital of Chile?",
+    "answer": "The capital of Chile is Santiago."
+  },
+  {
+    "question": "What is the capital of China?",
+    "answer": "The capital of China is Beijing."
+  },
+  {
+    "question": "What is the capital of Colombia?",
+    "answer": "The capital of Colombia is Bogotá."
+  },
+  {
+    "question": "What is the capital of Comoros?",
+    "answer": "The capital of Comoros is Moroni."
+  },
+  {
+    "question": "What is the capital of Costa Rica?",
+    "answer": "The capital of Costa Rica is San José."
+  },
+  {
+    "question": "What is the capital of Croatia?",
+    "answer": "The capital of Croatia is Zagreb."
+  },
+  {
+    "question": "What is the capital of Cuba?",
+    "answer": "The capital of Cuba is Havana."
+  },
+  {
+    "question": "What is the capital of Cyprus?",
+    "answer": "The capital of Cyprus is Nicosia."
+  },
+  {
+    "question": "What is the capital of Czech Republic?",
+    "answer": "The capital of Czech Republic is Prague."
+  },
+  {
+    "question": "What is the capital of Democratic Republic of the Congo?",
+    "answer": "The capital of Democratic Republic of the Congo is Kinshasa."
+  },
+  {
+    "question": "What is the capital of Denmark?",
+    "answer": "The capital of Denmark is Copenhagen."
+  },
+  {
+    "question": "What is the capital of Djibouti?",
+    "answer": "The capital of Djibouti is Djibouti."
+  },
+  {
+    "question": "What is the capital of Dominica?",
+    "answer": "The capital of Dominica is Roseau."
+  },
+  {
+    "question": "What is the capital of Dominican Republic?",
+    "answer": "The capital of Dominican Republic is Santo Domingo."
+  },
+  {
+    "question": "What is the capital of Ecuador?",
+    "answer": "The capital of Ecuador is Quito."
+  },
+  {
+    "question": "What is the capital of Egypt?",
+    "answer": "The capital of Egypt is Cairo."
+  },
+  {
+    "question": "What is the capital of El Salvador?",
+    "answer": "The capital of El Salvador is San Salvador."
+  },
+  {
+    "question": "What is the capital of Equatorial Guinea?",
+    "answer": "The capital of Equatorial Guinea is Malabo."
+  },
+  {
+    "question": "What is the capital of Eritrea?",
+    "answer": "The capital of Eritrea is Asmara."
+  },
+  {
+    "question": "What is the capital of Estonia?",
+    "answer": "The capital of Estonia is Tallinn."
+  },
+  {
+    "question": "What is the capital of Eswatini?",
+    "answer": "The capital of Eswatini is Mbabane."
+  },
+  {
+    "question": "What is the capital of Ethiopia?",
+    "answer": "The capital of Ethiopia is Addis Ababa."
+  },
+  {
+    "question": "What is the capital of Fiji?",
+    "answer": "The capital of Fiji is Suva."
+  },
+  {
+    "question": "What is the capital of Finland?",
+    "answer": "The capital of Finland is Helsinki."
+  },
+  {
+    "question": "What is the capital of France?",
+    "answer": "The capital of France is Paris."
+  },
+  {
+    "question": "What is the capital of Gabon?",
+    "answer": "The capital of Gabon is Libreville."
+  },
+  {
+    "question": "What is the capital of Gambia?",
+    "answer": "The capital of Gambia is Banjul."
+  },
+  {
+    "question": "What is the capital of Georgia?",
+    "answer": "The capital of Georgia is Tbilisi."
+  },
+  {
+    "question": "What is the capital of Germany?",
+    "answer": "The capital of Germany is Berlin."
+  },
+  {
+    "question": "What is the capital of Ghana?",
+    "answer": "The capital of Ghana is Accra."
+  },
+  {
+    "question": "What is the capital of Greece?",
+    "answer": "The capital of Greece is Athens."
+  },
+  {
+    "question": "What is the capital of Grenada?",
+    "answer": "The capital of Grenada is St. George's."
+  },
+  {
+    "question": "What is the capital of Guatemala?",
+    "answer": "The capital of Guatemala is Guatemala City."
+  },
+  {
+    "question": "What is the capital of Guinea?",
+    "answer": "The capital of Guinea is Conakry."
+  },
+  {
+    "question": "What is the capital of Guinea-Bissau?",
+    "answer": "The capital of Guinea-Bissau is Bissau."
+  },
+  {
+    "question": "What is the capital of Guyana?",
+    "answer": "The capital of Guyana is Georgetown."
+  },
+  {
+    "question": "What is the capital of Haiti?",
+    "answer": "The capital of Haiti is Port-au-Prince."
+  },
+  {
+    "question": "What is the capital of Honduras?",
+    "answer": "The capital of Honduras is Tegucigalpa."
+  },
+  {
+    "question": "What is the capital of Hungary?",
+    "answer": "The capital of Hungary is Budapest."
+  },
+  {
+    "question": "What is the capital of Iceland?",
+    "answer": "The capital of Iceland is Reykjavík."
+  },
+  {
+    "question": "What is the capital of India?",
+    "answer": "The capital of India is New Delhi."
+  },
+  {
+    "question": "What is the capital of Indonesia?",
+    "answer": "The capital of Indonesia is Jakarta."
+  },
+  {
+    "question": "What is the capital of Iran?",
+    "answer": "The capital of Iran is Tehran."
+  },
+  {
+    "question": "What is the capital of Iraq?",
+    "answer": "The capital of Iraq is Baghdad."
+  },
+  {
+    "question": "What is the capital of Ireland?",
+    "answer": "The capital of Ireland is Dublin."
+  },
+  {
+    "question": "What is the capital of Israel?",
+    "answer": "The capital of Israel is Jerusalem."
+  },
+  {
+    "question": "What is the capital of Italy?",
+    "answer": "The capital of Italy is Rome."
+  },
+  {
+    "question": "What is the capital of Jamaica?",
+    "answer": "The capital of Jamaica is Kingston."
+  },
+  {
+    "question": "What is the capital of Japan?",
+    "answer": "The capital of Japan is Tokyo."
+  },
+  {
+    "question": "What is the capital of Jordan?",
+    "answer": "The capital of Jordan is Amman."
+  },
+  {
+    "question": "What is the capital of Kazakhstan?",
+    "answer": "The capital of Kazakhstan is Astana."
+  },
+  {
+    "question": "What is the capital of Kenya?",
+    "answer": "The capital of Kenya is Nairobi."
+  },
+  {
+    "question": "What is the capital of Kiribati?",
+    "answer": "The capital of Kiribati is South Tarawa."
+  },
+  {
+    "question": "What is the capital of Kuwait?",
+    "answer": "The capital of Kuwait is Kuwait City."
+  },
+  {
+    "question": "What is the capital of Kyrgyzstan?",
+    "answer": "The capital of Kyrgyzstan is Bishkek."
+  },
+  {
+    "question": "What is the capital of Laos?",
+    "answer": "The capital of Laos is Vientiane."
+  },
+  {
+    "question": "What is the capital of Latvia?",
+    "answer": "The capital of Latvia is Riga."
+  },
+  {
+    "question": "What is the capital of Lebanon?",
+    "answer": "The capital of Lebanon is Beirut."
+  },
+  {
+    "question": "What is the capital of Lesotho?",
+    "answer": "The capital of Lesotho is Maseru."
+  },
+  {
+    "question": "What is the capital of Liberia?",
+    "answer": "The capital of Liberia is Monrovia."
+  },
+  {
+    "question": "What is the capital of Libya?",
+    "answer": "The capital of Libya is Tripoli."
+  },
+  {
+    "question": "What is the capital of Liechtenstein?",
+    "answer": "The capital of Liechtenstein is Vaduz."
+  },
+  {
+    "question": "What is the capital of Lithuania?",
+    "answer": "The capital of Lithuania is Vilnius."
+  },
+  {
+    "question": "What is the capital of Luxembourg?",
+    "answer": "The capital of Luxembourg is Luxembourg."
+  },
+  {
+    "question": "What is the capital of Madagascar?",
+    "answer": "The capital of Madagascar is Antananarivo."
+  },
+  {
+    "question": "What is the capital of Malawi?",
+    "answer": "The capital of Malawi is Lilongwe."
+  },
+  {
+    "question": "What is the capital of Malaysia?",
+    "answer": "The capital of Malaysia is Kuala Lumpur."
+  },
+  {
+    "question": "What is the capital of Maldives?",
+    "answer": "The capital of Maldives is Malé."
+  },
+  {
+    "question": "What is the capital of Mali?",
+    "answer": "The capital of Mali is Bamako."
+  },
+  {
+    "question": "What is the capital of Malta?",
+    "answer": "The capital of Malta is Valletta."
+  },
+  {
+    "question": "What is the capital of Marshall Islands?",
+    "answer": "The capital of Marshall Islands is Majuro."
+  },
+  {
+    "question": "What is the capital of Mauritania?",
+    "answer": "The capital of Mauritania is Nouakchott."
+  },
+  {
+    "question": "What is the capital of Mauritius?",
+    "answer": "The capital of Mauritius is Port Louis."
+  },
+  {
+    "question": "What is the capital of Mexico?",
+    "answer": "The capital of Mexico is Mexico City."
+  },
+  {
+    "question": "What is the capital of Micronesia?",
+    "answer": "The capital of Micronesia is Palikir."
+  },
+  {
+    "question": "What is the capital of Moldova?",
+    "answer": "The capital of Moldova is Chișinău."
+  },
+  {
+    "question": "What is the capital of Monaco?",
+    "answer": "The capital of Monaco is Monaco."
+  },
+  {
+    "question": "What is the capital of Mongolia?",
+    "answer": "The capital of Mongolia is Ulaanbaatar."
+  },
+  {
+    "question": "What is the capital of Montenegro?",
+    "answer": "The capital of Montenegro is Podgorica."
+  },
+  {
+    "question": "What is the capital of Morocco?",
+    "answer": "The capital of Morocco is Rabat."
+  },
+  {
+    "question": "What is the capital of Mozambique?",
+    "answer": "The capital of Mozambique is Maputo."
+  },
+  {
+    "question": "What is the capital of Myanmar?",
+    "answer": "The capital of Myanmar is Naypyidaw."
+  },
+  {
+    "question": "What is the capital of Namibia?",
+    "answer": "The capital of Namibia is Windhoek."
+  },
+  {
+    "question": "What is the capital of Nauru?",
+    "answer": "The capital of Nauru is Yaren."
+  },
+  {
+    "question": "What is the capital of Nepal?",
+    "answer": "The capital of Nepal is Kathmandu."
+  },
+  {
+    "question": "What is the capital of Netherlands?",
+    "answer": "The capital of Netherlands is Amsterdam."
+  },
+  {
+    "question": "What is the capital of New Zealand?",
+    "answer": "The capital of New Zealand is Wellington."
+  },
+  {
+    "question": "What is the capital of Nicaragua?",
+    "answer": "The capital of Nicaragua is Managua."
+  },
+  {
+    "question": "What is the capital of Niger?",
+    "answer": "The capital of Niger is Niamey."
+  },
+  {
+    "question": "What is the capital of Nigeria?",
+    "answer": "The capital of Nigeria is Abuja."
+  },
+  {
+    "question": "What is the capital of North Korea?",
+    "answer": "The capital of North Korea is Pyongyang."
+  },
+  {
+    "question": "What is the capital of North Macedonia?",
+    "answer": "The capital of North Macedonia is Skopje."
+  },
+  {
+    "question": "What is the capital of Norway?",
+    "answer": "The capital of Norway is Oslo."
+  },
+  {
+    "question": "What is the capital of Oman?",
+    "answer": "The capital of Oman is Muscat."
+  },
+  {
+    "question": "What is the capital of Pakistan?",
+    "answer": "The capital of Pakistan is Islamabad."
+  },
+  {
+    "question": "What is the capital of Palau?",
+    "answer": "The capital of Palau is Ngerulmud."
+  },
+  {
+    "question": "What is the capital of Panama?",
+    "answer": "The capital of Panama is Panama City."
+  },
+  {
+    "question": "What is the capital of Papua New Guinea?",
+    "answer": "The capital of Papua New Guinea is Port Moresby."
+  },
+  {
+    "question": "What is the capital of Paraguay?",
+    "answer": "The capital of Paraguay is Asunción."
+  },
+  {
+    "question": "What is the capital of Peru?",
+    "answer": "The capital of Peru is Lima."
+  },
+  {
+    "question": "What is the capital of Philippines?",
+    "answer": "The capital of Philippines is Manila."
+  },
+  {
+    "question": "What is the capital of Poland?",
+    "answer": "The capital of Poland is Warsaw."
+  },
+  {
+    "question": "What is the capital of Portugal?",
+    "answer": "The capital of Portugal is Lisbon."
+  },
+  {
+    "question": "What is the capital of Qatar?",
+    "answer": "The capital of Qatar is Doha."
+  },
+  {
+    "question": "What is the capital of Romania?",
+    "answer": "The capital of Romania is Bucharest."
+  },
+  {
+    "question": "What is the capital of Russia?",
+    "answer": "The capital of Russia is Moscow."
+  },
+  {
+    "question": "What is the capital of Rwanda?",
+    "answer": "The capital of Rwanda is Kigali."
+  },
+  {
+    "question": "What is the capital of Saint Kitts and Nevis?",
+    "answer": "The capital of Saint Kitts and Nevis is Basseterre."
+  },
+  {
+    "question": "What is the capital of Saint Lucia?",
+    "answer": "The capital of Saint Lucia is Castries."
+  },
+  {
+    "question": "What is the capital of Saint Vincent and the Grenadines?",
+    "answer": "The capital of Saint Vincent and the Grenadines is Kingstown."
+  },
+  {
+    "question": "What is the capital of Samoa?",
+    "answer": "The capital of Samoa is Apia."
+  },
+  {
+    "question": "What is the capital of San Marino?",
+    "answer": "The capital of San Marino is San Marino."
+  },
+  {
+    "question": "What is the capital of Sao Tome and Principe?",
+    "answer": "The capital of Sao Tome and Principe is São Tomé."
+  },
+  {
+    "question": "What is the capital of Saudi Arabia?",
+    "answer": "The capital of Saudi Arabia is Riyadh."
+  },
+  {
+    "question": "What is the capital of Senegal?",
+    "answer": "The capital of Senegal is Dakar."
+  },
+  {
+    "question": "What is the capital of Serbia?",
+    "answer": "The capital of Serbia is Belgrade."
+  },
+  {
+    "question": "What is the capital of Seychelles?",
+    "answer": "The capital of Seychelles is Victoria."
+  },
+  {
+    "question": "What is the capital of Sierra Leone?",
+    "answer": "The capital of Sierra Leone is Freetown."
+  },
+  {
+    "question": "What is the capital of Singapore?",
+    "answer": "The capital of Singapore is Singapore."
+  },
+  {
+    "question": "What is the capital of Slovakia?",
+    "answer": "The capital of Slovakia is Bratislava."
+  },
+  {
+    "question": "What is the capital of Slovenia?",
+    "answer": "The capital of Slovenia is Ljubljana."
+  },
+  {
+    "question": "What is the capital of Solomon Islands?",
+    "answer": "The capital of Solomon Islands is Honiara."
+  },
+  {
+    "question": "What is the capital of Somalia?",
+    "answer": "The capital of Somalia is Mogadishu."
+  },
+  {
+    "question": "What is the capital of South Africa?",
+    "answer": "The capital of South Africa is Pretoria."
+  },
+  {
+    "question": "What is the capital of South Korea?",
+    "answer": "The capital of South Korea is Seoul."
+  },
+  {
+    "question": "What is the capital of South Sudan?",
+    "answer": "The capital of South Sudan is Juba."
+  },
+  {
+    "question": "What is the capital of Spain?",
+    "answer": "The capital of Spain is Madrid."
+  },
+  {
+    "question": "What is the capital of Sri Lanka?",
+    "answer": "The capital of Sri Lanka is Sri Jayawardenepura Kotte."
+  },
+  {
+    "question": "What is the capital of Sudan?",
+    "answer": "The capital of Sudan is Khartoum."
+  },
+  {
+    "question": "What is the capital of Suriname?",
+    "answer": "The capital of Suriname is Paramaribo."
+  },
+  {
+    "question": "What is the capital of Sweden?",
+    "answer": "The capital of Sweden is Stockholm."
+  },
+  {
+    "question": "What is the capital of Switzerland?",
+    "answer": "The capital of Switzerland is Bern."
+  },
+  {
+    "question": "What is the capital of Syria?",
+    "answer": "The capital of Syria is Damascus."
+  },
+  {
+    "question": "What is the capital of Taiwan?",
+    "answer": "The capital of Taiwan is Taipei."
+  },
+  {
+    "question": "What is the capital of Tajikistan?",
+    "answer": "The capital of Tajikistan is Dushanbe."
+  },
+  {
+    "question": "What is the capital of Tanzania?",
+    "answer": "The capital of Tanzania is Dodoma."
+  },
+  {
+    "question": "What is the capital of Thailand?",
+    "answer": "The capital of Thailand is Bangkok."
+  },
+  {
+    "question": "What is the capital of Timor-Leste?",
+    "answer": "The capital of Timor-Leste is Dili."
+  },
+  {
+    "question": "What is the capital of Togo?",
+    "answer": "The capital of Togo is Lomé."
+  },
+  {
+    "question": "What is the capital of Tonga?",
+    "answer": "The capital of Tonga is Nukuʻalofa."
+  },
+  {
+    "question": "What is the capital of Trinidad and Tobago?",
+    "answer": "The capital of Trinidad and Tobago is Port of Spain."
+  },
+  {
+    "question": "What is the capital of Tunisia?",
+    "answer": "The capital of Tunisia is Tunis."
+  },
+  {
+    "question": "What is the capital of Turkey?",
+    "answer": "The capital of Turkey is Ankara."
+  },
+  {
+    "question": "What is the capital of Turkmenistan?",
+    "answer": "The capital of Turkmenistan is Ashgabat."
+  },
+  {
+    "question": "What is the capital of Tuvalu?",
+    "answer": "The capital of Tuvalu is Funafuti."
+  },
+  {
+    "question": "What is the capital of Uganda?",
+    "answer": "The capital of Uganda is Kampala."
+  },
+  {
+    "question": "What is the capital of Ukraine?",
+    "answer": "The capital of Ukraine is Kyiv."
+  },
+  {
+    "question": "What is the capital of United Arab Emirates?",
+    "answer": "The capital of United Arab Emirates is Abu Dhabi."
+  },
+  {
+    "question": "What is the capital of United Kingdom?",
+    "answer": "The capital of United Kingdom is London."
+  },
+  {
+    "question": "What is the capital of United States?",
+    "answer": "The capital of United States is Washington, D.C.."
+  },
+  {
+    "question": "What is the capital of Uruguay?",
+    "answer": "The capital of Uruguay is Montevideo."
+  },
+  {
+    "question": "What is the capital of Uzbekistan?",
+    "answer": "The capital of Uzbekistan is Tashkent."
+  },
+  {
+    "question": "What is the capital of Vanuatu?",
+    "answer": "The capital of Vanuatu is Port Vila."
+  },
+  {
+    "question": "What is the capital of Vatican City?",
+    "answer": "The capital of Vatican City is Vatican City."
+  },
+  {
+    "question": "What is the capital of Venezuela?",
+    "answer": "The capital of Venezuela is Caracas."
+  },
+  {
+    "question": "What is the capital of Vietnam?",
+    "answer": "The capital of Vietnam is Hanoi."
+  },
+  {
+    "question": "What is the capital of Yemen?",
+    "answer": "The capital of Yemen is Sana'a."
+  },
+  {
+    "question": "What is the capital of Zambia?",
+    "answer": "The capital of Zambia is Lusaka."
+  },
+  {
+    "question": "What is the capital of Zimbabwe?",
+    "answer": "The capital of Zimbabwe is Harare."
+  },
+  {
+    "question": "Where did the earliest known civilization emerge?",
+    "answer": "The earliest known civilization emerged in Mesopotamia."
+  },
+  {
+    "question": "What river supported ancient Egyptian civilization?",
+    "answer": "The Nile River supported ancient Egyptian civilization."
+  },
+  {
+    "question": "Which code is one of the earliest written laws?",
+    "answer": "The Code of Hammurabi is one of the earliest written laws."
+  },
+  {
+    "question": "Who was the first emperor of Rome?",
+    "answer": "Augustus was the first emperor of Rome."
+  },
+  {
+    "question": "What structure symbolized Roman engineering?",
+    "answer": "Aqueducts symbolized Roman engineering."
+  },
+  {
+    "question": "What philosophy was taught by Confucius?",
+    "answer": "Confucianism taught moral behavior and social harmony."
+  },
+  {
+    "question": "What was the Silk Road?",
+    "answer": "The Silk Road was a network of trade routes connecting Asia and Europe."
+  },
+  {
+    "question": "What empire built Machu Picchu?",
+    "answer": "The Inca Empire built Machu Picchu."
+  },
+  {
+    "question": "What religion began in India around 1500 BCE?",
+    "answer": "Hinduism began in India around 1500 BCE."
+  },
+  {
+    "question": "Who founded Buddhism?",
+    "answer": "Siddhartha Gautama founded Buddhism."
+  },
+  {
+    "question": "What event marked the start of the Middle Ages?",
+    "answer": "The fall of the Western Roman Empire marked the start of the Middle Ages."
+  },
+  {
+    "question": "What system dominated medieval Europe?",
+    "answer": "Feudalism dominated medieval Europe."
+  },
+  {
+    "question": "What document limited the power of English kings?",
+    "answer": "The Magna Carta limited the power of English kings."
+  },
+  {
+    "question": "What was the Black Death?",
+    "answer": "A deadly pandemic that swept through Europe in the 14th century."
+  },
+  {
+    "question": "What war was fought between England and France?",
+    "answer": "The Hundred Years' War was fought between England and France."
+  },
+  {
+    "question": "What movement revived classical learning?",
+    "answer": "The Renaissance revived classical learning."
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "answer": "Leonardo da Vinci painted the Mona Lisa."
+  },
+  {
+    "question": "What invention spread knowledge rapidly?",
+    "answer": "The printing press spread knowledge rapidly."
+  },
+  {
+    "question": "What event began the Protestant Reformation?",
+    "answer": "Martin Luther's Ninety-Five Theses began the Protestant Reformation."
+  },
+  {
+    "question": "What church split resulted from the Reformation?",
+    "answer": "The split between Catholicism and Protestantism resulted."
+  },
+  {
+    "question": "What voyages connected Europe to the Americas?",
+    "answer": "Christopher Columbus's voyages connected Europe to the Americas."
+  },
+  {
+    "question": "What empire conquered much of South America?",
+    "answer": "The Spanish Empire conquered much of South America."
+  },
+  {
+    "question": "What trade exchanged goods and diseases?",
+    "answer": "The Columbian Exchange exchanged goods and diseases."
+  },
+  {
+    "question": "What period emphasized reason and science?",
+    "answer": "The Enlightenment emphasized reason and science."
+  },
+  {
+    "question": "Who wrote The Social Contract?",
+    "answer": "Jean-Jacques Rousseau wrote The Social Contract."
+  },
+  {
+    "question": "What revolution began in 1789?",
+    "answer": "The French Revolution began in 1789."
+  },
+  {
+    "question": "Who became emperor of France after the revolution?",
+    "answer": "Napoleon Bonaparte became emperor."
+  },
+  {
+    "question": "What agreement ended the Napoleonic Wars?",
+    "answer": "The Congress of Vienna ended the Napoleonic Wars."
+  },
+  {
+    "question": "What movement promoted national identity?",
+    "answer": "Nationalism promoted national identity."
+  },
+  {
+    "question": "What revolution began industrialization?",
+    "answer": "The Industrial Revolution began industrialization."
+  },
+  {
+    "question": "What invention powered factories?",
+    "answer": "The steam engine powered factories."
+  },
+  {
+    "question": "What ideology supported workers' rights?",
+    "answer": "Socialism supported workers' rights."
+  },
+  {
+    "question": "What countries formed the Axis Powers?",
+    "answer": "Germany, Italy, and Japan formed the Axis Powers."
+  },
+  {
+    "question": "What war lasted from 1914 to 1918?",
+    "answer": "World War I lasted from 1914 to 1918."
+  },
+  {
+    "question": "What treaty ended World War I?",
+    "answer": "The Treaty of Versailles ended World War I."
+  },
+  {
+    "question": "What war followed World War I?",
+    "answer": "World War II followed World War I."
+  },
+  {
+    "question": "What genocide occurred during WWII?",
+    "answer": "The Holocaust occurred during World War II."
+  },
+  {
+    "question": "What bombings ended WWII in the Pacific?",
+    "answer": "Atomic bombings of Hiroshima and Nagasaki ended WWII."
+  },
+  {
+    "question": "What organization formed to promote peace?",
+    "answer": "The United Nations was formed to promote peace."
+  },
+  {
+    "question": "What conflict followed WWII?",
+    "answer": "The Cold War followed WWII."
+  },
+  {
+    "question": "What wall symbolized Cold War division?",
+    "answer": "The Berlin Wall symbolized Cold War division."
+  },
+  {
+    "question": "What alliance opposed NATO?",
+    "answer": "The Warsaw Pact opposed NATO."
+  },
+  {
+    "question": "What war was fought in Southeast Asia?",
+    "answer": "The Vietnam War was fought in Southeast Asia."
+  },
+  {
+    "question": "What movement ended colonial rule?",
+    "answer": "Decolonization ended colonial rule."
+  },
+  {
+    "question": "What country led the Cultural Revolution?",
+    "answer": "China led the Cultural Revolution."
+  },
+  {
+    "question": "What event ended the Cold War?",
+    "answer": "The collapse of the Soviet Union ended the Cold War."
+  },
+  {
+    "question": "What organization governs the European Union?",
+    "answer": "The European Commission governs the EU."
+  },
+  {
+    "question": "What attack occurred on September 11, 2001?",
+    "answer": "Terrorist attacks occurred on September 11, 2001."
+  },
+  {
+    "question": "What global issue involves climate change?",
+    "answer": "Climate change is a major global issue."
+  },
+  {
+    "question": "What era is the current period called?",
+    "answer": "The current period is often called the Information Age."
+  },
+  {
+    "question": "Where did the earliest known civilization emerge?",
+    "answer": "The earliest known civilization emerged in Mesopotamia."
+  },
+  {
+    "question": "What river supported ancient Egyptian civilization?",
+    "answer": "The Nile River supported ancient Egyptian civilization."
+  },
+  {
+    "question": "Which code is one of the earliest written laws?",
+    "answer": "The Code of Hammurabi is one of the earliest written laws."
+  },
+  {
+    "question": "Who was the first emperor of Rome?",
+    "answer": "Augustus was the first emperor of Rome."
+  },
+  {
+    "question": "What structure symbolized Roman engineering?",
+    "answer": "Aqueducts symbolized Roman engineering."
+  },
+  {
+    "question": "What philosophy was taught by Confucius?",
+    "answer": "Confucianism taught moral behavior and social harmony."
+  },
+  {
+    "question": "What was the Silk Road?",
+    "answer": "The Silk Road was a network of trade routes connecting Asia and Europe."
+  },
+  {
+    "question": "What empire built Machu Picchu?",
+    "answer": "The Inca Empire built Machu Picchu."
+  },
+  {
+    "question": "What religion began in India around 1500 BCE?",
+    "answer": "Hinduism began in India around 1500 BCE."
+  },
+  {
+    "question": "Who founded Buddhism?",
+    "answer": "Siddhartha Gautama founded Buddhism."
+  },
+  {
+    "question": "What event marked the start of the Middle Ages?",
+    "answer": "The fall of the Western Roman Empire marked the start of the Middle Ages."
+  },
+  {
+    "question": "What system dominated medieval Europe?",
+    "answer": "Feudalism dominated medieval Europe."
+  },
+  {
+    "question": "What document limited the power of English kings?",
+    "answer": "The Magna Carta limited the power of English kings."
+  },
+  {
+    "question": "What was the Black Death?",
+    "answer": "A deadly pandemic that swept through Europe in the 14th century."
+  },
+  {
+    "question": "What war was fought between England and France?",
+    "answer": "The Hundred Years' War was fought between England and France."
+  },
+  {
+    "question": "What movement revived classical learning?",
+    "answer": "The Renaissance revived classical learning."
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "answer": "Leonardo da Vinci painted the Mona Lisa."
+  },
+  {
+    "question": "What invention spread knowledge rapidly?",
+    "answer": "The printing press spread knowledge rapidly."
+  },
+  {
+    "question": "What event began the Protestant Reformation?",
+    "answer": "Martin Luther's Ninety-Five Theses began the Protestant Reformation."
+  },
+  {
+    "question": "What church split resulted from the Reformation?",
+    "answer": "The split between Catholicism and Protestantism resulted."
+  },
+  {
+    "question": "What voyages connected Europe to the Americas?",
+    "answer": "Christopher Columbus's voyages connected Europe to the Americas."
+  },
+  {
+    "question": "What empire conquered much of South America?",
+    "answer": "The Spanish Empire conquered much of South America."
+  },
+  {
+    "question": "What trade exchanged goods and diseases?",
+    "answer": "The Columbian Exchange exchanged goods and diseases."
+  },
+  {
+    "question": "What period emphasized reason and science?",
+    "answer": "The Enlightenment emphasized reason and science."
+  },
+  {
+    "question": "Who wrote The Social Contract?",
+    "answer": "Jean-Jacques Rousseau wrote The Social Contract."
+  },
+  {
+    "question": "What revolution began in 1789?",
+    "answer": "The French Revolution began in 1789."
+  },
+  {
+    "question": "Who became emperor of France after the revolution?",
+    "answer": "Napoleon Bonaparte became emperor."
+  },
+  {
+    "question": "What agreement ended the Napoleonic Wars?",
+    "answer": "The Congress of Vienna ended the Napoleonic Wars."
+  },
+  {
+    "question": "What movement promoted national identity?",
+    "answer": "Nationalism promoted national identity."
+  },
+  {
+    "question": "What revolution began industrialization?",
+    "answer": "The Industrial Revolution began industrialization."
+  },
+  {
+    "question": "What invention powered factories?",
+    "answer": "The steam engine powered factories."
+  },
+  {
+    "question": "What ideology supported workers' rights?",
+    "answer": "Socialism supported workers' rights."
+  },
+  {
+    "question": "What countries formed the Axis Powers?",
+    "answer": "Germany, Italy, and Japan formed the Axis Powers."
+  },
+  {
+    "question": "What war lasted from 1914 to 1918?",
+    "answer": "World War I lasted from 1914 to 1918."
+  },
+  {
+    "question": "What treaty ended World War I?",
+    "answer": "The Treaty of Versailles ended World War I."
+  },
+  {
+    "question": "What war followed World War I?",
+    "answer": "World War II followed World War I."
+  },
+  {
+    "question": "What genocide occurred during WWII?",
+    "answer": "The Holocaust occurred during World War II."
+  },
+  {
+    "question": "What bombings ended WWII in the Pacific?",
+    "answer": "Atomic bombings of Hiroshima and Nagasaki ended WWII."
+  },
+  {
+    "question": "What organization formed to promote peace?",
+    "answer": "The United Nations was formed to promote peace."
+  },
+  {
+    "question": "What conflict followed WWII?",
+    "answer": "The Cold War followed WWII."
+  },
+  {
+    "question": "What wall symbolized Cold War division?",
+    "answer": "The Berlin Wall symbolized Cold War division."
+  },
+  {
+    "question": "What alliance opposed NATO?",
+    "answer": "The Warsaw Pact opposed NATO."
+  },
+  {
+    "question": "What war was fought in Southeast Asia?",
+    "answer": "The Vietnam War was fought in Southeast Asia."
+  },
+  {
+    "question": "What movement ended colonial rule?",
+    "answer": "Decolonization ended colonial rule."
+  },
+  {
+    "question": "What country led the Cultural Revolution?",
+    "answer": "China led the Cultural Revolution."
+  },
+  {
+    "question": "What event ended the Cold War?",
+    "answer": "The collapse of the Soviet Union ended the Cold War."
+  },
+  {
+    "question": "What organization governs the European Union?",
+    "answer": "The European Commission governs the EU."
+  },
+  {
+    "question": "What attack occurred on September 11, 2001?",
+    "answer": "Terrorist attacks occurred on September 11, 2001."
+  },
+  {
+    "question": "What global issue involves climate change?",
+    "answer": "Climate change is a major global issue."
+  },
+  {
+    "question": "What era is the current period called?",
+    "answer": "The current period is often called the Information Age."
+  }
+]

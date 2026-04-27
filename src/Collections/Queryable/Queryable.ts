@@ -253,8 +253,8 @@ export class Queryable<T> extends Array<T> {
     return keywords;
   }
 
-  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[], fuzzyMatchPercentage: number) {
-    let keywordMatches = new Array<T>();
+  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[], fuzzyMatchPercentage: number): T[] {
+    const keywordMatches: [number, T][] = [];
 
     if (keywords.length > 0) {
       keywords.forEach(keyword => {
@@ -281,12 +281,15 @@ export class Queryable<T> extends Array<T> {
             }
             return matches;
           });
-          keywordMatches = keywordMatches.concat(keywordMatchesFound.slice());
+
+          keywordMatchesFound.forEach(match => {
+            keywordMatches.push([keywordMatches.filter(e => e.includes(match)).length, match]);
+          });
         }
       });
     }
 
-    return keywordMatches;
+    return Queryable.From(keywordMatches).OrderByDescending([e => e[0]]).slice().map(e => e[1]);
   }
 
   private mutableArrayQuery(func: (array: Array<T>) => Array<T>): Queryable<T> {
