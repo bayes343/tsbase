@@ -1,3 +1,4 @@
 *.map
 *.spec.js
 *.spec.d.ts
+*.json
