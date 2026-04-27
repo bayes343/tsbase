@@ -221,75 +221,79 @@ export class Queryable<T> extends Array<T> {
   public Search(
     term: string,
     minimumKeywordLength = 3,
-    stopWords = new Array<string>(),
+    stopWords = new Array<string>('a', 'an', 'the'),
     ignorableSuffixCharacters = new Array<string>(),
     fuzzyMatchPercentage = 0
   ): Queryable<T> {
-    const keywords = this.getKeywordsForTerm(term, ignorableSuffixCharacters);
-
-    stopWords = stopWords.map(s => s.toLowerCase());
+    const keywords = this.getKeywordsForTerm(term.toLowerCase(), ignorableSuffixCharacters)
+      .filter(e => e.length >= minimumKeywordLength)
+      .filter(e => !stopWords.includes(e))
+      .map(e => e.trim());
 
     const exactMatches = this.filter(
       item => JSON.stringify(item).toLowerCase().includes(term.toLowerCase())).slice();
 
-    const keywordMatches = this.getKeywordMatches(keywords, minimumKeywordLength, stopWords, fuzzyMatchPercentage);
+    const keywordMatches = this.getKeywordMatches(keywords, fuzzyMatchPercentage);
 
-    const distinctResults = Queryable.From(exactMatches.concat(keywordMatches)).Distinct();
-    return distinctResults;
+    return Queryable.From(exactMatches.concat(keywordMatches)).Distinct();
   }
 
   private getKeywordsForTerm(term: string, ignorableSuffixCharacters?: Array<string>) {
-    const keywords = term.split(Strings.Space);
+    const keywords = new Set(term.split(Strings.Space));
 
     keywords.forEach(element => {
       element = element.replace(Regex.NonAlphaNumeric, Strings.Empty);
 
       const lastCharacter = element[element.length - 1];
       if (ignorableSuffixCharacters && ignorableSuffixCharacters.includes(lastCharacter)) {
-        keywords.push(element.split(lastCharacter)[0]);
+        keywords.add(element.split(lastCharacter)[0]);
       }
     });
 
-    return keywords;
+    return Array.from(keywords);
   }
 
-  private getKeywordMatches(keywords: string[], minimumKeywordLength: number, stopWords: string[], fuzzyMatchPercentage: number): T[] {
-    const keywordMatches: [number, T][] = [];
+  private getKeywordMatches(keywords: string[], fuzzyMatchPercentage: number): T[] {
+    const keywordMatches = new Map<T, number>();
 
     if (keywords.length > 0) {
       keywords.forEach(keyword => {
-        if (keyword.length >= minimumKeywordLength && !stopWords.includes(keyword.toLowerCase())) {
-          const keywordMatchesFound = this.filter(item => {
-            const stringifiedItem = JSON.stringify(item).toLowerCase();
-            let matches = stringifiedItem.includes(keyword.toLowerCase());
-            if (fuzzyMatchPercentage > 0) {
-              const itemKeywords = stringifiedItem.split(/[\s\"]/);
-              itemKeywords.forEach(itemKeyword => {
-                const increment = 100 / itemKeyword.length;
-                let matchPercentage = 0;
+        const matches = this.filter(item => {
+          const stringifiedItem = JSON.stringify(item).toLowerCase();
+          const keywordMatch = new RegExp(`[^a-zA-Z0-9-]${keyword}|${keyword}[^a-zA-Z0-9-]`);
+          let matches = keywordMatch.test(stringifiedItem);
 
-                itemKeyword.split('').forEach((l, i) => {
-                  if (l.toLowerCase() === keyword[i]?.toLowerCase()) {
-                    matchPercentage += increment;
-                  }
-                });
+          if (fuzzyMatchPercentage > 0) {
+            const itemKeywords = stringifiedItem.split(/[\s\"]/);
+            itemKeywords.forEach(itemKeyword => {
+              const increment = 100 / itemKeyword.length;
+              let matchPercentage = 0;
 
-                if (matchPercentage >= fuzzyMatchPercentage) {
-                  matches = true;
+              itemKeyword.split('').forEach((l, i) => {
+                if (l.toLowerCase() === keyword[i]?.toLowerCase()) {
+                  matchPercentage += increment;
                 }
               });
-            }
-            return matches;
-          });
 
-          keywordMatchesFound.forEach(match => {
-            keywordMatches.push([keywordMatches.filter(e => e.includes(match)).length, match]);
-          });
-        }
+              if (matchPercentage >= fuzzyMatchPercentage) {
+                matches = true;
+              }
+            });
+          }
+
+          return matches;
+        });
+
+        matches.forEach(match => {
+          const currentCount = keywordMatches.get(match);
+          currentCount ?
+            keywordMatches.set(match, currentCount + 1) :
+            keywordMatches.set(match, 1);
+        });
       });
     }
 
-    return Queryable.From(keywordMatches).OrderByDescending([e => e[0]]).slice().map(e => e[1]);
+    return Queryable.From(Array.from(keywordMatches.entries())).OrderByDescending([e => e[1]]).slice().map(e => e[0]);
   }
 
   private mutableArrayQuery(func: (array: Array<T>) => Array<T>): Queryable<T> {

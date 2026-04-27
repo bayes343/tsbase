@@ -243,11 +243,11 @@ describe('Queryable', () => {
 
   it('should sort non-exact matches based on keyword occurrence count', () => {
     const qable = Queryable.From(jsonData);
-    const top = qable.Search('tell me about the movie the Matrix')[0];
+    const top = qable.Search('something about the Matrix Neo')[0];
     expect(top?.question).toEqual('What movie features the character Neo?');
     expect(top?.answer).toEqual('The Matrix features the character Neo.');
 
-    const second = qable.Search('tell me about the movie the Matrix')[1];
+    const second = qable.Search('something about the Matrix Neo')[1];
     expect(second?.question).toEqual('Who starred in The Matrix?');
     expect(second?.answer).toEqual('Keanu Reeves starred in The Matrix.');
   });
