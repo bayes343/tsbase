@@ -1,6 +1,5 @@
 export class Cookies {
   private constructor() { }
-
   public static GetCookieMap(mainDocument?: Document): Map<string, string>;
   public static GetCookieMap(cookieValue: string): Map<string, string>;
   public static GetCookieMap(
@@ -10,11 +9,10 @@ export class Cookies {
     const map = new Map<string, string>();
 
     const cookiePairs = cookieValue.split(';').map(e => e.trim());
-    const cookieKeys = cookiePairs.map(c => c.split('=')[0]);
-    const cookieValues = cookiePairs.map(c => c.split('=')[1]);
-    cookieKeys.forEach((key, i) => {
-      map.set(key, cookieValues[i]);
-    });
+    for (const pair of cookiePairs) {
+      const key = pair.split('=', 2)[0];
+      map.set(key, decodeURIComponent(pair.split(`${key}=`)[1]));
+    }
 
     return map;
   }
@@ -22,7 +20,7 @@ export class Cookies {
   public static GetCookieValue(key: string, cookieString: string): string | null {
     return cookieString
       .split(';')
-      .find((e) => e.trim().split('=')[0] === key)
-      ?.split('=')[1] || null;
+      .find((e) => e.trim().split('=', 2)[0] === key)
+      ?.split(`${key}=`)[1] || null;
   }
 }
