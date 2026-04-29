@@ -212,7 +212,7 @@ export class Queryable<T> extends Array<T> {
    * V8 change - change params to an object
    * Perform a full text search on a collection for a given search term. Elements containing the entire search term
    * are given precedence over keyword matches.
-   * @param term The term being searched for
+   * @param term The term being searched for - hard limit of 100 characters
    * @param minimumKeywordLength Keywords in the search term with a length less than this won't be considered
    * @param stopWords Keywords matching these words are not considered
    * @param ignorableSuffixCharacters Characters that should not prevent a positive match
@@ -225,6 +225,7 @@ export class Queryable<T> extends Array<T> {
     ignorableSuffixCharacters = new Array<string>(),
     fuzzyMatchPercentage = 0
   ): Queryable<T> {
+    term = term.trim().slice(0, 100);
     const keywords = this.getKeywordsForTerm(term.toLowerCase(), ignorableSuffixCharacters)
       .filter(e => e.length >= minimumKeywordLength)
       .filter(e => !stopWords.includes(e))
