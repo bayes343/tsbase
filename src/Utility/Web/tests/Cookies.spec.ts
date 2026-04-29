@@ -26,4 +26,27 @@ describe('Cookies', () => {
   it('should return null for empty cookies value', () => {
     expect(Cookies.GetCookieValue('test' as any, 'test=')).toEqual(null);
   });
+
+  it('GetCookieMap should handle cookie values containing equals signs', () => {
+    const cookieString = 'name=value=with=equals; other=normal';
+    const map = Cookies.GetCookieMap(cookieString);
+
+    expect(map.get('name')).toBe('value=with=equals');
+    expect(map.get('other')).toBe('normal');
+  });
+
+  it('GetCookieMap should URL-decode cookie values', () => {
+    const encodedCookieString = 'token=abc%20def; email=user%40example.com; data=a%3Db';
+    const map = Cookies.GetCookieMap(encodedCookieString);
+
+    expect(map.get('token')).toBe('abc def');
+    expect(map.get('email')).toBe('user@example.com');
+  });
+
+  it('GetCookieValue should handle cookie values containing equals signs', () => {
+    const cookieString = 'name=value=with=equals; other=normal';
+
+    expect(Cookies.GetCookieValue('name', cookieString)).toBe('value=with=equals');
+    expect(Cookies.GetCookieValue('other', cookieString)).toBe('normal');
+  });
 });
