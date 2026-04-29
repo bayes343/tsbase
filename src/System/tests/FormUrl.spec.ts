@@ -41,4 +41,25 @@ describe('FormUrl', () => {
     const decodedEmptyString = FormUrl.DecodeToJson(Strings.Empty);
     expect(decodedEmptyString).toEqual({});
   });
+
+  it('EncodeJson should URL-encode special characters to prevent parameter pollution', () => {
+    const jsonWithSpecialChars = {
+      description: 'test&value=with&special=chars',
+      email: 'user@domain.com',
+      name: 'John Doe'
+    };
+
+    const encoded = FormUrl.EncodeJson(jsonWithSpecialChars);
+
+    expect(encoded).not.toContain('test&value=with&special');
+    expect(encoded).toContain('%26');
+  });
+
+  it('DecodeToJson should URL-decode values and handle values containing equals signs', () => {
+    const encodedWithSpaces = 'name=John%20Doe&formula=2%2B2%3D4';
+    const decodedWithSpaces = FormUrl.DecodeToJson<{name: string, formula: string}>(encodedWithSpaces);
+
+    expect(decodedWithSpaces.name).toBe('John Doe');
+    expect(decodedWithSpaces.formula).toBe('2+2=4');
+  });
 });

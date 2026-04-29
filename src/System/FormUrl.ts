@@ -13,8 +13,9 @@ export class FormUrl {
 
     const keys = Object.keys(json);
     for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      formData += `${key}=${json[key]}${i < keys.length - 1 ? '&' : Strings.Empty}`;
+      const key = encodeURIComponent(keys[i]);
+      const value = encodeURIComponent(json[key]);
+      formData += `${key}=${value}${i < keys.length - 1 ? '&' : Strings.Empty}`;
     }
 
     return formData;
@@ -42,7 +43,7 @@ export class FormUrl {
   }
 
   private static SetKeyValuePair(formData: string, json: any) {
-    const keyValuePair = formData.split('=');
+    const keyValuePair = formData.split('=', 2).map(e => decodeURIComponent(e));
     if (keyValuePair.length >= 2) {
       json[keyValuePair[0]] = keyValuePair[1];
     }
