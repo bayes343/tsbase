@@ -6,6 +6,10 @@ export type Fetch = (input: RequestInfo, init?: RequestInit) => Promise<Response
 export class HttpClient implements IHttpClient {
   public OnRequestReceived?: ((request: Request) => Promise<Response | Request>) | undefined;
   public OnResponseResolved?: (response: Response) => void;
+  /**
+   * Amount of time before aborting a request, defaults to 30 seconds
+   */
+  public RequestTimeout = 30000;
 
   constructor(
     public DefaultRequestHeaders: Record<string, string> = {},
@@ -21,7 +25,8 @@ export class HttpClient implements IHttpClient {
     const request = new Request(uri, {
       method,
       body,
-      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders }
+      headers: { ...this.DefaultRequestHeaders, ...additionalHeaders },
+      signal: AbortSignal.timeout(this.RequestTimeout)
     });
 
     const requestOrResponse = await this.OnRequestReceived?.(request);
