@@ -15,7 +15,6 @@
     "productivity",
     "framework"
   ],
-  "license": "MIT",
   "version": "7.5.0",
   "description": "Base class libraries for TypeScript",
   "private": false,
