@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import dlv from 'dlv';
 import { dset } from 'dset';
 import { Queryable } from '../../Collections/Queryable/Queryable';
@@ -16,6 +17,15 @@ export class EventStore<T extends Object> implements IEventStore<T> {
   private stateObservers = new Map<string, Observable<any>>();
   private ledger = new Array<Transaction<any>>();
 
+  private static throwOnPathTraversal(memberOrState: unknown): void {
+    if (typeof memberOrState === 'string') {
+      if (/(?:^|\.)__(?:proto|defineGetter|defineSetter|lookupGetter|lookupSetter)__/i.test(memberOrState) ||
+          /(?:^|\.)(?:constructor|prototype)(?:\.|$)/i.test(memberOrState)) {
+        throw new Error(`Path traversal through "${memberOrState}" is not allowed`);
+      }
+    }
+  }
+
   constructor(
     private state: T
   ) { }
@@ -32,6 +42,8 @@ export class EventStore<T extends Object> implements IEventStore<T> {
   public SetState<V>(memberOrState: MemberLambda<T, V> | string | T, state?: T): Result<V | T> {
     return new Query<V | T>(() => {
       const isGranularUpdate = ['function', 'string'].includes(typeof memberOrState) && state !== undefined;
+      EventStore.throwOnPathTraversal(memberOrState);
+
       const getCurrentState = () => {
         if (isGranularUpdate && typeof memberOrState === 'function') {
           return memberOrState(this.cloneOf(this.state));
