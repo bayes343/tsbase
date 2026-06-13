@@ -22,6 +22,14 @@ export class HttpClient implements IHttpClient {
     body?: string,
     additionalHeaders?: Record<string, string>
   ): Promise<Response> {
+    /**
+     * @security SSRF (CWE-918): The uri parameter accepts any URL without validation.
+     * Assessment - Acceptable Risk (Joseph Bayes 20260613)
+     *
+     * The intent of this class is to be a general use client for any system.
+     * Validation, would be inappropriate and limiting. Consumers could, if
+     * they choose, implement validation via the OnRequestReceived handler.
+     */
     const request = new Request(uri, {
       method,
       body,
