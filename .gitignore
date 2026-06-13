@@ -3,6 +3,7 @@
 dist/**/*.js
 dist/**/*.ts
 dist/**/*.map
+dist/**/*.json
 coverage
 node_modules
 TESTS*.xml

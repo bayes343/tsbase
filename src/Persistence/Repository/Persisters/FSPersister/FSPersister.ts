@@ -6,6 +6,15 @@ import { IFileSystemAdapter } from './IFileSystemAdapter';
  * Persists data using the node fs / path api
  */
 export class FSPersister<T> implements IPersister<T> {
+  private static throwOnPathTraversal(localFilesDirectory: string, filePath: string): void {
+    if (/\.\.(?:\/|\\)/.test(localFilesDirectory) ||
+        /\.\.(?:\/|\\)/.test(filePath) ||
+        /^[\/\\]/.test(filePath) ||
+        /^[a-zA-Z]:[/\\]/.test(filePath)) {
+      throw new Error(`Path traversal detected: "${localFilesDirectory}" / "${filePath}"`);
+    }
+  }
+
   private get dir(): string {
     return this.pathResolver.resolve(this.localFilesDirectory);
   }
@@ -20,6 +29,7 @@ export class FSPersister<T> implements IPersister<T> {
     private pathResolver: IPathResolver,
     private fileSystemAdapter: IFileSystemAdapter
   ) {
+    FSPersister.throwOnPathTraversal(this.localFilesDirectory, this.filePath);
     this.ensureLocalFilesDirExists();
     this.ensureFileExists();
   }

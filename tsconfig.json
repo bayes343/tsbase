@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2018",
-    "module": "commonjs",
+    "module": "NodeNext",
     "lib": [
       "dom",
       "es2018",
@@ -10,6 +10,7 @@
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
+    "rootDir": "src",
     "importHelpers": true,
     "strict": true,
     "noImplicitAny": false,
@@ -21,7 +22,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "types": [
       "jest",
@@ -29,7 +30,6 @@
     ],
     "esModuleInterop": true,
     "inlineSources": true,
-    "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "jsxFactory": "ParseJsx",

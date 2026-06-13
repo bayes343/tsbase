@@ -9,6 +9,8 @@ type ClassComponent = { new(): { render: JsxFunc } };
 
 const isClassComponent = (nodeName: string | JsxFunc | ClassComponent): nodeName is ClassComponent => !!nodeName['prototype'];
 
+const validNodeNameRegex = /^[a-zA-Z][a-zA-Z0-9]*(?:-[a-zA-Z0-9]+)*$/;
+
 export type Jsx = {
   attributes?: Record<string, string | number | boolean | undefined | null | ((event: Event | null) => void)> | null,
   children?: (Jsx | string)[],
@@ -67,6 +69,11 @@ export class JsxRenderer {
       jsx = isClassComponent(jsx.nodeName) ?
         new jsx.nodeName().render(attributes, jsx.children) :
         jsx.nodeName({ ...globalAttributes, ...jsx.attributes }, jsx.children);
+    }
+    if (typeof jsx.nodeName === 'string' && jsx.nodeName !== Fragment && !validNodeNameRegex.test(jsx.nodeName)) {
+      console.error(`Invalid JSX node name: "${
+        jsx.nodeName}". Node names must start with a letter and contain only letters, digits, and hyphens (e.g., div, p, video, custom-element).`);
+      return Strings.Empty;
     }
     let element = `<${jsx.nodeName}`;
 

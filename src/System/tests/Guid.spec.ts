@@ -11,4 +11,13 @@ describe('Guid', () => {
     expect(guid1 === guid2).toBeFalsy();
   });
 
+  it('should not generate a single duplicate in 100k instances', () => {
+    const guids = new Array<string>(100000).fill('')
+      // @ts-ignore
+      .map(e => e = Guid.NewGuid());
+    const uniqueGuids = new Set(guids);
+
+    expect(guids.length).toEqual(100000);
+    expect(uniqueGuids.size).toEqual(100000);
+  });
 });

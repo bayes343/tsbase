@@ -46,7 +46,7 @@ export class Csv {
       if (cv.length === 0 || cv[cv.length - 1].length % headers.length === 0) {
         cv.push([]);
       }
-      match && cv[cv.length - 1].push(match[1] || '');
+      match && cv[cv.length - 1].push(match[1] || Strings.Empty);
     });
 
     recordValues.forEach(rv => {
@@ -61,6 +61,8 @@ export class Csv {
     return json;
   }
 
+  private static readonly dangerousFormulaChars = /^[=+\-@\t\r]/;
+
   // eslint-disable-next-line complexity
   private static convertToCSV(json: object) {
     const items = typeof json !== 'object' ? JSON.parse(json) : json;
@@ -74,9 +76,15 @@ export class Csv {
           line += ',';
         }
         const value = item[key];
-        const literalQuotes = value?.toString().includes(',') ? '"' : '';
+        const stringValue = value?.toString() || Strings.Empty;
+        const sanitizedForFormula = Csv.dangerousFormulaChars.test(stringValue) ?
+          `'${stringValue}` : stringValue;
+        const needsQuoting = sanitizedForFormula.includes(',') ||
+          sanitizedForFormula.includes('"') ||
+          sanitizedForFormula.includes('\n');
+        const literalQuotes = needsQuoting ? '"' : Strings.Empty;
         line += value !== Strings.Empty ?
-          `${literalQuotes}"${value}"${literalQuotes}` :
+          `${literalQuotes}"${sanitizedForFormula}"${literalQuotes}` :
           Strings.Empty;
       }
 

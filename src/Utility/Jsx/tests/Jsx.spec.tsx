@@ -2,7 +2,7 @@
 import { Any, Mock } from 'tsmockit';
 import { Strings } from '../../../System/Strings';
 import { Until } from '../../Timers/Until';
-import { Jsx, JsxRenderer, ParseJsx } from '../Jsx';
+import { Jsx, JsxRenderer, ParseJsx, Fragment } from '../Jsx';
 
 describe('JsxRenderer', () => {
   let mockDocument: Mock<Document>;
@@ -368,5 +368,99 @@ describe('JsxRenderer', () => {
   }
   it('should render the jsx response of a class\'s render method', () => {
     expect(JsxRenderer.RenderJsx(<Component test="fake id">test</Component>)).toEqual('<p id="fake id">test</p>');
+  });
+
+  it('should return empty string for nodeName injection with event handlers (XSS)', () => {
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => { /* noop */ });
+    const malicious = ParseJsx('div onclick=alert(1)' as any, { class: 'test' });
+
+    const html = JsxRenderer.RenderJsx(malicious);
+
+    expect(html).toEqual(Strings.Empty);
+    expect(mockConsoleError).toHaveBeenCalled();
+    mockConsoleError.mockRestore();
+  });
+
+  it('should return empty string for nodeName injection with script tag break-out (XSS)', () => {
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => { /* noop */ });
+    const malicious = ParseJsx('div><script>alert(1)</script><div' as any, { class: 'test' });
+
+    const html = JsxRenderer.RenderJsx(malicious);
+
+    expect(html).toEqual(Strings.Empty);
+    expect(mockConsoleError).toHaveBeenCalled();
+    mockConsoleError.mockRestore();
+  });
+
+  it('should return empty string for nodeName injection with closing tag break-out (XSS)', () => {
+    const mockConsoleError = jest.spyOn(console, 'error').mockImplementation(() => { /* noop */ });
+    const malicious = ParseJsx('img src=x onerror=alert(1)' as any, {});
+
+    const html = JsxRenderer.RenderJsx(malicious);
+
+    expect(html).toEqual(Strings.Empty);
+    expect(mockConsoleError).toHaveBeenCalled();
+    mockConsoleError.mockRestore();
+  });
+
+  it('should accept safe standard node names', () => {
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('div', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('p', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('video', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('h1', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('input', {}))).not.toThrow();
+  });
+
+  it('should accept safe custom element node names', () => {
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('custom-element', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('some-other-custom-element', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('my-app', {}, 'ok'))).not.toThrow();
+    expect(() => JsxRenderer.RenderJsx(ParseJsx('x-data-src', {}, 'ok'))).not.toThrow();
+  });
+
+  it('should NOT allow XSS via arbitrary attribute injection through globalAttributes', () => {
+    const jsx = ParseJsx('div', {}, 'Hello');
+
+    const html = JsxRenderer.RenderJsx(jsx, null, { onclick: 'alert(1)' } as any);
+
+    expect(html).not.toContain('onclick="alert(1)"');
+  });
+
+  it('should render a simple element safely', () => {
+    const jsx = ParseJsx('div', { class: 'container' }, 'Hello World');
+
+    const html = JsxRenderer.RenderJsx(jsx);
+
+    expect(html).toContain('<div class="container">');
+    expect(html).toContain('Hello World');
+    expect(html).toContain('</div>');
+  });
+
+  it('should escape HTML in text content', () => {
+    const jsx = ParseJsx('p', {}, '<script>alert("xss")</script>');
+
+    const html = JsxRenderer.RenderJsx(jsx);
+
+    expect(html).not.toContain('<script>');
+    expect(html).toContain('&lt;script&gt;');
+  });
+
+  it('should escape HTML in attribute values', () => {
+    const jsx = ParseJsx('div', { title: '"><script>alert(1)</script>' }, 'text');
+
+    const html = JsxRenderer.RenderJsx(jsx);
+
+    expect(html).not.toContain('"><script>');
+    expect(html).toContain('&quot;&gt;&lt;script&gt;');
+  });
+
+  it('should handle fragment', () => {
+    const jsx = ParseJsx(Fragment as any, {}, ParseJsx('span', {}, 'hello'));
+
+    const html = JsxRenderer.RenderJsx(jsx);
+
+    expect(html).not.toContain('fragment');
+    expect(html).toContain('<span>');
+    expect(html).toContain('hello');
   });
 });

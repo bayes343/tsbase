@@ -286,4 +286,24 @@ describe('EventStore', () => {
     expect((scenarioUnderTest.GetState() as House).address).toEqual(house().address);
     expect((scenarioUnderTest.GetState() as House).yearBuilt).toEqual(house().yearBuilt);
   });
+
+  it('should reject __proto__ path to prevent prototype pollution', () => {
+    const result = classUnderTest.SetState('__proto__.polluted', 'evil');
+    expect(result.IsSuccess).toBeFalsy();
+    expect(result.ErrorMessages[0]).toContain('not allowed');
+    expect(({} as any).polluted).toBeUndefined();
+  });
+
+  it('should reject constructor.prototype path to prevent prototype pollution', () => {
+    const result = classUnderTest.SetState('constructor.prototype.polluted2', 'evil');
+    expect(result.IsSuccess).toBeFalsy();
+    expect(result.ErrorMessages[0]).toContain('not allowed');
+    expect(({} as any).polluted2).toBeUndefined();
+  });
+
+  it('should allow legitimate deep paths', () => {
+    const result = classUnderTest.SetState('address.street', '123 Main St');
+    expect(result.IsSuccess).toBeTruthy();
+    expect(classUnderTest.GetState('address.street')).toEqual('123 Main St');
+  });
 });

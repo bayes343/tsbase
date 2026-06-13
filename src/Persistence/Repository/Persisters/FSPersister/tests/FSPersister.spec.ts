@@ -104,4 +104,28 @@ describe('FSPersister', () => {
     expect(billsData).toBeDefined();
   });
 
+  it('should reject localFilesDirectory containing parent directory traversal', () => {
+    expect(() => {
+      new FSPersister(
+        '../etc',
+        testFilePath,
+        testKey,
+        mockPathResolver.Object,
+        mockFileSystemAdapter.Object
+      );
+    }).toThrowError(/Path traversal/);
+  });
+
+  it('should reject filePath containing parent directory traversal', () => {
+    expect(() => {
+      new FSPersister(
+        testFileDir,
+        '../../etc/passwd',
+        testKey,
+        mockPathResolver.Object,
+        mockFileSystemAdapter.Object
+      );
+    }).toThrowError(/Path traversal/);
+  });
+
 });

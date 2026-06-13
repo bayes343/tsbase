@@ -78,4 +78,39 @@ Subtotal : $16.00",1,,Houston,,Kris,Houston,,test@qa.org,444-555-1111,FALSE,paid
   it('DecodeAsJson should return an empty array when csv header count is different than given headerKeys length', () => {
     expect(Csv.DecodeAsJson(csv, ['one', 'two', 'three'])).toEqual([]);
   });
+
+  it('EncodeAsCsv should neutralize CSV injection by prefixing formula-triggering values with a single quote', () => {
+    const maliciousData = [
+      { name: '=cmd|/C calc.exe!A0', score: '@SUM(1+9)', status: '+OK', notes: '-DDE' }
+    ];
+    const headers = ['name', 'score', 'status', 'notes'];
+    const result = Csv.EncodeAsCsv(headers, maliciousData);
+
+    const cellsAfterComma = result.split(',');
+    cellsAfterComma.forEach(cell => {
+      const trimmed = cell.trim().replace(/^"/, '').replace(/"$/, '');
+      if (trimmed.length > 0) {
+        const firstChar = trimmed[0];
+        expect(firstChar).not.toBe('=');
+        expect(firstChar).not.toBe('+');
+        expect(firstChar).not.toBe('-');
+        expect(firstChar).not.toBe('@');
+        expect(firstChar).not.toBe('\t');
+        expect(firstChar).not.toBe('\r');
+      }
+    });
+  });
+
+  it('EncodeAsCsv should neutralize tab-injected formulas', () => {
+    const maliciousData = [{ cmd: '\t=cmd|/C calc.exe!A0' }];
+    const headers = ['cmd'];
+    const result = Csv.EncodeAsCsv(headers, maliciousData);
+
+    const lines = result.split('\n');
+    const dataLine = lines[1] || '';
+    const cellValue = dataLine.replace(/"/g, '').trim();
+
+    expect(cellValue[0]).toBe("'");
+    expect(cellValue.indexOf('=cmd')).toBeGreaterThan(0);
+  });
 });
