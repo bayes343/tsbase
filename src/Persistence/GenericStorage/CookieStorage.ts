@@ -27,6 +27,15 @@ type CookieOptions = {
  * Provides a generic interface for interacting with Cookies
  */
 export class CookieStorage implements IGenericStorage {
+  private static sanitizeValue(value?: string | boolean): string | boolean {
+    if (typeof value === 'boolean') {
+      return value;
+    } else if (typeof value === 'string') {
+      return value.split(';')[0];
+    }
+    return Strings.Empty;
+  }
+
   constructor(
     private serializer = new JsonSerializer(),
     private mainDocument = document
@@ -72,8 +81,8 @@ export class CookieStorage implements IGenericStorage {
       const expiresOptionString = options.expires ?
         `expires=${options.expires.toUTCString()};` : Strings.Empty;
       const optionsString = expiresOptionString + optionKeys.map(k => k !== CookieOptionKeys.Expires && !!options[k]
-        ? `${k}=${options[k]};` : Strings.Empty).join('');
-      const newCookie = `${key}=${value};${optionsString}`;
+        ? `${k}=${CookieStorage.sanitizeValue(options[k])};` : Strings.Empty).join('');
+      const newCookie = `${key}=${CookieStorage.sanitizeValue(value)};${optionsString}`;
 
       this.mainDocument.cookie = newCookie;
     }).Execute();

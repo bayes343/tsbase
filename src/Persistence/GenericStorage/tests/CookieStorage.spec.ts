@@ -124,4 +124,25 @@ describe('CookieStorage', () => {
 
     expect(mockDocument.Object.cookie).toEqual(expectedCookie);
   });
+
+  it('should NOT allow cookie value injection via semicolons', () => {
+    const maliciousValue = 'innocent; Path=/evil; Secure; HttpOnly; samesite=none';
+    (classUnderTest as CookieStorage).SetValue('key', maliciousValue);
+
+    expect(mockDocument.Object.cookie).not.toContain('Path=/evil');
+    expect(mockDocument.Object.cookie).not.toContain('Secure');
+    expect(mockDocument.Object.cookie).not.toContain('HttpOnly');
+    expect(mockDocument.Object.cookie).not.toContain('samesite=none');
+  });
+
+  it('should NOT allow cookie option injection via semicolons in domain or path', () => {
+    (classUnderTest as CookieStorage).SetValue('key', 'value', {
+      path: '/evil; Secure; HttpOnly',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      domain: '.domain.com; Secure' as any
+    });
+
+    expect(mockDocument.Object.cookie).not.toContain('path=/evil; Secure; HttpOnly');
+    expect(mockDocument.Object.cookie).not.toContain('domain=.domain.com; Secure');
+  });
 });
