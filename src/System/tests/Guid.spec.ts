@@ -12,7 +12,9 @@ describe('Guid', () => {
   });
 
   it('should not generate a single duplicate in 100k instances', () => {
-    const guids = new Array<string>(100000).fill('').map(e => e = Guid.NewGuid());
+    const guids = new Array<string>(100000).fill('')
+      // @ts-ignore
+      .map(e => e = Guid.NewGuid());
     const uniqueGuids = new Set(guids);
 
     expect(guids.length).toEqual(100000);
